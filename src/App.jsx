@@ -1,11 +1,97 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
 import ProjectControl from './components/ProjectControl';
 import RoomControl from './components/RoomControl';
+import UserAudit from './components/UserAudit';
 import HubHome from './components/HubHome';
-import { LayoutDashboard, Calendar, LayoutGrid, Bell, User } from 'lucide-react';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import {
+    LayoutDashboard, Calendar, LayoutGrid,
+    Bell, User, ShieldCheck, LogOut, Loader2,
+    ShieldAlert
+} from 'lucide-react';
 
 function App() {
-    const [activeModule, setActiveModule] = useState('hub'); // 'hub', 'projects', or 'rooms'
+    const [session, setSession] = useState(null);
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [activeModule, setActiveModule] = useState('hub');
+    const [view, setView] = useState('login'); // 'login' or 'signup'
+
+    useEffect(() => {
+        // Initial session check
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+            if (session) fetchProfile(session.user.id);
+            else setLoading(false);
+        });
+
+        // Listen for auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+            if (session) fetchProfile(session.user.id);
+            else {
+                setProfile(null);
+                setLoading(false);
+            }
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    const fetchProfile = async (userId) => {
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .single();
+
+        if (error) console.error('Error fetching profile:', error);
+        else setProfile(data);
+        setLoading(false);
+    };
+
+    const handleLogout = () => supabase.auth.signOut();
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-6">
+                    <Loader2 className="text-indigo-600 animate-spin" size={48} />
+                    <p className="font-black text-slate-400 uppercase tracking-[0.3em] text-sm">Carregando Hub...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!session) {
+        return view === 'login'
+            ? <Login onSignupClick={() => setView('signup')} />
+            : <Signup onLoginClick={() => setView('login')} />;
+    }
+
+    if (profile && !profile.is_approved) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+                <div className="max-w-[500px] w-full bg-white rounded-[3rem] p-16 shadow-2xl border border-slate-100 text-center animate-in zoom-in duration-500">
+                    <div className="w-24 h-24 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-orange-100">
+                        <ShieldAlert size={48} />
+                    </div>
+                    <h3 className="text-3xl font-black text-slate-800 mb-4">Acesso em Auditoria.</h3>
+                    <p className="text-slate-500 font-medium leading-relaxed mb-10">
+                        Sua solicitação está sendo revisada. Contate o administrador da Klini para liberação dos módulos.
+                    </p>
+                    <button
+                        onClick={handleLogout}
+                        className="w-full bg-slate-900 text-white font-black py-5 rounded-xl flex items-center justify-center gap-3 hover:bg-black transition-all"
+                    >
+                        <LogOut size={20} /> Sair do Sistema
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
@@ -24,53 +110,67 @@ function App() {
                         <div className="hidden md:flex items-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
                             <button
                                 onClick={() => setActiveModule('hub')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeModule === 'hub' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
+                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'hub' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
                             >
-                                <LayoutGrid size={18} />
+                                <LayoutGrid size={16} />
                                 Início
                             </button>
-                            <button
-                                onClick={() => setActiveModule('projects')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeModule === 'projects' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                <LayoutDashboard size={18} />
-                                Projetos
-                            </button>
-                            <button
-                                onClick={() => setActiveModule('rooms')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeModule === 'rooms' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                <Calendar size={18} />
-                                Salas
-                            </button>
+                            {profile?.access_projects && (
+                                <button
+                                    onClick={() => setActiveModule('projects')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'projects' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <LayoutDashboard size={16} />
+                                    Projetos
+                                </button>
+                            )}
+                            {profile?.access_rooms && (
+                                <button
+                                    onClick={() => setActiveModule('rooms')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'rooms' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <Calendar size={16} />
+                                    Salas
+                                </button>
+                            )}
+                            {profile?.role === 'admin' && (
+                                <button
+                                    onClick={() => setActiveModule('audit')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'audit' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <ShieldCheck size={16} />
+                                    Auditoria
+                                </button>
+                            )}
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4">
                         <button className="p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-all relative">
                             <Bell size={20} />
-                            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
                         </button>
                         <div className="h-10 w-px bg-slate-200 mx-2"></div>
-                        <div className="flex items-center gap-3 pl-2">
+                        <div className="flex items-center gap-3 pl-2 group relative">
                             <div className="text-right hidden sm:block">
-                                <p className="text-sm font-bold text-slate-800">Enzo Romana</p>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrador</p>
+                                <p className="text-sm font-bold text-slate-800">{profile?.full_name}</p>
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{profile?.role === 'admin' ? 'Administrador' : 'Colaborador'}</p>
                             </div>
-                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-lg shadow-indigo-100">
-                                <div className="w-full h-full rounded-[0.9rem] bg-white flex items-center justify-center text-indigo-600">
-                                    <User size={24} />
-                                </div>
-                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="w-12 h-12 rounded-2xl bg-slate-100 p-0.5 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center text-slate-400"
+                            >
+                                <LogOut size={20} />
+                            </button>
                         </div>
                     </div>
                 </div>
             </nav>
 
             <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-10">
-                {activeModule === 'hub' && <HubHome setActiveModule={setActiveModule} />}
+                {activeModule === 'hub' && <HubHome setActiveModule={setActiveModule} userProfile={profile} />}
                 {activeModule === 'projects' && <ProjectControl />}
                 {activeModule === 'rooms' && <RoomControl setView={setActiveModule} />}
+                {activeModule === 'audit' && <UserAudit />}
             </main>
 
             <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">
