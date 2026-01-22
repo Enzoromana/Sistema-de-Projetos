@@ -13,8 +13,8 @@ function App() {
                 <div className="max-w-6xl mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">S</div>
-                            <span className="font-bold text-slate-800 tracking-tight">Sistema MVP</span>
+                            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">K</div>
+                            <span className="font-bold text-slate-800 tracking-tight">Hub Manager Klini</span>
                         </div>
 
                         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
@@ -53,7 +53,7 @@ function App() {
 
             <footer className="bg-white border-t border-slate-100 py-6 px-6 mt-12">
                 <div className="max-w-6xl mx-auto flex items-center justify-between text-slate-400 text-sm">
-                    <p>© 2026 Sistema de Projetos MVP</p>
+                    <p>© 2026 Hub Manager Klini</p>
                     <div className="flex gap-6">
                         <a href="#" className="hover:text-indigo-600 transition-colors">Suporte</a>
                         <a href="#" className="hover:text-indigo-600 transition-colors">Docs</a>

@@ -399,8 +399,9 @@ export default function ProjectControl() {
                                 <Folder size={24} />
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold">Controle de Projetos</h1>
-                                <p className="text-teal-100 text-sm">Gestão simplificada</p>
+                                <h1 className="text-xl font-bold">Gestão de Projetos</h1>
+                                <p className="text-teal-100 text-sm">Hub Manager Klini</p>
+
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
