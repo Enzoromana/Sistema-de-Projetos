@@ -130,7 +130,7 @@ function App() {
                                     className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'rooms' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
                                 >
                                     <Calendar size={16} />
-                                    Salas
+                                    Sala Reunião
                                 </button>
                             )}
                             {(profile?.access_audit || profile?.role === 'admin') && (

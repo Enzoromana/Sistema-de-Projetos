@@ -17,7 +17,7 @@ export default function HubHome({ setActiveModule, userProfile }) {
         },
         {
             id: 'rooms',
-            title: 'Controle de Salas',
+            title: 'Sala de Reunião',
             description: 'Agendamento de salas de reunião e gestão de espaços.',
             icon: <Calendar size={32} />,
             color: 'bg-indigo-500',

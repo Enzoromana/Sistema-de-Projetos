@@ -391,52 +391,53 @@ export default function ProjectControl() {
 
     return (
         <div className="min-h-screen bg-slate-50">
-            <header className="bg-gradient-to-r from-teal-700 to-teal-600 text-white shadow-lg sticky top-0 z-40">
-                <div className="max-w-6xl mx-auto px-6 py-5">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white/20 rounded-lg">
-                                <Folder size={24} />
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-bold">Gestão de Projetos</h1>
-                                <p className="text-teal-100 text-sm">Hub Manager Klini</p>
-
-                            </div>
+            {/* Header / Branding */}
+            <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl mb-8">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div>
+                        <div className="px-5 py-2 bg-indigo-500/20 backdrop-blur-md border border-indigo-400/20 rounded-full text-[10px] font-black uppercase tracking-widest text-indigo-200 w-fit mb-6">
+                            Gestão de Ecossistema
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="flex bg-white/10 p-1 rounded-lg">
-                                <button
-                                    onClick={() => setViewMode('list')}
-                                    className={`p-1.5 rounded-md transition-all ${viewMode === 'list' ? 'bg-white text-teal-700 shadow-sm' : 'text-white hover:bg-white/10'}`}
-                                >
-                                    <LayoutList size={18} />
-                                </button>
-                                <button
-                                    onClick={() => setViewMode('kanban')}
-                                    className={`p-1.5 rounded-md transition-all ${viewMode === 'kanban' ? 'bg-white text-teal-700 shadow-sm' : 'text-white hover:bg-white/10'}`}
-                                >
-                                    <Columns size={18} />
-                                </button>
-                            </div>
+                        <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tight">
+                            Controle de Projetos
+                        </h1>
+                        <p className="text-xl text-indigo-200/60 font-medium">Hub Manager Klini</p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex bg-white/5 backdrop-blur-xl p-1.5 rounded-[1.5rem] border border-white/10">
                             <button
-                                onClick={() => setShowModal(true)}
-                                className="flex items-center gap-2 bg-white text-teal-700 px-4 py-2 rounded-lg font-medium hover:bg-teal-50 transition-all shadow-md"
+                                onClick={() => setViewMode('list')}
+                                className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${viewMode === 'list' ? 'bg-white text-indigo-900 shadow-xl' : 'text-slate-400 hover:text-white'}`}
                             >
-                                <Plus size={18} /> Novo Projeto
+                                <LayoutList size={16} /> Lista
+                            </button>
+                            <button
+                                onClick={() => setViewMode('kanban')}
+                                className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${viewMode === 'kanban' ? 'bg-white text-indigo-900 shadow-xl' : 'text-slate-400 hover:text-white'}`}
+                            >
+                                <Columns size={16} /> Kanban
                             </button>
                         </div>
+
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-8 py-4 rounded-[1.5rem] font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-2"
+                        >
+                            <Plus size={20} /> Novo Projeto
+                        </button>
                     </div>
                 </div>
-            </header>
+            </div>
 
-            <main className="max-w-6xl mx-auto px-6 py-6">
-                {/* Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <StatCard icon={<BarChart3 />} label="Total" value={stats.total} color="slate" />
-                    <StatCard icon={<CheckCircle2 />} label="Concluídos" value={stats.done} color="emerald" />
-                    <StatCard icon={<Clock />} label="Em Andamento" value={stats.progress} color="blue" />
-                    <StatCard icon={<Target />} label="Tarefas" value={`${stats.tasksDone}/${stats.tasksTotal}`} color="teal" />
+            <main className="space-y-8">
+                {/* Modern Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <StatCard icon={<BarChart3 size={24} />} label="Projetos Ativos" value={stats.total} color="slate" />
+                    <StatCard icon={<CheckCircle2 size={24} />} label="Finalizados" value={stats.done} color="emerald" />
+                    <StatCard icon={<Clock size={24} />} label="Em Operação" value={stats.progress} color="blue" />
+                    <StatCard icon={<Target size={24} />} label="Meta de Tarefas" value={`${stats.tasksDone}/${stats.tasksTotal}`} color="indigo" />
                 </div>
 
                 {/* Filters */}
@@ -544,17 +545,17 @@ export default function ProjectControl() {
 function StatCard({ icon, label, value, color }) {
     const colors = {
         slate: 'bg-slate-100 text-slate-600',
-        emerald: 'bg-emerald-100 text-emerald-600',
-        blue: 'bg-blue-100 text-blue-600',
-        teal: 'bg-teal-100 text-teal-600'
+        emerald: 'bg-emerald-100 text-emerald-600 border-emerald-200',
+        blue: 'bg-blue-100 text-blue-600 border-blue-200',
+        indigo: 'bg-indigo-100 text-indigo-600 border-indigo-200'
     };
     return (
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
-            <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg ${colors[color]}`}>{icon}</div>
+        <div className="bg-white rounded-[1.5rem] p-6 shadow-xl shadow-slate-200/50 border border-slate-100">
+            <div className="flex items-center gap-4">
+                <div className={`p-3 rounded-2xl ${colors[color]} border`}>{icon}</div>
                 <div>
-                    <p className="text-2xl font-bold text-slate-800">{value}</p>
-                    <p className="text-xs text-slate-500">{label}</p>
+                    <p className="text-3xl font-black text-slate-800 tracking-tighter">{value}</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{label}</p>
                 </div>
             </div>
         </div>
