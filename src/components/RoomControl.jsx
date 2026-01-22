@@ -103,26 +103,26 @@ export default function RoomControl({ setView }) {
 
     // View Components
     const DayView = () => (
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+        <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
             <div className="grid grid-cols-1 divide-y divide-slate-100">
                 {HOURS.map((hour) => {
                     const booking = bookings.find(b => b.start_time.startsWith(hour) && b.date === selectedDate);
                     return (
-                        <div key={hour} className="flex group min-h-[90px] relative">
-                            <div className="w-24 md:w-32 py-8 flex flex-col items-center justify-start border-r border-slate-100 bg-slate-50/20">
-                                <span className="text-sm font-black text-slate-400 group-hover:text-indigo-600 transition-colors">{hour}</span>
+                        <div key={hour} className="flex group min-h-[70px] relative transition-all">
+                            <div className="w-20 md:w-28 py-6 flex flex-col items-center justify-start border-r border-slate-100 bg-slate-50/20">
+                                <span className="text-xs font-black text-slate-400 group-hover:text-indigo-600 transition-colors tracking-tighter">{hour}</span>
                             </div>
-                            <div className="flex-1 p-3">
+                            <div className="flex-1 p-2">
                                 {booking ? (
-                                    <div className="bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-2xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600">
-                                        <div className="flex items-center gap-4">
+                                    <div className="bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-xl p-3 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600">
+                                        <div className="flex items-center gap-3">
                                             <div>
-                                                <div className="flex items-center gap-2 mb-1">
-                                                    <h4 className="font-black text-slate-800">{booking.title}</h4>
-                                                    <span className="text-[10px] bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
+                                                <div className="flex items-center gap-2 mb-0.5">
+                                                    <h4 className="font-black text-sm text-slate-800 tracking-tight">{booking.title}</h4>
+                                                    <span className="text-[9px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
                                                 </div>
-                                                <div className="flex items-center gap-4 text-xs text-slate-400 font-bold">
-                                                    <span className="flex items-center gap-1.5"><Clock size={14} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
+                                                <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold">
+                                                    <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,12 +162,12 @@ export default function RoomControl({ setView }) {
         });
 
         return (
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+            <div className="max-w-6xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
                 <div className="grid grid-cols-8 divide-x divide-slate-100">
                     <div className="bg-slate-50/50">
-                        <div className="h-20 border-b border-slate-100 flex items-center justify-center font-black text-[10px] text-slate-400 uppercase tracking-widest">Hora</div>
+                        <div className="h-14 border-b border-slate-100 flex items-center justify-center font-black text-[9px] text-slate-400 uppercase tracking-widest">Hora</div>
                         {HOURS.map(h => (
-                            <div key={h} className="h-24 flex items-center justify-center border-b border-slate-50 text-xs font-black text-slate-400">{h}</div>
+                            <div key={h} className="h-20 flex items-center justify-center border-b border-slate-50 text-[10px] font-black text-slate-400">{h}</div>
                         ))}
                     </div>
                     {days.map((d, i) => {
@@ -175,14 +175,14 @@ export default function RoomControl({ setView }) {
                         const isToday = dateStr === new Date().toISOString().split('T')[0];
                         return (
                             <div key={i} className={`flex-1 ${isToday ? 'bg-indigo-50/20' : ''}`}>
-                                <div className={`h-20 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'}`}>
-                                    <span className="text-[10px] font-black uppercase tracking-tighter opacity-70">{DAYS_OF_WEEK[i]}</span>
-                                    <span className="text-xl font-black tracking-tighter">{d.getDate()}</span>
+                                <div className={`h-14 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'}`}>
+                                    <span className="text-[9px] font-black uppercase tracking-tighter opacity-70">{DAYS_OF_WEEK[i].slice(0, 3)}</span>
+                                    <span className="text-lg font-black tracking-tighter">{d.getDate()}</span>
                                 </div>
                                 {HOURS.map(h => {
                                     const booking = bookings.find(b => b.date === dateStr && b.start_time.startsWith(h));
                                     return (
-                                        <div key={h} className="h-24 border-b border-slate-50 p-1 relative">
+                                        <div key={h} className="h-20 border-b border-slate-50 p-1 relative">
                                             {booking ? (
                                                 <div className="h-full w-full bg-indigo-600 rounded-lg p-2 text-[9px] text-white flex flex-col justify-between shadow-lg shadow-indigo-100 overflow-hidden">
                                                     <p className="font-black leading-tight uppercase line-clamp-2">{booking.title}</p>
@@ -224,23 +224,23 @@ export default function RoomControl({ setView }) {
         for (let i = 1; i <= daysInMonth; i++) days.push(new Date(y, m, i));
 
         return (
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+            <div className="max-w-6xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
                 <div className="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                     {DAYS_OF_WEEK.map(d => (
-                        <div key={d} className="py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">{d.slice(0, 3)}</div>
+                        <div key={d} className="py-2 text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">{d.slice(0, 3)}</div>
                     ))}
                 </div>
                 <div className="grid grid-cols-7">
                     {days.map((d, i) => {
-                        if (!d) return <div key={i} className="h-32 border-b border-r border-slate-50 bg-slate-50/10"></div>;
+                        if (!d) return <div key={i} className="h-24 border-b border-r border-slate-50 bg-slate-50/10"></div>;
                         const dateStr = d.toISOString().split('T')[0];
                         const dayBookings = bookings.filter(b => b.date === dateStr);
                         const isToday = dateStr === new Date().toISOString().split('T')[0];
 
                         return (
-                            <div key={i} className={`h-32 border-b border-r border-slate-100 p-3 group hover:bg-slate-50 transition-all ${isToday ? 'bg-indigo-50/30' : ''}`}>
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-black ${isToday ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}>
+                            <div key={i} className={`h-24 border-b border-r border-slate-100 p-2 group hover:bg-slate-50 transition-all ${isToday ? 'bg-indigo-50/30' : ''}`}>
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${isToday ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}>
                                         {d.getDate()}
                                     </span>
                                     <button
@@ -248,20 +248,19 @@ export default function RoomControl({ setView }) {
                                             setFormData({ ...formData, date: dateStr });
                                             setShowModal(true);
                                         }}
-                                        className="opacity-0 group-hover:opacity-100 p-1.5 text-indigo-600 bg-indigo-50 rounded-lg transition-all"
+                                        className="opacity-0 group-hover:opacity-100 p-1 text-indigo-600 bg-indigo-50 rounded-lg transition-all"
                                     >
-                                        <Plus size={14} />
+                                        <Plus size={12} />
                                     </button>
                                 </div>
-                                <div className="space-y-1 overflow-y-auto max-h-[60px] custom-scrollbar">
-                                    {dayBookings.slice(0, 3).map(b => (
-                                        <div key={b.id} className="text-[9px] bg-indigo-100/50 text-indigo-700 px-2 py-1 rounded-md font-black flex items-center gap-1">
-                                            <div className="w-1 h-1 rounded-full bg-indigo-600"></div>
-                                            <span className="truncate">{b.title}</span>
+                                <div className="space-y-0.5 overflow-hidden">
+                                    {dayBookings.slice(0, 2).map(b => (
+                                        <div key={b.id} className="text-[8px] bg-indigo-100/50 text-indigo-700 px-1.5 py-0.5 rounded font-black truncate max-w-full">
+                                            {b.title}
                                         </div>
                                     ))}
-                                    {dayBookings.length > 3 && (
-                                        <div className="text-[9px] text-slate-400 font-black pl-2">+{dayBookings.length - 3} mais...</div>
+                                    {dayBookings.length > 2 && (
+                                        <div className="text-[8px] text-slate-400 font-black pl-1">+{dayBookings.length - 2}</div>
                                     )}
                                 </div>
                             </div>
@@ -273,73 +272,72 @@ export default function RoomControl({ setView }) {
     };
 
     return (
-        <div className="space-y-8 animate-in slide-in-from-right duration-700 pb-20">
+        <div className="space-y-6 animate-in slide-in-from-right duration-700 pb-20">
             {/* Professional Branding Header */}
-            <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div className="max-w-6xl mx-auto bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[2rem] p-8 md:p-10 text-white relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div>
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex items-center gap-3 mb-4">
                             <button
                                 onClick={() => setView('hub')}
-                                className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 transition-all group"
+                                className="p-2.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 transition-all group"
                             >
-                                <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                                <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                             </button>
-                            <div className="px-5 py-2 bg-indigo-500/20 backdrop-blur-md border border-indigo-400/20 rounded-full text-[10px] font-black uppercase tracking-widest text-indigo-200">
+                            <div className="px-4 py-1.5 bg-indigo-500/20 backdrop-blur-md border border-indigo-400/20 rounded-full text-[9px] font-black uppercase tracking-widest text-indigo-200">
                                 Unidade Corporativa Klini
                             </div>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tight">
+                        <h1 className="text-3xl md:text-4xl font-black mb-1 tracking-tight">
                             Grade de Horários
                         </h1>
-                        <p className="text-xl text-indigo-200/60 font-medium">Sala de Reunião mesanino</p>
+                        <p className="text-lg text-indigo-200/60 font-medium">Sala de Reunião mesanino</p>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex bg-white/5 backdrop-blur-xl p-1.5 rounded-[1.5rem] border border-white/10">
+                    <div className="flex flex-wrap items-center gap-3">
+                        <div className="flex bg-white/5 backdrop-blur-xl p-1 rounded-[1.25rem] border border-white/10">
                             {[
-                                { id: 'day', label: 'Hoje', icon: <CalendarIcon size={16} /> },
-                                { id: 'week', label: 'Semana', icon: <CalendarRange size={16} /> },
-                                { id: 'month', label: 'Mês', icon: <CalendarDays size={16} /> }
+                                { id: 'day', label: 'Hoje', icon: <CalendarIcon size={14} /> },
+                                { id: 'week', label: 'Semana', icon: <CalendarRange size={14} /> },
+                                { id: 'month', label: 'Mês', icon: <CalendarDays size={14} /> }
                             ].map(mod => (
                                 <button
                                     key={mod.id}
                                     onClick={() => setViewMode(mod.id)}
-                                    className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${viewMode === mod.id ? 'bg-white text-indigo-900 shadow-xl' : 'text-slate-400 hover:text-white'}`}
+                                    className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === mod.id ? 'bg-white text-indigo-900 shadow-lg' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     {mod.icon} {mod.label}
                                 </button>
                             ))}
                         </div>
 
-                        <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl p-1.5 rounded-[1.5rem] border border-white/10">
-                            <button onClick={() => navigateDate(-1)} className="p-3 hover:bg-white/10 rounded-2xl transition-all">
-                                <ChevronLeft size={20} />
+                        <div className="flex items-center gap-1 bg-white/5 backdrop-blur-xl p-1 rounded-[1.25rem] border border-white/10">
+                            <button onClick={() => navigateDate(-1)} className="p-2.5 hover:bg-white/10 rounded-xl transition-all">
+                                <ChevronLeft size={18} />
                             </button>
-                            <span className="px-4 font-black text-sm uppercase tracking-widest min-w-[150px] text-center">
+                            <span className="px-2 font-black text-[11px] uppercase tracking-widest min-w-[120px] text-center">
                                 {viewMode === 'day' ? formatDate(selectedDate) : viewMode === 'week' ? 'Esta Semana' : new Date(selectedDate).toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}
                             </span>
-                            <button onClick={() => navigateDate(1)} className="p-3 hover:bg-white/10 rounded-2xl transition-all">
-                                <ChevronRight size={20} />
+                            <button onClick={() => navigateDate(1)} className="p-2.5 hover:bg-white/10 rounded-xl transition-all">
+                                <ChevronRight size={18} />
                             </button>
                         </div>
 
                         <button
                             onClick={() => setShowModal(true)}
-                            className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-8 py-4 rounded-[1.5rem] font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-2"
+                            className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-6 py-3.5 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-2"
                         >
-                            <Plus size={20} /> Novo Agendamento
+                            <Plus size={18} /> Novo
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Dynamic View Content */}
             {loading ? (
-                <div className="h-[600px] flex flex-col items-center justify-center gap-6 bg-white rounded-[3rem] border border-slate-100 shadow-sm">
-                    <div className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
-                    <p className="font-black text-slate-400 uppercase tracking-widest text-sm">Sincronizando Grade...</p>
+                <div className="h-[400px] flex flex-col items-center justify-center gap-6 bg-white rounded-[2rem] border border-slate-100 shadow-sm max-w-6xl mx-auto">
+                    <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+                    <p className="font-black text-slate-400 uppercase tracking-widest text-[10px]">Sincronizando Grade...</p>
                 </div>
             ) : (
                 <>
@@ -350,18 +348,18 @@ export default function RoomControl({ setView }) {
             )}
 
             {/* Visual Policy Accent */}
-            <div className="bg-slate-900 rounded-[2rem] p-8 text-white/50 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/5">
-                <div className="flex items-center gap-4">
-                    <div className="p-3 bg-white/5 rounded-2xl text-emerald-400">
-                        <Users size={24} />
+            <div className="max-w-6xl mx-auto bg-slate-900 rounded-2xl p-6 text-white/50 flex flex-col md:flex-row items-center justify-between gap-4 border border-white/5">
+                <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-white/5 rounded-xl text-emerald-400">
+                        <Users size={20} />
                     </div>
-                    <p className="text-sm font-medium">Todos os colaboradores podem visualizar as reservas de salas para melhor coordenação.</p>
+                    <p className="text-[11px] font-medium leading-relaxed">Todos os colaboradores podem visualizar as reservas de salas para melhor coordenação.</p>
                 </div>
-                <div className="flex -space-x-3">
+                <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className={`w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold`}>{String.fromCharCode(64 + i)}</div>
+                        <div key={i} className={`w-8 h-8 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[8px] font-bold`}>{String.fromCharCode(64 + i)}</div>
                     ))}
-                    <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-indigo-600 flex items-center justify-center text-[10px] font-bold text-white">+8</div>
+                    <div className="w-8 h-8 rounded-full border-2 border-slate-900 bg-indigo-600 flex items-center justify-center text-[8px] font-bold text-white">+8</div>
                 </div>
             </div>
 
