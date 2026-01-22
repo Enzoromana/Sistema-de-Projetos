@@ -17,7 +17,10 @@ function App() {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeModule, setActiveModule] = useState('hub');
-    const [view, setView] = useState('login'); // 'login' or 'signup'
+    const [view, setView] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('mode') === 'signup' ? 'signup' : 'login';
+    }); // 'login' or 'signup'
 
     useEffect(() => {
         // Initial session check
