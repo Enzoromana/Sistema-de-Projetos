@@ -367,84 +367,84 @@ export default function RoomControl({ setView }) {
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl animate-in fade-in duration-300" onClick={() => setShowModal(false)}></div>
-                    <div className="bg-white rounded-[3rem] w-full max-w-lg p-12 shadow-2xl relative animate-in zoom-in duration-300 border border-white/20">
-                        <div className="flex items-center gap-4 mb-10">
-                            <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center text-white shadow-xl shadow-indigo-200">
-                                <Plus size={32} />
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-lg p-8 md:p-10 shadow-2xl relative animate-in zoom-in duration-300 border border-white/20 max-h-[90vh] overflow-y-auto custom-scrollbar">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-indigo-200">
+                                <Plus size={28} />
                             </div>
                             <div>
-                                <h3 className="text-3xl font-black text-slate-800 tracking-tight">Nova Reserva</h3>
-                                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Agendamento Mesanino</p>
+                                <h3 className="text-2xl font-black text-slate-800 tracking-tight">Nova Reserva</h3>
+                                <p className="text-slate-400 font-bold uppercase tracking-widest text-[9px]">Agendamento Mesanino</p>
                             </div>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Assunto da Reunião</label>
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            <div className="space-y-1.5">
+                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Assunto da Reunião</label>
                                 <input
                                     type="text" required
-                                    className="w-full px-8 py-5 rounded-[1.5rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none font-black text-slate-700 placeholder:text-slate-300"
+                                    className="w-full px-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none font-bold text-slate-700 placeholder:text-slate-300"
                                     placeholder="Ex: Alinhamento de Metas"
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Setor Solicitante</label>
+                            <div className="space-y-1.5">
+                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Setor Solicitante</label>
                                 <div className="relative">
                                     <input
                                         type="text" required
-                                        className="w-full pl-16 pr-8 py-5 rounded-[1.5rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none font-black text-slate-700 placeholder:text-slate-300"
+                                        className="w-full pl-14 pr-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none font-bold text-slate-700 placeholder:text-slate-300"
                                         placeholder="Ex: Comercial / TI"
                                         value={formData.sector}
                                         onChange={e => setFormData({ ...formData, sector: e.target.value })}
                                     />
-                                    <Building2 className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={24} />
+                                    <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Data</label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Data</label>
                                     <input
                                         type="date" required
-                                        className="w-full px-8 py-5 rounded-[1.5rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-black text-slate-700"
+                                        className="w-full px-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-bold text-slate-700"
                                         value={formData.date}
                                         onChange={e => setFormData({ ...formData, date: e.target.value })}
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Início</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Início</label>
                                     <input
                                         type="time" required
-                                        className="w-full px-8 py-5 rounded-[1.5rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-black text-slate-700"
+                                        className="w-full px-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-bold text-slate-700"
                                         value={formData.start_time}
                                         onChange={e => setFormData({ ...formData, start_time: e.target.value })}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Término Estimado</label>
+                            <div className="space-y-1.5">
+                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Término Estimado</label>
                                 <input
                                     type="time" required
-                                    className="w-full px-8 py-5 rounded-[1.5rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-black text-slate-700"
+                                    className="w-full px-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none font-bold text-slate-700"
                                     value={formData.end_time}
                                     onChange={e => setFormData({ ...formData, end_time: e.target.value })}
                                 />
                             </div>
 
-                            <div className="flex gap-6 pt-8">
+                            <div className="flex gap-4 pt-6">
                                 <button
                                     type="button" onClick={() => setShowModal(false)}
-                                    className="flex-1 px-10 py-5 rounded-[1.5rem] font-black text-sm uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-all"
+                                    className="flex-1 px-8 py-4 rounded-[1.2rem] font-black text-[11px] uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-all"
                                 >
                                     Descartar
                                 </button>
                                 <button
                                     type="submit"
-                                    className="flex-1 px-10 py-5 rounded-[1.5rem] font-black text-sm uppercase tracking-widest text-white bg-indigo-600 hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-100"
+                                    className="flex-1 px-8 py-4 rounded-[1.2rem] font-black text-[11px] uppercase tracking-widest text-white bg-indigo-600 hover:bg-slate-900 transition-all shadow-xl shadow-indigo-100"
                                 >
                                     Agendar
                                 </button>
