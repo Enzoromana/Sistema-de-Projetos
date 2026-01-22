@@ -1,10 +1,15 @@
 -- Drop existing restrictive policy
 DROP POLICY IF EXISTS "Users can update own profile." ON public.profiles;
 
--- Create new policy that allows update if it's the user's own profile OR if the current user is an admin
-CREATE POLICY "Users can update own profile or admins can update all." ON public.profiles
-  FOR UPDATE USING (
-    auth.uid() = id 
-    OR 
-    (SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin'
-  );
+-- Create new policy that allows update if it's the user's own profile OR if the current user is an admin (idempotent check)
+do $$ 
+begin
+    if not exists (select 1 from pg_policies where tablename = 'profiles' and policyname = 'Users can update own profile or admins can update all.') then
+        CREATE POLICY "Users can update own profile or admins can update all." ON public.profiles
+          FOR UPDATE USING (
+            auth.uid() = id 
+            OR 
+            (SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin'
+          );
+    end if;
+end $$;

@@ -14,4 +14,10 @@ create table if not exists public.subtasks (
 
 -- 3. Habilitar RLS para subtarefas
 alter table public.subtasks enable row level security;
-create policy "Allow all operations for subtasks" on public.subtasks for all using (true) with check (true);
+
+do $$ 
+begin
+    if not exists (select 1 from pg_policies where tablename = 'subtasks' and policyname = 'Allow all operations for subtasks') then
+        create policy "Allow all operations for subtasks" on public.subtasks for all using (true) with check (true);
+    end if;
+end $$;

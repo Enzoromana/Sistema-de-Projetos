@@ -14,15 +14,24 @@ CREATE TABLE IF NOT EXISTS public.profiles (
 -- Enable RLS
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- Policies
-CREATE POLICY "Public profiles are viewable by everyone." ON public.profiles
-  FOR SELECT USING (true);
+-- Policies (idempotent)
+do $$ 
+begin
+    if not exists (select 1 from pg_policies where tablename = 'profiles' and policyname = 'Public profiles are viewable by everyone.') then
+        CREATE POLICY "Public profiles are viewable by everyone." ON public.profiles
+          FOR SELECT USING (true);
+    end if;
 
-CREATE POLICY "Users can insert their own profile." ON public.profiles
-  FOR INSERT WITH CHECK (auth.uid() = id);
+    if not exists (select 1 from pg_policies where tablename = 'profiles' and policyname = 'Users can insert their own profile.') then
+        CREATE POLICY "Users can insert their own profile." ON public.profiles
+          FOR INSERT WITH CHECK (auth.uid() = id);
+    end if;
 
-CREATE POLICY "Users can update own profile." ON public.profiles
-  FOR UPDATE USING (auth.uid() = id);
+    if not exists (select 1 from pg_policies where tablename = 'profiles' and policyname = 'Users can update own profile.') then
+        CREATE POLICY "Users can update own profile." ON public.profiles
+          FOR UPDATE USING (auth.uid() = id);
+    end if;
+end $$;
 
 -- Function to handle new user signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
