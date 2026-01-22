@@ -28,15 +28,22 @@ export default function UserAudit() {
     };
 
     const togglePermission = async (profileId, field, currentValue) => {
+        let newValue;
+        if (field === 'role') {
+            newValue = currentValue === 'admin' ? 'user' : 'admin';
+        } else {
+            newValue = !currentValue;
+        }
+
         const { error } = await supabase
             .from('profiles')
-            .update({ [field]: !currentValue })
+            .update({ [field]: newValue })
             .eq('id', profileId);
 
         if (error) alert(error.message);
         else {
             setProfiles(profiles.map(p =>
-                p.id === profileId ? { ...p, [field]: !currentValue } : p
+                p.id === profileId ? { ...p, [field]: newValue } : p
             ));
         }
     };
@@ -124,7 +131,7 @@ export default function UserAudit() {
                                     <td className="px-8 py-6">
                                         <div className="flex items-center justify-center gap-2">
                                             <button
-                                                onClick={() => togglePermission(p.id, 'role', p.role === 'admin' ? 'user' : 'admin')}
+                                                onClick={() => togglePermission(p.id, 'role', p.role)}
                                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg shadow-purple-100' : 'bg-slate-100 text-slate-400'}`}
                                             >
                                                 <User size={14} /> {p.role === 'admin' ? 'Admin' : 'Mudar para Admin'}
