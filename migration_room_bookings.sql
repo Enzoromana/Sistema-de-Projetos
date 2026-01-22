@@ -6,6 +6,7 @@ create table public.room_bookings (
   start_time time not null,
   end_time time not null,
   title text not null,
+  sector text,
   description text
 );
 
