@@ -124,6 +124,13 @@ export default function UserAudit() {
                                     <td className="px-8 py-6">
                                         <div className="flex items-center justify-center gap-2">
                                             <button
+                                                onClick={() => togglePermission(p.id, 'role', p.role === 'admin' ? 'user' : 'admin')}
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg shadow-purple-100' : 'bg-slate-100 text-slate-400'}`}
+                                            >
+                                                <User size={14} /> {p.role === 'admin' ? 'Admin' : 'Mudar para Admin'}
+                                            </button>
+                                            <div className="w-px h-6 bg-slate-200 mx-2"></div>
+                                            <button
                                                 onClick={() => togglePermission(p.id, 'access_projects', p.access_projects)}
                                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.access_projects ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-slate-100 text-slate-400'}`}
                                             >
