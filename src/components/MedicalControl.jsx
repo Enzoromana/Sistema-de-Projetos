@@ -10,7 +10,8 @@ import {
     Box, Paperclip, AlertTriangle, Printer,
     ArrowLeft, ArrowRight, Loader2, Save, Download
 } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
+ArrowLeft, ArrowRight, Loader2, Save, Download
+} from 'lucide-react';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
@@ -129,69 +130,7 @@ export default function MedicalControl() {
     };
 
     const handleDownloadPDF = () => {
-        // 1. Clone the element
-        const originalElement = document.getElementById('printable-report-content');
-        if (!originalElement) return;
-
-        const clonedElement = originalElement.cloneNode(true);
-
-        // 2. Prepare a clean container for the clone
-        // Using absolute positioning at 0,0 ensures html2canvas captures from the correct origin
-        const container = document.createElement('div');
-        container.style.position = 'absolute';
-        container.style.top = '0';
-        container.style.left = '0';
-        container.style.width = '794px'; // Exact A4 width in pixels at 96DPI
-        container.style.zIndex = '10000'; // Make visible to renderer
-        container.style.backgroundColor = 'white';
-        container.appendChild(clonedElement);
-        document.body.appendChild(container);
-
-        // 3. Clean up styles on the clone for perfect printing
-        // @ts-ignore
-        clonedElement.style.padding = '30px';
-        // @ts-ignore
-        clonedElement.style.margin = '0';
-        // @ts-ignore
-        clonedElement.style.maxWidth = '100%';
-        // @ts-ignore
-        clonedElement.style.width = '100%';
-        // @ts-ignore
-        clonedElement.style.boxShadow = 'none';
-        // @ts-ignore
-        clonedElement.style.border = 'none';
-
-        const opt = {
-            margin: [0, 0, 0, 0], // Margins handled by padding inside container
-            filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: {
-                scale: 2,
-                useCORS: true,
-                scrollY: 0,
-                scrollX: 0,
-                x: 0,
-                y: 0,
-                width: 794,
-                windowWidth: 794
-            },
-            jsPDF: { unit: 'px', format: [794, 1123], orientation: 'portrait' }, // A4 in px
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        // 4. Generate and Clean up
-        // 4. Generate with Delay to ensure rendering
-        // Use a small timeout to allow the browser to paint the cloned element
-        setTimeout(() => {
-            const worker = html2pdf().from(container).set(opt);
-            worker.save().then(() => {
-                document.body.removeChild(container);
-            }).catch(err => {
-                console.error('PDF Generation Error:', err);
-                document.body.removeChild(container);
-                alert('Erro ao gerar PDF. Tente novamente.');
-            });
-        }, 500);
+        window.print();
     };
 
     const resetForm = () => {

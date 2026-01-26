@@ -1,3 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+
+    /* Reset page rules */
+    @page {
+        margin: 0;
+        size: auto;
+    }
+
+    /* Hide everything by default */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Hide scrollbars and reset body */
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    /* Target specific print content */
+    #printable-report-content,
+    #printable-report-content * {
+        visibility: visible;
+    }
+
+    /* Position the report at top-left of page */
+    #printable-report-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 20mm !important;
+        /* Standard document padding */
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+        min-height: 100vh;
+    }
+
+    /* Format headers for print */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Ensure text is black for crisp printing */
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    div {
+        color: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Maintain layout integrity */
+    .grid {
+        display: grid !important;
+    }
+
+    .flex {
+        display: flex !important;
+    }
+
+    /* Handle page breaks */
+    .break-inside-avoid {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .break-before-page {
+        break-before: page;
+        page-break-before: always;
+    }
+}
