@@ -363,7 +363,12 @@ export default function MedicalControl() {
                                     <Input label="CRM/CRO" required value={formData.ass_crm} onChange={v => setFormData({ ...formData, ass_crm: v })} placeholder="00000" />
                                     <Input label="E-mail" value={formData.ass_email} onChange={v => setFormData({ ...formData, ass_email: v })} placeholder="email@exemplo.com" />
                                     <Input label="Telefone" value={formData.ass_telefone} onChange={v => setFormData({ ...formData, ass_telefone: v })} placeholder="(00) 00000-0000" />
-                                    <Input label="Especialidade" required value={formData.ass_especialidade} onChange={v => setFormData({ ...formData, ass_especialidade: v })} placeholder="Ex: Cardiologia" />
+                                    <Input
+                                        label="Especialidade" required
+                                        value={formData.ass_especialidade}
+                                        onChange={v => setFormData({ ...formData, ass_especialidade: v, div_especialidade: v })}
+                                        placeholder="Ex: Cardiologia"
+                                    />
                                     <div className="md:col-span-2">
                                         <Input label="Endereço" value={formData.ass_endereco} onChange={v => setFormData({ ...formData, ass_endereco: v })} placeholder="Endereço completo da clínica/hospital" />
                                     </div>
