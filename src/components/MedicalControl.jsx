@@ -135,33 +135,33 @@ export default function MedicalControl() {
         const clonedElement = originalElement.cloneNode(true);
 
         // 2. Prepare a clean container for the clone
+        // Using absolute positioning at 0,0 ensures html2canvas captures from the correct origin
         const container = document.createElement('div');
-        container.style.position = 'fixed';
-        container.style.top = '-9999px';
+        container.style.position = 'absolute';
+        container.style.top = '0';
         container.style.left = '0';
-        container.style.width = '210mm'; // Exact A4 width
-        container.style.minHeight = '297mm';
+        container.style.width = '794px'; // Exact A4 width in pixels at 96DPI
+        container.style.zIndex = '-9999';
         container.style.backgroundColor = 'white';
-        container.style.zIndex = '-1';
         container.appendChild(clonedElement);
         document.body.appendChild(container);
 
         // 3. Clean up styles on the clone for perfect printing
         // @ts-ignore
-        clonedElement.style.padding = '40px'; // Consistent internal padding
+        clonedElement.style.padding = '30px';
         // @ts-ignore
-        clonedElement.style.margin = '0';     // No external margins
+        clonedElement.style.margin = '0';
         // @ts-ignore
-        clonedElement.style.boxShadow = 'none'; // No shadows
+        clonedElement.style.maxWidth = '100%';
         // @ts-ignore
-        clonedElement.style.border = 'none';    // No borders
+        clonedElement.style.width = '100%';
         // @ts-ignore
-        clonedElement.style.borderRadius = '0'; // No radius
+        clonedElement.style.boxShadow = 'none';
         // @ts-ignore
-        clonedElement.style.width = '100%';     // Fill container
+        clonedElement.style.border = 'none';
 
         const opt = {
-            margin: [0, 0, 0, 0], // We handle margin in the container
+            margin: [0, 0, 0, 0], // Margins handled by padding inside container
             filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: {
@@ -169,16 +169,19 @@ export default function MedicalControl() {
                 useCORS: true,
                 scrollY: 0,
                 scrollX: 0,
-                windowWidth: 794 // Approx 210mm in px at 96dpi
+                x: 0,
+                y: 0,
+                width: 794,
+                windowWidth: 794
             },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            jsPDF: { unit: 'px', format: [794, 1123], orientation: 'portrait' }, // A4 in px
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         // 4. Generate and Clean up
         // @ts-ignore
         window.html2pdf()
-            .from(clonedElement)
+            .from(container) // Capture the CONTAINER, not just the element
             .set(opt)
             .save()
             .then(() => {
