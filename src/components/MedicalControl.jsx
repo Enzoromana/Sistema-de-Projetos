@@ -10,8 +10,6 @@ import {
     Box, Paperclip, AlertTriangle, Printer,
     ArrowLeft, ArrowRight, Loader2, Save, Download
 } from 'lucide-react';
-ArrowLeft, ArrowRight, Loader2, Save, Download
-} from 'lucide-react';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
