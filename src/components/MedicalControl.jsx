@@ -640,15 +640,9 @@ export default function MedicalControl() {
                             <div className="flex items-center gap-3">
                                 <button
                                     onClick={handleDownloadPDF}
-                                    className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2"
-                                >
-                                    <Download size={18} /> Baixar PDF
-                                </button>
-                                <button
-                                    onClick={() => window.print()}
                                     className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
                                 >
-                                    <Printer size={18} /> Imprimir
+                                    <Printer size={18} /> Imprimir / Salvar PDF
                                 </button>
                                 <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
                                     <X size={24} />
@@ -657,18 +651,21 @@ export default function MedicalControl() {
                         </div>
 
                         {/* Report Content Wrapper */}
-                        <div className="flex-1 overflow-y-auto p-4 md:p-12 bg-slate-100 flex justify-center print:bg-white print:p-0">
-                            {/* The Actual Document Area - Hard Width for Capture Accuracy */}
+                        <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+                            {/* The Actual Document Area - Visual Match for A4 */}
                             <div
                                 id="printable-report-content"
-                                className="bg-white p-16 shadow-2xl print:shadow-none print:p-0"
+                                className="bg-white shadow-2xl border border-slate-200"
                                 style={{
-                                    width: '800px',
+                                    width: '210mm',
                                     minHeight: '297mm',
-                                    fontFamily: "'Inter', sans-serif"
+                                    fontFamily: "'Inter', sans-serif",
+                                    padding: '15mm', // Match print padding
+                                    margin: '0 auto',
+                                    boxSizing: 'border-box'
                                 }}
                             >
-                                {/* Klini Header - Simplified for canvas stability */}
+                                {/* Klini Header */}
                                 <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 text-teal-700">
