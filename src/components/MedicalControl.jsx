@@ -76,10 +76,16 @@ export default function MedicalControl() {
 
     const handleCreateRequest = async () => {
         try {
+            // Sanitization: convert empty strings to null (especially for dates)
+            const sanitizedData = { ...formData };
+            ['ben_nascimento', 'aud_data', 'prazo_ans'].forEach(field => {
+                if (sanitizedData[field] === '') sanitizedData[field] = null;
+            });
+
             // 1. Insert Main Request
             const { data: requestData, error: requestError } = await supabase
                 .from('medical_requests')
-                .insert([formData])
+                .insert([sanitizedData])
                 .select();
             if (requestError) throw requestError;
 
