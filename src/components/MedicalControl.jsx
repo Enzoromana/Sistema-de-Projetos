@@ -131,17 +131,16 @@ export default function MedicalControl() {
         const element = document.getElementById('printable-report-content');
         if (!element) return;
 
-        // Temporarily adjust styles for high-fidelity capture
         const opt = {
-            margin: [10, 10, 10, 10],
+            margin: [12, 12, 12, 12],
             filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: {
-                scale: 3,
+                scale: 2, // Scale 2 is more stable for large renders
                 useCORS: true,
                 letterRendering: true,
-                logging: false,
-                windowWidth: 794 // A4 width at 96 DPI
+                scrollY: 0,
+                windowWidth: 1100 // Higher width to force desktop layout during capture
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
@@ -644,11 +643,18 @@ export default function MedicalControl() {
                         </div>
 
                         {/* Report Content Wrapper */}
-                        <div className="flex-1 overflow-y-auto p-12 bg-slate-100/50 print:bg-white print:p-0">
-                            {/* The Actual Document Area - Fixed A4 context for high quality export */}
-                            <div id="printable-report-content" className="bg-white shadow-xl border border-slate-100 rounded-[2.5rem] p-16 w-full max-w-[210mm] mx-auto print:shadow-none print:border-none print:rounded-none" style={{ minHeight: '297mm' }}>
-                                {/* Klini Header */}
-                                <div className="flex flex-col md:flex-row justify-between items-start border-b-4 border-teal-700 pb-10 mb-12 text-left break-inside-avoid">
+                        <div className="flex-1 overflow-y-auto p-4 md:p-12 bg-slate-100 flex justify-center print:bg-white print:p-0">
+                            {/* The Actual Document Area - Optimized for Export */}
+                            <div
+                                id="printable-report-content"
+                                className="bg-white p-12 w-full max-w-[800px] shadow-2xl print:shadow-none print:p-0"
+                                style={{
+                                    minHeight: '297mm',
+                                    fontFamily: "'Inter', sans-serif"
+                                }}
+                            >
+                                {/* Klini Header - Simplified for canvas stability */}
+                                <div className="flex justify-between items-start border-b-[6px] border-teal-700 pb-8 mb-10 text-left">
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 text-teal-700">
                                             <Activity size={48} className="stroke-[3]" />
@@ -673,9 +679,9 @@ export default function MedicalControl() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-12">
+                                <div className="space-y-10">
                                     {/* Section 1: Beneficiary */}
-                                    <div className="relative text-left break-inside-avoid">
+                                    <div className="relative text-left break-inside-avoid px-2">
                                         <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
                                         <div className="pl-8 space-y-6">
                                             <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
