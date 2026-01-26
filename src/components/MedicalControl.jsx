@@ -130,15 +130,25 @@ export default function MedicalControl() {
     const handleDownloadPDF = () => {
         const element = document.getElementById('printable-report-content');
         if (!element) return;
+
+        // Temporarily adjust styles for high-fidelity capture
         const opt = {
-            margin: 10,
+            margin: [10, 10, 10, 10],
             filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: {
+                scale: 3,
+                useCORS: true,
+                letterRendering: true,
+                logging: false,
+                windowWidth: 794 // A4 width at 96 DPI
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
+
         // @ts-ignore
-        window.html2pdf().set(opt).from(element).save();
+        window.html2pdf().from(element).set(opt).save();
     };
 
     const resetForm = () => {
@@ -635,10 +645,10 @@ export default function MedicalControl() {
 
                         {/* Report Content Wrapper */}
                         <div className="flex-1 overflow-y-auto p-12 bg-slate-100/50 print:bg-white print:p-0">
-                            {/* The Actual Document Area */}
-                            <div id="printable-report-content" className="bg-white shadow-xl border border-slate-100 rounded-[2.5rem] p-16 max-w-[210mm] mx-auto print:shadow-none print:border-none print:rounded-none">
+                            {/* The Actual Document Area - Fixed A4 context for high quality export */}
+                            <div id="printable-report-content" className="bg-white shadow-xl border border-slate-100 rounded-[2.5rem] p-16 w-full max-w-[210mm] mx-auto print:shadow-none print:border-none print:rounded-none" style={{ minHeight: '297mm' }}>
                                 {/* Klini Header */}
-                                <div className="flex flex-col md:flex-row justify-between items-start border-b-4 border-teal-700 pb-10 mb-12 text-left">
+                                <div className="flex flex-col md:flex-row justify-between items-start border-b-4 border-teal-700 pb-10 mb-12 text-left break-inside-avoid">
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 text-teal-700">
                                             <Activity size={48} className="stroke-[3]" />
@@ -665,7 +675,7 @@ export default function MedicalControl() {
 
                                 <div className="space-y-12">
                                     {/* Section 1: Beneficiary */}
-                                    <div className="relative text-left">
+                                    <div className="relative text-left break-inside-avoid">
                                         <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
                                         <div className="pl-8 space-y-6">
                                             <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
@@ -684,7 +694,7 @@ export default function MedicalControl() {
                                     </div>
 
                                     {/* Section 2: Professionals */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left break-inside-avoid">
                                         <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
                                             <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
                                                 <Activity className="text-teal-700" size={18} /> II. Médico Auditor
@@ -714,7 +724,7 @@ export default function MedicalControl() {
                                     </div>
 
                                     {/* Section 3: Divergence */}
-                                    <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left">
+                                    <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left break-inside-avoid shadow-sm">
                                         <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
                                         <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
                                             <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
@@ -732,10 +742,42 @@ export default function MedicalControl() {
                                         </div>
                                     </div>
 
-                                    {/* Section 4: Procedures */}
-                                    <div className="space-y-6 text-left">
+                                    {/* Section 4: Materials & OPME */}
+                                    {selectedRequest.medical_materials?.length > 0 && (
+                                        <div className="space-y-6 text-left break-before-page">
+                                            <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                                                <Box className="text-teal-700" size={20} /> V. Materiais & OPME
+                                            </h2>
+                                            <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
+                                                <table className="w-full text-left">
+                                                    <thead className="bg-slate-50">
+                                                        <tr>
+                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
+                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
+                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-slate-100">
+                                                        {selectedRequest.medical_materials.map((m, i) => (
+                                                            <tr key={i} className="bg-white">
+                                                                <td className="px-8 py-6">
+                                                                    <div className="font-bold text-slate-700">{m.descricao}</div>
+                                                                    {m.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
+                                                                </td>
+                                                                <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
+                                                                <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Section 5: Procedures */}
+                                    <div className="space-y-6 text-left break-inside-avoid">
                                         <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                            <FileText className="text-teal-700" size={20} /> V. Lista de Procedimentos
+                                            <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
                                         </h2>
                                         <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
                                             <table className="w-full text-left">
@@ -926,9 +968,9 @@ function Checkbox({ label, checked, onChange }) {
 
 function ReportSection({ title, icon, children }) {
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 break-inside-avoid border-l-2 border-teal-50 pl-6">
             <div className="flex items-center gap-3 border-b-2 border-slate-50 pb-4">
-                <div className="text-indigo-600">{icon}</div>
+                <div className="text-teal-600">{icon}</div>
                 <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">{title}</h4>
             </div>
             {children}
@@ -938,9 +980,9 @@ function ReportSection({ title, icon, children }) {
 
 function ReportItem({ label, value, className = "" }) {
     return (
-        <div className={className}>
+        <div className={`${className} break-inside-avoid`}>
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-            <p className="text-sm font-bold text-slate-700">{value || '-'}</p>
+            <p className="text-sm font-bold text-slate-700 leading-tight">{value || '-'}</p>
         </div>
     );
 }
