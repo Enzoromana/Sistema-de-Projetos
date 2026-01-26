@@ -141,7 +141,7 @@ export default function MedicalControl() {
         container.style.top = '0';
         container.style.left = '0';
         container.style.width = '794px'; // Exact A4 width in pixels at 96DPI
-        container.style.zIndex = '-9999';
+        container.style.zIndex = '10000'; // Make visible to renderer
         container.style.backgroundColor = 'white';
         container.appendChild(clonedElement);
         document.body.appendChild(container);
