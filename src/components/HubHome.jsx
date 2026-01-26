@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Calendar, Users, Settings, Bell, Search,
-    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp
+    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 

@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import {
     Users, ShieldCheck, ShieldAlert, CheckCircle2,
     XCircle, Lock, Unlock, Eye, Trash2,
-    LayoutDashboard, Calendar, Search, Filter, User
+    LayoutDashboard, Calendar, Search, Filter, User, Activity
 } from 'lucide-react';
 
 export default function UserAudit() {
