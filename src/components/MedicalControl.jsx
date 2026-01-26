@@ -23,8 +23,8 @@ const DOC_TYPES = [
     { id: 'aberturaFechamentoMedica', label: 'Abertura/Fechamento Médica' },
     { id: 'desempatador', label: 'Desempatador: Escolha' },
     { id: 'parecerFinal', label: 'Parecer Final' },
-    { id: 'emailConfirmacaoMedico', label: 'Email Confirmação Recebimento Médico' },
-    { id: 'beneficiarioAberturaFechamento', label: 'Beneficiário - Abertura/Fechamento' },
+    { id: 'emailConfirmacaoMedico', label: 'Confirmação Recebimento Médico' },
+    { id: 'beneficiarioAberturaFechamento', label: 'Fechamento Beneficiários' },
     { id: 'confirmacaoRecebimento', label: 'Confirmação de Recebimento' }
 ];
 
