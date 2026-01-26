@@ -128,28 +128,62 @@ export default function MedicalControl() {
     };
 
     const handleDownloadPDF = () => {
-        const element = document.getElementById('printable-report-content');
-        if (!element) return;
+        // 1. Clone the element
+        const originalElement = document.getElementById('printable-report-content');
+        if (!originalElement) return;
+
+        const clonedElement = originalElement.cloneNode(true);
+
+        // 2. Prepare a clean container for the clone
+        const container = document.createElement('div');
+        container.style.position = 'fixed';
+        container.style.top = '-9999px';
+        container.style.left = '0';
+        container.style.width = '210mm'; // Exact A4 width
+        container.style.minHeight = '297mm';
+        container.style.backgroundColor = 'white';
+        container.style.zIndex = '-1';
+        container.appendChild(clonedElement);
+        document.body.appendChild(container);
+
+        // 3. Clean up styles on the clone for perfect printing
+        // @ts-ignore
+        clonedElement.style.padding = '40px'; // Consistent internal padding
+        // @ts-ignore
+        clonedElement.style.margin = '0';     // No external margins
+        // @ts-ignore
+        clonedElement.style.boxShadow = 'none'; // No shadows
+        // @ts-ignore
+        clonedElement.style.border = 'none';    // No borders
+        // @ts-ignore
+        clonedElement.style.borderRadius = '0'; // No radius
+        // @ts-ignore
+        clonedElement.style.width = '100%';     // Fill container
 
         const opt = {
-            margin: [10, 5, 10, 5],
+            margin: [0, 0, 0, 0], // We handle margin in the container
             filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: {
                 scale: 2,
                 useCORS: true,
-                letterRendering: true,
                 scrollY: 0,
                 scrollX: 0,
-                windowWidth: 800,
-                width: 800
+                windowWidth: 794 // Approx 210mm in px at 96dpi
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
+        // 4. Generate and Clean up
         // @ts-ignore
-        window.html2pdf().from(element).set(opt).save();
+        window.html2pdf()
+            .from(clonedElement)
+            .set(opt)
+            .save()
+            .then(() => {
+                document.body.removeChild(container);
+            });
     };
 
     const resetForm = () => {
