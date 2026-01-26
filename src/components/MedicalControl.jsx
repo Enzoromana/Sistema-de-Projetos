@@ -132,26 +132,24 @@ export default function MedicalControl() {
         if (!content) return;
 
         // Create a dedicated print container at the body level
-        // This effectively "portals" the content out of the modal for printing
         const printContainer = document.createElement('div');
         printContainer.id = 'print-container';
 
         // Clone the report
         const clonedContent = content.cloneNode(true);
-
-        // Clean up any screen-only styles from the clone if necessary
-        // (Though CSS will handle most of it)
-
         printContainer.appendChild(clonedContent);
         document.body.appendChild(printContainer);
+
+        // Store original title and set new one for PDF naming
+        const originalTitle = document.title;
+        document.title = `Relatorio_Klini_${selectedRequest.requisicao}`;
 
         // Trigger print
         window.print();
 
-        // Cleanup after print dialog handles usage
-        // We use a small timeout or event listener to ensure cleanup 
-        // Note: In most browsers window.print() is blocking, but we use a listener for safety
+        // Cleanup
         const cleanup = () => {
+            document.title = originalTitle; // Restore title
             if (document.body.contains(printContainer)) {
                 document.body.removeChild(printContainer);
             }
@@ -160,7 +158,7 @@ export default function MedicalControl() {
 
         window.addEventListener('afterprint', cleanup);
 
-        // Fallback cleanup in case afterprint doesn't fire (desktop Safari weirdness sometimes)
+        // Fallback cleanup
         setTimeout(cleanup, 2000);
     };
 

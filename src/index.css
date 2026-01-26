@@ -24,9 +24,18 @@
         width: 100% !important;
         margin: 0 !important;
         padding: 15mm !important;
-        /* Add document margin */
         box-sizing: border-box !important;
         background: white !important;
+        box-shadow: none !important;
+        /* Force flat look */
+        border: none !important;
+    }
+
+    /* Flatten internal containers */
+    #print-container div {
+        box-shadow: none !important;
+        border-color: #e2e8f0 !important;
+        /* Lighter borders for print */
     }
 
     /* Ensure content inside prints correctly */
