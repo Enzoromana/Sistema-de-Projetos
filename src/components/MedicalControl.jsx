@@ -132,15 +132,17 @@ export default function MedicalControl() {
         if (!element) return;
 
         const opt = {
-            margin: [12, 12, 12, 12],
+            margin: [10, 5, 10, 5],
             filename: `Relatorio_Klini_${selectedRequest.requisicao}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: {
-                scale: 2, // Scale 2 is more stable for large renders
+                scale: 2,
                 useCORS: true,
                 letterRendering: true,
                 scrollY: 0,
-                windowWidth: 1100 // Higher width to force desktop layout during capture
+                scrollX: 0,
+                windowWidth: 800,
+                width: 800
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
@@ -644,17 +646,18 @@ export default function MedicalControl() {
 
                         {/* Report Content Wrapper */}
                         <div className="flex-1 overflow-y-auto p-4 md:p-12 bg-slate-100 flex justify-center print:bg-white print:p-0">
-                            {/* The Actual Document Area - Optimized for Export */}
+                            {/* The Actual Document Area - Hard Width for Capture Accuracy */}
                             <div
                                 id="printable-report-content"
-                                className="bg-white p-12 w-full max-w-[800px] shadow-2xl print:shadow-none print:p-0"
+                                className="bg-white p-16 shadow-2xl print:shadow-none print:p-0"
                                 style={{
+                                    width: '800px',
                                     minHeight: '297mm',
                                     fontFamily: "'Inter', sans-serif"
                                 }}
                             >
                                 {/* Klini Header - Simplified for canvas stability */}
-                                <div className="flex justify-between items-start border-b-[6px] border-teal-700 pb-8 mb-10 text-left">
+                                <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 text-teal-700">
                                             <Activity size={48} className="stroke-[3]" />
