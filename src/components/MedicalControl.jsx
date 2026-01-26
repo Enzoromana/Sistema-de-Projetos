@@ -10,6 +10,7 @@ import {
     Box, Paperclip, AlertTriangle, Printer,
     ArrowLeft, ArrowRight, Loader2, Save, Download
 } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
@@ -179,8 +180,7 @@ export default function MedicalControl() {
         };
 
         // 4. Generate and Clean up
-        // @ts-ignore
-        window.html2pdf()
+        html2pdf()
             .from(container) // Capture the CONTAINER, not just the element
             .set(opt)
             .save()
