@@ -742,7 +742,7 @@ export default function MedicalControl() {
                                     </div>
 
                                     {/* Section 3: Divergence */}
-                                    <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left break-inside-avoid shadow-sm">
+                                    <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left shadow-sm">
                                         <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
                                         <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
                                             <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
@@ -762,7 +762,7 @@ export default function MedicalControl() {
 
                                     {/* Section 4: Materials & OPME */}
                                     {selectedRequest.medical_materials?.length > 0 && (
-                                        <div className="space-y-6 text-left break-before-page">
+                                        <div className="space-y-6 text-left">
                                             <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                                                 <Box className="text-teal-700" size={20} /> V. Materiais & OPME
                                             </h2>
@@ -793,7 +793,7 @@ export default function MedicalControl() {
                                     )}
 
                                     {/* Section 5: Procedures */}
-                                    <div className="space-y-6 text-left break-inside-avoid">
+                                    <div className="space-y-6 text-left">
                                         <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                                             <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
                                         </h2>
