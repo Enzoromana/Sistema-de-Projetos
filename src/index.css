@@ -10,78 +10,55 @@
         size: auto;
     }
 
-    /* Hide everything by default */
-    body * {
-        visibility: hidden;
-    }
-
-    /* Hide scrollbars and reset body */
-    body {
-        background: white;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-
-    /* Target specific print content */
-    #printable-report-content,
-    #printable-report-content * {
-        visibility: visible;
-    }
-
-    /* Position the report at top-left of page */
-    #printable-report-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 20mm !important;
-        /* Standard document padding */
-        border: none !important;
-        box-shadow: none !important;
-        background: white !important;
-        min-height: 100vh;
-    }
-
-    /* Format headers for print */
-    .no-print {
+    /* Hide everything in the body by default */
+    body>* {
         display: none !important;
     }
 
-    /* Ensure text is black for crisp printing */
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    span,
-    div {
-        color: #000 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+    /* ONLY show the print container */
+    body>#print-container {
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
     }
 
-    /* Maintain layout integrity */
-    .grid {
+    /* Ensure content inside prints correctly */
+    #print-container * {
+        visibility: visible !important;
+    }
+
+    /* Reset colors and text */
+    #print-container {
+        color: black !important;
+    }
+
+    /* Restore grid and flex layouts specifically */
+    #print-container .grid {
         display: grid !important;
     }
 
-    .flex {
+    #print-container .flex {
         display: flex !important;
     }
 
-    /* Handle page breaks */
+    /* Page break utilities */
     .break-inside-avoid {
-        break-inside: avoid;
-        page-break-inside: avoid;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
     }
 
     .break-before-page {
-        break-before: page;
-        page-break-before: always;
+        break-before: page !important;
+        page-break-before: always !important;
+    }
+
+    /* Remove scrollbars */
+    body {
+        overflow: visible !important;
     }
 }

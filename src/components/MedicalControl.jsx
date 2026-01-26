@@ -128,7 +128,40 @@ export default function MedicalControl() {
     };
 
     const handleDownloadPDF = () => {
+        const content = document.getElementById('printable-report-content');
+        if (!content) return;
+
+        // Create a dedicated print container at the body level
+        // This effectively "portals" the content out of the modal for printing
+        const printContainer = document.createElement('div');
+        printContainer.id = 'print-container';
+
+        // Clone the report
+        const clonedContent = content.cloneNode(true);
+
+        // Clean up any screen-only styles from the clone if necessary
+        // (Though CSS will handle most of it)
+
+        printContainer.appendChild(clonedContent);
+        document.body.appendChild(printContainer);
+
+        // Trigger print
         window.print();
+
+        // Cleanup after print dialog handles usage
+        // We use a small timeout or event listener to ensure cleanup 
+        // Note: In most browsers window.print() is blocking, but we use a listener for safety
+        const cleanup = () => {
+            if (document.body.contains(printContainer)) {
+                document.body.removeChild(printContainer);
+            }
+            window.removeEventListener('afterprint', cleanup);
+        };
+
+        window.addEventListener('afterprint', cleanup);
+
+        // Fallback cleanup in case afterprint doesn't fire (desktop Safari weirdness sometimes)
+        setTimeout(cleanup, 2000);
     };
 
     const resetForm = () => {
