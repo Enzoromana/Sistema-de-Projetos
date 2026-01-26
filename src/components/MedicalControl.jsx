@@ -180,13 +180,18 @@ export default function MedicalControl() {
         };
 
         // 4. Generate and Clean up
-        html2pdf()
-            .from(container) // Capture the CONTAINER, not just the element
-            .set(opt)
-            .save()
-            .then(() => {
+        // 4. Generate with Delay to ensure rendering
+        // Use a small timeout to allow the browser to paint the cloned element
+        setTimeout(() => {
+            const worker = html2pdf().from(container).set(opt);
+            worker.save().then(() => {
                 document.body.removeChild(container);
+            }).catch(err => {
+                console.error('PDF Generation Error:', err);
+                document.body.removeChild(container);
+                alert('Erro ao gerar PDF. Tente novamente.');
             });
+        }, 500);
     };
 
     const resetForm = () => {
