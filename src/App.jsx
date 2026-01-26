@@ -4,6 +4,7 @@ import ProjectControl from './components/ProjectControl';
 import RoomControl from './components/RoomControl';
 import UserAudit from './components/UserAudit';
 import HubHome from './components/HubHome';
+import MedicalControl from './components/MedicalControl';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import {
@@ -145,6 +146,15 @@ function App() {
                                     Auditoria
                                 </button>
                             )}
+                            {(profile?.access_medical || profile?.role === 'admin') && (
+                                <button
+                                    onClick={() => setActiveModule('medical')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'medical' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <Activity size={16} />
+                                    Junta Médica
+                                </button>
+                            )}
                         </div>
                     </div>
 
@@ -174,6 +184,7 @@ function App() {
                 {activeModule === 'projects' && <ProjectControl />}
                 {activeModule === 'rooms' && <RoomControl setView={setActiveModule} />}
                 {activeModule === 'audit' && <UserAudit />}
+                {activeModule === 'medical' && <MedicalControl />}
             </main>
 
             <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">

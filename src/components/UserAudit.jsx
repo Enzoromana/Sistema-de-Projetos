@@ -155,6 +155,12 @@ export default function UserAudit() {
                                             >
                                                 <ShieldCheck size={14} /> Auditoria
                                             </button>
+                                            <button
+                                                onClick={() => togglePermission(p.id, 'access_medical', p.access_medical)}
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.access_medical ? 'bg-teal-700 text-white shadow-lg shadow-teal-100' : 'bg-slate-100 text-slate-400'}`}
+                                            >
+                                                <Activity size={14} /> Médico
+                                            </button>
                                         </div>
                                     </td>
                                     <td className="px-8 py-6 text-right">

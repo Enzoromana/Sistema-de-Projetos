@@ -32,6 +32,14 @@ export default function HubHome({ setActiveModule, userProfile }) {
             permission: userProfile?.access_audit || userProfile?.role === 'admin'
         },
         {
+            id: 'medical',
+            title: 'Junta Médica',
+            description: 'Módulo técnico para regulação e análise de divergências.',
+            icon: <Activity size={32} />,
+            color: 'bg-[#1D7874]',
+            permission: userProfile?.access_medical || userProfile?.role === 'admin'
+        },
+        {
             id: 'settings',
             title: 'Configurações',
             description: 'Ajustes do sistema e customização da plataforma.',
