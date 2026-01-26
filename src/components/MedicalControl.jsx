@@ -585,175 +585,167 @@ export default function MedicalControl() {
                     </div>
                 </div>
             )}
-        </div>
-    );
-}
-
-{/* Modal Relatório */ }
-{
-    showReportModal && selectedRequest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2.5rem] w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-200">
-                            <Printer size={24} />
-                        </div>
-                        <div>
-                            <h3 className="text-2xl font-black text-slate-800 tracking-tight">Relatório Completo</h3>
-                            <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
-                        </div>
-                    </div>
-                    <button onClick={() => setShowReportModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                        <X size={24} />
-                    </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto p-10 space-y-10" id="printable-report">
-                    <ReportSection title="Dados do Beneficiário" icon={<User />}>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            <ReportItem label="CPF" value={selectedRequest.ben_cpf} />
-                            <ReportItem label="Nome" value={selectedRequest.ben_nome} className="md:col-span-2" />
-                            <ReportItem label="E-mail" value={selectedRequest.ben_email} />
-                            <ReportItem label="Sexo" value={selectedRequest.ben_sexo} />
-                            <ReportItem label="Nascimento" value={selectedRequest.ben_nascimento} />
-                            <ReportItem label="Telefone" value={selectedRequest.ben_telefone} />
-                            <ReportItem label="Estado/Cidade" value={`${selectedRequest.ben_estado} / ${selectedRequest.ben_cidade}`} />
-                        </div>
-                    </ReportSection>
-
-                    <ReportSection title="Médico Auditor" icon={<Activity />}>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            <ReportItem label="Nome" value={selectedRequest.aud_nome} className="md:col-span-2" />
-                            <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
-                            <ReportItem label="Atendimento" value={selectedRequest.aud_data} />
-                        </div>
-                    </ReportSection>
-
-                    <ReportSection title="Médico Assistente" icon={<Stethoscope />}>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            <ReportItem label="Nome" value={selectedRequest.ass_nome} className="md:col-span-2" />
-                            <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
-                            <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
-                            <ReportItem label="Endereço" value={selectedRequest.ass_endereco} className="md:col-span-4" />
-                        </div>
-                    </ReportSection>
-
-                    <ReportSection title="Procedimentos" icon={<FileText />}>
-                        <div className="space-y-4">
-                            {selectedRequest.medical_procedures?.map((p, i) => (
-                                <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <ReportItem label="Código" value={p.codigo} />
-                                    <ReportItem label="Descrição" value={p.descricao} className="md:col-span-2" />
-                                    <ReportItem label="Qtd (S/A)" value={`${p.qtd_solicitada} / ${p.qtd_autorizada}`} />
-                                    {p.justificativa && <ReportItem label="Justificativa" value={p.justificativa} className="md:col-span-4" />}
+            {/* Modal Relatório */}
+            {showReportModal && selectedRequest && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+                        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-200">
+                                    <Printer size={24} />
                                 </div>
-                            ))}
-                        </div>
-                    </ReportSection>
-
-                    <ReportSection title="Materiais & OPME" icon={<Box />}>
-                        <div className="space-y-4">
-                            {selectedRequest.medical_materials?.map((m, i) => (
-                                <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <ReportItem label="Descrição" value={m.descricao} className="md:col-span-2" />
-                                    <ReportItem label="Qtd (S/A)" value={`${m.qtd_solicitada} / ${m.qtd_autorizada}`} />
-                                    {m.justificativa && <ReportItem label="Justificativa" value={m.justificativa} className="md:col-span-4" />}
+                                <div>
+                                    <h3 className="text-2xl font-black text-slate-800 tracking-tight">Relatório Completo</h3>
+                                    <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
                                 </div>
-                            ))}
+                            </div>
+                            <button onClick={() => setShowReportModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
+                                <X size={24} />
+                            </button>
                         </div>
-                    </ReportSection>
 
-                    <ReportSection title="Divergência" icon={<AlertTriangle />}>
-                        <div className="grid grid-cols-2 gap-6">
-                            <ReportItem label="Especialidade" value={selectedRequest.div_especialidade} />
-                            <ReportItem label="Motivos" value={selectedRequest.div_motivos?.join(', ')} />
-                        </div>
-                    </ReportSection>
-                </div>
+                        <div className="flex-1 overflow-y-auto p-10 space-y-10" id="printable-report">
+                            <ReportSection title="Dados do Beneficiário" icon={<User />}>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <ReportItem label="CPF" value={selectedRequest.ben_cpf} />
+                                    <ReportItem label="Nome" value={selectedRequest.ben_nome} className="md:col-span-2" />
+                                    <ReportItem label="E-mail" value={selectedRequest.ben_email} />
+                                    <ReportItem label="Sexo" value={selectedRequest.ben_sexo} />
+                                    <ReportItem label="Nascimento" value={selectedRequest.ben_nascimento} />
+                                    <ReportItem label="Telefone" value={selectedRequest.ben_telefone} />
+                                    <ReportItem label="Estado/Cidade" value={`${selectedRequest.ben_estado} / ${selectedRequest.ben_cidade}`} />
+                                </div>
+                            </ReportSection>
 
-                <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
-                    <button onClick={() => setShowReportModal(false)} className="px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
-                        Fechar
-                    </button>
-                    <button onClick={() => window.print()} className="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 flex items-center gap-2">
-                        <Printer size={18} /> Imprimir Relatório
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
-}
+                            <ReportSection title="Médico Auditor" icon={<Activity />}>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <ReportItem label="Nome" value={selectedRequest.aud_nome} className="md:col-span-2" />
+                                    <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
+                                    <ReportItem label="Atendimento" value={selectedRequest.aud_data} />
+                                </div>
+                            </ReportSection>
 
-{/* Modal Status */ }
-{
-    showStatusModal && selectedRequest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
-                            <Activity size={24} />
-                        </div>
-                        <div>
-                            <h3 className="text-2xl font-black text-slate-800 tracking-tight">Status do Processo</h3>
-                            <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
-                        </div>
-                    </div>
-                    <button onClick={() => setShowStatusModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                        <X size={24} />
-                    </button>
-                </div>
+                            <ReportSection title="Médico Assistente" icon={<Stethoscope />}>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <ReportItem label="Nome" value={selectedRequest.ass_nome} className="md:col-span-2" />
+                                    <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
+                                    <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
+                                    <ReportItem label="Endereço" value={selectedRequest.ass_endereco} className="md:col-span-4" />
+                                </div>
+                            </ReportSection>
 
-                <div className="flex-1 overflow-y-auto p-10 space-y-8">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
-                        <select
-                            value={selectedRequest.situacao}
-                            onChange={async (e) => {
-                                const newStatus = e.target.value;
-                                const { error } = await supabase.from('medical_requests').update({ situacao: newStatus }).eq('id', selectedRequest.id);
-                                if (!error) {
-                                    setSelectedRequest({ ...selectedRequest, situacao: newStatus });
-                                    loadRequests();
-                                }
-                            }}
-                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-teal-500/10 transition-all font-bold"
-                        >
-                            {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Próximas Etapas / Documentos</label>
-                        <div className="grid grid-cols-1 gap-3">
-                            {DOC_TYPES.map(dt => (
-                                <div key={dt.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between group">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                                            <FileText size={16} />
+                            <ReportSection title="Procedimentos" icon={<FileText />}>
+                                <div className="space-y-4">
+                                    {selectedRequest.medical_procedures?.map((p, i) => (
+                                        <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <ReportItem label="Código" value={p.codigo} />
+                                            <ReportItem label="Descrição" value={p.descricao} className="md:col-span-2" />
+                                            <ReportItem label="Qtd (S/A)" value={`${p.qtd_solicitada} / ${p.qtd_autorizada}`} />
+                                            {p.justificativa && <ReportItem label="Justificativa" value={p.justificativa} className="md:col-span-4" />}
                                         </div>
-                                        <span className="text-sm font-bold text-slate-600">{dt.label}</span>
-                                    </div>
-                                    <button className="text-xs font-black text-teal-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
-                                        Anexar
-                                    </button>
+                                    ))}
                                 </div>
-                            ))}
+                            </ReportSection>
+
+                            <ReportSection title="Materiais & OPME" icon={<Box />}>
+                                <div className="space-y-4">
+                                    {selectedRequest.medical_materials?.map((m, i) => (
+                                        <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <ReportItem label="Descrição" value={m.descricao} className="md:col-span-2" />
+                                            <ReportItem label="Qtd (S/A)" value={`${m.qtd_solicitada} / ${m.qtd_autorizada}`} />
+                                            {m.justificativa && <ReportItem label="Justificativa" value={m.justificativa} className="md:col-span-4" />}
+                                        </div>
+                                    ))}
+                                </div>
+                            </ReportSection>
+
+                            <ReportSection title="Divergência" icon={<AlertTriangle />}>
+                                <div className="grid grid-cols-2 gap-6">
+                                    <ReportItem label="Especialidade" value={selectedRequest.div_especialidade} />
+                                    <ReportItem label="Motivos" value={selectedRequest.div_motivos?.join(', ')} />
+                                </div>
+                            </ReportSection>
+                        </div>
+
+                        <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+                            <button onClick={() => setShowReportModal(false)} className="px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
+                                Fechar
+                            </button>
+                            <button onClick={() => window.print()} className="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 flex items-center gap-2">
+                                <Printer size={18} /> Imprimir Relatório
+                            </button>
                         </div>
                     </div>
                 </div>
+            )}
 
-                <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
-                    <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
-                        Salvar Alterações
-                    </button>
+            {/* Modal Status */}
+            {showStatusModal && selectedRequest && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+                        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
+                                    <Activity size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-black text-slate-800 tracking-tight">Status do Processo</h3>
+                                    <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setShowStatusModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-10 space-y-8">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
+                                <select
+                                    value={selectedRequest.situacao}
+                                    onChange={async (e) => {
+                                        const newStatus = e.target.value;
+                                        const { error } = await supabase.from('medical_requests').update({ situacao: newStatus }).eq('id', selectedRequest.id);
+                                        if (!error) {
+                                            setSelectedRequest({ ...selectedRequest, situacao: newStatus });
+                                            loadRequests();
+                                        }
+                                    }}
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-teal-500/10 transition-all font-bold"
+                                >
+                                    {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Próximas Etapas / Documentos</label>
+                                <div className="grid grid-cols-1 gap-3">
+                                    {DOC_TYPES.map(dt => (
+                                        <div key={dt.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between group">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
+                                                    <FileText size={16} />
+                                                </div>
+                                                <span className="text-sm font-bold text-slate-600">{dt.label}</span>
+                                            </div>
+                                            <button className="text-xs font-black text-teal-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
+                                                Anexar
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+                            <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
-    )
-}
-        </div >
     );
 }
 
