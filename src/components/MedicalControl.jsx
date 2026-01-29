@@ -107,15 +107,32 @@ export default function MedicalControl() {
                 if (matError) throw matError;
             }
 
-            // 4. Attachments (Real file upload logic would go here, using metadata for now)
+            // 4. Attachments (Supabase Storage upload)
             if (attachments.length > 0) {
+                const uploadPromises = attachments.map(async (file) => {
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+                    const filePath = `medical-board/${requestId}/${fileName}`;
+
+                    const { error: uploadError } = await supabase.storage
+                        .from('medical-board')
+                        .upload(filePath, file);
+
+                    if (uploadError) throw uploadError;
+
+                    return {
+                        request_id: requestId,
+                        file_name: file.name,
+                        file_path: filePath
+                    };
+                });
+
+                const uploadedAttachments = await Promise.all(uploadPromises);
+
                 const { error: attError } = await supabase
                     .from('medical_attachments')
-                    .insert(attachments.map(a => ({
-                        request_id: requestId,
-                        file_name: a.name,
-                        file_path: 'uploads/' + a.name
-                    })));
+                    .insert(uploadedAttachments);
+
                 if (attError) throw attError;
             }
 
@@ -207,7 +224,7 @@ export default function MedicalControl() {
                             Módulo de Regulação
                         </div>
                         <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tight">
-                            Junta Médica & Odontológica
+                            Junta Médica
                         </h1>
                         <p className="text-xl text-white/70 font-medium">Gestão técnica de divergências Klini</p>
                     </div>
