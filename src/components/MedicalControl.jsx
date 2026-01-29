@@ -183,6 +183,18 @@ export default function MedicalControl() {
         setTimeout(cleanup, 2000);
     };
 
+    const getPendingDocsCount = (request) => {
+        if (!request) return 0;
+        const docs = request.documentos_internos || {};
+        let count = 0;
+        DOC_TYPES.forEach(type => {
+            if (!docs[type.id] || docs[type.id].length === 0) {
+                count++;
+            }
+        });
+        return count;
+    };
+
     const handleInternalFileUpload = async (e, typeId) => {
         const file = e.target.files[0];
         if (!file || !selectedRequest) return;
@@ -368,9 +380,14 @@ export default function MedicalControl() {
                                                 <div className="flex justify-end gap-2">
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowStatusModal(true); }}
-                                                        className="p-3 text-[#1D7874] bg-slate-50 hover:bg-[#1D7874] hover:text-white rounded-xl transition-all"
+                                                        className="p-3 text-[#1D7874] bg-slate-50 hover:bg-[#1D7874] hover:text-white rounded-xl transition-all relative"
                                                     >
                                                         <FileText size={18} />
+                                                        {getPendingDocsCount(r) > 0 && (
+                                                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                                                                {getPendingDocsCount(r)}
+                                                            </span>
+                                                        )}
                                                     </button>
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowReportModal(true); }}
@@ -939,26 +956,45 @@ export default function MedicalControl() {
                         </div>
 
                         <div className="flex-1 overflow-y-auto p-10 space-y-8">
-                            <div className="space-y-2">
+                            <div className="space-y-4">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
-                                <select
-                                    value={selectedRequest.situacao}
-                                    onChange={async (e) => {
-                                        const newStatus = e.target.value;
-                                        const { error } = await supabase.from('medical_requests').update({ situacao: newStatus }).eq('id', selectedRequest.id);
-                                        if (!error) {
-                                            setSelectedRequest({ ...selectedRequest, situacao: newStatus });
-                                            loadRequests();
-                                        }
-                                    }}
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-teal-500/10 transition-all font-bold"
-                                >
-                                    {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {Object.entries(SITUACAO).map(([status, config]) => (
+                                        <button
+                                            key={status}
+                                            onClick={async () => {
+                                                const { error } = await supabase.from('medical_requests').update({ situacao: status }).eq('id', selectedRequest.id);
+                                                if (!error) {
+                                                    setSelectedRequest({ ...selectedRequest, situacao: status });
+                                                    loadRequests();
+                                                }
+                                            }}
+                                            className={`p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-3 group relative overflow-hidden ${selectedRequest.situacao === status
+                                                    ? `${config.bgLight} border-teal-500 shadow-md`
+                                                    : 'bg-white border-slate-100 hover:border-slate-200'
+                                                }`}
+                                        >
+                                            <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
+                                            <span className={`text-sm font-bold ${selectedRequest.situacao === status ? 'text-slate-800' : 'text-slate-500 group-hover:text-slate-700'}`}>
+                                                {status}
+                                            </span>
+                                            {selectedRequest.situacao === status && (
+                                                <div className="absolute top-2 right-2">
+                                                    <CheckCircle2 size={12} className="text-teal-600" />
+                                                </div>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Próximas Etapas / Documentos</label>
+                                <div className="flex items-center justify-between ml-1">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Próximas Etapas / Documentos</label>
+                                    <span className="px-3 py-1 bg-red-50 text-red-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-red-100">
+                                        {getPendingDocsCount(selectedRequest)} Pendentes
+                                    </span>
+                                </div>
                                 <input
                                     type="file"
                                     id="internal-file-input"
