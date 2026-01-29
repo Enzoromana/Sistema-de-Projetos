@@ -53,6 +53,7 @@ export default function MedicalControl() {
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [showStatusModal, setShowStatusModal] = useState(false);
     const [showReportModal, setShowReportModal] = useState(false);
+    const [uploadingInternal, setUploadingInternal] = useState(null); // id do tipo de doc sendo enviado
 
     useEffect(() => {
         loadRequests();
@@ -177,6 +178,55 @@ export default function MedicalControl() {
 
         // Fallback cleanup
         setTimeout(cleanup, 2000);
+    };
+
+    const handleInternalFileUpload = async (e, typeId) => {
+        const file = e.target.files[0];
+        if (!file || !selectedRequest) return;
+
+        setUploadingInternal(typeId);
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+            const filePath = `internal/${selectedRequest.id}/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('medical-board')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // Get public URL or just store path
+            const { data: { publicUrl } } = supabase.storage.from('medical-board').getPublicUrl(filePath);
+
+            const newDoc = {
+                name: file.name,
+                path: filePath,
+                url: publicUrl,
+                uploaded_at: new Date().toISOString()
+            };
+
+            // Update JSONB in database
+            const updatedDocs = { ...selectedRequest.documentos_internos };
+            if (!updatedDocs[typeId]) updatedDocs[typeId] = [];
+            updatedDocs[typeId].push(newDoc);
+
+            const { error: updateError } = await supabase
+                .from('medical_requests')
+                .update({ documentos_internos: updatedDocs })
+                .eq('id', selectedRequest.id);
+
+            if (updateError) throw updateError;
+
+            // Update local state
+            setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+            loadRequests();
+        } catch (e) {
+            alert('Erro no upload: ' + e.message);
+        } finally {
+            setUploadingInternal(null);
+            e.target.value = '';
+        }
     };
 
     const resetForm = () => {
@@ -905,18 +955,86 @@ export default function MedicalControl() {
 
                             <div className="space-y-4">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Próximas Etapas / Documentos</label>
+                                <input
+                                    type="file"
+                                    id="internal-file-input"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        const typeId = e.target.getAttribute('data-type-id');
+                                        handleInternalFileUpload(e, typeId);
+                                    }}
+                                />
                                 <div className="grid grid-cols-1 gap-3">
                                     {DOC_TYPES.map(dt => (
-                                        <div key={dt.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between group">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                                                    <FileText size={16} />
+                                        <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
+                                                        <FileText size={16} />
+                                                    </div>
+                                                    <span className="text-sm font-bold text-slate-600">{dt.label}</span>
                                                 </div>
-                                                <span className="text-sm font-bold text-slate-600">{dt.label}</span>
+                                                <button
+                                                    onClick={() => {
+                                                        const input = document.getElementById('internal-file-input');
+                                                        input.setAttribute('data-type-id', dt.id);
+                                                        input.click();
+                                                    }}
+                                                    disabled={uploadingInternal === dt.id}
+                                                    className="text-xs font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50"
+                                                >
+                                                    {uploadingInternal === dt.id ? (
+                                                        <Loader2 size={12} className="animate-spin" />
+                                                    ) : (
+                                                        <Plus size={12} />
+                                                    )}
+                                                    Anexar
+                                                </button>
                                             </div>
-                                            <button className="text-xs font-black text-teal-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
-                                                Anexar
-                                            </button>
+
+                                            {/* List of files for this type */}
+                                            {selectedRequest.documentos_internos?.[dt.id]?.length > 0 && (
+                                                <div className="space-y-2 border-t border-slate-200/50 pt-3">
+                                                    {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
+                                                        <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
+                                                            <div className="flex items-center gap-2 text-slate-600">
+                                                                <Paperclip size={12} className="text-slate-300" />
+                                                                <span className="font-medium truncate max-w-[200px]">{doc.name}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                <a
+                                                                    href={doc.url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
+                                                                >
+                                                                    Abrir
+                                                                </a>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        if (!confirm('Deseja remover este anexo?')) return;
+                                                                        const updatedDocs = { ...selectedRequest.documentos_internos };
+                                                                        updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
+
+                                                                        const { error } = await supabase
+                                                                            .from('medical_requests')
+                                                                            .update({ documentos_internos: updatedDocs })
+                                                                            .eq('id', selectedRequest.id);
+
+                                                                        if (!error) {
+                                                                            setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+                                                                            loadRequests();
+                                                                        }
+                                                                    }}
+                                                                    className="text-red-400 hover:text-red-600 transition-colors"
+                                                                >
+                                                                    <Trash2 size={12} />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
