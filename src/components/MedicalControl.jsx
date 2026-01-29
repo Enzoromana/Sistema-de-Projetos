@@ -1182,271 +1182,269 @@ function StatCard({ icon, label, value, color }) {
                     <p className="text-3xl font-black text-slate-800 tracking-tighter">{value}</p>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest line-clamp-1">{label}</p>
                 </div>
-            </div>
-        </div>
-    );
+                );
 }
 
-function FormHeader({ icon, title, sub }) {
+                function FormHeader({icon, title, sub}) {
     return (
-        <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-slate-50 text-[#1D7874] flex items-center justify-center border border-[#1D7874]/10 shadow-sm">
-                {icon}
-            </div>
-            <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">{title}</h3>
-                <p className="text-slate-400 text-sm font-medium">{sub}</p>
-            </div>
-        </div>
-    );
+                <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50 text-[#1D7874] flex items-center justify-center border border-[#1D7874]/10 shadow-sm">
+                        {icon}
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">{title}</h3>
+                        <p className="text-slate-400 text-sm font-medium">{sub}</p>
+                    </div>
+                </div>
+                );
 }
 
-function Input({ label, required, value, onChange, placeholder, type = "text" }) {
+                function Input({label, required, value, onChange, placeholder, type = "text"}) {
     return (
-        <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
-                {label} {required && <span className="text-red-500 font-black">*</span>}
-            </label>
-            <input
-                type={type}
-                value={value || ''}
-                onChange={e => onChange(e.target.value)}
-                placeholder={placeholder}
-                className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
-            />
-        </div>
-    );
-}
-
-function Checkbox({ label, checked, onChange }) {
-    return (
-        <label className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 cursor-pointer group transition-all hover:bg-slate-100">
-            <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${checked ? 'bg-[#1D7874] border-[#1D7874]' : 'border-slate-300 bg-white group-hover:border-[#1D7874]'}`}>
-                {checked && <X size={14} className="text-white" />}
-            </div>
-            <span className="text-sm font-bold text-slate-600 transition-colors group-hover:text-slate-900">{label}</span>
-            <input type="checkbox" className="hidden" checked={checked} onChange={e => onChange(e.target.checked)} />
-        </label>
-    );
-}
-
-function ReportSection({ title, icon, children }) {
-    return (
-        <div className="space-y-6 break-inside-avoid border-l-2 border-teal-50 pl-6">
-            <div className="flex items-center gap-3 border-b-2 border-slate-50 pb-4">
-                <div className="text-teal-600">{icon}</div>
-                <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">{title}</h4>
-            </div>
-            {children}
-        </div>
-    );
-}
-
-function ReportItem({ label, value, className = "" }) {
-    return (
-        <div className={`${className} break-inside-avoid`}>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-            <p className="text-sm font-bold text-slate-700 leading-tight">{value || '-'}</p>
-        </div>
-    );
-}
-
-function TussAutocomplete({ value, onChange }) {
-    const [search, setSearch] = useState('');
-    const [showOptions, setShowOptions] = useState(false);
-    const [results, setResults] = useState([]);
-
-    const handleSearch = (term) => {
-        setSearch(term);
-        if (term.length < 2) {
-            setResults([]);
-            return;
-        }
-
-        const lowerTerm = term.toLowerCase();
-        // Limit to 50 results for performance
-        const filtered = TUSS_DATA.filter(item =>
-            item.label.toLowerCase().includes(lowerTerm)
-        ).slice(0, 50);
-
-        setResults(filtered);
-        setShowOptions(true);
-    };
-
-    // Derived state determining if a valid procedure is selected
-    const isSelected = !!value.codigo;
-
-    return (
-        <div className="space-y-2 relative">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
-                Procedimento (Busca TUSS) <span className="text-red-500 font-black">*</span>
-            </label>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                {/* Visual fields for the selected values */}
-                <div className="md:col-span-1">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                        {label} {required && <span className="text-red-500 font-black">*</span>}
+                    </label>
                     <input
-                        readOnly
-                        value={value.codigo}
-                        placeholder="Código"
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-100 font-bold text-slate-500 outline-none cursor-not-allowed"
+                        type={type}
+                        value={value || ''}
+                        onChange={e => onChange(e.target.value)}
+                        placeholder={placeholder}
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
                     />
                 </div>
-                <div className="md:col-span-2 relative">
-                    {isSelected ? (
-                        <div className="relative">
+                );
+}
+
+                function Checkbox({label, checked, onChange}) {
+    return (
+                <label className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 cursor-pointer group transition-all hover:bg-slate-100">
+                    <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${checked ? 'bg-[#1D7874] border-[#1D7874]' : 'border-slate-300 bg-white group-hover:border-[#1D7874]'}`}>
+                        {checked && <X size={14} className="text-white" />}
+                    </div>
+                    <span className="text-sm font-bold text-slate-600 transition-colors group-hover:text-slate-900">{label}</span>
+                    <input type="checkbox" className="hidden" checked={checked} onChange={e => onChange(e.target.checked)} />
+                </label>
+                );
+}
+
+                function ReportSection({title, icon, children}) {
+    return (
+                <div className="space-y-6 break-inside-avoid border-l-2 border-teal-50 pl-6">
+                    <div className="flex items-center gap-3 border-b-2 border-slate-50 pb-4">
+                        <div className="text-teal-600">{icon}</div>
+                        <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">{title}</h4>
+                    </div>
+                    {children}
+                </div>
+                );
+}
+
+                function ReportItem({label, value, className = ""}) {
+    return (
+                <div className={`${className} break-inside-avoid`}>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+                    <p className="text-sm font-bold text-slate-700 leading-tight">{value || '-'}</p>
+                </div>
+                );
+}
+
+                function TussAutocomplete({value, onChange}) {
+    const [search, setSearch] = useState('');
+                const [showOptions, setShowOptions] = useState(false);
+                const [results, setResults] = useState([]);
+
+    const handleSearch = (term) => {
+                    setSearch(term);
+                if (term.length < 2) {
+                    setResults([]);
+                return;
+        }
+
+                const lowerTerm = term.toLowerCase();
+        // Limit to 50 results for performance
+        const filtered = TUSS_DATA.filter(item =>
+                item.label.toLowerCase().includes(lowerTerm)
+                ).slice(0, 50);
+
+                setResults(filtered);
+                setShowOptions(true);
+    };
+
+                // Derived state determining if a valid procedure is selected
+                const isSelected = !!value.codigo;
+
+                return (
+                <div className="space-y-2 relative">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                        Procedimento (Busca TUSS) <span className="text-red-500 font-black">*</span>
+                    </label>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                        {/* Visual fields for the selected values */}
+                        <div className="md:col-span-1">
                             <input
                                 readOnly
-                                value={value.descricao}
-                                className="w-full pl-6 pr-14 py-4 rounded-2xl bg-teal-50 border border-teal-100 font-bold text-teal-800 outline-none"
+                                value={value.codigo}
+                                placeholder="Código"
+                                className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-100 font-bold text-slate-500 outline-none cursor-not-allowed"
                             />
-                            <button
-                                onClick={() => {
-                                    onChange({ codigo: '', descricao: '' });
-                                    setSearch('');
-                                    setResults([]);
-                                }}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all shadow-sm"
-                                title="Limpar seleção"
-                            >
-                                <X size={16} />
-                            </button>
                         </div>
-                    ) : (
-                        <div className="relative">
-                            <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
-                            <input
-                                type="text"
-                                value={search}
-                                onChange={(e) => handleSearch(e.target.value)}
-                                onFocus={() => {
-                                    if (search.length >= 2) setShowOptions(true);
-                                }}
-                                placeholder="Digite o código ou nome do procedimento..."
-                                className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
-                            />
+                        <div className="md:col-span-2 relative">
+                            {isSelected ? (
+                                <div className="relative">
+                                    <input
+                                        readOnly
+                                        value={value.descricao}
+                                        className="w-full pl-6 pr-14 py-4 rounded-2xl bg-teal-50 border border-teal-100 font-bold text-teal-800 outline-none"
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            onChange({ codigo: '', descricao: '' });
+                                            setSearch('');
+                                            setResults([]);
+                                        }}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all shadow-sm"
+                                        title="Limpar seleção"
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="relative">
+                                    <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                                    <input
+                                        type="text"
+                                        value={search}
+                                        onChange={(e) => handleSearch(e.target.value)}
+                                        onFocus={() => {
+                                            if (search.length >= 2) setShowOptions(true);
+                                        }}
+                                        placeholder="Digite o código ou nome do procedimento..."
+                                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                                    />
 
-                            {showOptions && results.length > 0 && (
-                                <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto">
-                                    {results.map((item) => (
-                                        <button
-                                            key={item.value}
-                                            onClick={() => {
-                                                onChange({ codigo: item.code, descricao: item.description });
-                                                setShowOptions(false);
-                                            }}
-                                            className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
-                                        >
-                                            <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
-                                            <span className="block text-sm font-bold text-slate-600">{item.description}</span>
-                                        </button>
-                                    ))}
+                                    {showOptions && results.length > 0 && (
+                                        <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto">
+                                            {results.map((item) => (
+                                                <button
+                                                    key={item.value}
+                                                    onClick={() => {
+                                                        onChange({ codigo: item.code, descricao: item.description });
+                                                        setShowOptions(false);
+                                                    }}
+                                                    className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
+                                                >
+                                                    <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
+                                                    <span className="block text-sm font-bold text-slate-600">{item.description}</span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {showOptions && (
+                                        <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} />
+                                    )}
                                 </div>
                             )}
-
-                            {showOptions && (
-                                <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} />
-                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
-            </div>
-        </div>
 
-            function RequestDetails({ request, onEdit, onBack }) {
+                function RequestDetails({request, onEdit, onBack}) {
         if (!request) return null;
 
-        return (
-            <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="flex items-center justify-between mb-10 pb-8 border-b border-slate-100">
-                    <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600">
-                            <FileText size={32} />
-                        </div>
-                        <div>
-                            <h2 className="text-3xl font-black text-slate-800 tracking-tight">Detalhes do Processo</h2>
-                            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Protocolo: {request.requisicao}</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <button
-                            onClick={onEdit}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-indigo-200 flex items-center gap-2"
-                        >
-                            <Edit3 size={18} /> Editar Dados
-                        </button>
-                        <button
-                            onClick={onBack}
-                            className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all"
-                        >
-                            Voltar
-                        </button>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div className="space-y-8">
-                        <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                            <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><User size={20} className="text-teal-600" /> Beneficiário</h3>
-                            <div className="space-y-4">
-                                <ReportItem label="Nome" value={request.ben_nome} />
-                                <ReportItem label="CPF" value={request.ben_cpf} />
-                                <ReportItem label="E-mail" value={request.ben_email} />
-                                <ReportItem label="Telefone" value={request.ben_telefone} />
-                                <ReportItem label="Nascimento" value={request.ben_nascimento ? new Date(request.ben_nascimento).toLocaleDateString('pt-BR') : '-'} />
+                return (
+                <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex items-center justify-between mb-10 pb-8 border-b border-slate-100">
+                        <div className="flex items-center gap-6">
+                            <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600">
+                                <FileText size={32} />
+                            </div>
+                            <div>
+                                <h2 className="text-3xl font-black text-slate-800 tracking-tight">Detalhes do Processo</h2>
+                                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Protocolo: {request.requisicao}</p>
                             </div>
                         </div>
-
-                        <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                            <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Activity size={20} className="text-teal-600" /> Auditor</h3>
-                            <div className="space-y-4">
-                                <ReportItem label="Nome" value={request.aud_nome} />
-                                <ReportItem label="CRM" value={request.aud_crm} />
-                                <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
-                            </div>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={onEdit}
+                                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-indigo-200 flex items-center gap-2"
+                            >
+                                <Edit3 size={18} /> Editar Dados
+                            </button>
+                            <button
+                                onClick={onBack}
+                                className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all"
+                            >
+                                Voltar
+                            </button>
                         </div>
                     </div>
 
-                    <div className="space-y-8">
-                        <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                            <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><FileText size={20} className="text-teal-600" /> Procedimentos</h3>
-                            <div className="space-y-3">
-                                {request.medical_procedures?.map((p, i) => (
-                                    <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-                                        <p className="font-bold text-slate-700 text-sm">{p.descricao}</p>
-                                        <div className="flex justify-between mt-2">
-                                            <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Cód: {p.codigo || 'N/A'}</p>
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Qtd: {p.qtd_solicitada}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        {request.medical_materials?.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div className="space-y-8">
                             <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                                <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Box size={20} className="text-teal-600" /> Materiais</h3>
+                                <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><User size={20} className="text-teal-600" /> Beneficiário</h3>
+                                <div className="space-y-4">
+                                    <ReportItem label="Nome" value={request.ben_nome} />
+                                    <ReportItem label="CPF" value={request.ben_cpf} />
+                                    <ReportItem label="E-mail" value={request.ben_email} />
+                                    <ReportItem label="Telefone" value={request.ben_telefone} />
+                                    <ReportItem label="Nascimento" value={request.ben_nascimento ? new Date(request.ben_nascimento).toLocaleDateString('pt-BR') : '-'} />
+                                </div>
+                            </div>
+
+                            <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                                <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Activity size={20} className="text-teal-600" /> Auditor</h3>
+                                <div className="space-y-4">
+                                    <ReportItem label="Nome" value={request.aud_nome} />
+                                    <ReportItem label="CRM" value={request.aud_crm} />
+                                    <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-8">
+                            <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                                <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><FileText size={20} className="text-teal-600" /> Procedimentos</h3>
                                 <div className="space-y-3">
-                                    {request.medical_materials?.map((m, i) => (
+                                    {request.medical_procedures?.map((p, i) => (
                                         <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-                                            <p className="font-bold text-slate-700 text-sm">{m.descricao}</p>
-                                            <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest mt-1">Qtd: {m.qtd_solicitada}</p>
+                                            <p className="font-bold text-slate-700 text-sm">{p.descricao}</p>
+                                            <div className="flex justify-between mt-2">
+                                                <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Cód: {p.codigo || 'N/A'}</p>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Qtd: {p.qtd_solicitada}</p>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                        )}
+                            {request.medical_materials?.length > 0 && (
+                                <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                                    <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Box size={20} className="text-teal-600" /> Materiais</h3>
+                                    <div className="space-y-3">
+                                        {request.medical_materials?.map((m, i) => (
+                                            <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                                <p className="font-bold text-slate-700 text-sm">{m.descricao}</p>
+                                                <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest mt-1">Qtd: {m.qtd_solicitada}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="mt-10 pt-10 border-t border-slate-100 flex justify-end">
+                        <button
+                            onClick={onBack}
+                            className="text-slate-400 hover:text-slate-600 font-bold uppercase tracking-widest text-xs px-6 py-4"
+                        >
+                            Voltar para lista
+                        </button>
                     </div>
                 </div>
-                <div className="mt-10 pt-10 border-t border-slate-100 flex justify-end">
-                    <button
-                        onClick={onBack}
-                        className="text-slate-400 hover:text-slate-600 font-bold uppercase tracking-widest text-xs px-6 py-4"
-                    >
-                        Voltar para lista
-                    </button>
-                </div>
-            </div>
-        );
+                );
     }
 
 
