@@ -8,8 +8,9 @@ import {
     LayoutGrid, FileText, Search, Filter,
     User, Mail, Phone, MapPin, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, ArrowRight, Loader2, Save, Download
+    ArrowLeft, ArrowRight, Loader2, Save, Download, Search as SearchIcon
 } from 'lucide-react';
+import { TUSS_DATA } from '../data/tuss';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
@@ -521,17 +522,15 @@ export default function MedicalControl() {
                                                 <Trash2 size={16} />
                                             </button>
                                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                                <Input label="Código" value={p.codigo} onChange={v => {
-                                                    const newP = [...procedures];
-                                                    newP[idx].codigo = v;
-                                                    setProcedures(newP);
-                                                }} placeholder="00.00.00.00-0" />
-                                                <div className="md:col-span-2">
-                                                    <Input label="Descrição" required value={p.descricao} onChange={v => {
-                                                        const newP = [...procedures];
-                                                        newP[idx].descricao = v;
-                                                        setProcedures(newP);
-                                                    }} placeholder="Nome do procedimento" />
+                                                <div className="md:col-span-3">
+                                                    <TussAutocomplete
+                                                        value={p}
+                                                        onChange={(newValues) => {
+                                                            const newP = [...procedures];
+                                                            newP[idx] = { ...newP[idx], ...newValues };
+                                                            setProcedures(newP);
+                                                        }}
+                                                    />
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-2">
                                                     <Input label="Qtd. Sol." type="number" value={p.qtd_solicitada} onChange={v => {
@@ -970,8 +969,8 @@ export default function MedicalControl() {
                                                 }
                                             }}
                                             className={`p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-3 group relative overflow-hidden ${selectedRequest.situacao === status
-                                                    ? `${config.bgLight} border-teal-500 shadow-md`
-                                                    : 'bg-white border-slate-100 hover:border-slate-200'
+                                                ? `${config.bgLight} border-teal-500 shadow-md`
+                                                : 'bg-white border-slate-100 hover:border-slate-200'
                                                 }`}
                                         >
                                             <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
