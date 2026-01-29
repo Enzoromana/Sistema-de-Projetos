@@ -773,781 +773,396 @@ export default function MedicalControl() {
                             )}
                         </div>
                     </div>
+                    {/* Medical Report Modal */}
+                    {
+                        showReportModal && selectedRequest && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
+                                <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
+                                    {/* Control Header (Hidden on Print) */}
+                                    <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 print:hidden">
+                                        <div className="flex items-center gap-4">
+                                            <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
+                                                <FileText size={24} />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
+                                                <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <button
+                                                onClick={handleDownloadPDF}
+                                                className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
+                                            >
+                                                <Printer size={18} /> Imprimir / Salvar PDF
+                                            </button>
+                                            <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
+                                                <X size={24} />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Report Content Wrapper */}
+                                    <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+                                        {/* The Actual Document Area - Visual Match for A4 */}
+                                        <div
+                                            id="printable-report-content"
+                                            className="bg-white shadow-2xl border border-slate-200"
+                                            style={{
+                                                width: '210mm',
+                                                minHeight: '297mm',
+                                                fontFamily: "'Inter', sans-serif",
+                                                padding: '15mm', // Match print padding
+                                                margin: '0 auto',
+                                                boxSizing: 'border-box',
+                                                transform: 'scale(0.85)', // Scale down for better preview visibility
+                                                transformOrigin: 'top center'
+                                            }}
+                                        >
+                                            {/* Klini Header */}
+                                            <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
+                                                <div className="space-y-4">
+                                                    <div className="flex items-center gap-3 text-teal-700">
+                                                        <Activity size={48} className="stroke-[3]" />
+                                                        <div>
+                                                            <h1 className="text-4xl font-black tracking-tighter leading-none">KLINI</h1>
+                                                            <p className="text-xs font-black uppercase tracking-[0.2em] opacity-70">Saúde & Bem-estar</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="space-y-0.5">
+                                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Unidade de Regulação Técnica</p>
+                                                        <p className="text-[10px] font-bold text-slate-500">Junta Médica e Odontológica Administrativa</p>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-8 md:mt-0 text-right">
+                                                    <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 inline-block">
+                                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-center">Protocolo do Processo</p>
+                                                        <p className="text-3xl font-black text-teal-800 tracking-tighter">{selectedRequest.requisicao}</p>
+                                                        <div className="flex items-center gap-2 justify-center mt-2 text-[10px] font-bold text-slate-500">
+                                                            <Calendar size={12} /> Emitido em: {new Date().toLocaleDateString('pt-BR')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-10">
+                                                {/* Section 1: Beneficiary */}
+                                                <div className="relative text-left break-inside-avoid px-2">
+                                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
+                                                    <div className="pl-8 space-y-6">
+                                                        <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                                                            <User className="text-teal-700" size={20} /> I. Identificação do Beneficiário
+                                                        </h2>
+                                                        <div className="grid grid-cols-6 gap-y-6 gap-x-8">
+                                                            <ReportItem label="Nome do Paciente" value={selectedRequest.ben_nome} className="col-span-4" />
+                                                            <ReportItem label="CPF" value={selectedRequest.ben_cpf} className="col-span-2" />
+                                                            <ReportItem label="E-mail" value={selectedRequest.ben_email} className="col-span-3" />
+                                                            <ReportItem label="Telefone" value={selectedRequest.ben_telefone} className="col-span-3" />
+                                                            <ReportItem label="Data de Nascimento" value={selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'} className="col-span-2" />
+                                                            <ReportItem label="Sexo" value={selectedRequest.ben_sexo} className="col-span-2" />
+                                                            <ReportItem label="Cidade/UF" value={`${selectedRequest.ben_cidade || '-'} / ${selectedRequest.ben_estado || '-'}`} className="col-span-2" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Section 2: Professionals */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left break-inside-avoid">
+                                                    <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+                                                        <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                                            <Activity className="text-teal-700" size={18} /> II. Médico Auditor
+                                                        </h2>
+                                                        <div className="space-y-4">
+                                                            <ReportItem label="Profissional" value={selectedRequest.aud_nome} />
+                                                            <div className="flex gap-8">
+                                                                <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
+                                                                <ReportItem label="Data Análise" value={selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+                                                        <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                                            <Stethoscope className="text-teal-700" size={18} /> III. Médico Assistente
+                                                        </h2>
+                                                        <div className="space-y-4">
+                                                            <ReportItem label="Profissional" value={selectedRequest.ass_nome} />
+                                                            <div className="flex gap-8">
+                                                                <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
+                                                                <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
+                                                            </div>
+                                                            <ReportItem label="Endereço Profissional" value={selectedRequest.ass_endereco} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Section 3: Divergence */}
+                                                <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left shadow-sm">
+                                                    <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
+                                                    <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
+                                                        <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
+                                                    </h2>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                                                        <ReportItem label="Especialidade Afetada" value={selectedRequest.div_especialidade} />
+                                                        <div className="space-y-2">
+                                                            <p className="text-[10px] font-black text-teal-700/60 uppercase tracking-widest">Motivações Identificadas</p>
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {selectedRequest.div_motivos?.map((m, i) => (
+                                                                    <span key={i} className="px-4 py-2 bg-white border border-teal-100 rounded-full text-xs font-bold text-teal-900 shadow-sm">{m}</span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Section 4: Materials & OPME */}
+                                                {selectedRequest.medical_materials?.length > 0 && (
+                                                    <div className="space-y-6 text-left">
+                                                        <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                                                            <Box className="text-teal-700" size={20} /> V. Materiais & OPME
+                                                        </h2>
+                                                        <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
+                                                            <table className="w-full text-left">
+                                                                <thead className="bg-slate-50">
+                                                                    <tr>
+                                                                        <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
+                                                                        <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
+                                                                        <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody className="divide-y divide-slate-100">
+                                                                    {selectedRequest.medical_materials.map((m, i) => (
+                                                                        <tr key={i} className="bg-white">
+                                                                            <td className="px-8 py-6">
+                                                                                <div className="font-bold text-slate-700">{m.descricao}</div>
+                                                                                {m.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
+                                                                            </td>
+                                                                            <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
+                                                                            <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Section 5: Procedures */}
+                                                <div className="space-y-6 text-left">
+                                                    <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                                                        <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
+                                                    </h2>
+                                                    <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
+                                                        <table className="w-full text-left">
+                                                            <thead className="bg-slate-50">
+                                                                <tr>
+                                                                    <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cód. TUSS</th>
+                                                                    <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição Técnica</th>
+                                                                    <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Solicitada</th>
+                                                                    <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Autorizada</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody className="divide-y divide-slate-50">
+                                                                {selectedRequest.medical_procedures?.map((p, i) => (
+                                                                    <tr key={i}>
+                                                                        <td className="px-8 py-6 font-bold text-teal-700">{p.codigo || '-'}</td>
+                                                                        <td className="px-8 py-6 text-sm font-medium text-slate-600">
+                                                                            <div className="font-bold">{p.descricao}</div>
+                                                                            {p.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
+                                                                        </td>
+                                                                        <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{p.qtd_solicitada}</td>
+                                                                        <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{p.qtd_autorizada}</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                {/* Footer / Signatures */}
+                                                <div className="pt-20 text-center space-y-20">
+                                                    <div className="flex justify-center gap-24">
+                                                        <div className="w-64 border-t border-slate-300 pt-4">
+                                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Auditor</p>
+                                                        </div>
+                                                        <div className="w-64 border-t border-slate-300 pt-4">
+                                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Coordenador</p>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">Este documento é original e confidencial da Klini Saúde - {selectedRequest.requisicao}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Modal Footer Controls (Hidden on Print) */}
+                                    <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:hidden">
+                                        <button onClick={() => setShowReportModal(false)} className="px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
+                                            Fechar Visualização
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+
+                    {/* Modal Status */}
+                    {
+                        showStatusModal && selectedRequest && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                                <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+                                    <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                                        <div className="flex items-center gap-4">
+                                            <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
+                                                <Activity size={24} />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-2xl font-black text-slate-800 tracking-tight">Status do Processo</h3>
+                                                <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
+                                            </div>
+                                        </div>
+                                        <button onClick={() => setShowStatusModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
+                                            <X size={24} />
+                                        </button>
+                                    </div>
+
+                                    <div className="flex-1 overflow-y-auto p-10 space-y-8">
+                                        <div className="space-y-4">
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                {Object.entries(SITUACAO).map(([status, config]) => (
+                                                    <button
+                                                        key={status}
+                                                        onClick={async () => {
+                                                            const { error } = await supabase.from('medical_requests').update({ situacao: status }).eq('id', selectedRequest.id);
+                                                            if (!error) {
+                                                                setSelectedRequest({ ...selectedRequest, situacao: status });
+                                                                loadRequests();
+                                                            }
+                                                        }}
+                                                        className={`p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-3 group relative overflow-hidden ${selectedRequest.situacao === status
+                                                            ? `${config.bgLight} border-teal-500 shadow-md`
+                                                            : 'bg-white border-slate-100 hover:border-slate-200'
+                                                            }`}
+                                                    >
+                                                        <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
+                                                        <span className={`text-sm font-bold ${selectedRequest.situacao === status ? 'text-slate-800' : 'text-slate-500 group-hover:text-slate-700'}`}>
+                                                            {status}
+                                                        </span>
+                                                        {selectedRequest.situacao === status && (
+                                                            <div className="absolute top-2 right-2">
+                                                                <CheckCircle2 size={12} className="text-teal-600" />
+                                                            </div>
+                                                        )}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between ml-1">
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Próximas Etapas / Documentos</label>
+                                                <span className="px-3 py-1 bg-red-50 text-red-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-red-100">
+                                                    {getPendingDocsCount(selectedRequest)} Pendentes
+                                                </span>
+                                            </div>
+                                            <input
+                                                type="file"
+                                                id="internal-file-input"
+                                                className="hidden"
+                                                onChange={(e) => {
+                                                    const typeId = e.target.getAttribute('data-type-id');
+                                                    handleInternalFileUpload(e, typeId);
+                                                }}
+                                            />
+                                            <div className="grid grid-cols-1 gap-3">
+                                                {DOC_TYPES.map(dt => (
+                                                    <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group">
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
+                                                                    <FileText size={16} />
+                                                                </div>
+                                                                <span className="text-sm font-bold text-slate-600">{dt.label}</span>
+                                                            </div>
+                                                            <button
+                                                                onClick={() => {
+                                                                    const input = document.getElementById('internal-file-input');
+                                                                    input.setAttribute('data-type-id', dt.id);
+                                                                    input.click();
+                                                                }}
+                                                                disabled={uploadingInternal === dt.id}
+                                                                className="text-xs font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50"
+                                                            >
+                                                                {uploadingInternal === dt.id ? (
+                                                                    <Loader2 size={12} className="animate-spin" />
+                                                                ) : (
+                                                                    <Plus size={12} />
+                                                                )}
+                                                                Anexar
+                                                            </button>
+                                                        </div>
+
+                                                        {/* List of files for this type */}
+                                                        {selectedRequest.documentos_internos?.[dt.id]?.length > 0 && (
+                                                            <div className="space-y-2 border-t border-slate-200/50 pt-3">
+                                                                {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
+                                                                    <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
+                                                                        <div className="flex items-center gap-2 text-slate-600">
+                                                                            <Paperclip size={12} className="text-slate-300" />
+                                                                            <span className="font-medium truncate max-w-[200px]">{doc.name}</span>
+                                                                        </div>
+                                                                        <div className="flex items-center gap-2">
+                                                                            <a
+                                                                                href={doc.url}
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
+                                                                            >
+                                                                                Abrir
+                                                                            </a>
+                                                                            <button
+                                                                                onClick={async () => {
+                                                                                    if (!confirm('Deseja remover este anexo?')) return;
+                                                                                    const updatedDocs = { ...selectedRequest.documentos_internos };
+                                                                                    updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
+
+                                                                                    const { error } = await supabase
+                                                                                        .from('medical_requests')
+                                                                                        .update({ documentos_internos: updatedDocs })
+                                                                                        .eq('id', selectedRequest.id);
+
+                                                                                    if (!error) {
+                                                                                        setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+                                                                                        loadRequests();
+                                                                                    }
+                                                                                }}
+                                                                                className="text-red-400 hover:text-red-600 transition-colors"
+                                                                            >
+                                                                                <Trash2 size={12} />
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+                                        <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
+                                            Salvar Alterações
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
-            )
-            }
-            {/* Professional Medical Report Modal */}
-            {
-                showReportModal && selectedRequest && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
-                            {/* Control Header (Hidden on Print) */}
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 print:hidden">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
-                                        <FileText size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <button
-                                        onClick={handleDownloadPDF}
-                                        className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
-                                    >
-                                        <Printer size={18} /> Imprimir / Salvar PDF
-                                    </button>
-                                    <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                                        <X size={24} />
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Report Content Wrapper */}
-                            <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
-                                {/* The Actual Document Area - Visual Match for A4 */}
-                                <div
-                                    id="printable-report-content"
-                                    className="bg-white shadow-2xl border border-slate-200"
-                                    style={{
-                                        width: '210mm',
-                                        minHeight: '297mm',
-                                        fontFamily: "'Inter', sans-serif",
-                                        padding: '15mm', // Match print padding
-                                        margin: '0 auto',
-                                        boxSizing: 'border-box'
-                                    }}
-                                >
-                                    {/* Klini Header */}
-                                    <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-3 text-teal-700">
-                                                <Activity size={48} className="stroke-[3]" />
-                                                <div>
-                                                    <h1 className="text-4xl font-black tracking-tighter leading-none">KLINI</h1>
-                                                    <p className="text-xs font-black uppercase tracking-[0.2em] opacity-70">Saúde & Bem-estar</p>
-                                                </div>
-                                            </div>
-                                            <div className="space-y-0.5">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Unidade de Regulação Técnica</p>
-                                                <p className="text-[10px] font-bold text-slate-500">Junta Médica e Odontológica Administrativa</p>
-                                            </div>
-                                        </div>
-                                        <div className="mt-8 md:mt-0 text-right">
-                                            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 inline-block">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-center">Protocolo do Processo</p>
-                                                <p className="text-3xl font-black text-teal-800 tracking-tighter">{selectedRequest.requisicao}</p>
-                                                <div className="flex items-center gap-2 justify-center mt-2 text-[10px] font-bold text-slate-500">
-                                                    <Calendar size={12} /> Emitido em: {new Date().toLocaleDateString('pt-BR')}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-10">
-                                        {/* Section 1: Beneficiary */}
-                                        <div className="relative text-left break-inside-avoid px-2">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
-                                            <div className="pl-8 space-y-6">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <User className="text-teal-700" size={20} /> I. Identificação do Beneficiário
-                                                </h2>
-                                                <div className="grid grid-cols-6 gap-y-6 gap-x-8">
-                                                    <ReportItem label="Nome do Paciente" value={selectedRequest.ben_nome} className="col-span-4" />
-                                                    <ReportItem label="CPF" value={selectedRequest.ben_cpf} className="col-span-2" />
-                                                    <ReportItem label="E-mail" value={selectedRequest.ben_email} className="col-span-3" />
-                                                    <ReportItem label="Telefone" value={selectedRequest.ben_telefone} className="col-span-3" />
-                                                    <ReportItem label="Data de Nascimento" value={selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'} className="col-span-2" />
-                                                    <ReportItem label="Sexo" value={selectedRequest.ben_sexo} className="col-span-2" />
-                                                    <ReportItem label="Cidade/UF" value={`${selectedRequest.ben_cidade || '-'} / ${selectedRequest.ben_estado || '-'}`} className="col-span-2" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 2: Professionals */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left break-inside-avoid">
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Activity className="text-teal-700" size={18} /> II. Médico Auditor
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.aud_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
-                                                        <ReportItem label="Data Análise" value={selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'} />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Stethoscope className="text-teal-700" size={18} /> III. Médico Assistente
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.ass_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
-                                                        <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
-                                                    </div>
-                                                    <ReportItem label="Endereço Profissional" value={selectedRequest.ass_endereco} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 3: Divergence */}
-                                        <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left shadow-sm">
-                                            <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
-                                            <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
-                                                <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
-                                            </h2>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-                                                <ReportItem label="Especialidade Afetada" value={selectedRequest.div_especialidade} />
-                                                <div className="space-y-2">
-                                                    <p className="text-[10px] font-black text-teal-700/60 uppercase tracking-widest">Motivações Identificadas</p>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {selectedRequest.div_motivos?.map((m, i) => (
-                                                            <span key={i} className="px-4 py-2 bg-white border border-teal-100 rounded-full text-xs font-bold text-teal-900 shadow-sm">{m}</span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 4: Materials & OPME */}
-                                        {selectedRequest.medical_materials?.length > 0 && (
-                                            <div className="space-y-6 text-left">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <Box className="text-teal-700" size={20} /> V. Materiais & OPME
-                                                </h2>
-                                                <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
-                                                    <table className="w-full text-left">
-                                                        <thead className="bg-slate-50">
-                                                            <tr>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="divide-y divide-slate-100">
-                                                            {selectedRequest.medical_materials.map((m, i) => (
-                                                                <tr key={i} className="bg-white">
-                                                                    <td className="px-8 py-6">
-                                                                        <div className="font-bold text-slate-700">{m.descricao}</div>
-                                                                        {m.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
-                                                                    </td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Section 5: Procedures */}
-                                        <div className="space-y-6 text-left">
-                                            <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
-                                            </h2>
-                                            <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
-                                                <table className="w-full text-left">
-                                                    <thead className="bg-slate-50">
-                                                        <tr>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cód. TUSS</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição Técnica</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Solicitada</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Autorizada</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody className="divide-y divide-slate-50">
-                                                        {selectedRequest.medical_procedures?.map((p, i) => (
-                                                            <tr key={i}>
-                                                                <td className="px-8 py-6 font-bold text-teal-700">{p.codigo || '-'}</td>
-                                                                <td className="px-8 py-6 text-sm font-medium text-slate-600">
-                                                                    <div className="font-bold">{p.descricao}</div>
-                                                                    {p.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
-                                                                </td>
-                                                                <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{p.qtd_solicitada}</td>
-                                                                <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{p.qtd_autorizada}</td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        {/* Footer / Signatures */}
-                                        <div className="pt-20 text-center space-y-20">
-                                            <div className="flex justify-center gap-24">
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Auditor</p>
-                                                </div>
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Coordenador</p>
-                                                </div>
-                                            </div>
-                                            <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">Este documento é original e confidencial da Klini Saúde - {selectedRequest.requisicao}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Modal Footer Controls (Hidden on Print) */}
-                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:hidden">
-                                <button onClick={() => setShowReportModal(false)} className="px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
-                                    Fechar Visualização
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-
-            {/* Modal Status */}
-            {
-                showStatusModal && selectedRequest && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
-                                        <Activity size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">Status do Processo</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
-                                    </div>
-                                </div>
-                                <button onClick={() => setShowStatusModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                                    <X size={24} />
-                                </button>
-                            </div>
-
-                            <div className="flex-1 overflow-y-auto p-10 space-y-8">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        {Object.entries(SITUACAO).map(([status, config]) => (
-                                            <button
-                                                key={status}
-                                                onClick={async () => {
-                                                    const { error } = await supabase.from('medical_requests').update({ situacao: status }).eq('id', selectedRequest.id);
-                                                    if (!error) {
-                                                        setSelectedRequest({ ...selectedRequest, situacao: status });
-                                                        loadRequests();
-                                                    }
-                                                }}
-                                                className={`p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-3 group relative overflow-hidden ${selectedRequest.situacao === status
-                                                    ? `${config.bgLight} border-teal-500 shadow-md`
-                                                    : 'bg-white border-slate-100 hover:border-slate-200'
-                                                    }`}
-                                            >
-                                                <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
-                                                <span className={`text-sm font-bold ${selectedRequest.situacao === status ? 'text-slate-800' : 'text-slate-500 group-hover:text-slate-700'}`}>
-                                                    {status}
-                                                </span>
-                                                {selectedRequest.situacao === status && (
-                                                    <div className="absolute top-2 right-2">
-                                                        <CheckCircle2 size={12} className="text-teal-600" />
-                                                    </div>
-                                                )}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between ml-1">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Próximas Etapas / Documentos</label>
-                                        <span className="px-3 py-1 bg-red-50 text-red-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-red-100">
-                                            {getPendingDocsCount(selectedRequest)} Pendentes
-                                        </span>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        id="internal-file-input"
-                                        className="hidden"
-                                        onChange={(e) => {
-                                            const typeId = e.target.getAttribute('data-type-id');
-                                            handleInternalFileUpload(e, typeId);
-                                        }}
-                                    />
-                                    <div className="grid grid-cols-1 gap-3">
-                                        {DOC_TYPES.map(dt => (
-                                            <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                                                            <FileText size={16} />
-                                                        </div>
-                                                        <span className="text-sm font-bold text-slate-600">{dt.label}</span>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => {
-                                                            const input = document.getElementById('internal-file-input');
-                                                            input.setAttribute('data-type-id', dt.id);
-                                                            input.click();
-                                                        }}
-                                                        disabled={uploadingInternal === dt.id}
-                                                        className="text-xs font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50"
-                                                    >
-                                                        {uploadingInternal === dt.id ? (
-                                                            <Loader2 size={12} className="animate-spin" />
-                                                        ) : (
-                                                            <Plus size={12} />
-                                                        )}
-                                                        Anexar
-                                                    </button>
-                                                </div>
-
-                                                {/* List of files for this type */}
-                                                {selectedRequest.documentos_internos?.[dt.id]?.length > 0 && (
-                                                    <div className="space-y-2 border-t border-slate-200/50 pt-3">
-                                                        {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
-                                                            <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
-                                                                <div className="flex items-center gap-2 text-slate-600">
-                                                                    <Paperclip size={12} className="text-slate-300" />
-                                                                    <span className="font-medium truncate max-w-[200px]">{doc.name}</span>
-                                                                </div>
-                                                                <div className="flex items-center gap-2">
-                                                                    <a
-                                                                        href={doc.url}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
-                                                                    >
-                                                                        Abrir
-                                                                    </a>
-                                                                    <button
-                                                                        onClick={async () => {
-                                                                            if (!confirm('Deseja remover este anexo?')) return;
-                                                                            const updatedDocs = { ...selectedRequest.documentos_internos };
-                                                                            updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
-
-                                                                            const { error } = await supabase
-                                                                                .from('medical_requests')
-                                                                                .update({ documentos_internos: updatedDocs })
-                                                                                .eq('id', selectedRequest.id);
-
-                                                                            if (!error) {
-                                                                                setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
-                                                                                loadRequests();
-                                                                            }
-                                                                        }}
-                                                                        className="text-red-400 hover:text-red-600 transition-colors"
-                                                                    >
-                                                                        <Trash2 size={12} />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
-                                <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
-                                    Salvar Alterações
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-            {/* Professional Medical Report Modal */}
-            {
-                showReportModal && selectedRequest && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
-                            {/* Control Header (Hidden on Print) */}
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 print:hidden">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
-                                        <FileText size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <button
-                                        onClick={handleDownloadPDF}
-                                        className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
-                                    >
-                                        <Printer size={18} /> Imprimir / Salvar PDF
-                                    </button>
-                                    <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                                        <X size={24} />
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Report Content Wrapper */}
-                            <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
-                                {/* The Actual Document Area - Visual Match for A4 */}
-                                <div
-                                    id="printable-report-content"
-                                    className="bg-white shadow-2xl border border-slate-200"
-                                    style={{
-                                        width: '210mm',
-                                        minHeight: '297mm',
-                                        fontFamily: "'Inter', sans-serif",
-                                        padding: '15mm', // Match print padding
-                                        margin: '0 auto',
-                                        boxSizing: 'border-box',
-                                        transform: 'scale(0.85)', // Scale down for better preview visibility
-                                        transformOrigin: 'top center'
-                                    }}
-                                >
-                                    {/* Klini Header */}
-                                    <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-3 text-teal-700">
-                                                <Activity size={48} className="stroke-[3]" />
-                                                <div>
-                                                    <h1 className="text-4xl font-black tracking-tighter leading-none">KLINI</h1>
-                                                    <p className="text-xs font-black uppercase tracking-[0.2em] opacity-70">Saúde & Bem-estar</p>
-                                                </div>
-                                            </div>
-                                            <div className="space-y-0.5">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Unidade de Regulação Técnica</p>
-                                                <p className="text-[10px] font-bold text-slate-500">Junta Médica e Odontológica Administrativa</p>
-                                            </div>
-                                        </div>
-                                        <div className="mt-8 md:mt-0 text-right">
-                                            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 inline-block">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-center">Protocolo do Processo</p>
-                                                <p className="text-3xl font-black text-teal-800 tracking-tighter">{selectedRequest.requisicao}</p>
-                                                <div className="flex items-center gap-2 justify-center mt-2 text-[10px] font-bold text-slate-500">
-                                                    <Calendar size={12} /> Emitido em: {new Date().toLocaleDateString('pt-BR')}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-10">
-                                        {/* Section 1: Beneficiary */}
-                                        <div className="relative text-left break-inside-avoid px-2">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
-                                            <div className="pl-8 space-y-6">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <User className="text-teal-700" size={20} /> I. Identificação do Beneficiário
-                                                </h2>
-                                                <div className="grid grid-cols-6 gap-y-6 gap-x-8">
-                                                    <ReportItem label="Nome do Paciente" value={selectedRequest.ben_nome} className="col-span-4" />
-                                                    <ReportItem label="CPF" value={selectedRequest.ben_cpf} className="col-span-2" />
-                                                    <ReportItem label="E-mail" value={selectedRequest.ben_email} className="col-span-3" />
-                                                    <ReportItem label="Telefone" value={selectedRequest.ben_telefone} className="col-span-3" />
-                                                    <ReportItem label="Data de Nascimento" value={selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'} className="col-span-2" />
-                                                    <ReportItem label="Sexo" value={selectedRequest.ben_sexo} className="col-span-2" />
-                                                    <ReportItem label="Cidade/UF" value={`${selectedRequest.ben_cidade || '-'} / ${selectedRequest.ben_estado || '-'}`} className="col-span-2" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 2: Professionals */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left break-inside-avoid">
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Activity className="text-teal-700" size={18} /> II. Médico Auditor
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.aud_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
-                                                        <ReportItem label="Data Análise" value={selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'} />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Stethoscope className="text-teal-700" size={18} /> III. Médico Assistente
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.ass_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
-                                                        <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
-                                                    </div>
-                                                    <ReportItem label="Endereço Profissional" value={selectedRequest.ass_endereco} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 3: Divergence */}
-                                        <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left shadow-sm">
-                                            <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
-                                            <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
-                                                <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
-                                            </h2>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-                                                <ReportItem label="Especialidade Afetada" value={selectedRequest.div_especialidade} />
-                                                <div className="space-y-2">
-                                                    <p className="text-[10px] font-black text-teal-700/60 uppercase tracking-widest">Motivações Identificadas</p>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {selectedRequest.div_motivos?.map((m, i) => (
-                                                            <span key={i} className="px-4 py-2 bg-white border border-teal-100 rounded-full text-xs font-bold text-teal-900 shadow-sm">{m}</span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 4: Materials & OPME */}
-                                        {selectedRequest.medical_materials?.length > 0 && (
-                                            <div className="space-y-6 text-left">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <Box className="text-teal-700" size={20} /> V. Materiais & OPME
-                                                </h2>
-                                                <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
-                                                    <table className="w-full text-left">
-                                                        <thead className="bg-slate-50">
-                                                            <tr>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="divide-y divide-slate-100">
-                                                            {selectedRequest.medical_materials.map((m, i) => (
-                                                                <tr key={i} className="bg-white">
-                                                                    <td className="px-8 py-6">
-                                                                        <div className="font-bold text-slate-700">{m.descricao}</div>
-                                                                        {m.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
-                                                                    </td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Section 5: Procedures */}
-                                        <div className="space-y-6 text-left">
-                                            <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
-                                            </h2>
-                                            <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
-                                                <table className="w-full text-left">
-                                                    <thead className="bg-slate-50">
-                                                        <tr>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cód. TUSS</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição Técnica</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Solicitada</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Autorizada</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody className="divide-y divide-slate-50">
-                                                        {selectedRequest.medical_procedures?.map((p, i) => (
-                                                            <tr key={i}>
-                                                                <td className="px-8 py-6 font-bold text-teal-700">{p.codigo || '-'}</td>
-                                                                <td className="px-8 py-6 text-sm font-medium text-slate-600">
-                                                                    <div className="font-bold">{p.descricao}</div>
-                                                                    {p.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
-                                                                </td>
-                                                                <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{p.qtd_solicitada}</td>
-                                                                <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{p.qtd_autorizada}</td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        {/* Footer / Signatures */}
-                                        <div className="pt-20 text-center space-y-20">
-                                            <div className="flex justify-center gap-24">
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Auditor</p>
-                                                </div>
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Coordenador</p>
-                                                </div>
-                                            </div>
-                                            <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">Este documento é original e confidencial da Klini Saúde - {selectedRequest.requisicao}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Modal Footer Controls (Hidden on Print) */}
-                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:hidden">
-                                <button onClick={() => setShowReportModal(false)} className="px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
-                                    Fechar Visualização
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-
-            {/* Modal Status */}
-            {
-                showStatusModal && selectedRequest && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
-                                        <Activity size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">Status do Processo</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{selectedRequest.requisicao}</p>
-                                    </div>
-                                </div>
-                                <button onClick={() => setShowStatusModal(false)} className="p-2 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                                    <X size={24} />
-                                </button>
-                            </div>
-
-                            <div className="flex-1 overflow-y-auto p-10 space-y-8">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Alterar Situação</label>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        {Object.entries(SITUACAO).map(([status, config]) => (
-                                            <button
-                                                key={status}
-                                                onClick={async () => {
-                                                    const { error } = await supabase.from('medical_requests').update({ situacao: status }).eq('id', selectedRequest.id);
-                                                    if (!error) {
-                                                        setSelectedRequest({ ...selectedRequest, situacao: status });
-                                                        loadRequests();
-                                                    }
-                                                }}
-                                                className={`p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-3 group relative overflow-hidden ${selectedRequest.situacao === status
-                                                    ? `${config.bgLight} border-teal-500 shadow-md`
-                                                    : 'bg-white border-slate-100 hover:border-slate-200'
-                                                    }`}
-                                            >
-                                                <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
-                                                <span className={`text-sm font-bold ${selectedRequest.situacao === status ? 'text-slate-800' : 'text-slate-500 group-hover:text-slate-700'}`}>
-                                                    {status}
-                                                </span>
-                                                {selectedRequest.situacao === status && (
-                                                    <div className="absolute top-2 right-2">
-                                                        <CheckCircle2 size={12} className="text-teal-600" />
-                                                    </div>
-                                                )}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between ml-1">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Próximas Etapas / Documentos</label>
-                                        <span className="px-3 py-1 bg-red-50 text-red-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-red-100">
-                                            {getPendingDocsCount(selectedRequest)} Pendentes
-                                        </span>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        id="internal-file-input"
-                                        className="hidden"
-                                        onChange={(e) => {
-                                            const typeId = e.target.getAttribute('data-type-id');
-                                            handleInternalFileUpload(e, typeId);
-                                        }}
-                                    />
-                                    <div className="grid grid-cols-1 gap-3">
-                                        {DOC_TYPES.map(dt => (
-                                            <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                                                            <FileText size={16} />
-                                                        </div>
-                                                        <span className="text-sm font-bold text-slate-600">{dt.label}</span>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => {
-                                                            const input = document.getElementById('internal-file-input');
-                                                            input.setAttribute('data-type-id', dt.id);
-                                                            input.click();
-                                                        }}
-                                                        disabled={uploadingInternal === dt.id}
-                                                        className="text-xs font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50"
-                                                    >
-                                                        {uploadingInternal === dt.id ? (
-                                                            <Loader2 size={12} className="animate-spin" />
-                                                        ) : (
-                                                            <Plus size={12} />
-                                                        )}
-                                                        Anexar
-                                                    </button>
-                                                </div>
-
-                                                {/* List of files for this type */}
-                                                {selectedRequest.documentos_internos?.[dt.id]?.length > 0 && (
-                                                    <div className="space-y-2 border-t border-slate-200/50 pt-3">
-                                                        {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
-                                                            <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
-                                                                <div className="flex items-center gap-2 text-slate-600">
-                                                                    <Paperclip size={12} className="text-slate-300" />
-                                                                    <span className="font-medium truncate max-w-[200px]">{doc.name}</span>
-                                                                </div>
-                                                                <div className="flex items-center gap-2">
-                                                                    <a
-                                                                        href={doc.url}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
-                                                                    >
-                                                                        Abrir
-                                                                    </a>
-                                                                    <button
-                                                                        onClick={async () => {
-                                                                            if (!confirm('Deseja remover este anexo?')) return;
-                                                                            const updatedDocs = { ...selectedRequest.documentos_internos };
-                                                                            updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
-
-                                                                            const { error } = await supabase
-                                                                                .from('medical_requests')
-                                                                                .update({ documentos_internos: updatedDocs })
-                                                                                .eq('id', selectedRequest.id);
-
-                                                                            if (!error) {
-                                                                                setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
-                                                                                loadRequests();
-                                                                            }
-                                                                        }}
-                                                                        className="text-red-400 hover:text-red-600 transition-colors"
-                                                                    >
-                                                                        <Trash2 size={12} />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
-                                <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
-                                    Salvar Alterações
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-        </div>
-    </div >
+            </div>
+        </div >
     );
 }
 
@@ -1738,7 +1353,7 @@ function TussAutocomplete({ value, onChange }) {
             </div>
         </div>
 
-function RequestDetails({ request, onEdit, onBack }) {
+            function RequestDetails({ request, onEdit, onBack }) {
         if (!request) return null;
 
         return (
