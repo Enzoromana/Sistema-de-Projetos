@@ -10,7 +10,7 @@ import {
     Box, Paperclip, AlertTriangle, Printer,
     ArrowLeft, ArrowRight, Loader2, Save, Download, Search as SearchIcon
 } from 'lucide-react';
-import { TUSS_DATA } from '../data/tuss';
+import TUSS_DATA from '../data/tuss.json';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
