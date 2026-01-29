@@ -113,13 +113,16 @@ export default function MedicalControl() {
                 const uploadPromises = attachments.map(async (file) => {
                     const fileExt = file.name.split('.').pop();
                     const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-                    const filePath = `medical-board/${requestId}/${fileName}`;
+                    const filePath = `${requestId}/${fileName}`; // Folder is the requestId
 
                     const { error: uploadError } = await supabase.storage
                         .from('medical-board')
                         .upload(filePath, file);
 
-                    if (uploadError) throw uploadError;
+                    if (uploadError) {
+                        console.error('Erro de upload Supabase:', uploadError);
+                        throw uploadError;
+                    }
 
                     return {
                         request_id: requestId,
@@ -222,7 +225,8 @@ export default function MedicalControl() {
             setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
             loadRequests();
         } catch (e) {
-            alert('Erro no upload: ' + e.message);
+            console.error('Detalhes do erro de upload:', e);
+            alert(`Erro no upload: ${e.message || e.error_description || 'Erro desconhecido'}. \n\nVerifique se o bucket "medical-board" foi criado no Supabase e se as permissões de RLS permitem upload.`);
         } finally {
             setUploadingInternal(null);
             e.target.value = '';
