@@ -1350,6 +1350,8 @@ export default function MedicalControl() {
                     </div>
                 </div>
             </div>
+            );
+}
 
             function RequestDetails({request, onEdit, onBack}) {
         if (!request) return null;
