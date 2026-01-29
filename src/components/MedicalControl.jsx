@@ -1199,6 +1199,9 @@ function TussAutocomplete({ value, onChange }) {
         setShowOptions(true);
     };
 
+    // Derived state determining if a valid procedure is selected
+    const isSelected = !!value.codigo;
+
     return (
         <div className="space-y-2 relative">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
@@ -1216,47 +1219,66 @@ function TussAutocomplete({ value, onChange }) {
                     />
                 </div>
                 <div className="md:col-span-2 relative">
-                    <div className="relative">
-                        <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
-                        <input
-                            type="text"
-                            value={search || value.descricao} // Show description if no search active
-                            onChange={(e) => handleSearch(e.target.value)}
-                            onFocus={() => {
-                                setSearch(''); // Clear to start new search
-                                setShowOptions(results.length > 0);
-                            }}
-                            placeholder="Digite o código ou nome do procedimento..."
-                            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
-                        />
-                    </div>
-
-                    {showOptions && results.length > 0 && (
-                        <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto">
-                            {results.map((item) => (
-                                <button
-                                    key={item.value}
-                                    onClick={() => {
-                                        onChange({ codigo: item.code, descricao: item.description });
-                                        setSearch('');
-                                        setShowOptions(false);
-                                    }}
-                                    className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
-                                >
-                                    <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
-                                    <span className="block text-sm font-bold text-slate-600">{item.description}</span>
-                                </button>
-                            ))}
+                    {isSelected ? (
+                        <div className="relative">
+                            <input
+                                readOnly
+                                value={value.descricao}
+                                className="w-full pl-6 pr-14 py-4 rounded-2xl bg-teal-50 border border-teal-100 font-bold text-teal-800 outline-none"
+                            />
+                            <button
+                                onClick={() => {
+                                    onChange({ codigo: '', descricao: '' });
+                                    setSearch('');
+                                    setResults([]);
+                                }}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all shadow-sm"
+                                title="Limpar seleção"
+                            >
+                                <X size={16} />
+                            </button>
                         </div>
-                    )}
+                    ) : (
+                        <div className="relative">
+                            <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                            <input
+                                type="text"
+                                value={search}
+                                onChange={(e) => handleSearch(e.target.value)}
+                                onFocus={() => {
+                                    if (search.length >= 2) setShowOptions(true);
+                                }}
+                                placeholder="Digite o código ou nome do procedimento..."
+                                className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                            />
 
-                    {/* Click outside closer could be added here or just rely on selection */}
-                    {showOptions && (
-                        <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} />
+                            {showOptions && results.length > 0 && (
+                                <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto">
+                                    {results.map((item) => (
+                                        <button
+                                            key={item.value}
+                                            onClick={() => {
+                                                onChange({ codigo: item.code, descricao: item.description });
+                                                setShowOptions(false);
+                                            }}
+                                            className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
+                                        >
+                                            <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
+                                            <span className="block text-sm font-bold text-slate-600">{item.description}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
+                            {showOptions && (
+                                <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} />
+                            )}
+                        </div>
                     )}
                 </div>
             </div>
         </div>
     );
 }
+
 
