@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import {
     Users, ShieldCheck, ShieldAlert, CheckCircle2,
     XCircle, Lock, Unlock, Eye, Trash2,
-    LayoutDashboard, Calendar, Search, Filter, User, Activity, Key
+    LayoutDashboard, Calendar, Search, Filter, User, Activity, Key, Briefcase
 } from 'lucide-react';
 
 export default function UserAudit() {
@@ -102,6 +102,7 @@ export default function UserAudit() {
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
                                 <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Colaborador</th>
+                                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Setor</th>
                                 <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                                 <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Permissões de Módulo</th>
                                 <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Ações</th>
@@ -119,6 +120,12 @@ export default function UserAudit() {
                                                 <p className="font-bold text-slate-800">{p.full_name}</p>
                                                 <p className="text-xs text-slate-400 font-medium">{p.email}</p>
                                             </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-2 text-slate-600 font-bold bg-slate-50 px-4 py-2 rounded-xl text-[10px] uppercase tracking-widest w-fit border border-slate-100">
+                                            <Briefcase size={14} className="text-indigo-600" />
+                                            {p.setor || 'N/A'}
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
