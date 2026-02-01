@@ -1006,7 +1006,7 @@ function SubtaskModal({ subtaskForm, setSubtaskForm, handleSubmit, setShow, edit
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
                 <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-slate-800">{editingSubtask ? 'Editar Subtarefa' : 'Nova Subtarefa'}</h2>
+                    <h2 className="text-lg font-bold text-slate-800">{editingSubtask ? 'EDITAR SUBTAREFA (V2)' : 'NOVA SUBTAREFA (V2)'}</h2>
                     <button onClick={() => { setShow(false); setEditingSubtask(null); }} className="p-2 hover:bg-slate-100 rounded-lg"><X size={18} className="text-slate-400" /></button>
                 </div>
                 <div className="p-5 space-y-4">
@@ -1014,21 +1014,40 @@ function SubtaskModal({ subtaskForm, setSubtaskForm, handleSubmit, setShow, edit
                         <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
                         <input type="text" value={subtaskForm.title} onChange={e => setSubtaskForm({ ...subtaskForm, title: e.target.value })} className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-teal-500" placeholder="Título da subtarefa" />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Responsável</label>
-                        <div className="relative">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                                <Users size={14} />
-                            </span>
-                            <input
-                                type="text"
-                                value={subtaskForm.assignee}
-                                onChange={e => setSubtaskForm({ ...subtaskForm, assignee: e.target.value })}
-                                className="w-full pl-9 pr-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-teal-500"
-                                placeholder="Nome do responsável"
-                            />
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
+                            <select value={subtaskForm.status} onChange={e => setSubtaskForm({ ...subtaskForm, status: e.target.value })} className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-teal-500 text-sm">
+                                {Object.entries(STATUS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Responsável</label>
+                            <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <Users size={14} />
+                                </span>
+                                <input
+                                    type="text"
+                                    value={subtaskForm.assignee}
+                                    onChange={e => setSubtaskForm({ ...subtaskForm, assignee: e.target.value })}
+                                    className="w-full pl-9 pr-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                                    placeholder="Nome"
+                                />
+                            </div>
                         </div>
                     </div>
+                    {subtaskForm.status === 'done' && (
+                        <div className="animate-in fade-in slide-in-from-top-1 duration-200">
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Data Realização</label>
+                            <input
+                                type="date"
+                                value={subtaskForm.completed_at}
+                                onChange={e => setSubtaskForm({ ...subtaskForm, completed_at: e.target.value })}
+                                className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className="p-5 border-t border-slate-100 flex gap-3">
                     <button onClick={() => { setShow(false); setEditingSubtask(null); }} className="flex-1 px-4 py-2 border rounded-lg text-slate-600">Cancelar</button>
