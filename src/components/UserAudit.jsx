@@ -68,7 +68,8 @@ export default function UserAudit() {
 
     const filteredProfiles = profiles.filter(p =>
         p.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
+        p.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.setor?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
