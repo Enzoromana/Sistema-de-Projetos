@@ -14,6 +14,7 @@ export default function UserAudit() {
     const [showResetModal, setShowResetModal] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [resetting, setResetting] = useState(false);
+    const [resetSuccess, setResetSuccess] = useState(false);
 
     useEffect(() => {
         loadProfiles();
@@ -233,40 +234,101 @@ export default function UserAudit() {
                             </div>
 
                             <div className="p-8 space-y-6">
-                                <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                                    Como o sistema está configurado para não utilizar e-mails externos, utilize uma das opções abaixo para redefinir a senha do colaborador:
-                                </p>
+                                {!resetSuccess ? (
+                                    <>
+                                        <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                                            Digite a nova senha para o colaborador abaixo. A alteração será imediata e integrada ao Supabase.
+                                        </p>
 
-                                <div className="space-y-4">
-                                    <div className="p-5 bg-slate-50 border border-slate-100 rounded-2xl">
-                                        <h4 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
-                                            <ShieldCheck size={14} className="text-indigo-600" /> Opção 1: Dashboard Supabase (Recomendado)
-                                        </h4>
-                                        <p className="text-[11px] text-slate-500 mb-4">Acesse o painel administrativo da Klini e altere manualmente a senha na aba Authentication.</p>
-                                        <a
-                                            href="https://supabase.com/dashboard/project/vyibcbedcilkxpdrizet/auth/users"
-                                            target="_blank"
-                                            className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-indigo-600 bg-white px-4 py-2 rounded-lg border border-slate-200 hover:shadow-md transition-all"
-                                        >
-                                            Abrir Painel Supabase <Eye size={12} />
-                                        </a>
-                                    </div>
+                                        <div className="space-y-4">
+                                            <div className="p-6 bg-indigo-50/50 border border-indigo-100 rounded-[1.5rem] space-y-4">
+                                                <h4 className="font-black text-indigo-800 text-xs uppercase tracking-widest flex items-center gap-2">
+                                                    <ShieldCheck size={14} /> Redefinição Direta
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha (Mínimo 6 caracteres)</label>
+                                                    <div className="flex gap-2">
+                                                        <input
+                                                            type="text"
+                                                            value={newPassword}
+                                                            onChange={e => setNewPassword(e.target.value)}
+                                                            placeholder="Ex: Klini123@"
+                                                            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500 font-bold text-sm"
+                                                        />
+                                                        <button
+                                                            disabled={!newPassword || newPassword.length < 6 || resetting}
+                                                            onClick={async () => {
+                                                                setResetting(true);
+                                                                try {
+                                                                    const { data, error } = await supabase.rpc('admin_reset_user_password', {
+                                                                        target_user_id: selectedUser.id,
+                                                                        new_password: newPassword
+                                                                    });
+                                                                    if (error) throw error;
+                                                                    setResetSuccess(true);
+                                                                } catch (e) {
+                                                                    alert('Erro ao redefinir: ' + e.message);
+                                                                } finally {
+                                                                    setResetting(false);
+                                                                }
+                                                            }}
+                                                            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-700 disabled:opacity-50 transition-all shadow-lg shadow-indigo-100 flex items-center gap-2"
+                                                        >
+                                                            {resetting ? (
+                                                                <Activity size={14} className="animate-spin" />
+                                                            ) : (
+                                                                <CheckCircle2 size={14} />
+                                                            )}
+                                                            {resetting ? 'Alterando...' : 'Confirmar'}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <div className="p-5 bg-orange-50 border border-orange-100 rounded-2xl">
-                                        <h4 className="font-black text-orange-800 text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
-                                            <Unlock size={14} className="text-orange-600" /> Opção 2: Chave de Recuperação
-                                        </h4>
-                                        <p className="text-[11px] text-orange-700/70">Em breve: Sistema de chaves estáticas que o usuário armazena offline para auto-redefinição.</p>
+                                            <div className="p-6 bg-slate-50 border border-slate-100 rounded-[1.5rem]">
+                                                <h4 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                    <Eye size={14} className="text-slate-400" /> Acesso ao Console
+                                                </h4>
+                                                <p className="text-[11px] text-slate-500 mb-4">Caso prefira gerenciar as configurações avançadas do usuário diretamente no Supabase:</p>
+                                                <a
+                                                    href="https://supabase.com/dashboard/project/vyibcbedcilkxpdrizet/auth/users"
+                                                    target="_blank"
+                                                    className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 bg-white px-4 py-2 rounded-lg border border-slate-200 hover:shadow-md transition-all font-sans"
+                                                >
+                                                    Abrir Supabase Dashboard
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="py-10 flex flex-col items-center text-center space-y-4 animate-in zoom-in duration-500">
+                                        <div className="w-20 h-20 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center shadow-inner">
+                                            <CheckCircle2 size={40} />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xl font-black text-slate-800">Sucesso!</h4>
+                                            <p className="text-sm text-slate-400 font-medium px-10">
+                                                A senha de <strong>{selectedUser.full_name}</strong> foi alterada com sucesso.
+                                            </p>
+                                        </div>
+                                        <div className="w-full p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nova Senha Temporária</p>
+                                            <p className="text-lg font-mono font-black text-slate-700 tracking-wider">{newPassword}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
 
                             <div className="p-8 bg-slate-50/50 flex justify-end">
                                 <button
-                                    onClick={() => setShowResetModal(false)}
+                                    onClick={() => {
+                                        setShowResetModal(false);
+                                        setResetSuccess(false);
+                                        setNewPassword('');
+                                    }}
                                     className="bg-slate-900 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
                                 >
-                                    Fechar
+                                    {resetSuccess ? 'Fechar' : 'Cancelar'}
                                 </button>
                             </div>
                         </div>
