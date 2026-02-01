@@ -220,7 +220,11 @@ export default function UserAudit() {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-black text-slate-800">Redefinição de Senha</h3>
-                                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{selectedUser.full_name}</p>
+                                        <div className="flex items-center gap-2">
+                                            <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{selectedUser.full_name}</p>
+                                            <span className="w-1 h-1 bg-slate-200 rounded-full"></span>
+                                            <p className="text-[10px] text-indigo-500 font-black uppercase tracking-widest">{selectedUser.setor || 'Sem Setor'}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <button onClick={() => setShowResetModal(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-all">
