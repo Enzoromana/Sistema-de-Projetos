@@ -3,13 +3,17 @@ import { supabase } from '../lib/supabase';
 import {
     Users, ShieldCheck, ShieldAlert, CheckCircle2,
     XCircle, Lock, Unlock, Eye, Trash2,
-    LayoutDashboard, Calendar, Search, Filter, User, Activity
+    LayoutDashboard, Calendar, Search, Filter, User, Activity, Key
 } from 'lucide-react';
 
 export default function UserAudit() {
     const [profiles, setProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [showResetModal, setShowResetModal] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [resetting, setResetting] = useState(false);
 
     useEffect(() => {
         loadProfiles();
@@ -179,12 +183,83 @@ export default function UserAudit() {
                                                 <Lock size={20} />
                                             </button>
                                         )}
+                                        <button
+                                            onClick={() => {
+                                                setSelectedUser(p);
+                                                setShowResetModal(true);
+                                                setNewPassword('');
+                                            }}
+                                            className="p-2 text-slate-300 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                                            title="Redefinir Senha"
+                                        >
+                                            <Key size={20} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
+                {/* Reset Password Options Modal */}
+                {showResetModal && selectedUser && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-lg shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500">
+                            <div className="p-8 border-b border-slate-50 flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                                        <Key size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-black text-slate-800">Redefinição de Senha</h3>
+                                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{selectedUser.full_name}</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setShowResetModal(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-all">
+                                    <XCircle className="text-slate-300" size={24} />
+                                </button>
+                            </div>
+
+                            <div className="p-8 space-y-6">
+                                <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                                    Como o sistema está configurado para não utilizar e-mails externos, utilize uma das opções abaixo para redefinir a senha do colaborador:
+                                </p>
+
+                                <div className="space-y-4">
+                                    <div className="p-5 bg-slate-50 border border-slate-100 rounded-2xl">
+                                        <h4 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                                            <ShieldCheck size={14} className="text-indigo-600" /> Opção 1: Dashboard Supabase (Recomendado)
+                                        </h4>
+                                        <p className="text-[11px] text-slate-500 mb-4">Acesse o painel administrativo da Klini e altere manualmente a senha na aba Authentication.</p>
+                                        <a
+                                            href="https://supabase.com/dashboard/project/vyibcbedcilkxpdrizet/auth/users"
+                                            target="_blank"
+                                            className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-indigo-600 bg-white px-4 py-2 rounded-lg border border-slate-200 hover:shadow-md transition-all"
+                                        >
+                                            Abrir Painel Supabase <Eye size={12} />
+                                        </a>
+                                    </div>
+
+                                    <div className="p-5 bg-orange-50 border border-orange-100 rounded-2xl">
+                                        <h4 className="font-black text-orange-800 text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                                            <Unlock size={14} className="text-orange-600" /> Opção 2: Chave de Recuperação
+                                        </h4>
+                                        <p className="text-[11px] text-orange-700/70">Em breve: Sistema de chaves estáticas que o usuário armazena offline para auto-redefinição.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-8 bg-slate-50/50 flex justify-end">
+                                <button
+                                    onClick={() => setShowResetModal(false)}
+                                    className="bg-slate-900 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
+                                >
+                                    Fechar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {filteredProfiles.length === 0 && (
                     <div className="p-20 flex flex-col items-center justify-center opacity-40">

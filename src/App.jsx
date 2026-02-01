@@ -5,6 +5,7 @@ import RoomControl from './components/RoomControl';
 import UserAudit from './components/UserAudit';
 import HubHome from './components/HubHome';
 import MedicalControl from './components/MedicalControl';
+import ProfileUpdateModal from './components/ProfileUpdateModal';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import {
@@ -186,6 +187,14 @@ function App() {
                 {activeModule === 'audit' && <UserAudit />}
                 {activeModule === 'medical' && <MedicalControl />}
             </main>
+
+            {/* Profile Update Mandatory Modal */}
+            {profile && !profile.setor && (
+                <ProfileUpdateModal
+                    profile={profile}
+                    onUpdate={(updatedProfile) => setProfile(updatedProfile)}
+                />
+            )}
 
             <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
