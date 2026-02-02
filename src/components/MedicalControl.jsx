@@ -20,13 +20,12 @@ const SITUACAO = {
 };
 
 const DOC_TYPES = [
-    { id: 'aberturaBeneficiario', label: 'Abertura Beneficiários' },
-    { id: 'aberturaFechamentoMedica', label: 'Abertura/Fechamento Médica' },
-    { id: 'desempatador', label: 'Desempatador: Escolha' },
-    { id: 'parecerFinal', label: 'Parecer Final' },
-    { id: 'emailConfirmacaoMedico', label: 'Confirmação Recebimento Médico' },
-    { id: 'beneficiarioAberturaFechamento', label: 'Fechamento Beneficiários' },
-    { id: 'confirmacaoRecebimento', label: 'Confirmação de Recebimento' }
+    { id: 'aberturaBeneficiario', label: 'Confirmação abertura beneficiário' },
+    { id: 'aberturaMedico', label: 'Confirmação abertura Médico' },
+    { id: 'desempatadorEscolha', label: 'Desempatador Escolha' },
+    { id: 'parecerFinal', label: 'Parecer final' },
+    { id: 'fechamentoBeneficiario', label: 'Confirmação fechamento beneficiário' },
+    { id: 'fechamentoMedico', label: 'Confirmação fechamento médico' }
 ];
 
 export default function MedicalControl() {
@@ -54,6 +53,7 @@ export default function MedicalControl() {
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [showStatusModal, setShowStatusModal] = useState(false);
     const [showReportModal, setShowReportModal] = useState(false);
+    const [showHelpModal, setShowHelpModal] = useState(false);
     const [uploadingInternal, setUploadingInternal] = useState(null); // id do tipo de doc sendo enviado
 
     useEffect(() => {
@@ -348,6 +348,13 @@ export default function MedicalControl() {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => setShowHelpModal(true)}
+                            className="bg-white/10 hover:bg-white/20 text-white p-4 rounded-[1.5rem] transition-all backdrop-blur-md flex items-center gap-2 border border-white/10 shadow-xl"
+                            title="Ajuda e Notas de Atualização"
+                        >
+                            <AlertCircle size={20} />
+                        </button>
                         {view === 'list' ? (
                             <button
                                 onClick={() => {
@@ -476,40 +483,44 @@ export default function MedicalControl() {
             ) : (
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Stepper Sidebar */}
-                    <div className="w-full lg:w-80 space-y-2">
+                    <div className="w-full lg:w-72 space-y-1.5 pt-4">
                         {[
-                            { title: 'Beneficiário', sub: 'Dados pessoais', icon: <User /> },
-                            { title: 'Médico Auditor', sub: 'Dados do auditor', icon: <Activity /> },
-                            { title: 'Médico Assistente', sub: 'Dados do assistente', icon: <Stethoscope /> },
-                            { title: 'Procedimentos', sub: 'Lista técnica', icon: <FileText /> },
-                            { title: 'Materiais', sub: 'Lista de OPME', icon: <Box /> },
-                            { title: 'Anexos', sub: 'Documentação', icon: <Paperclip /> },
-                            { title: 'Divergência', sub: 'Motivação técnica', icon: <AlertTriangle /> }
+                            { title: 'Beneficiário', icon: <User size={18} /> },
+                            { title: 'Médico Auditor', icon: <Activity size={18} /> },
+                            { title: 'Médico Assistente', icon: <Stethoscope size={18} /> },
+                            { title: 'Procedimentos', icon: <FileText size={18} /> },
+                            { title: 'Materiais', icon: <Box size={18} /> },
+                            { title: 'Anexos', icon: <Paperclip size={18} /> },
+                            { title: 'Divergência', icon: <AlertTriangle size={18} /> }
                         ].map((s, idx) => (
                             <div
                                 key={idx}
                                 onClick={() => setCurrentStep(idx)}
-                                className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center gap-4 ${currentStep === idx ? 'bg-[#1D7874] text-white shadow-lg border-[#1D7874]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#1D7874]/30 hover:text-slate-600'}`}
+                                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${currentStep === idx ? 'bg-[#1D7874] text-white shadow-lg border-[#1D7874]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#1D7874]/30 hover:text-slate-600'}`}
                             >
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${currentStep === idx ? 'bg-white/20' : 'bg-slate-50 text-slate-300'}`}>
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${currentStep === idx ? 'bg-white/20' : 'bg-slate-50 text-slate-300'}`}>
                                     {s.icon}
                                 </div>
                                 <div>
-                                    <p className="text-xs font-black uppercase tracking-widest">{s.title}</p>
-                                    <p className={`text-[10px] ${currentStep === idx ? 'text-white/60' : 'text-slate-400'}`}>{s.sub}</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest">{s.title}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
 
                     {/* Step Form Content */}
-                    <div className="flex-1 bg-white rounded-[2.5rem] shadow-2xl p-10 border border-slate-100">
+                    <div className="flex-1 bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
                         {/* Step 0: Beneficiário */}
                         {currentStep === 0 && (
                             <div className="space-y-8 animate-in slide-in-from-right">
                                 <FormHeader icon={<User />} title="Dados do Beneficiário" sub="Informações pessoais do paciente para abertura da junta." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <Input label="CPF" required value={formData.ben_cpf} onChange={v => setFormData({ ...formData, ben_cpf: v })} placeholder="000.000.000-00" />
+                                    <Input
+                                        label="CPF" required
+                                        value={formData.ben_cpf}
+                                        onChange={v => setFormData({ ...formData, ben_cpf: v.replace(/\D/g, '') })}
+                                        placeholder="00000000000 (Somente números)"
+                                    />
                                     <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
                                     <Input label="E-mail" value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
                                     <div className="space-y-2">
@@ -525,7 +536,12 @@ export default function MedicalControl() {
                                         </select>
                                     </div>
                                     <Input label="Data de Nascimento" type="date" value={formData.ben_nascimento} onChange={v => setFormData({ ...formData, ben_nascimento: v })} />
-                                    <Input label="Telefone" value={formData.ben_telefone} onChange={v => setFormData({ ...formData, ben_telefone: v })} placeholder="(00) 00000-0000" />
+                                    <Input
+                                        label="Telefone"
+                                        value={formData.ben_telefone}
+                                        onChange={v => setFormData({ ...formData, ben_telefone: v.replace(/\D/g, '') })}
+                                        placeholder="21999999999 (Somente números)"
+                                    />
                                     <Input label="Estado" value={formData.ben_estado} onChange={v => setFormData({ ...formData, ben_estado: v })} placeholder="UF" />
                                     <Input label="Cidade" value={formData.ben_cidade} onChange={v => setFormData({ ...formData, ben_cidade: v })} placeholder="Nome da cidade" />
                                 </div>
@@ -539,7 +555,12 @@ export default function MedicalControl() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Número da Requisição" required value={formData.requisicao} onChange={v => setFormData({ ...formData, requisicao: v })} placeholder="EX: REQ-2025-0001" />
                                     <Input label="Nome do Médico" required value={formData.aud_nome} onChange={v => setFormData({ ...formData, aud_nome: v })} placeholder="Dr. Nome Completo" />
-                                    <Input label="CRM/CRO" required value={formData.aud_crm} onChange={v => setFormData({ ...formData, aud_crm: v })} placeholder="00000" />
+                                    <Input
+                                        label="CRM/CRO" required
+                                        value={formData.aud_crm}
+                                        onChange={v => setFormData({ ...formData, aud_crm: v.replace(/\D/g, '') })}
+                                        placeholder="00000 (Somente números)"
+                                    />
                                     <Input label="Estado (CRM)" value={formData.aud_estado} onChange={v => setFormData({ ...formData, aud_estado: v })} placeholder="UF" />
                                     <Input label="Data do Atendimento" type="date" value={formData.aud_data} onChange={v => setFormData({ ...formData, aud_data: v })} />
                                 </div>
@@ -552,9 +573,19 @@ export default function MedicalControl() {
                                 <FormHeader icon={<Stethoscope />} title="Dados do Médico Assistente" sub="Informações do médico que solicitou o procedimento." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Nome" required value={formData.ass_nome} onChange={v => setFormData({ ...formData, ass_nome: v })} placeholder="Dr. Nome Completo" />
-                                    <Input label="CRM/CRO" required value={formData.ass_crm} onChange={v => setFormData({ ...formData, ass_crm: v })} placeholder="00000" />
+                                    <Input
+                                        label="CRM/CRO" required
+                                        value={formData.ass_crm}
+                                        onChange={v => setFormData({ ...formData, ass_crm: v.replace(/\D/g, '') })}
+                                        placeholder="00000 (Somente números)"
+                                    />
                                     <Input label="E-mail" value={formData.ass_email} onChange={v => setFormData({ ...formData, ass_email: v })} placeholder="email@exemplo.com" />
-                                    <Input label="Telefone" value={formData.ass_telefone} onChange={v => setFormData({ ...formData, ass_telefone: v })} placeholder="(00) 00000-0000" />
+                                    <Input
+                                        label="Telefone"
+                                        value={formData.ass_telefone}
+                                        onChange={v => setFormData({ ...formData, ass_telefone: v.replace(/\D/g, '') })}
+                                        placeholder="21999999999 (Somente números)"
+                                    />
                                     <Input
                                         label="Especialidade" required
                                         value={formData.ass_especialidade}
@@ -589,35 +620,37 @@ export default function MedicalControl() {
                                             >
                                                 <Trash2 size={16} />
                                             </button>
-                                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                                <div className="md:col-span-3">
-                                                    <TussAutocomplete
-                                                        value={p}
-                                                        onChange={(newValues) => {
+                                            <div className="grid grid-cols-1 gap-6">
+                                                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
+                                                    <div className="lg:col-span-3">
+                                                        <TussAutocomplete
+                                                            value={p}
+                                                            onChange={(newValues) => {
+                                                                const newP = [...procedures];
+                                                                newP[idx] = { ...newP[idx], ...newValues };
+                                                                setProcedures(newP);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        <Input label="Solicitada" type="number" value={p.qtd_solicitada} onChange={v => {
                                                             const newP = [...procedures];
-                                                            newP[idx] = { ...newP[idx], ...newValues };
+                                                            newP[idx].qtd_solicitada = v;
                                                             setProcedures(newP);
-                                                        }}
-                                                    />
+                                                        }} />
+                                                        <Input label="Autorizada" type="number" value={p.qtd_autorizada} onChange={v => {
+                                                            const newP = [...procedures];
+                                                            newP[idx].qtd_autorizada = v;
+                                                            setProcedures(newP);
+                                                        }} />
+                                                    </div>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    <Input label="Qtd. Sol." type="number" value={p.qtd_solicitada} onChange={v => {
-                                                        const newP = [...procedures];
-                                                        newP[idx].qtd_solicitada = v;
-                                                        setProcedures(newP);
-                                                    }} />
-                                                    <Input label="Qtd. Aut." type="number" value={p.qtd_autorizada} onChange={v => {
-                                                        const newP = [...procedures];
-                                                        newP[idx].qtd_autorizada = v;
-                                                        setProcedures(newP);
-                                                    }} />
-                                                </div>
-                                                <div className="md:col-span-4 mt-2">
-                                                    <Input label="Justificativa" value={p.justificativa} onChange={v => {
+                                                <div className="mt-2">
+                                                    <Input label="Justificativa Técnica" value={p.justificativa} onChange={v => {
                                                         const newP = [...procedures];
                                                         newP[idx].justificativa = v;
                                                         setProcedures(newP);
-                                                    }} placeholder="Justificativa técnica (opcional)" />
+                                                    }} placeholder="Descreva brevemente a necessidade clínica deste procedimento" />
                                                 </div>
                                             </div>
                                         </div>
@@ -679,39 +712,160 @@ export default function MedicalControl() {
                             </div>
                         )}
 
-                        {/* Step 5: Anexos */}
+                        {/* Step 5: Anexos / Documentação */}
                         {currentStep === 5 && (
                             <div className="space-y-8 animate-in slide-in-from-right">
-                                <FormHeader icon={<Paperclip />} title="Anexos & Documentação" sub="Faça o upload de documentos de apoio." />
-                                <div
-                                    className="border-4 border-dashed border-slate-100 rounded-[2.5rem] p-16 flex flex-col items-center justify-center text-center group hover:border-[#1D7874]/30 hover:bg-slate-50/50 transition-all cursor-pointer"
-                                    onClick={() => document.getElementById('medical-file-input').click()}
-                                >
-                                    <input
-                                        type="file" id="medical-file-input" multiple className="hidden"
-                                        onChange={e => setAttachments([...attachments, ...Array.from(e.target.files)])}
-                                    />
-                                    <div className="w-20 h-20 bg-slate-50 text-slate-300 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                        <Plus size={40} />
-                                    </div>
-                                    <p className="text-xl font-black text-slate-800 mb-2">Selecione os arquivos</p>
-                                    <p className="text-slate-400 font-medium max-w-xs mx-auto">Formatos: PDF, PNG, JPG, DOCX, MP3 ou WAV</p>
+                                <div className="flex items-center justify-between">
+                                    <FormHeader icon={<Paperclip />} title="Anexos & Documentação" sub="Anexe os arquivos obrigatórios e complementares da junta." />
+                                    <span className="px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-teal-100">
+                                        Organizado por Categoria
+                                    </span>
                                 </div>
-                                {attachments.length > 0 && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                                        {attachments.map((file, idx) => (
-                                            <div key={idx} className="flex items-center justify-between p-4 bg-teal-50 border border-teal-100 rounded-2xl group">
+
+                                <input
+                                    type="file"
+                                    id="form-internal-file-input"
+                                    className="hidden"
+                                    onChange={async (e) => {
+                                        const typeId = e.target.getAttribute('data-type-id');
+                                        const file = e.target.files[0];
+                                        if (!file) return;
+
+                                        // Simulação de "pré-upload" para o formulário
+                                        // No fluxo atual, o upload real para o Storage ocorre em handleCreateRequest
+                                        // Mas para documentos internos, usamos documentos_internos JSONB.
+                                        // Como o request ainda pode estar sendo CRIA-DO, precisamos de um estado temporário ou salvar direto se for edição.
+
+                                        if (selectedRequest) {
+                                            // Se estivermos editando, podemos salvar direto
+                                            handleInternalFileUpload(e, typeId);
+                                        } else {
+                                            // Se for criação, precisamos gerenciar localmente antes de salvar
+                                            // Por simplicidade técnica neste MVP, o usuário costuma criar e depois anexar documentos de "etapas"
+                                            // Mas vamos implementar uma lógica que permita anexar mesmo na criação se possível.
+                                            // ATENÇÃO: O fluxo de documentos_internos depende do requestId.
+                                            // Vou manter o comportamento de "Anexar" pedindo para salvar a junta primeiro se for nova.
+                                            alert("Para anexar documentos de etapas, por favor, finalize o cadastro inicial da junta primeiro.");
+                                        }
+                                        e.target.value = '';
+                                    }}
+                                />
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {DOC_TYPES.map(dt => (
+                                        <div key={dt.id} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex flex-col gap-4 group hover:border-teal-200 transition-all hover:bg-white hover:shadow-xl hover:shadow-teal-900/5">
+                                            <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
-                                                    <FileText className="text-teal-600" size={20} />
-                                                    <span className="text-xs font-bold text-teal-900 truncate max-w-[200px]">{file.name}</span>
+                                                    <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                        <FileText size={20} />
+                                                    </div>
+                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight">{dt.label}</span>
                                                 </div>
-                                                <button onClick={() => setAttachments(attachments.filter((_, i) => i !== idx))} className="p-2 text-teal-400 hover:text-red-500 transition-all">
-                                                    <Trash2 size={16} />
+                                                <button
+                                                    onClick={() => {
+                                                        const input = document.getElementById('form-internal-file-input');
+                                                        input.setAttribute('data-type-id', dt.id);
+                                                        input.click();
+                                                    }}
+                                                    className="text-[10px] font-black text-teal-600 uppercase tracking-widest px-4 py-2 bg-white rounded-xl border border-teal-100 hover:bg-teal-600 hover:text-white transition-all flex items-center gap-1 shadow-sm"
+                                                >
+                                                    <Plus size={12} /> ANEXAR
                                                 </button>
                                             </div>
-                                        ))}
+
+                                            {/* List of files for this type */}
+                                            {selectedRequest?.documentos_internos?.[dt.id]?.length > 0 ? (
+                                                <div className="space-y-2 border-t border-slate-200/50 pt-4">
+                                                    {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
+                                                        <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                                                            <div className="flex items-center gap-2 text-slate-600">
+                                                                <Paperclip size={12} className="text-slate-300" />
+                                                                <span className="font-bold truncate max-w-[150px]">{doc.name}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                <a
+                                                                    href={doc.url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="text-teal-600 font-black hover:underline uppercase tracking-tighter pt-0.5"
+                                                                >
+                                                                    Ver
+                                                                </a>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        if (!confirm('Deseja remover este anexo?')) return;
+                                                                        const updatedDocs = { ...selectedRequest.documentos_internos };
+                                                                        updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
+
+                                                                        const { error } = await supabase
+                                                                            .from('medical_requests')
+                                                                            .update({ documentos_internos: updatedDocs })
+                                                                            .eq('id', selectedRequest.id);
+
+                                                                        if (!error) {
+                                                                            setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+                                                                            loadRequests();
+                                                                        }
+                                                                    }}
+                                                                    className="text-red-400 hover:text-red-600 transition-colors p-1"
+                                                                >
+                                                                    <Trash2 size={12} />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="mt-2 text-center py-4 border-2 border-dashed border-slate-100 rounded-2xl">
+                                                    <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Nenhum arquivo enviado</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-12 p-8 bg-amber-50 rounded-[2rem] border border-amber-100 flex items-start gap-4">
+                                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-amber-500 shadow-sm shrink-0">
+                                        <AlertTriangle size={24} />
                                     </div>
-                                )}
+                                    <div>
+                                        <p className="text-sm font-black text-amber-900 uppercase tracking-tight mb-1">Observação sobre Anexos Gerais</p>
+                                        <p className="text-xs text-amber-700 leading-relaxed font-medium">Os anexos acima são documentos específicos das etapas da junta. Caso deseje anexar documentos gerais (exame, laudo externo), utilize a seção de "Anexos Gerais" abaixo.</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Anexos Gerais (Laudos, Exames, etc)</label>
+                                    <div
+                                        className="border-4 border-dashed border-slate-100 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center group hover:border-[#1D7874]/30 hover:bg-slate-50/50 transition-all cursor-pointer"
+                                        onClick={() => document.getElementById('medical-file-input').click()}
+                                    >
+                                        <input
+                                            type="file" id="medical-file-input" multiple className="hidden"
+                                            onChange={e => setAttachments([...attachments, ...Array.from(e.target.files)])}
+                                        />
+                                        <div className="w-16 h-16 bg-slate-50 text-slate-300 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <Plus size={32} />
+                                        </div>
+                                        <p className="text-lg font-black text-slate-800 mb-1">Arraste ou Selecione</p>
+                                        <p className="text-slate-400 text-xs font-medium">Formatos suportados: PDF, Imagens, Docx</p>
+                                    </div>
+                                    {attachments.length > 0 && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {attachments.map((file, idx) => (
+                                                <div key={idx} className="flex items-center justify-between p-4 bg-teal-50 border border-teal-100 rounded-2xl">
+                                                    <div className="flex items-center gap-3">
+                                                        <FileText className="text-teal-600" size={18} />
+                                                        <span className="text-xs font-bold text-teal-900 truncate max-w-[200px]">{file.name}</span>
+                                                    </div>
+                                                    <button onClick={() => setAttachments(attachments.filter((_, i) => i !== idx))} className="p-2 text-teal-400 hover:text-red-500 transition-all">
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         )}
 
@@ -1077,15 +1231,15 @@ export default function MedicalControl() {
                                             handleInternalFileUpload(e, typeId);
                                         }}
                                     />
-                                    <div className="grid grid-cols-1 gap-3">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {DOC_TYPES.map(dt => (
-                                            <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group">
+                                            <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group hover:border-teal-200 transition-all">
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
                                                         <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
                                                             <FileText size={16} />
                                                         </div>
-                                                        <span className="text-sm font-bold text-slate-600">{dt.label}</span>
+                                                        <span className="text-[11px] font-black text-slate-600 uppercase tracking-tight leading-none">{dt.label}</span>
                                                     </div>
                                                     <button
                                                         onClick={() => {
@@ -1094,25 +1248,25 @@ export default function MedicalControl() {
                                                             input.click();
                                                         }}
                                                         disabled={uploadingInternal === dt.id}
-                                                        className="text-xs font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50"
+                                                        className="text-[10px] font-black text-teal-600 uppercase tracking-widest hover:text-teal-800 transition-all flex items-center gap-1 disabled:opacity-50 px-3 py-1.5 bg-white rounded-lg border border-teal-50 shadow-sm"
                                                     >
                                                         {uploadingInternal === dt.id ? (
-                                                            <Loader2 size={12} className="animate-spin" />
+                                                            <Loader2 size={10} className="animate-spin" />
                                                         ) : (
-                                                            <Plus size={12} />
+                                                            <Plus size={10} />
                                                         )}
                                                         Anexar
                                                     </button>
                                                 </div>
 
                                                 {/* List of files for this type */}
-                                                {selectedRequest.documentos_internos?.[dt.id]?.length > 0 && (
+                                                {selectedRequest.documentos_internos?.[dt.id]?.length > 0 ? (
                                                     <div className="space-y-2 border-t border-slate-200/50 pt-3">
                                                         {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
                                                             <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
                                                                 <div className="flex items-center gap-2 text-slate-600">
                                                                     <Paperclip size={12} className="text-slate-300" />
-                                                                    <span className="font-medium truncate max-w-[200px]">{doc.name}</span>
+                                                                    <span className="font-bold truncate max-w-[120px]">{doc.name}</span>
                                                                 </div>
                                                                 <div className="flex items-center gap-2">
                                                                     <a
@@ -1121,7 +1275,7 @@ export default function MedicalControl() {
                                                                         rel="noopener noreferrer"
                                                                         className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
                                                                     >
-                                                                        Abrir
+                                                                        Ver
                                                                     </a>
                                                                     <button
                                                                         onClick={async () => {
@@ -1147,6 +1301,10 @@ export default function MedicalControl() {
                                                             </div>
                                                         ))}
                                                     </div>
+                                                ) : (
+                                                    <div className="text-center py-2">
+                                                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Pendente</span>
+                                                    </div>
                                                 )}
                                             </div>
                                         ))}
@@ -1157,6 +1315,96 @@ export default function MedicalControl() {
                             <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
                                 <button onClick={() => setShowStatusModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-200">
                                     Salvar Alterações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            {/* Modal de Ajuda */}
+            {
+                showHelpModal && (
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#1D7874] text-white">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-white/20 rounded-2xl">
+                                        <AlertCircle size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black tracking-tight">Portal de Ajuda & Notas</h3>
+                                        <p className="text-sm font-black text-white/60 uppercase tracking-widest leading-none mt-1">Junta Médica Administrativa</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setShowHelpModal(false)} className="p-2 hover:bg-white/10 rounded-xl transition-all text-white/60 hover:text-white">
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto p-10 space-y-12">
+                                {/* Guia de Utilização */}
+                                <section className="space-y-6">
+                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
+                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full" /> Guia de Utilização
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">1. Cadastro de Junta</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Preencha os dados do beneficiário e médicos. Os campos de CPF, CRM e Telefone agora aceitam apenas números.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">2. Documentação</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Na penúltima etapa, anexe os documentos específicos em suas respectivas categorias para melhor organização.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">3. Acompanhamento</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Utilize o botão de "Status" na lista principal para gerenciar as etapas e anexos após a criação.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">4. Emissão de PDF</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Gere o documento oficial da junta clicando no ícone de impressora na visualização de detalhes.</p>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Notas de Atualização */}
+                                <section className="space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
+                                            <div className="w-8 h-1 bg-amber-400 rounded-full" /> Notas de Atualização
+                                        </h4>
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.1.0</span>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
+                                            <div>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Hoje - Janelas & Fluxo</p>
+                                                <ul className="space-y-2">
+                                                    {[
+                                                        "Nova estrutura de documentação categorizada",
+                                                        "Validação numérica restritiva para CPF, CRM e Telefone",
+                                                        "Melhoria visual premium nos menus de seleção (Dropdowns)",
+                                                        "Sidebar de fases mais compacta e limpa",
+                                                        "Correção de campos e labels cortados na tela de preenchimento",
+                                                        "Lançamento do Portal de Ajuda e Release Notes"
+                                                    ].map((note, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-medium text-slate-500 leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-1.5" /> {note}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div className="p-8 border-t border-slate-100 flex justify-end bg-slate-50/50">
+                                <button onClick={() => setShowHelpModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-100 hover:scale-105 active:scale-95">
+                                    Entendido
                                 </button>
                             </div>
                         </div>
@@ -1316,25 +1564,27 @@ function TussAutocomplete({ value, onChange }) {
                                 onFocus={() => {
                                     if (search.length >= 2) setShowOptions(true);
                                 }}
-                                placeholder="Busca por Cód..."
-                                className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                                placeholder="Cód..."
+                                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
                             />
 
                             {showOptions && results.length > 0 && (
-                                <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto w-[300%]">
-                                    {results.map((item) => (
-                                        <button
-                                            key={item.value}
-                                            onClick={() => {
-                                                onChange({ codigo: item.code, descricao: item.description });
-                                                setShowOptions(false);
-                                            }}
-                                            className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
-                                        >
-                                            <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
-                                            <span className="block text-sm font-bold text-slate-600 truncate">{item.description}</span>
-                                        </button>
-                                    ))}
+                                <div className="absolute z-50 top-full left-0 right-0 mt-3 bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-white/20 max-h-80 overflow-y-auto w-[300%] animate-in fade-in zoom-in-95 duration-200">
+                                    <div className="p-2">
+                                        {results.map((item) => (
+                                            <button
+                                                key={item.value}
+                                                onClick={() => {
+                                                    onChange({ codigo: item.code, descricao: item.description });
+                                                    setShowOptions(false);
+                                                }}
+                                                className="w-full text-left px-6 py-4 hover:bg-[#1D7874] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
+                                            >
+                                                <span className="block text-[10px] font-black text-[#1D7874] group-hover/item:text-teal-200 uppercase tracking-widest mb-1">{item.code}</span>
+                                                <span className="block text-sm font-bold text-slate-600 group-hover/item:text-white truncate">{item.description}</span>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
@@ -1350,7 +1600,7 @@ function TussAutocomplete({ value, onChange }) {
                     <input
                         readOnly
                         value={value.descricao || ''}
-                        placeholder="Descrição do procedimento (Selecione pelo código)"
+                        placeholder="Nome do procedimento (Selecione pelo código)"
                         className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-100 font-bold text-slate-500 outline-none cursor-not-allowed"
                     />
                 </div>
