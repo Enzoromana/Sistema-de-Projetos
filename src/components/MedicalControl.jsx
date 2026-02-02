@@ -1259,6 +1259,7 @@ function TussAutocomplete({ value, onChange }) {
 
     const handleSearch = (term) => {
         setSearch(term);
+        // Allow searching with even 1 digit if it mimics a code, but keeping 2 for performance is safer
         if (term.length < 2) {
             setResults([]);
             return;
@@ -1267,7 +1268,7 @@ function TussAutocomplete({ value, onChange }) {
         const lowerTerm = term.toLowerCase();
         // Limit to 50 results for performance
         const filtered = TUSS_DATA.filter(item =>
-            item.label.toLowerCase().includes(lowerTerm)
+            item.label.toLowerCase().includes(lowerTerm) // Label usually contains "Code - Description"
         ).slice(0, 50);
 
         setResults(filtered);
@@ -1280,25 +1281,17 @@ function TussAutocomplete({ value, onChange }) {
     return (
         <div className="space-y-2 relative">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
-                Procedimento (Busca TUSS) <span className="text-red-500 font-black">*</span>
+                Busca de Procedimentos (TUSS) <span className="text-red-500 font-black">*</span>
             </label>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                {/* Visual fields for the selected values */}
-                <div className="md:col-span-1">
-                    <input
-                        readOnly
-                        value={value.codigo}
-                        placeholder="Código"
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-100 font-bold text-slate-500 outline-none cursor-not-allowed"
-                    />
-                </div>
-                <div className="md:col-span-2 relative">
+                {/* Code Field (Search Input) - Now the interactive one */}
+                <div className="md:col-span-1 relative">
                     {isSelected ? (
                         <div className="relative">
                             <input
                                 readOnly
-                                value={value.descricao}
+                                value={value.codigo}
                                 className="w-full pl-6 pr-14 py-4 rounded-2xl bg-teal-50 border border-teal-100 font-bold text-teal-800 outline-none"
                             />
                             <button
@@ -1323,12 +1316,12 @@ function TussAutocomplete({ value, onChange }) {
                                 onFocus={() => {
                                     if (search.length >= 2) setShowOptions(true);
                                 }}
-                                placeholder="Digite o código ou nome do procedimento..."
+                                placeholder="Busca por Cód..."
                                 className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
                             />
 
                             {showOptions && results.length > 0 && (
-                                <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto">
+                                <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-60 overflow-y-auto w-[300%]">
                                     {results.map((item) => (
                                         <button
                                             key={item.value}
@@ -1339,7 +1332,7 @@ function TussAutocomplete({ value, onChange }) {
                                             className="w-full text-left px-6 py-4 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
                                         >
                                             <span className="block text-xs font-black text-[#1D7874]">{item.code}</span>
-                                            <span className="block text-sm font-bold text-slate-600">{item.description}</span>
+                                            <span className="block text-sm font-bold text-slate-600 truncate">{item.description}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -1350,6 +1343,16 @@ function TussAutocomplete({ value, onChange }) {
                             )}
                         </div>
                     )}
+                </div>
+
+                {/* Description Field (Read Only) */}
+                <div className="md:col-span-2">
+                    <input
+                        readOnly
+                        value={value.descricao || ''}
+                        placeholder="Descrição do procedimento (Selecione pelo código)"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-100 font-bold text-slate-500 outline-none cursor-not-allowed"
+                    />
                 </div>
             </div>
         </div>
