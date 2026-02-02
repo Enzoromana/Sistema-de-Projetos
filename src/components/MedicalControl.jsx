@@ -55,6 +55,7 @@ export default function MedicalControl() {
     const [showReportModal, setShowReportModal] = useState(false);
     const [showHelpModal, setShowHelpModal] = useState(false);
     const [uploadingInternal, setUploadingInternal] = useState(null); // id do tipo de doc sendo enviado
+    const [dragOverId, setDragOverId] = useState(null); // 'general' or doc type id
 
     useEffect(() => {
         loadRequests();
@@ -293,7 +294,26 @@ export default function MedicalControl() {
             alert(`Erro no upload: ${e.message || e.error_description || 'Erro desconhecido'}. \n\nVerifique se o bucket "medical-board" foi criado no Supabase e se as permissões de RLS permitem upload.`);
         } finally {
             setUploadingInternal(null);
-            e.target.value = '';
+            if (e.target) e.target.value = '';
+        }
+    };
+
+    const handleDrop = (e, typeId) => {
+        e.preventDefault();
+        setDragOverId(null);
+
+        const files = Array.from(e.dataTransfer.files);
+        if (files.length === 0) return;
+
+        if (typeId === 'general') {
+            setAttachments([...attachments, ...files]);
+        } else {
+            if (!selectedRequest) {
+                alert("Para anexar documentos de etapas, por favor, finalize o cadastro inicial da junta primeiro.");
+                return;
+            }
+            const mockE = { target: { files: [files[0]], value: '' } };
+            handleInternalFileUpload(mockE, typeId);
         }
     };
 
@@ -753,7 +773,13 @@ export default function MedicalControl() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {DOC_TYPES.map(dt => (
-                                        <div key={dt.id} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex flex-col gap-4 group hover:border-teal-200 transition-all hover:bg-white hover:shadow-xl hover:shadow-teal-900/5">
+                                        <div
+                                            key={dt.id}
+                                            onDragOver={(e) => { e.preventDefault(); setDragOverId(dt.id); }}
+                                            onDragLeave={() => setDragOverId(null)}
+                                            onDrop={(e) => handleDrop(e, dt.id)}
+                                            className={`p-6 rounded-3xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-2xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-xl hover:shadow-teal-900/5'}`}
+                                        >
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -837,7 +863,10 @@ export default function MedicalControl() {
                                 <div className="space-y-6">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Anexos Gerais (Laudos, Exames, etc)</label>
                                     <div
-                                        className="border-4 border-dashed border-slate-100 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center group hover:border-[#1D7874]/30 hover:bg-slate-50/50 transition-all cursor-pointer"
+                                        onDragOver={(e) => { e.preventDefault(); setDragOverId('general'); }}
+                                        onDragLeave={() => setDragOverId(null)}
+                                        onDrop={(e) => handleDrop(e, 'general')}
+                                        className={`border-4 border-dashed rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center group transition-all cursor-pointer ${dragOverId === 'general' ? 'border-[#1D7874] bg-[#1D7874]/5 scale-[1.01]' : 'border-slate-100 hover:border-[#1D7874]/30 hover:bg-slate-50/50'}`}
                                         onClick={() => document.getElementById('medical-file-input').click()}
                                     >
                                         <input
@@ -1233,7 +1262,13 @@ export default function MedicalControl() {
                                     />
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {DOC_TYPES.map(dt => (
-                                            <div key={dt.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4 group hover:border-teal-200 transition-all">
+                                            <div
+                                                key={dt.id}
+                                                onDragOver={(e) => { e.preventDefault(); setDragOverId(dt.id); }}
+                                                onDragLeave={() => setDragOverId(null)}
+                                                onDrop={(e) => handleDrop(e, dt.id)}
+                                                className={`p-5 rounded-2xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-lg'}`}
+                                            >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
                                                         <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
