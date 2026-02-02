@@ -1419,6 +1419,7 @@ export default function MedicalControl() {
                                                 <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Hoje - Janelas & Fluxo</p>
                                                 <ul className="space-y-2">
                                                     {[
+                                                        "Suporte a Drag & Drop (Arraste e Solte) para anexos",
                                                         "Nova estrutura de documentação categorizada",
                                                         "Validação numérica restritiva para CPF, CRM e Telefone",
                                                         "Melhoria visual premium nos menus de seleção (Dropdowns)",
