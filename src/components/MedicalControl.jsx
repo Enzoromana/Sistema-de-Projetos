@@ -538,8 +538,9 @@ export default function MedicalControl() {
                                     <Input
                                         label="CPF" required
                                         value={formData.ben_cpf}
-                                        onChange={v => setFormData({ ...formData, ben_cpf: v.replace(/\D/g, '') })}
+                                        onChange={v => setFormData({ ...formData, ben_cpf: v.replace(/\D/g, '').slice(0, 11) })}
                                         placeholder="00000000000 (Somente números)"
+                                        maxLength={11}
                                     />
                                     <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
                                     <Input label="E-mail" value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
@@ -1486,7 +1487,7 @@ function FormHeader({ icon, title, sub }) {
     );
 }
 
-function Input({ label, required, value, onChange, placeholder, type = "text" }) {
+function Input({ label, required, value, onChange, placeholder, type = "text", maxLength }) {
     return (
         <div className="space-y-2">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
@@ -1497,6 +1498,7 @@ function Input({ label, required, value, onChange, placeholder, type = "text" })
                 value={value || ''}
                 onChange={e => onChange(e.target.value)}
                 placeholder={placeholder}
+                maxLength={maxLength}
                 className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
             />
         </div>
