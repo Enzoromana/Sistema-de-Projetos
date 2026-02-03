@@ -336,7 +336,9 @@ export default function MedicalControl() {
             setAttachments([...attachments, ...files]);
         } else {
             if (!selectedRequest) {
-                alert("Para anexar documentos de etapas, por favor, finalize o cadastro inicial da junta primeiro.");
+                // Para criação, adicionar aos anexos gerais temporariamente
+                setAttachments(prev => [...prev, ...files]);
+                alert("Documento adicionado aos anexos. Será vinculado após salvar a junta.");
                 return;
             }
             const mockE = { target: { files: [files[0]], value: '' } };
@@ -793,21 +795,13 @@ export default function MedicalControl() {
                                         const file = e.target.files[0];
                                         if (!file) return;
 
-                                        // Simulação de "pré-upload" para o formulário
-                                        // No fluxo atual, o upload real para o Storage ocorre em handleCreateRequest
-                                        // Mas para documentos internos, usamos documentos_internos JSONB.
-                                        // Como o request ainda pode estar sendo CRIA-DO, precisamos de um estado temporário ou salvar direto se for edição.
-
                                         if (selectedRequest) {
-                                            // Se estivermos editando, podemos salvar direto
+                                            // Se estivermos editando, salvamos direto
                                             handleInternalFileUpload(e, typeId);
                                         } else {
-                                            // Se for criação, precisamos gerenciar localmente antes de salvar
-                                            // Por simplicidade técnica neste MVP, o usuário costuma criar e depois anexar documentos de "etapas"
-                                            // Mas vamos implementar uma lógica que permita anexar mesmo na criação se possível.
-                                            // ATENÇÃO: O fluxo de documentos_internos depende do requestId.
-                                            // Vou manter o comportamento de "Anexar" pedindo para salvar a junta primeiro se for nova.
-                                            alert("Para anexar documentos de etapas, por favor, finalize o cadastro inicial da junta primeiro.");
+                                            // Para criação, adicionar aos anexos gerais temporariamente
+                                            setAttachments(prev => [...prev, file]);
+                                            alert("Documento adicionado aos anexos. Será vinculado após salvar a junta.");
                                         }
                                         e.target.value = '';
                                     }}
@@ -1586,17 +1580,28 @@ function TussAutocomplete({ value, onChange }) {
 
     const handleSearch = (term) => {
         setSearch(term);
-        // Allow searching with even 1 digit if it mimics a code, but keeping 2 for performance is safer
         if (term.length < 2) {
             setResults([]);
             return;
         }
 
         const lowerTerm = term.toLowerCase();
-        // Limit to 50 results for performance
+
+        // Filter and sort: prioritize exact code matches first
         const filtered = TUSS_DATA.filter(item =>
-            item.label.toLowerCase().includes(lowerTerm) // Label usually contains "Code - Description"
-        ).slice(0, 50);
+            item.label.toLowerCase().includes(lowerTerm)
+        ).sort((a, b) => {
+            // Check if code starts with the search term (exact prefix match)
+            const aCodeMatch = a.code && a.code.toLowerCase().startsWith(lowerTerm);
+            const bCodeMatch = b.code && b.code.toLowerCase().startsWith(lowerTerm);
+
+            // Exact code match first
+            if (aCodeMatch && !bCodeMatch) return -1;
+            if (!aCodeMatch && bCodeMatch) return 1;
+
+            // If both match or both don't, keep original order
+            return 0;
+        }).slice(0, 50);
 
         setResults(filtered);
         setShowOptions(true);
