@@ -9,8 +9,7 @@ import {
     Box, Paperclip, AlertTriangle, Printer,
     ArrowLeft, Loader2
 } from 'lucide-react';
-// import TUSS_DATA from '../data/tuss.json';
-const TUSS_DATA = []; // Temporarily disabled for build debugging
+import TUSS_DATA from '../data/tuss.json';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
@@ -319,9 +318,9 @@ export default function MedicalControl() {
             // Update local state
             setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
             loadRequests();
-        } catch (e) {
-            console.error('Detalhes do erro de upload:', e);
-            alert(`Erro no upload: ${e.message || e.error_description || 'Erro desconhecido'}. \n\nVerifique se o bucket "medical-board" foi criado no Supabase e se as permissões de RLS permitem upload.`);
+        } catch (error) {
+            console.error('Detalhes do erro de upload:', error);
+            alert(`Erro no upload: ${error.message || error.error_description || 'Erro desconhecido'}. \n\nVerifique se o bucket "medical-board" foi criado no Supabase e se as permissões de RLS permitem upload.`);
         } finally {
             setUploadingInternal(null);
             if (e.target) e.target.value = '';

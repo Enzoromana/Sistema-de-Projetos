@@ -10,7 +10,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
-    Bell, User, ShieldCheck, LogOut, Loader2,
+    Bell, ShieldCheck, LogOut, Loader2,
     ShieldAlert, Activity
 } from 'lucide-react';
 
