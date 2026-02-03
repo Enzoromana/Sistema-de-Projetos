@@ -3,12 +3,11 @@ import { supabase } from '../lib/supabase';
 import {
     Plus, Activity, CheckCircle2, Clock,
     AlertCircle, Trash2, Edit3, X,
-    ChevronDown, ChevronRight, ChevronUp,
-    BarChart3, Target, Calendar, Users,
-    LayoutGrid, FileText, Search, Filter,
-    User, Mail, Phone, MapPin, Stethoscope,
+    BarChart3, Calendar,
+    FileText, Search,
+    User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, ArrowRight, Loader2, Save, Download
+    ArrowLeft, Loader2
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 
@@ -29,19 +28,22 @@ const DOC_TYPES = [
 ];
 
 const addBusinessDays = (date, days) => {
+    if (!date) return '';
     let result = new Date(date);
-    // Adjust for timezone offset to ensure we start essentially at 00:00:00 local
-    // Or just treat as pure string processing if needed, but Date object is safer.
-    // Adding 12h to avoid timezone flip glitches when just dealing with yyyy-mm-dd
+    if (isNaN(result.getTime())) return '';
+
+    // Adjust for timezone offset
     result.setHours(12, 0, 0, 0);
 
     let count = 0;
-    while (count < days) {
+    let iterations = 0;
+    while (count < days && iterations < 100) { // Safety limit of 100 iterations
         result.setDate(result.getDate() + 1);
         const day = result.getDay();
         if (day !== 0 && day !== 6) { // 0 = Sunday, 6 = Saturday
             count++;
         }
+        iterations++;
     }
     return result.toISOString().split('T')[0];
 };
