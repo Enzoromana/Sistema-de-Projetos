@@ -278,36 +278,38 @@ export default function MedicalControl() {
     };
 
     const handleInternalFileUpload = async (e, typeId) => {
-        const file = e.target.files[0];
-        if (!file || !selectedRequest) return;
+        const files = e.target.files ? Array.from(e.target.files) : [];
+        if (files.length === 0 || !selectedRequest) return;
 
         setUploadingInternal(typeId);
         try {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-            const filePath = `internal/${selectedRequest.id}/${fileName}`;
-
-            const { error: uploadError } = await supabase.storage
-                .from('medical-board')
-                .upload(filePath, file);
-
-            if (uploadError) throw uploadError;
-
-            // Get public URL or just store path
-            const { data: { publicUrl } } = supabase.storage.from('medical-board').getPublicUrl(filePath);
-
-            const newDoc = {
-                name: file.name,
-                path: filePath,
-                url: publicUrl,
-                uploaded_at: new Date().toISOString()
-            };
-
-            // Update JSONB in database
             const updatedDocs = { ...selectedRequest.documentos_internos };
             if (!updatedDocs[typeId]) updatedDocs[typeId] = [];
-            updatedDocs[typeId].push(newDoc);
 
+            for (const file of files) {
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+                const filePath = `internal/${selectedRequest.id}/${fileName}`;
+
+                const { error: uploadError } = await supabase.storage
+                    .from('medical-board')
+                    .upload(filePath, file);
+
+                if (uploadError) throw uploadError;
+
+                const { data: { publicUrl } } = supabase.storage.from('medical-board').getPublicUrl(filePath);
+
+                const newDoc = {
+                    name: file.name,
+                    path: filePath,
+                    url: publicUrl,
+                    uploaded_at: new Date().toISOString()
+                };
+
+                updatedDocs[typeId].push(newDoc);
+            }
+
+            // Update JSONB in database once after all uploads
             const { error: updateError } = await supabase
                 .from('medical_requests')
                 .update({ documentos_internos: updatedDocs })
@@ -343,7 +345,7 @@ export default function MedicalControl() {
                 alert("Documento adicionado aos anexos. Será vinculado após salvar a junta.");
                 return;
             }
-            const mockE = { target: { files: [files[0]], value: '' } };
+            const mockE = { target: { files: files, value: '' } };
             handleInternalFileUpload(mockE, typeId);
         }
     };
@@ -1292,6 +1294,7 @@ export default function MedicalControl() {
                                     <input
                                         type="file"
                                         id="internal-file-input"
+                                        multiple
                                         className="hidden"
                                         onChange={(e) => {
                                             const typeId = e.target.getAttribute('data-type-id');
@@ -1587,22 +1590,38 @@ function TussAutocomplete({ value, onChange }) {
             return;
         }
 
-        const lowerTerm = term.toLowerCase();
+        const lowerTerm = term.toLowerCase().trim();
 
-        // Filter and sort: prioritize exact code matches first
+        // Filter and sort: prioritize exact matches and prefix matches
         const filtered = TUSS_DATA.filter(item =>
-            item.label.toLowerCase().includes(lowerTerm)
+            item.code !== 'Código' && (
+                item.label.toLowerCase().includes(lowerTerm) ||
+                (item.code && item.code.toLowerCase().includes(lowerTerm))
+            )
         ).sort((a, b) => {
-            // Check if code starts with the search term (exact prefix match)
-            const aCodeMatch = a.code && a.code.toLowerCase().startsWith(lowerTerm);
-            const bCodeMatch = b.code && b.code.toLowerCase().startsWith(lowerTerm);
+            const aCode = (a.code || '').toLowerCase();
+            const bCode = (b.code || '').toLowerCase();
+            const aDesc = (a.description || '').toLowerCase();
+            const bDesc = (b.description || '').toLowerCase();
 
-            // Exact code match first
-            if (aCodeMatch && !bCodeMatch) return -1;
-            if (!aCodeMatch && bCodeMatch) return 1;
+            // 1. Exact code match
+            if (aCode === lowerTerm && bCode !== lowerTerm) return -1;
+            if (aCode !== lowerTerm && bCode === lowerTerm) return 1;
 
-            // If both match or both don't, keep original order
-            return 0;
+            // 2. Code starts with term
+            const aCodeStarts = aCode.startsWith(lowerTerm);
+            const bCodeStarts = bCode.startsWith(lowerTerm);
+            if (aCodeStarts && !bCodeStarts) return -1;
+            if (!aCodeStarts && bCodeStarts) return 1;
+
+            // 3. Description starts with term
+            const aDescStarts = aDesc.startsWith(lowerTerm);
+            const bDescStarts = bDesc.startsWith(lowerTerm);
+            if (aDescStarts && !bDescStarts) return -1;
+            if (!aDescStarts && bDescStarts) return 1;
+
+            // 4. Alphabetical order for the rest
+            return aCode.localeCompare(bCode);
         }).slice(0, 50);
 
         setResults(filtered);
