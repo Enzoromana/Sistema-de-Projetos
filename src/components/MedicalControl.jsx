@@ -75,18 +75,6 @@ export default function MedicalControl() {
     const [uploadingInternal, setUploadingInternal] = useState(null); // id do tipo de doc sendo enviado
     const [dragOverId, setDragOverId] = useState(null); // 'general' or doc type id
 
-    useEffect(() => {
-        loadRequests();
-    }, []);
-
-    // Calculate ANS deadline (21 business days) whenever 'aud_data' changes
-    useEffect(() => {
-        if (view === 'form' && formData.aud_data) {
-            const calculatedDate = addBusinessDays(formData.aud_data, 21);
-            setFormData(prev => ({ ...prev, prazo_ans: calculatedDate }));
-        }
-    }, [formData.aud_data, view]);
-
     const loadRequests = async () => {
         setLoading(true);
         try {
@@ -102,6 +90,19 @@ export default function MedicalControl() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        loadRequests();
+    }, []);
+
+    // Calculate ANS deadline (21 business days) whenever 'aud_data' changes
+    useEffect(() => {
+        if (view === 'form' && formData.aud_data) {
+            const calculatedDate = addBusinessDays(formData.aud_data, 21);
+            setFormData(prev => ({ ...prev, prazo_ans: calculatedDate }));
+        }
+    }, [formData.aud_data, view]);
+
 
     const handleCreateRequest = async () => {
         try {
@@ -584,7 +585,7 @@ export default function MedicalControl() {
                                     </div>
                                     <Input label="Data de Nascimento" type="date" value={formData.ben_nascimento} onChange={v => setFormData({ ...formData, ben_nascimento: v })} />
                                     <Input
-                                        label="Telefone"
+                                        label="Telefone" required
                                         value={formData.ben_telefone}
                                         onChange={v => setFormData({ ...formData, ben_telefone: v.replace(/\D/g, '') })}
                                         placeholder="21999999999 (Somente números)"
@@ -616,8 +617,7 @@ export default function MedicalControl() {
                                             value={formData.prazo_ans}
                                             onChange={() => { }} // Read-only
                                             type="date"
-                                            placeholder="Calculado automaticamente after 21 business days"
-                                            className="bg-slate-100 text-slate-500 cursor-not-allowed"
+                                            placeholder="Calculado automaticamente após 21 dias úteis"
                                         />
                                         <div className="absolute inset-0 bg-transparent cursor-not-allowed z-10" />
                                     </div>
