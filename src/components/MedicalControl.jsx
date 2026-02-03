@@ -8,7 +8,7 @@ import {
     LayoutGrid, FileText, Search, Filter,
     User, Mail, Phone, MapPin, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, ArrowRight, Loader2, Save, Download, Search as SearchIcon
+    ArrowLeft, ArrowRight, Loader2, Save, Download
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 
@@ -25,7 +25,7 @@ const DOC_TYPES = [
     { id: 'desempatadorEscolha', label: 'Desempatador Escolha' },
     { id: 'parecerFinal', label: 'Parecer final' },
     { id: 'fechamentoBeneficiario', label: 'Confirmação fechamento beneficiário' },
-    { id: 'fechamentoMedico', label: 'Confirmação fechamento médico' }
+    { id: 'fechamentoMedico', label: 'Confirmação fechamento médico' },
 ];
 
 const addBusinessDays = (date, days) => {
@@ -568,7 +568,6 @@ export default function MedicalControl() {
                                         placeholder="00000000000 (Somente números)"
                                         maxLength={11}
                                     />
-                                    <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
                                     <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
                                     <Input label="E-mail" required value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
                                     <div className="space-y-2">
@@ -1636,7 +1635,7 @@ function TussAutocomplete({ value, onChange }) {
                         </div>
                     ) : (
                         <div className="relative">
-                            <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
                             <input
                                 type="text"
                                 value={search}
