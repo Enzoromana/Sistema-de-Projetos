@@ -28,6 +28,24 @@ const DOC_TYPES = [
     { id: 'fechamentoMedico', label: 'Confirmação fechamento médico' }
 ];
 
+const addBusinessDays = (date, days) => {
+    let result = new Date(date);
+    // Adjust for timezone offset to ensure we start essentially at 00:00:00 local
+    // Or just treat as pure string processing if needed, but Date object is safer.
+    // Adding 12h to avoid timezone flip glitches when just dealing with yyyy-mm-dd
+    result.setHours(12, 0, 0, 0);
+
+    let count = 0;
+    while (count < days) {
+        result.setDate(result.getDate() + 1);
+        const day = result.getDay();
+        if (day !== 0 && day !== 6) { // 0 = Sunday, 6 = Saturday
+            count++;
+        }
+    }
+    return result.toISOString().split('T')[0];
+};
+
 export default function MedicalControl() {
     const [view, setView] = useState('list'); // 'list', 'form', or 'details'
     const [requests, setRequests] = useState([]);
@@ -60,6 +78,14 @@ export default function MedicalControl() {
     useEffect(() => {
         loadRequests();
     }, []);
+
+    // Calculate ANS deadline (21 business days) whenever 'aud_data' changes
+    useEffect(() => {
+        if (view === 'form' && formData.aud_data) {
+            const calculatedDate = addBusinessDays(formData.aud_data, 21);
+            setFormData(prev => ({ ...prev, prazo_ans: calculatedDate }));
+        }
+    }, [formData.aud_data, view]);
 
     const loadRequests = async () => {
         setLoading(true);
@@ -543,7 +569,8 @@ export default function MedicalControl() {
                                         maxLength={11}
                                     />
                                     <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
-                                    <Input label="E-mail" value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
+                                    <Input label="Nome Completo" required value={formData.ben_nome} onChange={v => setFormData({ ...formData, ben_nome: v })} placeholder="Nome do paciente" />
+                                    <Input label="E-mail" required value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Sexo</label>
                                         <select
@@ -584,6 +611,17 @@ export default function MedicalControl() {
                                     />
                                     <Input label="Estado (CRM)" value={formData.aud_estado} onChange={v => setFormData({ ...formData, aud_estado: v })} placeholder="UF" />
                                     <Input label="Data do Atendimento" type="date" value={formData.aud_data} onChange={v => setFormData({ ...formData, aud_data: v })} />
+                                    <div className="relative">
+                                        <Input
+                                            label="Prazo Limite (ANS)"
+                                            value={formData.prazo_ans}
+                                            onChange={() => { }} // Read-only
+                                            type="date"
+                                            placeholder="Calculado automaticamente after 21 business days"
+                                            className="bg-slate-100 text-slate-500 cursor-not-allowed"
+                                        />
+                                        <div className="absolute inset-0 bg-transparent cursor-not-allowed z-10" />
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -600,9 +638,9 @@ export default function MedicalControl() {
                                         onChange={v => setFormData({ ...formData, ass_crm: v.replace(/\D/g, '') })}
                                         placeholder="00000 (Somente números)"
                                     />
-                                    <Input label="E-mail" value={formData.ass_email} onChange={v => setFormData({ ...formData, ass_email: v })} placeholder="email@exemplo.com" />
+                                    <Input label="E-mail" required value={formData.ass_email} onChange={v => setFormData({ ...formData, ass_email: v })} placeholder="email@exemplo.com" />
                                     <Input
-                                        label="Telefone"
+                                        label="Telefone" required
                                         value={formData.ass_telefone}
                                         onChange={v => setFormData({ ...formData, ass_telefone: v.replace(/\D/g, '') })}
                                         placeholder="21999999999 (Somente números)"
@@ -634,13 +672,15 @@ export default function MedicalControl() {
                                 </div>
                                 <div className="space-y-4">
                                     {procedures.map((p, idx) => (
-                                        <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group">
-                                            <button
-                                                onClick={() => setProcedures(procedures.filter((_, i) => i !== idx))}
-                                                className="absolute top-4 right-4 p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                        <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group" style={{ zIndex: procedures.length - idx }}>
+                                            <div className="flex justify-end mb-4">
+                                                <button
+                                                    onClick={() => setProcedures(procedures.filter((_, i) => i !== idx))}
+                                                    className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 size={14} /> Remover Item
+                                                </button>
+                                            </div>
                                             <div className="grid grid-cols-1 gap-6">
                                                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
                                                     <div className="lg:col-span-3">
@@ -667,11 +707,11 @@ export default function MedicalControl() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <Input label="Justificativa Técnica" value={p.justificativa} onChange={v => {
+                                                    <Input label="Justificativa Técnica" required={Number(p.qtd_solicitada) !== Number(p.qtd_autorizada)} value={p.justificativa} onChange={v => {
                                                         const newP = [...procedures];
                                                         newP[idx].justificativa = v;
                                                         setProcedures(newP);
-                                                    }} placeholder="Descreva brevemente a necessidade clínica deste procedimento" />
+                                                    }} placeholder={Number(p.qtd_solicitada) !== Number(p.qtd_autorizada) ? "Obrigatório: Quantidades divergem" : "Descreva brevemente a necessidade clínica"} />
                                                 </div>
                                             </div>
                                         </div>
@@ -695,12 +735,14 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     {materials.map((m, idx) => (
                                         <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group">
-                                            <button
-                                                onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
-                                                className="absolute top-4 right-4 p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                            <div className="flex justify-end mb-4">
+                                                <button
+                                                    onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
+                                                    className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 size={14} /> Remover Item
+                                                </button>
+                                            </div>
                                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                                 <div className="md:col-span-2">
                                                     <Input label="Descrição" required value={m.descricao} onChange={v => {
@@ -720,11 +762,11 @@ export default function MedicalControl() {
                                                     setMaterials(newM);
                                                 }} />
                                                 <div className="md:col-span-4 mt-2">
-                                                    <Input label="Justificativa" value={m.justificativa} onChange={v => {
+                                                    <Input label="Justificativa" required={Number(m.qtd_solicitada) !== Number(m.qtd_autorizada)} value={m.justificativa} onChange={v => {
                                                         const newM = [...materials];
                                                         newM[idx].justificativa = v;
                                                         setMaterials(newM);
-                                                    }} placeholder="Justificativa técnica (opcional)" />
+                                                    }} placeholder={Number(m.qtd_solicitada) !== Number(m.qtd_autorizada) ? "Obrigatório: Quantidades divergem" : "Justificativa técnica (opcional)"} />
                                                 </div>
                                             </div>
                                         </div>
