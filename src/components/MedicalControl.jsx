@@ -1203,42 +1203,10 @@ export default function MedicalControl() {
                                             </div>
                                         </div>
 
-                                        {/* Section 4: Materials & OPME */}
-                                        {selectedRequest.medical_materials?.length > 0 && (
-                                            <div className="space-y-6 text-left">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <Box className="text-teal-700" size={20} /> V. Materiais & OPME
-                                                </h2>
-                                                <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
-                                                    <table className="w-full text-left">
-                                                        <thead className="bg-slate-50">
-                                                            <tr>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="divide-y divide-slate-100">
-                                                            {selectedRequest.medical_materials.map((m, i) => (
-                                                                <tr key={i} className="bg-white">
-                                                                    <td className="px-8 py-6">
-                                                                        <div className="font-bold text-slate-700">{m.descricao}</div>
-                                                                        {m.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
-                                                                    </td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        )}
-
                                         {/* Section 5: Procedures */}
                                         <div className="space-y-6 text-left">
                                             <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                <FileText className="text-teal-700" size={20} /> VI. Lista de Procedimentos
+                                                <FileText className="text-teal-700" size={20} /> V. Lista de Procedimentos
                                             </h2>
                                             <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
                                                 <table className="w-full text-left">
@@ -1256,7 +1224,7 @@ export default function MedicalControl() {
                                                                 <td className="px-8 py-6 font-bold text-teal-700">{p.codigo || '-'}</td>
                                                                 <td className="px-8 py-6 text-sm font-medium text-slate-600">
                                                                     <div className="font-bold">{p.descricao}</div>
-                                                                    {p.justificativa && <div className="text-[10px] text-slate-400 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
+                                                                    {p.justificativa && <div className="text-[10px] text-red-600 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
                                                                 </td>
                                                                 <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{p.qtd_solicitada}</td>
                                                                 <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{p.qtd_autorizada}</td>
@@ -1266,6 +1234,38 @@ export default function MedicalControl() {
                                                 </table>
                                             </div>
                                         </div>
+
+                                        {/* Section 6: Materials & OPME */}
+                                        {selectedRequest.medical_materials?.length > 0 && (
+                                            <div className="space-y-6 text-left">
+                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                                                    <Box className="text-teal-700" size={20} /> VI. Materiais & OPME
+                                                </h2>
+                                                <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
+                                                    <table className="w-full text-left">
+                                                        <thead className="bg-slate-50">
+                                                            <tr>
+                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
+                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
+                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody className="divide-y divide-slate-100">
+                                                            {selectedRequest.medical_materials.map((m, i) => (
+                                                                <tr key={i} className="bg-white">
+                                                                    <td className="px-8 py-6">
+                                                                        <div className="font-bold text-slate-700">{m.descricao}</div>
+                                                                        {m.justificativa && <div className="text-[10px] text-red-600 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
+                                                                    </td>
+                                                                    <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
+                                                                    <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Footer / Signatures */}
                                         <div className="pt-20 text-center space-y-20">
