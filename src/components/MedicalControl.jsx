@@ -1671,7 +1671,15 @@ export default function MedicalControl() {
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
                                             <p className="font-black text-[#1D7874] text-sm uppercase">4. Emissão de PDF</p>
-                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Gere o documento oficial da junta clicando no ícone de impressora na visualização de detalhes.</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Gere o documento inicial clicando no ícone de impressora na visualização de detalhes.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">5. Fase de Desempate</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Para solicitações divergentes, use o ícone de Martelo para inserir o parecer do desempatador e itens específicos.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">6. Parecer Final</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Após finalizar o desempate, imprima o Parecer de Junta Médica (ícone de Check verde) para o fechamento oficial.</p>
                                         </div>
                                     </div>
                                 </section>
@@ -1682,14 +1690,36 @@ export default function MedicalControl() {
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
                                             <div className="w-8 h-1 bg-amber-400 rounded-full" /> Notas de Atualização
                                         </h4>
-                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.1.0</span>
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.2.0</span>
                                     </div>
 
                                     <div className="space-y-4">
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Hoje - Janelas & Fluxo</p>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Hoje - Fase de Desempate (Terceira Opinião)</p>
+                                                <ul className="space-y-2">
+                                                    {[
+                                                        "Módulo de Terceira Opinião (Desempatador) com fluxo completo",
+                                                        "Novas seções para conclusões individuais de Procedimentos e Materiais",
+                                                        "Novo Relatório Executivo: Parecer de Junta Médica (Formatado para Impressão)",
+                                                        "Sincronização automática do status para 'Finalizado' após desempate",
+                                                        "Correção de busca TUSS (Prioridade por início do código)",
+                                                        "Atualização do código ANS da Klini (42.202-9)",
+                                                        "Remoção de restrições impeditivas de anexos (Status dinâmico)"
+                                                    ].map((note, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-medium text-slate-500 leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5" /> {note}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
+                                            <div>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Janelas & Fluxo</p>
                                                 <ul className="space-y-2">
                                                     {[
                                                         "Suporte a Drag & Drop (Arraste e Solte) para anexos",
