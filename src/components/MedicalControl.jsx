@@ -1263,9 +1263,57 @@ export default function MedicalControl() {
                                             </div>
                                         )}
 
-                                        {/* Block 6: Divergence (New Position) */}
+                                        {/* Block 6: Documents */}
+                                        <div className="mt-8 break-inside-avoid">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> VI. Documentos & Anexos
+                                            </h3>
+                                            <div className="border border-[#1D7874] bg-white text-xs">
+                                                {DOC_TYPES.map(type => {
+                                                    const docs = selectedRequest.documentos_internos?.[type.id];
+                                                    if (!docs || docs.length === 0) return null;
+                                                    return (
+                                                        <div key={type.id} className="p-3 border-b border-[#1D7874]/20 last:border-b-0">
+                                                            <p className="font-black text-[#1D7874] uppercase text-[10px] mb-1">{type.label}</p>
+                                                            <div className="space-y-1 pl-2">
+                                                                {docs.map((doc, i) => (
+                                                                    <div key={i} className="flex items-center gap-2">
+                                                                        <FileText size={10} className="text-slate-400" />
+                                                                        <span className="font-bold text-slate-700">{doc.name}</span>
+                                                                        <span className="text-[9px] text-slate-400">({new Date(doc.uploaded_at).toLocaleDateString('pt-BR')})</span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+
+                                                {/* General Attachments */}
+                                                {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
+                                                    <div className="p-3 border-b border-[#1D7874]/20 last:border-b-0">
+                                                        <p className="font-black text-[#1D7874] uppercase text-[10px] mb-1">Outros Anexos</p>
+                                                        <div className="space-y-1 pl-2">
+                                                            {selectedRequest.medical_attachments.map((att, i) => (
+                                                                <div key={i} className="flex items-center gap-2">
+                                                                    <Paperclip size={10} className="text-slate-400" />
+                                                                    <span className="font-bold text-slate-700">{att.file_name}</span>
+                                                                    <span className="text-[9px] text-slate-400">({new Date(att.created_at).toLocaleDateString('pt-BR')})</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Empty State */}
+                                                {(!selectedRequest.medical_attachments?.length && (!selectedRequest.documentos_internos || Object.keys(selectedRequest.documentos_internos).length === 0)) && (
+                                                    <div className="p-4 text-center italic text-slate-500">Nenhum documento anexado.</div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Block 7: Divergence (Renumbered) */}
                                         <div className="mt-8 border border-[#1D7874] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VI. Parecer de Divergência</h3>
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VII. Parecer de Divergência</h3>
                                             <div className="grid grid-cols-1 gap-y-1 relative z-10">
                                                 <div>
                                                     <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Especialidade Analisada</p>
