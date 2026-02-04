@@ -1844,9 +1844,37 @@ function RequestDetails({ request, onEdit, onBack }) {
                             <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
                         </div>
                     </div>
+
+                    <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Stethoscope size={20} className="text-teal-600" /> Médico Assistente</h3>
+                        <div className="space-y-4">
+                            <ReportItem label="Nome" value={request.ass_nome} />
+                            <div className="flex gap-4">
+                                <ReportItem label="CRM" value={request.ass_crm} className="flex-1" />
+                                <ReportItem label="Especialidade" value={request.ass_especialidade} className="flex-1" />
+                            </div>
+                            <ReportItem label="Email" value={request.ass_email} />
+                            <ReportItem label="Telefone" value={request.ass_telefone} />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-8">
+                    <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><AlertTriangle size={20} className="text-teal-600" /> Divergência</h3>
+                        <div className="space-y-4">
+                            <ReportItem label="Especialidade Afetada" value={request.div_especialidade} />
+                            <div className="space-y-2">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Motivos</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {request.div_motivos?.map((m, i) => (
+                                        <span key={i} className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600">{m}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
                         <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><FileText size={20} className="text-teal-600" /> Procedimentos</h3>
                         <div className="space-y-3">
