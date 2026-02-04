@@ -2006,7 +2006,7 @@ export default function MedicalControl() {
         <div class="last">
             <div class="section-title">IV. Operadora</div>
             <p class="field-value">Klini Planos de Saúde</p>
-            <p style="font-size: 11px; color: #64748b;">ANS: 422860</p>
+            <p style="font-size: 11px; color: #64748b;">ANS: 42.202-9</p>
         </div>
     </div>
 
@@ -2159,7 +2159,7 @@ export default function MedicalControl() {
                                         <div className="flex-1 p-4 bg-teal-50/30">
                                             <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">IV. Operadora</h3>
                                             <p className="text-sm font-bold">Klini Planos de Saúde</p>
-                                            <p className="text-xs text-slate-600">ANS: 422860</p>
+                                            <p className="text-xs text-slate-600">ANS: 42.202-9</p>
                                         </div>
                                     </div>
 
