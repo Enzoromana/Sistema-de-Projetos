@@ -78,6 +78,20 @@ export default function MedicalControl() {
     const [uploadingInternal, setUploadingInternal] = useState(null); // id do tipo de doc sendo enviado
     const [dragOverId, setDragOverId] = useState(null); // 'general' or doc type id
 
+    // Third Opinion (Tiebreaker) Modal State
+    const [showTiebreakerModal, setShowTiebreakerModal] = useState(false);
+    const [tiebreakerData, setTiebreakerData] = useState({
+        desempatador_nome: '',
+        desempatador_crm: '',
+        desempatador_especialidade: '',
+        desempate_ass_nome: '',
+        desempate_ass_crm: '',
+        desempate_ass_especialidade: '',
+        parecer_conclusao: ''
+    });
+    const [procedureConclusions, setProcedureConclusions] = useState([]); // [{id, conclusao_desempate}]
+    const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
+
     const loadRequests = async () => {
         setLoading(true);
         try {
@@ -328,24 +342,39 @@ export default function MedicalControl() {
         return count;
     };
 
-    const [showTiebreakerModal, setShowTiebreakerModal] = useState(false);
-    const [tiebreakerData, setTiebreakerData] = useState({
-        desempatador_nome: '', desempatador_crm: '', desempatador_especialidade: '',
-        desempate_ass_nome: '', desempate_ass_crm: '', desempate_ass_especialidade: '',
-        parecer_conclusao: ''
-    });
 
     const handleSaveTiebreaker = async () => {
         try {
+            // 1. Update main request with tiebreaker data
             const { error } = await supabase
                 .from('medical_requests')
                 .update({
                     ...tiebreakerData,
-                    situacao: 'Finalizado' // Auto-finalize or keep as specific status? User didn't specify, but implies conclusion.
+                    situacao: 'Finalizado'
                 })
                 .eq('id', selectedRequest.id);
 
             if (error) throw error;
+
+            // 2. Update procedure conclusions
+            for (const proc of procedureConclusions) {
+                if (proc.id && proc.conclusao_desempate !== undefined) {
+                    await supabase
+                        .from('medical_procedures')
+                        .update({ conclusao_desempate: proc.conclusao_desempate })
+                        .eq('id', proc.id);
+                }
+            }
+
+            // 3. Update material conclusions
+            for (const mat of materialConclusions) {
+                if (mat.id && mat.conclusao_desempate !== undefined) {
+                    await supabase
+                        .from('medical_materials')
+                        .update({ conclusao_desempate: mat.conclusao_desempate })
+                        .eq('id', mat.id);
+                }
+            }
 
             // Update local state
             setSelectedRequest(prev => ({ ...prev, ...tiebreakerData, situacao: 'Finalizado' }));
@@ -609,6 +638,28 @@ export default function MedicalControl() {
                                                                 desempate_ass_especialidade: r.desempate_ass_especialidade || '',
                                                                 parecer_conclusao: r.parecer_conclusao || ''
                                                             });
+                                                            // Initialize item-level conclusions
+                                                            setProcedureConclusions(
+                                                                (r.medical_procedures || []).map(p => ({
+                                                                    id: p.id,
+                                                                    codigo: p.codigo,
+                                                                    descricao: p.descricao,
+                                                                    justificativa: p.justificativa,
+                                                                    qtd_solicitada: p.qtd_solicitada,
+                                                                    qtd_autorizada: p.qtd_autorizada,
+                                                                    conclusao_desempate: p.conclusao_desempate || ''
+                                                                }))
+                                                            );
+                                                            setMaterialConclusions(
+                                                                (r.medical_materials || []).map(m => ({
+                                                                    id: m.id,
+                                                                    descricao: m.descricao,
+                                                                    justificativa: m.justificativa,
+                                                                    qtd_solicitada: m.qtd_solicitada,
+                                                                    qtd_autorizada: m.qtd_autorizada,
+                                                                    conclusao_desempate: m.conclusao_desempate || ''
+                                                                }))
+                                                            );
                                                             setShowTiebreakerModal(true);
                                                         }}
                                                         className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all border border-indigo-100"
@@ -1735,11 +1786,84 @@ export default function MedicalControl() {
                                     </div>
                                 </div>
 
-                                {/* Section 3: Conclusion */}
+                                {/* Section 3: Procedure Conclusions */}
+                                {procedureConclusions.length > 0 && (
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
+                                            <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">3. Conclusões dos Procedimentos</h4>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {procedureConclusions.map((proc, idx) => (
+                                                <div key={proc.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <div className="flex flex-wrap gap-2 text-xs mb-3">
+                                                        <span className="px-2 py-1 bg-[#1D7874]/10 text-[#1D7874] rounded font-bold">{proc.codigo || 'S/C'}</span>
+                                                        <span className="font-bold text-slate-700">{proc.descricao}</span>
+                                                        <span className="text-slate-400">Sol: {proc.qtd_solicitada} | Aut: {proc.qtd_autorizada}</span>
+                                                    </div>
+                                                    {proc.justificativa && (
+                                                        <p className="text-xs text-amber-600 font-medium mb-2">
+                                                            <strong>Justificativa:</strong> {proc.justificativa}
+                                                        </p>
+                                                    )}
+                                                    <Input
+                                                        label="Conclusão do Desempatador"
+                                                        value={proc.conclusao_desempate}
+                                                        onChange={v => {
+                                                            const updated = [...procedureConclusions];
+                                                            updated[idx].conclusao_desempate = v;
+                                                            setProcedureConclusions(updated);
+                                                        }}
+                                                        placeholder="Parecer sobre este procedimento..."
+                                                        labelClass="text-[#1D7874]"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Section 4: Material Conclusions */}
+                                {materialConclusions.length > 0 && (
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
+                                            <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">4. Conclusões dos Materiais</h4>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {materialConclusions.map((mat, idx) => (
+                                                <div key={mat.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <div className="flex flex-wrap gap-2 text-xs mb-3">
+                                                        <span className="font-bold text-slate-700">{mat.descricao}</span>
+                                                        <span className="text-slate-400">Sol: {mat.qtd_solicitada} | Aut: {mat.qtd_autorizada}</span>
+                                                    </div>
+                                                    {mat.justificativa && (
+                                                        <p className="text-xs text-amber-600 font-medium mb-2">
+                                                            <strong>Justificativa:</strong> {mat.justificativa}
+                                                        </p>
+                                                    )}
+                                                    <Input
+                                                        label="Conclusão do Desempatador"
+                                                        value={mat.conclusao_desempate}
+                                                        onChange={v => {
+                                                            const updated = [...materialConclusions];
+                                                            updated[idx].conclusao_desempate = v;
+                                                            setMaterialConclusions(updated);
+                                                        }}
+                                                        placeholder="Parecer sobre este material..."
+                                                        labelClass="text-[#1D7874]"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Section 5: Final Conclusion */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">3. Conclusão do Parecer</h4>
+                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">5. Conclusão Final do Parecer</h4>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-[#1D7874] uppercase tracking-widest ml-1">Parecer Final</label>
