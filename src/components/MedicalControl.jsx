@@ -1921,18 +1921,171 @@ export default function MedicalControl() {
                                 <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => {
-                                            const printContent = document.getElementById('tiebreaker-report-content');
+                                            const r = selectedRequest;
+                                            const printHTML = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Parecer de Junta Médica - ${r.requisicao}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; padding: 15mm; color: #1e293b; font-size: 12px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 4px solid #1D7874; padding-bottom: 16px; margin-bottom: 24px; }
+        .logo { display: flex; align-items: center; gap: 12px; color: #1D7874; }
+        .logo-icon { width: 48px; height: 48px; }
+        .logo h1 { font-size: 36px; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; margin: 0; line-height: 1; }
+        .logo p { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #64748b; margin: 0; }
+        .header-right { text-align: right; }
+        .header-right h2 { font-size: 18px; font-weight: 900; text-transform: uppercase; color: #1D7874; margin-bottom: 8px; }
+        .header-right p { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .header-right span { color: #1e293b; font-weight: 900; }
+        .section { border: 1px solid #1D7874; padding: 12px 16px; margin-bottom: 12px; }
+        .section-title { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #1D7874; margin-bottom: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .field-label { font-size: 9px; text-transform: uppercase; font-weight: 700; color: rgba(29, 120, 116, 0.7); }
+        .field-value { font-weight: 700; font-size: 13px; }
+        .professionals { display: flex; border: 1px solid #1D7874; margin-bottom: 12px; }
+        .professionals > div { flex: 1; padding: 12px 16px; }
+        .professionals > div:not(:last-child) { border-right: 1px solid #1D7874; }
+        .professionals .last { background: rgba(240, 253, 250, 0.3); }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #1D7874; }
+        th { background: #f0fdfa; border: 1px solid rgba(29, 120, 116, 0.2); padding: 8px; text-align: left; font-weight: 700; font-size: 10px; text-transform: uppercase; }
+        td { border: 1px solid rgba(29, 120, 116, 0.2); padding: 8px; }
+        .code { font-family: monospace; }
+        .center { text-align: center; }
+        .bold { font-weight: 700; }
+        .teal { color: #1D7874; }
+        .conclusion-box { border: 1px solid #1D7874; background: rgba(240, 253, 250, 0.3); padding: 16px; margin-top: 24px; }
+        .signature { margin-top: 48px; display: flex; justify-content: center; }
+        .sig-line { width: 200px; border-top: 1px solid #64748b; padding-top: 8px; text-align: center; }
+        .sig-line p { font-size: 11px; font-weight: 700; margin: 0; }
+        .sig-line span { font-size: 10px; color: #64748b; }
+        .footer { margin-top: 48px; text-align: center; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(29, 120, 116, 0.5); }
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#1D7874" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <div>
+                <h1>Klini</h1>
+                <p>Saúde & Bem-estar</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <h2>Parecer de Junta Médica</h2>
+            <p>Protocolo: <span style="font-size: 14px;">${r.requisicao}</span></p>
+            <p>Emissão: <span>${new Date().toLocaleDateString('pt-BR')}</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">I. Beneficiário</div>
+        <div class="grid-2">
+            <div><span class="field-label">Nome:</span> <span class="field-value">${r.ben_nome}</span></div>
+            <div><span class="field-label">CPF:</span> <span class="field-value">${r.ben_cpf}</span></div>
+        </div>
+    </div>
+
+    <div class="professionals">
+        <div>
+            <div class="section-title">II. Desempatador</div>
+            <p class="field-value">${r.desempatador_nome || '-'}</p>
+            <p style="font-size: 11px; color: #64748b;">CRM: ${r.desempatador_crm || '-'} • ${r.desempatador_especialidade || '-'}</p>
+        </div>
+        <div>
+            <div class="section-title">III. Médico Assistente (Final)</div>
+            <p class="field-value">${r.desempate_ass_nome || '-'}</p>
+            <p style="font-size: 11px; color: #64748b;">CRM: ${r.desempate_ass_crm || '-'} • ${r.desempate_ass_especialidade || '-'}</p>
+        </div>
+        <div class="last">
+            <div class="section-title">IV. Operadora</div>
+            <p class="field-value">Klini Planos de Saúde</p>
+            <p style="font-size: 11px; color: #64748b;">ANS: 422860</p>
+        </div>
+    </div>
+
+    ${(r.medical_procedures?.length > 0) ? `
+    <div style="margin-bottom: 12px;">
+        <div class="section-title" style="margin-bottom: 8px;">V. Procedimentos</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 80px;">TUSS</th>
+                    <th>Descrição</th>
+                    <th style="width: 50px;" class="center">Sol.</th>
+                    <th style="width: 50px;" class="center">Aut.</th>
+                    <th>Conclusão Desempatador</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${r.medical_procedures.map(p => `
+                    <tr>
+                        <td class="code">${p.codigo || '-'}</td>
+                        <td class="bold">${p.descricao}</td>
+                        <td class="center">${p.qtd_solicitada}</td>
+                        <td class="center bold teal">${p.qtd_autorizada}</td>
+                        <td>${p.conclusao_desempate || '-'}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+    ` : ''}
+
+    ${(r.medical_materials?.length > 0) ? `
+    <div style="margin-bottom: 12px;">
+        <div class="section-title" style="margin-bottom: 8px;">VI. Materiais & OPME</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th style="width: 50px;" class="center">Sol.</th>
+                    <th style="width: 50px;" class="center">Aut.</th>
+                    <th>Conclusão Desempatador</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${r.medical_materials.map(m => `
+                    <tr>
+                        <td class="bold">${m.descricao}</td>
+                        <td class="center">${m.qtd_solicitada}</td>
+                        <td class="center bold teal">${m.qtd_autorizada}</td>
+                        <td>${m.conclusao_desempate || '-'}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+    ` : ''}
+
+    <div class="conclusion-box">
+        <div class="section-title">VII. Conclusão Final do Parecer</div>
+        <p style="font-size: 12px; white-space: pre-wrap;">${r.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+    </div>
+
+    <div class="signature">
+        <div class="sig-line">
+            <p>${r.desempatador_nome || 'Desempatador'}</p>
+            <span>CRM: ${r.desempatador_crm || '-'}</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        Documento gerado eletronicamente em ${new Date().toLocaleString('pt-BR')} • ID: ${r.id}
+    </div>
+</body>
+</html>`;
                                             const winPrint = window.open('', '', 'width=900,height=650');
-                                            winPrint.document.write('<html><head><title>Parecer de Junta</title>');
-                                            winPrint.document.write('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">');
-                                            winPrint.document.write('<style>body{font-family:"Inter",sans-serif;padding:15mm;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #1D7874;padding:8px;text-align:left;font-size:11px;} th{background:#f0fdfa;} .header{display:flex;justify-content:space-between;border-bottom:4px solid #1D7874;padding-bottom:16px;margin-bottom:24px;} .section{margin-top:24px;} .section-title{font-size:11px;font-weight:900;text-transform:uppercase;color:#1D7874;margin-bottom:8px;} .conclusion{background:#f0fdfa;padding:16px;border:1px solid #1D7874;margin-top:24px;} .signature{margin-top:48px;display:flex;gap:48px;} .sig-line{border-top:1px solid #333;padding-top:8px;text-align:center;width:200px;font-size:11px;}</style>');
-                                            winPrint.document.write('</head><body>');
-                                            winPrint.document.write(printContent.innerHTML);
-                                            winPrint.document.write('</body></html>');
+                                            winPrint.document.write(printHTML);
                                             winPrint.document.close();
                                             winPrint.focus();
-                                            winPrint.print();
-                                            winPrint.close();
+                                            setTimeout(() => { winPrint.print(); winPrint.close(); }, 250);
                                         }}
                                         className="bg-white text-emerald-700 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl flex items-center gap-2 hover:bg-emerald-50"
                                     >
