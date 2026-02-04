@@ -1683,23 +1683,26 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">1. Dados do Desempatador</h4>
+                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">1. Dados do Desempatador</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
                                             label="Nome Completo"
                                             value={tiebreakerData.desempatador_nome}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_nome: v })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                         <Input
                                             label="Especialidade"
                                             value={tiebreakerData.desempatador_especialidade}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_especialidade: v })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                         <Input
                                             label="CRM"
                                             value={tiebreakerData.desempatador_crm}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v.replace(/\D/g, '') })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                     </div>
                                 </div>
@@ -1708,23 +1711,26 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">2. Médico Assistente (Opinião Final)</h4>
+                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">2. Médico Assistente (Opinião Final)</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
                                             label="Nome Completo"
                                             value={tiebreakerData.desempate_ass_nome}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_nome: v })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                         <Input
                                             label="Especialidade"
                                             value={tiebreakerData.desempate_ass_especialidade}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_especialidade: v })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                         <Input
                                             label="CRM"
                                             value={tiebreakerData.desempate_ass_crm}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_crm: v.replace(/\D/g, '') })}
+                                            labelClass="text-[#1D7874]"
                                         />
                                     </div>
                                 </div>
@@ -1733,10 +1739,10 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">3. Conclusão do Parecer</h4>
+                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">3. Conclusão do Parecer</h4>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Parecer Final</label>
+                                        <label className="text-[10px] font-black text-[#1D7874] uppercase tracking-widest ml-1">Parecer Final</label>
                                         <textarea
                                             value={tiebreakerData.parecer_conclusao}
                                             onChange={e => setTiebreakerData({ ...tiebreakerData, parecer_conclusao: e.target.value })}
@@ -1801,10 +1807,10 @@ function FormHeader({ icon, title, sub }) {
     );
 }
 
-function Input({ label, required, value, onChange, placeholder, type = "text", maxLength }) {
+function Input({ label, required, value, onChange, placeholder, type = "text", maxLength, labelClass = "text-slate-400" }) {
     return (
         <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+            <label className={`text-[10px] font-black ${labelClass} uppercase tracking-widest ml-1`}>
                 {label} {required && <span className="text-red-500 font-black">*</span>}
             </label>
             <input
