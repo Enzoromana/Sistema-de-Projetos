@@ -1283,21 +1283,7 @@ export default function MedicalControl() {
 
                                         </div>
 
-                                        {/* Signatures */}
-                                        <div className="mt-20 pt-8 border-t border-slate-200 flex justify-between break-inside-avoid">
-                                            <div className="text-center w-1/3">
-                                                <div className="border-t border-slate-400 pt-2">
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Assinatura Auditor</p>
-                                                    <p className="text-[9px] text-slate-900 mt-1 font-bold">{selectedRequest.aud_nome}</p>
-                                                </div>
-                                            </div>
-                                            <div className="text-center w-1/3">
-                                                <div className="border-t border-slate-400 pt-2">
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Responsável Técnico</p>
-                                                    <p className="text-[9px] text-[#1D7874] mt-1 font-bold">Klini Saúde</p>
-                                                </div>
-                                            </div>
-                                        </div>
+
 
                                         <div className="mt-12 text-center">
                                             <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#1D7874]/50">
