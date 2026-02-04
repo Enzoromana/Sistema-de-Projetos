@@ -91,6 +91,7 @@ export default function MedicalControl() {
     });
     const [procedureConclusions, setProcedureConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
+    const [showTiebreakerReportModal, setShowTiebreakerReportModal] = useState(false);
 
     const loadRequests = async () => {
         setLoading(true);
@@ -667,6 +668,15 @@ export default function MedicalControl() {
                                                     >
                                                         <Gavel size={18} />
                                                     </button>
+                                                    {r.parecer_conclusao && (
+                                                        <button
+                                                            onClick={() => { setSelectedRequest(r); setShowTiebreakerReportModal(true); }}
+                                                            className="p-3 text-emerald-600 bg-slate-50 hover:bg-emerald-600 hover:text-white rounded-xl transition-all border border-emerald-100"
+                                                            title="Imprimir Parecer de Junta"
+                                                        >
+                                                            <CheckCircle2 size={18} />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>
@@ -1887,6 +1897,198 @@ export default function MedicalControl() {
                                 >
                                     Finalizar <CheckCircle2 size={18} />
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+            {/* Tiebreaker Conclusion Report Modal */}
+            {
+                showTiebreakerReportModal && selectedRequest && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
+                            {/* Control Header (Hidden on Print) */}
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-emerald-600 text-white print:hidden">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-white/20 rounded-2xl shadow-lg">
+                                        <CheckCircle2 size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black tracking-tight">Parecer de Junta Médica</h3>
+                                        <p className="text-sm text-white/70 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => {
+                                            const printContent = document.getElementById('tiebreaker-report-content');
+                                            const winPrint = window.open('', '', 'width=900,height=650');
+                                            winPrint.document.write('<html><head><title>Parecer de Junta</title>');
+                                            winPrint.document.write('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">');
+                                            winPrint.document.write('<style>body{font-family:"Inter",sans-serif;padding:15mm;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #1D7874;padding:8px;text-align:left;font-size:11px;} th{background:#f0fdfa;} .header{display:flex;justify-content:space-between;border-bottom:4px solid #1D7874;padding-bottom:16px;margin-bottom:24px;} .section{margin-top:24px;} .section-title{font-size:11px;font-weight:900;text-transform:uppercase;color:#1D7874;margin-bottom:8px;} .conclusion{background:#f0fdfa;padding:16px;border:1px solid #1D7874;margin-top:24px;} .signature{margin-top:48px;display:flex;gap:48px;} .sig-line{border-top:1px solid #333;padding-top:8px;text-align:center;width:200px;font-size:11px;}</style>');
+                                            winPrint.document.write('</head><body>');
+                                            winPrint.document.write(printContent.innerHTML);
+                                            winPrint.document.write('</body></html>');
+                                            winPrint.document.close();
+                                            winPrint.focus();
+                                            winPrint.print();
+                                            winPrint.close();
+                                        }}
+                                        className="bg-white text-emerald-700 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl flex items-center gap-2 hover:bg-emerald-50"
+                                    >
+                                        <Printer size={18} /> Imprimir / Salvar PDF
+                                    </button>
+                                    <button onClick={() => setShowTiebreakerReportModal(false)} className="p-4 hover:bg-white/20 rounded-xl transition-all text-white/60 hover:text-white">
+                                        <X size={24} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Report Content Wrapper */}
+                            <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+                                <div
+                                    id="tiebreaker-report-content"
+                                    className="bg-white shadow-2xl border border-slate-200"
+                                    style={{
+                                        width: '210mm',
+                                        minHeight: '297mm',
+                                        fontFamily: "'Inter', sans-serif",
+                                        padding: '15mm',
+                                        margin: '0 auto',
+                                        boxSizing: 'border-box',
+                                        transform: 'scale(0.85)',
+                                        transformOrigin: 'top center'
+                                    }}
+                                >
+                                    {/* Header */}
+                                    <div className="flex justify-between items-end border-b-[4px] border-[#1D7874] pb-4 mb-6">
+                                        <div className="flex items-center gap-4 text-[#1D7874]">
+                                            <Activity size={48} className="stroke-[2.5]" />
+                                            <div>
+                                                <h1 className="text-4xl font-black tracking-tighter leading-none uppercase">Klini</h1>
+                                                <p className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 text-slate-600">Saúde & Bem-estar</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#1D7874]">Parecer de Junta Médica</h2>
+                                            <div className="mt-2 space-y-0.5">
+                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                    Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
+                                                </p>
+                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                    Emissão: <span className="text-slate-900 font-bold">{new Date().toLocaleDateString('pt-BR')}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Beneficiary */}
+                                    <div className="border border-[#1D7874] p-4 mb-4">
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">I. Beneficiário</h3>
+                                        <div className="grid grid-cols-2 gap-4 text-sm">
+                                            <div><span className="text-[9px] uppercase font-bold text-[#1D7874]/70">Nome:</span> <span className="font-bold">{selectedRequest.ben_nome}</span></div>
+                                            <div><span className="text-[9px] uppercase font-bold text-[#1D7874]/70">CPF:</span> <span className="font-bold">{selectedRequest.ben_cpf}</span></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Professionals */}
+                                    <div className="border border-[#1D7874] flex mb-4">
+                                        <div className="flex-1 p-4 border-r border-[#1D7874]">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">II. Desempatador</h3>
+                                            <p className="text-sm font-bold">{selectedRequest.desempatador_nome || '-'}</p>
+                                            <p className="text-xs text-slate-600">CRM: {selectedRequest.desempatador_crm || '-'} • {selectedRequest.desempatador_especialidade || '-'}</p>
+                                        </div>
+                                        <div className="flex-1 p-4 border-r border-[#1D7874]">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente (Final)</h3>
+                                            <p className="text-sm font-bold">{selectedRequest.desempate_ass_nome || '-'}</p>
+                                            <p className="text-xs text-slate-600">CRM: {selectedRequest.desempate_ass_crm || '-'} • {selectedRequest.desempate_ass_especialidade || '-'}</p>
+                                        </div>
+                                        <div className="flex-1 p-4 bg-teal-50/30">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">IV. Operadora</h3>
+                                            <p className="text-sm font-bold">Klini Planos de Saúde</p>
+                                            <p className="text-xs text-slate-600">ANS: 422860</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Procedures Table */}
+                                    {selectedRequest.medical_procedures?.length > 0 && (
+                                        <div className="mb-4">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2">V. Procedimentos</h3>
+                                            <table className="w-full text-left border border-[#1D7874] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                                    <tr>
+                                                        <th className="p-2 border-r border-[#1D7874]/20 w-20">TUSS</th>
+                                                        <th className="p-2 border-r border-[#1D7874]/20">Descrição</th>
+                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Sol.</th>
+                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Aut.</th>
+                                                        <th className="p-2">Conclusão Desempatador</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {selectedRequest.medical_procedures.map((p, i) => (
+                                                        <tr key={i} className="border-b border-[#1D7874]/20">
+                                                            <td className="p-2 border-r border-[#1D7874]/20 font-mono">{p.codigo || '-'}</td>
+                                                            <td className="p-2 border-r border-[#1D7874]/20 font-bold">{p.descricao}</td>
+                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center">{p.qtd_solicitada}</td>
+                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center font-bold text-[#1D7874]">{p.qtd_autorizada}</td>
+                                                            <td className="p-2">{p.conclusao_desempate || '-'}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    )}
+
+                                    {/* Materials Table */}
+                                    {selectedRequest.medical_materials?.length > 0 && (
+                                        <div className="mb-4">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2">VI. Materiais & OPME</h3>
+                                            <table className="w-full text-left border border-[#1D7874] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                                    <tr>
+                                                        <th className="p-2 border-r border-[#1D7874]/20">Descrição</th>
+                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Sol.</th>
+                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Aut.</th>
+                                                        <th className="p-2">Conclusão Desempatador</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {selectedRequest.medical_materials.map((m, i) => (
+                                                        <tr key={i} className="border-b border-[#1D7874]/20">
+                                                            <td className="p-2 border-r border-[#1D7874]/20 font-bold">{m.descricao}</td>
+                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center">{m.qtd_solicitada}</td>
+                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center font-bold text-[#1D7874]">{m.qtd_autorizada}</td>
+                                                            <td className="p-2">{m.conclusao_desempate || '-'}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    )}
+
+                                    {/* Final Conclusion */}
+                                    <div className="border border-[#1D7874] bg-teal-50/30 p-4 mt-6">
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">VII. Conclusão Final do Parecer</h3>
+                                        <p className="text-sm font-medium text-slate-800 whitespace-pre-wrap">{selectedRequest.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+                                    </div>
+
+                                    {/* Signature Block */}
+                                    <div className="mt-12 flex justify-around">
+                                        <div className="text-center">
+                                            <div className="w-48 border-t border-slate-400 pt-2">
+                                                <p className="text-xs font-bold">{selectedRequest.desempatador_nome || 'Desempatador'}</p>
+                                                <p className="text-[10px] text-slate-500">CRM: {selectedRequest.desempatador_crm || '-'}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="mt-12 text-center">
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#1D7874]/50">
+                                            Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
