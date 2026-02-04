@@ -1654,37 +1654,55 @@ function TussAutocomplete({ value, onChange }) {
         }
 
         const lowerTerm = term.toLowerCase().trim();
+        const cleanTerm = lowerTerm.replace(/[^a-z0-9]/g, ''); // Strip dots, dashes, spaces for code matching
 
         // Filter and sort: prioritize exact matches and prefix matches
-        const filtered = TUSS_DATA.filter(item =>
-            item.code !== 'Código' && (
-                item.label.toLowerCase().includes(lowerTerm) ||
-                (item.code && item.code.toLowerCase().includes(lowerTerm))
-            )
-        ).sort((a, b) => {
+        const filtered = TUSS_DATA.filter(item => {
+            if (item.code === 'Código') return false;
+
+            const itemCode = (item.code || '').toLowerCase();
+            const cleanItemCode = itemCode.replace(/[^a-z0-9]/g, '');
+            const itemLabel = item.label.toLowerCase();
+
+            // Match against original label OR cleaned code (supports "10.10.10.12" input matching "10101012")
+            return itemLabel.includes(lowerTerm) || cleanItemCode.includes(cleanTerm);
+        }).sort((a, b) => {
             const aCode = (a.code || '').toLowerCase();
             const bCode = (b.code || '').toLowerCase();
+            const cleanACode = aCode.replace(/[^a-z0-9]/g, '');
+            const cleanBCode = bCode.replace(/[^a-z0-9]/g, '');
 
-            // 1. Exact code match
-            if (aCode === lowerTerm && bCode !== lowerTerm) return -1;
-            if (aCode !== lowerTerm && bCode === lowerTerm) return 1;
+            // 1. Exact code match (Cleaned)
+            if (cleanACode === cleanTerm && cleanBCode !== cleanTerm) return -1;
+            if (cleanACode !== cleanTerm && cleanBCode === cleanTerm) return 1;
 
             // 2. Code starts with term (prefix match) - HIGHEST PRIORITY after exact match
-            const aCodeStarts = aCode.startsWith(lowerTerm);
-            const bCodeStarts = bCode.startsWith(lowerTerm);
+            const aCodeStarts = cleanACode.startsWith(cleanTerm);
+            const bCodeStarts = cleanBCode.startsWith(cleanTerm);
             if (aCodeStarts && !bCodeStarts) return -1;
             if (!aCodeStarts && bCodeStarts) return 1;
 
-            // 3. String length difference (closer length to term is better if it starts with it)
+            // 3. String length difference
             if (aCodeStarts && bCodeStarts) {
                 return aCode.length - bCode.length;
             }
 
-            // 4. Alphabetical order for the rest
+            // 4. Alphabetical order
             return aCode.localeCompare(bCode);
-        }).slice(0, 100);
+        });
 
-        setResults(filtered);
+        // Deduplication (keep first occurrence of each code)
+        const uniqueResults = [];
+        const seenCodes = new Set();
+        for (const item of filtered) {
+            if (!seenCodes.has(item.code)) {
+                seenCodes.add(item.code);
+                uniqueResults.push(item);
+                if (uniqueResults.length >= 100) break;
+            }
+        }
+
+        setResults(uniqueResults);
         setShowOptions(true);
     };
 
