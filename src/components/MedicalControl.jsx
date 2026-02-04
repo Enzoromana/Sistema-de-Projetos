@@ -1697,16 +1697,17 @@ export default function MedicalControl() {
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Hoje - Fase de Desempate (Terceira Opinião)</p>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Jan/2026 - Fase de Desempate (Terceira Opinião)</p>
                                                 <ul className="space-y-2">
                                                     {[
-                                                        "Módulo de Terceira Opinião (Desempatador) com fluxo completo",
-                                                        "Novas seções para conclusões individuais de Procedimentos e Materiais",
-                                                        "Novo Relatório Executivo: Parecer de Junta Médica (Formatado para Impressão)",
-                                                        "Sincronização automática do status para 'Finalizado' após desempate",
-                                                        "Correção de busca TUSS (Prioridade por início do código)",
-                                                        "Atualização do código ANS da Klini (42.202-9)",
-                                                        "Remoção de restrições impeditivas de anexos (Status dinâmico)"
+                                                        "Lançamento do Módulo de Terceira Opinião (Desempatador): Fluxo completo para resolução de divergências médicas entre auditoria e assistente.",
+                                                        "Conclusões Item-a-Item: Possibilidade de registrar o veredito do desempatador individualmente para cada Procedimento e Material, com justificativas específicas.",
+                                                        "Relatório Executivo de Parecer: Novo layout 'Parecer de Junta Médica' em alta densidade, formatado para impressão oficial com CSS inline para fidelidade visual.",
+                                                        "Inteligência na Busca TUSS: Motor de busca otimizado com priorização por prefixo (início do código) e limite expandido para 100 resultados simultâneos.",
+                                                        "Sincronização de Status: Transição automática da solicitação para o estado 'Finalizado' imediatamente após o registro do parecer de desempate.",
+                                                        "Ajuste de Conformidade ANS: Atualização do registro ANS da Klini para o código correto (42.202-9) em todos os documentos gerados.",
+                                                        "Status Dinâmico de Anexos: Remoção de bloqueios impeditivos na fase de auditoria, permitindo maior fluidez no processo sem travas de 'Pendência' obrigatória.",
+                                                        "Destaque em Auditoria: Observações e justificativas de itens agora são destacadas em Vermelho no PDF para facilitar a leitura rápida do médico."
                                                     ].map((note, i) => (
                                                         <li key={i} className="flex items-start gap-2 text-xs font-medium text-slate-500 leading-relaxed">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5" /> {note}
@@ -1717,21 +1718,21 @@ export default function MedicalControl() {
                                         </div>
 
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
-                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
+                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-200 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Janelas & Fluxo</p>
+                                                <p className="text-xs font-black text-slate-500 uppercase tracking-tight mb-2">Dez/2025 - Janelas & Fluxo</p>
                                                 <ul className="space-y-2">
                                                     {[
-                                                        "Suporte a Drag & Drop (Arraste e Solte) para anexos",
-                                                        "Nova estrutura de documentação categorizada",
-                                                        "Validação numérica restritiva para CPF, CRM e Telefone",
-                                                        "Melhoria visual premium nos menus de seleção (Dropdowns)",
-                                                        "Sidebar de fases mais compacta e limpa",
-                                                        "Correção de campos e labels cortados na tela de preenchimento",
-                                                        "Lançamento do Portal de Ajuda e Release Notes"
+                                                        "Suporte a Drag & Drop (Arraste e Solte) para anexos direto nas pastas",
+                                                        "Nova estrutura de documentação categorizada por tipo de anexo",
+                                                        "Validação numérica restritiva para CPF, CRM e Telefone (apenas números)",
+                                                        "Melhoria visual premium nos menus de seleção e dropdowns de especialidade",
+                                                        "Sidebar de fases mais compacta e limpa para navegação ágil",
+                                                        "Correção de campos e labels que eram cortados em telas menores",
+                                                        "Lançamento do Portal de Ajuda Integrado e Central de Notas"
                                                     ].map((note, i) => (
-                                                        <li key={i} className="flex items-start gap-2 text-xs font-medium text-slate-500 leading-relaxed">
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-1.5" /> {note}
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-medium text-slate-400 leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5" /> {note}
                                                         </li>
                                                     ))}
                                                 </ul>
