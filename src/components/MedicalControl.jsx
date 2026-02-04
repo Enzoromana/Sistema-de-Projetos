@@ -1902,6 +1902,51 @@ function RequestDetails({ request, onEdit, onBack }) {
                             </div>
                         </div>
                     )}
+
+                    <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Paperclip size={20} className="text-teal-600" /> Documentos e Anexos</h3>
+                        <div className="space-y-6">
+                            {/* Documentos Internos */}
+                            <div className="space-y-3">
+                                <h4 className="text-sm font-bold text-slate-700 border-b border-slate-200 pb-2">Documentos Internos</h4>
+                                {DOC_TYPES.map(dt => {
+                                    const docs = request.documentos_internos?.[dt.id] || [];
+                                    if (docs.length === 0) return null;
+                                    return (
+                                        <div key={dt.id} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{dt.label}</p>
+                                            <div className="space-y-2">
+                                                {docs.map((doc, idx) => (
+                                                    <a key={idx} href={doc.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-teal-600 hover:text-teal-700 transition-colors group">
+                                                        <FileText size={14} />
+                                                        <span className="text-xs font-bold group-hover:underline">{doc.name}</span>
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                {!Object.values(request.documentos_internos || {}).some(arr => arr?.length > 0) && (
+                                    <p className="text-xs text-slate-400 italic">Nenhum documento interno anexado.</p>
+                                )}
+                            </div>
+
+                            {/* Anexos Gerais */}
+                            {request.medical_attachments?.length > 0 && (
+                                <div className="space-y-3 pt-4 border-t border-slate-200">
+                                    <h4 className="text-sm font-bold text-slate-700 pb-2">Anexos Gerais</h4>
+                                    <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm space-y-2">
+                                        {request.medical_attachments.map((att, idx) => (
+                                            <a key={idx} href={att.file_path} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-teal-600 hover:text-teal-700 transition-colors group">
+                                                <Paperclip size={14} />
+                                                <span className="text-xs font-bold group-hover:underline">{att.file_name}</span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="mt-10 pt-10 border-t border-slate-100 flex justify-end">
