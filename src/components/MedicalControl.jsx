@@ -7,7 +7,7 @@ import {
     FileText, Search,
     User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, Loader2
+    ArrowLeft, Loader2, Gavel
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 
@@ -328,6 +328,35 @@ export default function MedicalControl() {
         return count;
     };
 
+    const [showTiebreakerModal, setShowTiebreakerModal] = useState(false);
+    const [tiebreakerData, setTiebreakerData] = useState({
+        desempatador_nome: '', desempatador_crm: '', desempatador_especialidade: '',
+        desempate_ass_nome: '', desempate_ass_crm: '', desempate_ass_especialidade: '',
+        parecer_conclusao: ''
+    });
+
+    const handleSaveTiebreaker = async () => {
+        try {
+            const { error } = await supabase
+                .from('medical_requests')
+                .update({
+                    ...tiebreakerData,
+                    situacao: 'Finalizado' // Auto-finalize or keep as specific status? User didn't specify, but implies conclusion.
+                })
+                .eq('id', selectedRequest.id);
+
+            if (error) throw error;
+
+            // Update local state
+            setSelectedRequest(prev => ({ ...prev, ...tiebreakerData, situacao: 'Finalizado' }));
+            setShowTiebreakerModal(false);
+            loadRequests();
+        } catch (error) {
+            console.error('Erro ao salvar desempate:', error);
+            alert('Erro ao salvar o parecer de desempate.');
+        }
+    };
+
     const handleInternalFileUpload = async (e, typeId) => {
         const files = e.target.files ? Array.from(e.target.files) : [];
         if (files.length === 0 || !selectedRequest) return;
@@ -564,8 +593,28 @@ export default function MedicalControl() {
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowReportModal(true); }}
                                                         className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all"
+                                                        title="Visualizar Relatório"
                                                     >
                                                         <Printer size={18} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setSelectedRequest(r);
+                                                            setTiebreakerData({
+                                                                desempatador_nome: r.desempatador_nome || '',
+                                                                desempatador_crm: r.desempatador_crm || '',
+                                                                desempatador_especialidade: r.desempatador_especialidade || '',
+                                                                desempate_ass_nome: r.desempate_ass_nome || '',
+                                                                desempate_ass_crm: r.desempate_ass_crm || '',
+                                                                desempate_ass_especialidade: r.desempate_ass_especialidade || '',
+                                                                parecer_conclusao: r.parecer_conclusao || ''
+                                                            });
+                                                            setShowTiebreakerModal(true);
+                                                        }}
+                                                        className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all border border-indigo-100"
+                                                        title="Conclusão Junta"
+                                                    >
+                                                        <Gavel size={18} />
                                                     </button>
                                                 </div>
                                             </td>
@@ -1604,6 +1653,108 @@ export default function MedicalControl() {
                             <div className="p-8 border-t border-slate-100 flex justify-end bg-slate-50/50">
                                 <button onClick={() => setShowHelpModal(false)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-slate-100 hover:scale-105 active:scale-95">
                                     Entendido
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            {
+                showTiebreakerModal && (
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-indigo-600 text-white">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-white/20 rounded-2xl">
+                                        <Gavel size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black tracking-tight">Conclusão de Desempate</h3>
+                                        <p className="text-sm font-black text-white/60 uppercase tracking-widest leading-none mt-1">Junta Médica</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setShowTiebreakerModal(false)} className="p-2 hover:bg-white/10 rounded-xl transition-all text-white/60 hover:text-white">
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto p-10 space-y-8">
+                                {/* Section 1: Desempatador */}
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">1. Dados do Desempatador</h4>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Input
+                                            label="Nome Completo"
+                                            value={tiebreakerData.desempatador_nome}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_nome: v })}
+                                        />
+                                        <Input
+                                            label="Especialidade"
+                                            value={tiebreakerData.desempatador_especialidade}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_especialidade: v })}
+                                        />
+                                        <Input
+                                            label="CRM / UF"
+                                            value={tiebreakerData.desempatador_crm}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v })}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Section 2: Assistant Physician (Tiebreaker Phase) */}
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">2. Médico Assistente (Opinião Final)</h4>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Input
+                                            label="Nome Completo"
+                                            value={tiebreakerData.desempate_ass_nome}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_nome: v })}
+                                        />
+                                        <Input
+                                            label="Especialidade"
+                                            value={tiebreakerData.desempate_ass_especialidade}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_especialidade: v })}
+                                        />
+                                        <Input
+                                            label="CRM / UF"
+                                            value={tiebreakerData.desempate_ass_crm}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_crm: v })}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Section 3: Conclusion */}
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">3. Conclusão do Parecer</h4>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Parecer Final</label>
+                                        <textarea
+                                            value={tiebreakerData.parecer_conclusao}
+                                            onChange={e => setTiebreakerData({ ...tiebreakerData, parecer_conclusao: e.target.value })}
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all min-h-[150px]"
+                                            placeholder="Descreva a conclusão final da junta médica..."
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+                                <button onClick={() => setShowTiebreakerModal(false)} className="px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleSaveTiebreaker}
+                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-200 flex items-center gap-2"
+                                >
+                                    Finalizar Desempate <CheckCircle2 size={18} />
                                 </button>
                             </div>
                         </div>
