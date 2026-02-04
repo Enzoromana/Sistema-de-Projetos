@@ -1191,18 +1191,11 @@ export default function MedicalControl() {
                                                     <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex-1 p-4 border-r border-[#1D7874]">
+                                            <div className="flex-1 p-4 bg-teal-50/10">
                                                 <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente</h3>
                                                 <div className="space-y-1">
                                                     <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
                                                     <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
-                                                </div>
-                                            </div>
-                                            <div className="flex-1 p-4 bg-teal-50/10">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">IV. Divergência</h3>
-                                                <div className="space-y-1">
-                                                    <p className="text-xs font-bold text-slate-800">{selectedRequest.div_especialidade}</p>
-                                                    <p className="text-[10px] leading-tight text-slate-600">{selectedRequest.div_motivos?.join(', ')}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1210,7 +1203,7 @@ export default function MedicalControl() {
                                         {/* Table: Procedures */}
                                         <div className="mt-8 break-inside-avoid">
                                             <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> V. Procedimentos Solicitados
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> IV. Procedimentos Solicitados
                                             </h3>
                                             <table className="w-full text-left border border-[#1D7874] text-xs">
                                                 <thead className="bg-teal-50 border-b border-[#1D7874]">
@@ -1244,7 +1237,7 @@ export default function MedicalControl() {
                                         {selectedRequest.medical_materials?.length > 0 && (
                                             <div className="mt-6 break-inside-avoid">
                                                 <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> VI. Materiais & OPME
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> V. Materiais & OPME
                                                 </h3>
                                                 <table className="w-full text-left border border-[#1D7874] text-xs">
                                                     <thead className="bg-teal-50 border-b border-[#1D7874]">
@@ -1269,6 +1262,26 @@ export default function MedicalControl() {
                                                 </table>
                                             </div>
                                         )}
+
+                                        {/* Block 6: Divergence (New Position) */}
+                                        <div className="mt-8 border border-[#1D7874] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VI. Parecer de Divergência</h3>
+                                            <div className="grid grid-cols-1 gap-y-1 relative z-10">
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Especialidade Analisada</p>
+                                                    <p className="text-sm font-bold text-slate-900">{selectedRequest.div_especialidade}</p>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Considerações Técnicas</p>
+                                                    <div className="flex flex-wrap gap-2 mt-1">
+                                                        {selectedRequest.div_motivos?.map((m, i) => (
+                                                            <span key={i} className="px-3 py-1 bg-white border border-[#1D7874]/30 rounded text-[10px] font-bold text-[#1D7874]">{m}</span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
 
                                         {/* Signatures */}
                                         <div className="mt-20 pt-8 border-t border-slate-200 flex justify-between break-inside-avoid">
