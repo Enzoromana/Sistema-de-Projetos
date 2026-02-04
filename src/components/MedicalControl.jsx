@@ -7,7 +7,7 @@ import {
     FileText, Search,
     User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, Loader2, Gavel
+    ArrowLeft, Loader2, Gavel, Download
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 
@@ -54,6 +54,9 @@ export default function MedicalControl() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
+    const [specialtyFilter, setSpecialtyFilter] = useState('');
+    const [doctorSearch, setDoctorSearch] = useState('');
+    const [crmSearch, setCrmSearch] = useState('');
 
     // Form State
     const [currentStep, setCurrentStep] = useState(0);
@@ -479,10 +482,21 @@ export default function MedicalControl() {
     };
 
     const filteredRequests = requests.filter(r => {
-        const matchSearch = r.ben_nome.toLowerCase().includes(searchTerm.toLowerCase()) || r.requisicao.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchSearch = r.ben_nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            r.requisicao.toLowerCase().includes(searchTerm.toLowerCase());
         const matchStatus = statusFilter === '' || r.situacao === statusFilter;
-        return matchSearch && matchStatus;
+        const matchSpecialty = specialtyFilter === '' || r.div_especialidade === specialtyFilter;
+
+        const matchDoctor = doctorSearch === '' || [r.aud_nome, r.ass_nome, r.desempatador_nome, r.desempate_ass_nome]
+            .some(name => name?.toLowerCase().includes(doctorSearch.toLowerCase()));
+
+        const matchCRM = crmSearch === '' || [r.aud_crm, r.ass_crm, r.desempatador_crm, r.desempate_ass_crm]
+            .some(crm => crm?.toLowerCase().includes(crmSearch.toLowerCase()));
+
+        return matchSearch && matchStatus && matchSpecialty && matchDoctor && matchCRM;
     });
+
+    const specialties = [...new Set(requests.map(r => r.div_especialidade).filter(Boolean))].sort();
 
     const stats = {
         total: requests.length,
@@ -555,25 +569,62 @@ export default function MedicalControl() {
                     </div>
 
                     {/* Table Filters */}
-                    <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col md:flex-row gap-4 items-center">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={20} />
-                            <input
-                                type="text"
-                                placeholder="Buscar por beneficiário ou requisição..."
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
-                            />
+                    <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="relative flex-2 w-full md:w-2/5">
+                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={20} />
+                                <input
+                                    type="text"
+                                    placeholder="Beneficiário ou requisição..."
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                />
+                            </div>
+                            <div className="flex-1 w-full">
+                                <select
+                                    value={statusFilter}
+                                    onChange={e => setStatusFilter(e.target.value)}
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#1D7874]/10"
+                                >
+                                    <option value="">Todos os status</option>
+                                    {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                            <div className="flex-1 w-full">
+                                <select
+                                    value={specialtyFilter}
+                                    onChange={e => setSpecialtyFilter(e.target.value)}
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#1D7874]/10"
+                                >
+                                    <option value="">Todas as especialidades</option>
+                                    {specialties.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
                         </div>
-                        <select
-                            value={statusFilter}
-                            onChange={e => setStatusFilter(e.target.value)}
-                            className="px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#1D7874]/10 min-w-[240px]"
-                        >
-                            <option value="">Todos os status</option>
-                            {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
-                        </select>
+
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="relative flex-1 w-full">
+                                <User className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por nome do médico..."
+                                    value={doctorSearch}
+                                    onChange={e => setDoctorSearch(e.target.value)}
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                />
+                            </div>
+                            <div className="relative flex-1 w-full">
+                                <Stethoscope className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por CRM..."
+                                    value={crmSearch}
+                                    onChange={e => setCrmSearch(e.target.value)}
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     {/* Requests Table */}
@@ -2632,7 +2683,40 @@ function RequestDetails({ request, onEdit, onBack }) {
                     )}
 
                     <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Paperclip size={20} className="text-teal-600" /> Documentos e Anexos</h3>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <h3 className="text-lg font-black text-slate-800 flex items-center gap-2">
+                                <Paperclip size={20} className="text-teal-600" /> Documentos e Anexos
+                            </h3>
+                            <button
+                                onClick={() => {
+                                    const allDocs = [
+                                        ...Object.values(request.documentos_internos || {}).flat(),
+                                        ...(request.medical_attachments || []).map(a => ({ url: a.file_path, name: a.file_name }))
+                                    ].filter(d => d.url || d.file_path);
+
+                                    if (allDocs.length === 0) {
+                                        alert('Nenhum documento para baixar.');
+                                        return;
+                                    }
+
+                                    allDocs.forEach((doc, index) => {
+                                        setTimeout(() => {
+                                            const link = document.createElement('a');
+                                            link.href = doc.url || doc.file_path;
+                                            link.target = '_blank';
+                                            link.download = doc.name || 'documento';
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                        }, index * 400); // 400ms delay to prevent browser block
+                                    });
+                                }}
+                                className="bg-[#1D7874] hover:bg-[#155a57] text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                <Download size={14} /> Baixar Todos os Arquivos
+                            </button>
+                        </div>
+
                         <div className="space-y-6">
                             {/* Documentos Internos */}
                             <div className="space-y-3">
