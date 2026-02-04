@@ -1733,6 +1733,14 @@ export default function MedicalControl() {
                                             <p className="font-black text-[#1D7874] text-sm uppercase">6. Parecer Final</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Após finalizar o desempate, imprima o Parecer de Junta Médica (ícone de Check verde) para o fechamento oficial.</p>
                                         </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">7. Filtros Avançados</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Filtre a lista por Especialidade, CRM ou Nome de qualquer médico na barra superior.</p>
+                                        </div>
+                                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+                                            <p className="font-black text-[#1D7874] text-sm uppercase">8. Download em Lote</p>
+                                            <p className="text-xs font-medium text-slate-500 leading-relaxed">Baixe todos os anexos de uma só vez com o botão "Baixar Todos os Arquivos" em detalhes.</p>
+                                        </div>
                                     </div>
                                 </section>
 
@@ -1742,12 +1750,33 @@ export default function MedicalControl() {
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
                                             <div className="w-8 h-1 bg-amber-400 rounded-full" /> Notas de Atualização
                                         </h4>
-                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.2.0</span>
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.3.0</span>
                                     </div>
 
                                     <div className="space-y-4">
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
+                                            <div>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Fev/2026 - Segurança & Gestão de Dados</p>
+                                                <ul className="space-y-2">
+                                                    {[
+                                                        "Filtros Avançados: Implementação de busca multi-critério por Especialidade, CRM e Nome do Médico (Auditor/Assistente/Desempatador).",
+                                                        "Download em Lote: Novo botão 'Baixar Todos os Arquivos' para coleta automática e sequencial de toda a documentação do processo.",
+                                                        "Hardening de Segurança (RLS): Fechamento de APIs de Procedimentos, Materiais e Anexos, exigindo agora obrigatoriamente autenticação médica/admin.",
+                                                        "Infraestrutura de Backups: Novo sistema de repositório local e script de sincronização periódica de anexos físicos.",
+                                                        "Tooltips de UX: Adição de nomenclatura descritiva ao passar o mouse em ícones de Status e Ações na tabela principal.",
+                                                        "Proteção de Credenciais: Migração de chaves Supabase para variáveis de ambiente (.env) seguindo normas de segurança OWASP."
+                                                    ].map((note, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-black text-[#1D7874] leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874] mt-1.5" /> {note}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0 opacity-60">
+                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-400 border-4 border-white shadow-sm" />
                                             <div>
                                                 <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Jan/2026 - Fase de Desempate (Terceira Opinião)</p>
                                                 <ul className="space-y-2">
