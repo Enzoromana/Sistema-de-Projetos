@@ -34,8 +34,7 @@
     /* Flatten internal containers */
     #print-container div {
         box-shadow: none !important;
-        border-color: #e2e8f0 !important;
-        /* Lighter borders for print */
+        /* Removed forced border-color to allow border-black */
     }
 
     /* Ensure content inside prints correctly */
