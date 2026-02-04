@@ -16,6 +16,19 @@ const formatDate = (dateStr) => {
 const HOURS = Array.from({ length: 15 }, (_, i) => `${(i + 7).toString().padStart(2, '0')}:00`); // 07:00 to 21:00
 const DAYS_OF_WEEK = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
+const isBookingInHour = (booking, hour) => {
+    const hStart = parseInt(hour.split(':')[0]);
+    const hEnd = hStart + 1;
+
+    const bStartParts = booking.start_time.split(':');
+    const bStartDec = parseInt(bStartParts[0]) + (parseInt(bStartParts[1] || 0) / 60);
+
+    const bEndParts = booking.end_time.split(':');
+    const bEndDec = parseInt(bEndParts[0]) + (parseInt(bEndParts[1] || 0) / 60);
+
+    return Math.max(bStartDec, hStart) < Math.min(bEndDec, hEnd);
+};
+
 export default function RoomControl({ setView }) {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -106,30 +119,32 @@ export default function RoomControl({ setView }) {
         <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
             <div className="grid grid-cols-1 divide-y divide-slate-100">
                 {HOURS.map((hour) => {
-                    const booking = bookings.find(b => b.start_time.startsWith(hour) && b.date === selectedDate);
+                    const hourBookings = bookings.filter(b => b.date === selectedDate && isBookingInHour(b, hour));
                     return (
                         <div key={hour} className="flex group min-h-[70px] relative transition-all">
                             <div className="w-20 md:w-28 py-6 flex flex-col items-center justify-start border-r border-slate-100 bg-slate-50/20">
                                 <span className="text-xs font-black text-slate-400 group-hover:text-indigo-600 transition-colors tracking-tighter">{hour}</span>
                             </div>
-                            <div className="flex-1 p-2">
-                                {booking ? (
-                                    <div className="bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-xl p-3 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600">
-                                        <div className="flex items-center gap-3">
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-0.5">
-                                                    <h4 className="font-black text-sm text-slate-800 tracking-tight">{booking.title}</h4>
-                                                    <span className="text-[9px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold">
-                                                    <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
+                            <div className="flex-1 p-2 space-y-2">
+                                {hourBookings.length > 0 ? (
+                                    hourBookings.map((booking) => (
+                                        <div key={booking.id} className="bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-xl p-3 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600">
+                                            <div className="flex items-center gap-3">
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-0.5">
+                                                        <h4 className="font-black text-sm text-slate-800 tracking-tight">{booking.title}</h4>
+                                                        <span className="text-[9px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold">
+                                                        <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <button onClick={() => deleteBooking(booking.id)} className="p-2.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover/card:opacity-100">
+                                                <Trash2 size={18} />
+                                            </button>
                                         </div>
-                                        <button onClick={() => deleteBooking(booking.id)} className="p-2.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover/card:opacity-100">
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </div>
+                                    ))
                                 ) : (
                                     <button
                                         onClick={() => {
@@ -180,13 +195,17 @@ export default function RoomControl({ setView }) {
                                     <span className="text-lg font-black tracking-tighter">{d.getDate()}</span>
                                 </div>
                                 {HOURS.map(h => {
-                                    const booking = bookings.find(b => b.date === dateStr && b.start_time.startsWith(h));
+                                    const hourBookings = bookings.filter(b => b.date === dateStr && isBookingInHour(b, h));
                                     return (
-                                        <div key={h} className="h-20 border-b border-slate-50 p-1 relative">
-                                            {booking ? (
-                                                <div className="h-full w-full bg-indigo-600 rounded-lg p-2 text-[9px] text-white flex flex-col justify-between shadow-lg shadow-indigo-100 overflow-hidden">
-                                                    <p className="font-black leading-tight uppercase line-clamp-2">{booking.title}</p>
-                                                    <p className="font-bold opacity-70">{booking.sector}</p>
+                                        <div key={h} className="h-20 border-b border-slate-50 p-1 relative overflow-hidden">
+                                            {hourBookings.length > 0 ? (
+                                                <div className="flex flex-col gap-1 h-full">
+                                                    {hourBookings.map(booking => (
+                                                        <div key={booking.id} className="flex-1 min-h-0 bg-indigo-600 rounded-lg p-1.5 text-[8px] text-white flex flex-col justify-between shadow-md shadow-indigo-100 overflow-hidden">
+                                                            <p className="font-black leading-tight uppercase truncate">{booking.title}</p>
+                                                            <p className="font-bold opacity-70 truncate">{booking.sector}</p>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             ) : (
                                                 <button
