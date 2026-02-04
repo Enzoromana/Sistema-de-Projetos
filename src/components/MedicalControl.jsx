@@ -1663,7 +1663,7 @@ export default function MedicalControl() {
                 showTiebreakerModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
                         <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-indigo-600 text-white">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#1D7874] text-white">
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-white/20 rounded-2xl">
                                         <Gavel size={24} />
@@ -1682,7 +1682,7 @@ export default function MedicalControl() {
                                 {/* Section 1: Desempatador */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">1. Dados do Desempatador</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1697,9 +1697,9 @@ export default function MedicalControl() {
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_especialidade: v })}
                                         />
                                         <Input
-                                            label="CRM / UF"
+                                            label="CRM"
                                             value={tiebreakerData.desempatador_crm}
-                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v })}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v.replace(/\D/g, '') })}
                                         />
                                     </div>
                                 </div>
@@ -1707,7 +1707,7 @@ export default function MedicalControl() {
                                 {/* Section 2: Assistant Physician (Tiebreaker Phase) */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">2. Médico Assistente (Opinião Final)</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1722,9 +1722,9 @@ export default function MedicalControl() {
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_especialidade: v })}
                                         />
                                         <Input
-                                            label="CRM / UF"
+                                            label="CRM"
                                             value={tiebreakerData.desempate_ass_crm}
-                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_crm: v })}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_crm: v.replace(/\D/g, '') })}
                                         />
                                     </div>
                                 </div>
@@ -1732,7 +1732,7 @@ export default function MedicalControl() {
                                 {/* Section 3: Conclusion */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">3. Conclusão do Parecer</h4>
                                     </div>
                                     <div className="space-y-2">
@@ -1740,7 +1740,7 @@ export default function MedicalControl() {
                                         <textarea
                                             value={tiebreakerData.parecer_conclusao}
                                             onChange={e => setTiebreakerData({ ...tiebreakerData, parecer_conclusao: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all min-h-[150px]"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]/20 transition-all min-h-[150px]"
                                             placeholder="Descreva a conclusão final da junta médica..."
                                         />
                                     </div>
@@ -1753,9 +1753,9 @@ export default function MedicalControl() {
                                 </button>
                                 <button
                                     onClick={handleSaveTiebreaker}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-200 flex items-center gap-2"
+                                    className="bg-[#1D7874] hover:bg-[#155a57] text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-900/20 flex items-center gap-2"
                                 >
-                                    Finalizar Desempate <CheckCircle2 size={18} />
+                                    Finalizar <CheckCircle2 size={18} />
                                 </button>
                             </div>
                         </div>
