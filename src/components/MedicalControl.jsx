@@ -617,6 +617,7 @@ export default function MedicalControl() {
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowStatusModal(true); }}
                                                         className="p-3 text-[#1D7874] bg-slate-50 hover:bg-[#1D7874] hover:text-white rounded-xl transition-all relative"
+                                                        title="Status / Etapas"
                                                     >
                                                         <Activity size={18} />
                                                     </button>
