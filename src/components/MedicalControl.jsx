@@ -1108,176 +1108,175 @@ export default function MedicalControl() {
                                         transformOrigin: 'top center'
                                     }}
                                 >
-                                    {/* Klini Header */}
-                                    <div className="flex justify-between items-start border-b-[6px] border-[#1D7874] pb-8 mb-10 text-left">
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-3 text-teal-700">
-                                                <Activity size={48} className="stroke-[3]" />
-                                                <div>
-                                                    <h1 className="text-4xl font-black tracking-tighter leading-none">KLINI</h1>
-                                                    <p className="text-xs font-black uppercase tracking-[0.2em] opacity-70">Saúde & Bem-estar</p>
-                                                </div>
-                                            </div>
-                                            <div className="space-y-0.5">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Unidade de Regulação Técnica</p>
-                                                <p className="text-[10px] font-bold text-slate-500">Junta Médica e Odontológica Administrativa</p>
+                                    {/* Klini Header - Executive */}
+                                    <div className="flex justify-between items-end border-b-[3px] border-black pb-4 mb-6">
+                                        <div className="flex items-center gap-4 text-black">
+                                            <Activity size={42} className="stroke-[2.5]" />
+                                            <div>
+                                                <h1 className="text-3xl font-black tracking-tighter leading-none uppercase">Klini</h1>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-80">Saúde & Bem-estar</p>
                                             </div>
                                         </div>
-                                        <div className="mt-8 md:mt-0 text-right">
-                                            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 inline-block">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-center">Protocolo do Processo</p>
-                                                <p className="text-3xl font-black text-teal-800 tracking-tighter">{selectedRequest.requisicao}</p>
-                                                <div className="flex items-center gap-2 justify-center mt-2 text-[10px] font-bold text-slate-500">
-                                                    <Calendar size={12} /> Emitido em: {new Date().toLocaleDateString('pt-BR')}
-                                                </div>
-                                            </div>
+                                        <div className="text-right">
+                                            <h2 className="text-xl font-black uppercase tracking-tight text-black">Relatório de Junta Médica</h2>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
+                                                Protocolo: <span className="text-black text-sm">{selectedRequest.requisicao}</span>
+                                            </p>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                Emissão: <span className="text-black">{new Date().toLocaleDateString('pt-BR')}</span>
+                                            </p>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-10">
-                                        {/* Section 1: Beneficiary */}
-                                        <div className="relative text-left break-inside-avoid px-2">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-teal-700 rounded-full"></div>
-                                            <div className="pl-8 space-y-6">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <User className="text-teal-700" size={20} /> I. Identificação do Beneficiário
-                                                </h2>
-                                                <div className="grid grid-cols-6 gap-y-6 gap-x-8">
-                                                    <ReportItem label="Nome do Paciente" value={selectedRequest.ben_nome} className="col-span-4" />
-                                                    <ReportItem label="CPF" value={selectedRequest.ben_cpf} className="col-span-2" />
-                                                    <ReportItem label="E-mail" value={selectedRequest.ben_email} className="col-span-3" />
-                                                    <ReportItem label="Telefone" value={selectedRequest.ben_telefone} className="col-span-3" />
-                                                    <ReportItem label="Data de Nascimento" value={selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'} className="col-span-2" />
-                                                    <ReportItem label="Sexo" value={selectedRequest.ben_sexo} className="col-span-2" />
-                                                    <ReportItem label="Cidade/UF" value={`${selectedRequest.ben_cidade || '-'} / ${selectedRequest.ben_estado || '-'}`} className="col-span-2" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 2: Professionals */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left break-inside-avoid">
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Activity className="text-teal-700" size={18} /> II. Médico Auditor
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.aud_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.aud_crm} />
-                                                        <ReportItem label="Data Análise" value={selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'} />
+                                    <div className="space-y-6 text-black font-sans">
+                                        {/* Block 1: Beneficiary & Request Data */}
+                                        <div className="border border-black flex">
+                                            {/* Beneficiary Col */}
+                                            <div className="flex-[2] p-4 border-r border-black">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3 border-b border-slate-200 pb-1">I. Beneficiário</h3>
+                                                <div className="grid grid-cols-2 gap-y-3 gap-x-6">
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">Nome Completo</p>
+                                                        <p className="text-sm font-bold truncate">{selectedRequest.ben_nome}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">CPF</p>
+                                                        <p className="text-sm font-bold">{selectedRequest.ben_cpf}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">Data de Nasc.</p>
+                                                        <p className="text-sm font-medium">{selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">Telefone</p>
+                                                        <p className="text-sm font-medium">{selectedRequest.ben_telefone}</p>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
-                                                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                                    <Stethoscope className="text-teal-700" size={18} /> III. Médico Assistente
-                                                </h2>
-                                                <div className="space-y-4">
-                                                    <ReportItem label="Profissional" value={selectedRequest.ass_nome} />
-                                                    <div className="flex gap-8">
-                                                        <ReportItem label="CRM/CRO" value={selectedRequest.ass_crm} />
-                                                        <ReportItem label="Especialidade" value={selectedRequest.ass_especialidade} />
+                                            {/* Request Details Col */}
+                                            <div className="flex-1 p-4 bg-slate-50 break-inside-avoid">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3 border-b border-slate-200 pb-1">Status Interno</h3>
+                                                <div className="space-y-3">
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">Situação Atual</p>
+                                                        <p className="text-xs font-black uppercase">{selectedRequest.situacao}</p>
                                                     </div>
-                                                    <ReportItem label="Endereço Profissional" value={selectedRequest.ass_endereco} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Section 3: Divergence */}
-                                        <div className="bg-teal-50/50 rounded-[2.5rem] p-10 border border-teal-100 relative overflow-hidden text-left shadow-sm">
-                                            <AlertTriangle className="absolute -right-8 -bottom-8 text-teal-700/5 rotate-12" size={240} />
-                                            <h2 className="text-xl font-black text-teal-900 uppercase tracking-tight mb-8 flex items-center gap-3">
-                                                <AlertTriangle className="text-teal-700" size={20} /> IV. Divergência Técnico-Assistencial
-                                            </h2>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-                                                <ReportItem label="Especialidade Afetada" value={selectedRequest.div_especialidade} />
-                                                <div className="space-y-2">
-                                                    <p className="text-[10px] font-black text-teal-700/60 uppercase tracking-widest">Motivações Identificadas</p>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {selectedRequest.div_motivos?.map((m, i) => (
-                                                            <span key={i} className="px-4 py-2 bg-white border border-teal-100 rounded-full text-xs font-bold text-teal-900 shadow-sm">{m}</span>
-                                                        ))}
+                                                    <div>
+                                                        <p className="text-[9px] uppercase font-bold text-slate-500">Prazo ANS</p>
+                                                        <p className="text-xs font-bold">{selectedRequest.prazo_ans ? new Date(selectedRequest.prazo_ans).toLocaleDateString('pt-BR') : 'A calcular'}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Section 5: Procedures */}
-                                        <div className="space-y-6 text-left">
-                                            <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                <FileText className="text-teal-700" size={20} /> V. Lista de Procedimentos
-                                            </h2>
-                                            <div className="border border-slate-100 rounded-[2rem] overflow-hidden">
-                                                <table className="w-full text-left">
-                                                    <thead className="bg-slate-50">
+                                        {/* Block 2: Professionals */}
+                                        <div className="border border-black flex break-inside-avoid">
+                                            <div className="flex-1 p-4 border-r border-black">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">II. Médico Auditor</h3>
+                                                <div className="space-y-1">
+                                                    <p className="text-sm font-bold">{selectedRequest.aud_nome}</p>
+                                                    <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 p-4 border-r border-black">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">III. Médico Assistente</h3>
+                                                <div className="space-y-1">
+                                                    <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
+                                                    <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 p-4 bg-slate-50">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">IV. Divergência</h3>
+                                                <div className="space-y-1">
+                                                    <p className="text-xs font-bold text-slate-800">{selectedRequest.div_especialidade}</p>
+                                                    <p className="text-[10px] leading-tight text-slate-600">{selectedRequest.div_motivos?.join(', ')}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Table: Procedures */}
+                                        <div className="mt-8 break-inside-avoid">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-black mb-2 flex items-center gap-2">
+                                                <div className="w-1 h-3 bg-black"></div> V. Procedimentos Solicitados
+                                            </h3>
+                                            <table className="w-full text-left border border-black text-xs">
+                                                <thead className="bg-slate-100 border-b border-black">
+                                                    <tr>
+                                                        <th className="p-2 border-r border-black font-black uppercase w-24">TUSS</th>
+                                                        <th className="p-2 border-r border-black font-black uppercase">Descrição Técnica</th>
+                                                        <th className="p-2 border-r border-black font-black uppercase text-center w-16">Qtd. Sol</th>
+                                                        <th className="p-2 font-black uppercase text-center w-16">Qtd. Aut</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="divide-y divide-black/20">
+                                                    {selectedRequest.medical_procedures?.map((p, i) => (
+                                                        <tr key={i} className="even:bg-slate-50">
+                                                            <td className="p-2 border-r border-black font-bold font-mono">{p.codigo || '-'}</td>
+                                                            <td className="p-2 border-r border-black">
+                                                                <div className="font-bold text-slate-800">{p.descricao}</div>
+                                                                {p.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {p.justificativa}</div>}
+                                                            </td>
+                                                            <td className="p-2 border-r border-black text-center font-bold">{p.qtd_solicitada}</td>
+                                                            <td className="p-2 text-center font-bold">{p.qtd_autorizada}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                            {(!selectedRequest.medical_procedures || selectedRequest.medical_procedures.length === 0) && (
+                                                <div className="text-center p-4 border border-t-0 border-black text-xs italic text-slate-500">Nenhum procedimento listado.</div>
+                                            )}
+                                        </div>
+
+                                        {/* Table: Materials */}
+                                        {selectedRequest.medical_materials?.length > 0 && (
+                                            <div className="mt-6 break-inside-avoid">
+                                                <h3 className="text-xs font-black uppercase tracking-widest text-black mb-2 flex items-center gap-2">
+                                                    <div className="w-1 h-3 bg-black"></div> VI. Materiais & OPME
+                                                </h3>
+                                                <table className="w-full text-left border border-black text-xs">
+                                                    <thead className="bg-slate-100 border-b border-black">
                                                         <tr>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cód. TUSS</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição Técnica</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Solicitada</th>
-                                                            <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Autorizada</th>
+                                                            <th className="p-2 border-r border-black font-black uppercase">Descrição do Material</th>
+                                                            <th className="p-2 border-r border-black font-black uppercase text-center w-24">Qtd. Sol</th>
+                                                            <th className="p-2 font-black uppercase text-center w-24">Qtd. Aut</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody className="divide-y divide-slate-50">
-                                                        {selectedRequest.medical_procedures?.map((p, i) => (
-                                                            <tr key={i}>
-                                                                <td className="px-8 py-6 font-bold text-teal-700">{p.codigo || '-'}</td>
-                                                                <td className="px-8 py-6 text-sm font-medium text-slate-600">
-                                                                    <div className="font-bold">{p.descricao}</div>
-                                                                    {p.justificativa && <div className="text-[10px] text-red-600 mt-1 uppercase font-black tracking-tighter">Nota: {p.justificativa}</div>}
+                                                    <tbody className="divide-y divide-black/20">
+                                                        {selectedRequest.medical_materials.map((m, i) => (
+                                                            <tr key={i} className="even:bg-slate-50">
+                                                                <td className="p-2 border-r border-black">
+                                                                    <div className="font-bold text-slate-800">{m.descricao}</div>
+                                                                    {m.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {m.justificativa}</div>}
                                                                 </td>
-                                                                <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{p.qtd_solicitada}</td>
-                                                                <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{p.qtd_autorizada}</td>
+                                                                <td className="p-2 border-r border-black text-center font-bold">{m.qtd_solicitada}</td>
+                                                                <td className="p-2 text-center font-bold">{m.qtd_autorizada}</td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
-
-                                        {/* Section 6: Materials & OPME */}
-                                        {selectedRequest.medical_materials?.length > 0 && (
-                                            <div className="space-y-6 text-left">
-                                                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                                                    <Box className="text-teal-700" size={20} /> VI. Materiais & OPME
-                                                </h2>
-                                                <div className="border border-slate-100 rounded-[2rem] overflow-hidden bg-slate-50/30">
-                                                    <table className="w-full text-left">
-                                                        <thead className="bg-slate-50">
-                                                            <tr>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição do Material</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Solicitada</th>
-                                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Qtd. Autorizada</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="divide-y divide-slate-100">
-                                                            {selectedRequest.medical_materials.map((m, i) => (
-                                                                <tr key={i} className="bg-white">
-                                                                    <td className="px-8 py-6">
-                                                                        <div className="font-bold text-slate-700">{m.descricao}</div>
-                                                                        {m.justificativa && <div className="text-[10px] text-red-600 mt-1 uppercase font-black tracking-tighter">Obs: {m.justificativa}</div>}
-                                                                    </td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-slate-400 text-center">{m.qtd_solicitada || 1}</td>
-                                                                    <td className="px-8 py-6 text-sm font-black text-teal-700 text-center">{m.qtd_autorizada || 0}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
                                         )}
 
-                                        {/* Footer / Signatures */}
-                                        <div className="pt-20 text-center space-y-20">
-                                            <div className="flex justify-center gap-24">
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Auditor</p>
-                                                </div>
-                                                <div className="w-64 border-t border-slate-300 pt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Assinatura Coordenador</p>
+                                        {/* Signatures */}
+                                        <div className="mt-24 pt-8 border-t border-black flex justify-between break-inside-avoid">
+                                            <div className="text-center w-1/3">
+                                                <div className="border-t border-black pt-2">
+                                                    <p className="text-[10px] font-black uppercase tracking-widest">Assinatura Auditor</p>
+                                                    <p className="text-[9px] text-slate-500 mt-1">{selectedRequest.aud_nome}</p>
                                                 </div>
                                             </div>
-                                            <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">Este documento é original e confidencial da Klini Saúde - {selectedRequest.requisicao}</p>
+                                            <div className="text-center w-1/3">
+                                                <div className="border-t border-black pt-2">
+                                                    <p className="text-[10px] font-black uppercase tracking-widest">Responsável Técnico</p>
+                                                    <p className="text-[9px] text-slate-500 mt-1">Klini Saúde</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-12 text-center">
+                                            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                                                Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
