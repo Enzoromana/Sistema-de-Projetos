@@ -68,6 +68,7 @@ export default function MedicalControl() {
     const [procedures, setProcedures] = useState([{ codigo: '', descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
     const [materials, setMaterials] = useState([{ descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
     const [attachments, setAttachments] = useState([]);
+    const [categorizedAttachments, setCategorizedAttachments] = useState({}); // { typeId: [File, File] }
 
     // Detail/Status Modal
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -158,6 +159,46 @@ export default function MedicalControl() {
             }
 
             // 4. Attachments (Supabase Storage upload)
+            let docInternos = {};
+
+            // Upload categorized attachments
+            const catEntries = Object.entries(categorizedAttachments);
+            if (catEntries.length > 0) {
+                for (const [typeId, files] of catEntries) {
+                    docInternos[typeId] = [];
+                    for (const file of files) {
+                        const fileExt = file.name.split('.').pop();
+                        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+                        const filePath = `internal/${requestId}/${fileName}`;
+
+                        const { error: uploadError } = await supabase.storage
+                            .from('medical-board')
+                            .upload(filePath, file);
+
+                        if (uploadError) throw uploadError;
+
+                        const { data: { publicUrl } } = supabase.storage.from('medical-board').getPublicUrl(filePath);
+
+                        docInternos[typeId].push({
+                            name: file.name,
+                            path: filePath,
+                            url: publicUrl,
+                            uploaded_at: new Date().toISOString()
+                        });
+                    }
+                }
+            }
+
+            // Update request with categorized docs mapping
+            if (Object.keys(docInternos).length > 0) {
+                const { error: updateDocsError } = await supabase
+                    .from('medical_requests')
+                    .update({ documentos_internos: docInternos })
+                    .eq('id', requestId);
+                if (updateDocsError) throw updateDocsError;
+            }
+
+            // Upload general attachments
             if (attachments.length > 0) {
                 const uploadPromises = attachments.map(async (file) => {
                     const fileExt = file.name.split('.').pop();
@@ -340,13 +381,15 @@ export default function MedicalControl() {
             setAttachments([...attachments, ...files]);
         } else {
             if (!selectedRequest) {
-                // Para criação, adicionar aos anexos gerais temporariamente
-                setAttachments(prev => [...prev, ...files]);
-                alert("Documento adicionado aos anexos. Será vinculado após salvar a junta.");
-                return;
+                // Durante criação, guardar no estado categorizado
+                setCategorizedAttachments(prev => ({
+                    ...prev,
+                    [typeId]: [...(prev[typeId] || []), ...files]
+                }));
+            } else {
+                const mockE = { target: { files: files, value: '' } };
+                handleInternalFileUpload(mockE, typeId);
             }
-            const mockE = { target: { files: files, value: '' } };
-            handleInternalFileUpload(mockE, typeId);
         }
     };
 
@@ -362,6 +405,7 @@ export default function MedicalControl() {
         setProcedures([{ codigo: '', descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
         setMaterials([{ descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
         setAttachments([]);
+        setCategorizedAttachments({});
         setCurrentStep(0);
     };
 
@@ -506,11 +550,6 @@ export default function MedicalControl() {
                                                         className="p-3 text-[#1D7874] bg-slate-50 hover:bg-[#1D7874] hover:text-white rounded-xl transition-all relative"
                                                     >
                                                         <Activity size={18} />
-                                                        {getPendingDocsCount(r) > 0 && (
-                                                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-                                                                {getPendingDocsCount(r)}
-                                                            </span>
-                                                        )}
                                                     </button>
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowReportModal(true); }}
@@ -796,16 +835,18 @@ export default function MedicalControl() {
                                     className="hidden"
                                     onChange={async (e) => {
                                         const typeId = e.target.getAttribute('data-type-id');
-                                        const file = e.target.files[0];
+                                        const file = e.target.files?.[0];
                                         if (!file) return;
 
                                         if (selectedRequest) {
                                             // Se estivermos editando, salvamos direto
                                             handleInternalFileUpload(e, typeId);
                                         } else {
-                                            // Para criação, adicionar aos anexos gerais temporariamente
-                                            setAttachments(prev => [...prev, file]);
-                                            alert("Documento adicionado aos anexos. Será vinculado após salvar a junta.");
+                                            // Durante criação, guardar no estado categorizado
+                                            setCategorizedAttachments(prev => ({
+                                                ...prev,
+                                                [typeId]: [...(prev[typeId] || []), file]
+                                            }));
                                         }
                                         e.target.value = '';
                                     }}
@@ -840,10 +881,11 @@ export default function MedicalControl() {
                                             </div>
 
                                             {/* List of files for this type */}
-                                            {selectedRequest?.documentos_internos?.[dt.id]?.length > 0 ? (
+                                            {selectedRequest?.documentos_internos?.[dt.id]?.length > 0 || (!selectedRequest && categorizedAttachments[dt.id]?.length > 0) ? (
                                                 <div className="space-y-2 border-t border-slate-200/50 pt-4">
-                                                    {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
-                                                        <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                                                    {/* Files already in the database */}
+                                                    {selectedRequest?.documentos_internos?.[dt.id]?.map((doc, idx) => (
+                                                        <div key={`db-${idx}`} className="flex items-center justify-between text-[11px] bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
                                                             <div className="flex items-center gap-2 text-slate-600">
                                                                 <Paperclip size={12} className="text-slate-300" />
                                                                 <span className="font-bold truncate max-w-[150px]">{doc.name}</span>
@@ -878,6 +920,27 @@ export default function MedicalControl() {
                                                                     <Trash2 size={12} />
                                                                 </button>
                                                             </div>
+                                                        </div>
+                                                    ))}
+
+                                                    {/* Files being added during creation */}
+                                                    {!selectedRequest && categorizedAttachments[dt.id]?.map((file, idx) => (
+                                                        <div key={`temp-${idx}`} className="flex items-center justify-between text-[11px] bg-teal-50 p-3 rounded-xl border border-teal-100 shadow-sm">
+                                                            <div className="flex items-center gap-2 text-teal-700">
+                                                                <Paperclip size={12} className="text-teal-400" />
+                                                                <span className="font-bold truncate max-w-[150px]">{file.name}</span>
+                                                            </div>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setCategorizedAttachments(prev => ({
+                                                                        ...prev,
+                                                                        [dt.id]: prev[dt.id].filter((_, i) => i !== idx)
+                                                                    }));
+                                                                }}
+                                                                className="text-teal-400 hover:text-red-500 transition-colors p-1"
+                                                            >
+                                                                <Trash2 size={12} />
+                                                            </button>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -1601,28 +1664,25 @@ function TussAutocomplete({ value, onChange }) {
         ).sort((a, b) => {
             const aCode = (a.code || '').toLowerCase();
             const bCode = (b.code || '').toLowerCase();
-            const aDesc = (a.description || '').toLowerCase();
-            const bDesc = (b.description || '').toLowerCase();
 
             // 1. Exact code match
             if (aCode === lowerTerm && bCode !== lowerTerm) return -1;
             if (aCode !== lowerTerm && bCode === lowerTerm) return 1;
 
-            // 2. Code starts with term
+            // 2. Code starts with term (prefix match) - HIGHEST PRIORITY after exact match
             const aCodeStarts = aCode.startsWith(lowerTerm);
             const bCodeStarts = bCode.startsWith(lowerTerm);
             if (aCodeStarts && !bCodeStarts) return -1;
             if (!aCodeStarts && bCodeStarts) return 1;
 
-            // 3. Description starts with term
-            const aDescStarts = aDesc.startsWith(lowerTerm);
-            const bDescStarts = bDesc.startsWith(lowerTerm);
-            if (aDescStarts && !bDescStarts) return -1;
-            if (!aDescStarts && bDescStarts) return 1;
+            // 3. String length difference (closer length to term is better if it starts with it)
+            if (aCodeStarts && bCodeStarts) {
+                return aCode.length - bCode.length;
+            }
 
             // 4. Alphabetical order for the rest
             return aCode.localeCompare(bCode);
-        }).slice(0, 50);
+        }).slice(0, 100);
 
         setResults(filtered);
         setShowOptions(true);
