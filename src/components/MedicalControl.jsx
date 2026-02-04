@@ -1757,7 +1757,7 @@ export default function MedicalControl() {
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Fev/2026 - Segurança & Gestão de Dados</p>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">1ª Nota - Segurança & Gestão de Dados</p>
                                                 <ul className="space-y-2">
                                                     {[
                                                         "Filtros Avançados: Implementação de busca multi-critério por Especialidade, CRM e Nome do Médico (Auditor/Assistente/Desempatador).",
@@ -1778,7 +1778,7 @@ export default function MedicalControl() {
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0 opacity-60">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-400 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Jan/2026 - Fase de Desempate (Terceira Opinião)</p>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">2ª Nota - Fase de Desempate (Terceira Opinião)</p>
                                                 <ul className="space-y-2">
                                                     {[
                                                         "Lançamento do Módulo de Terceira Opinião (Desempatador): Fluxo completo para resolução de divergências médicas entre auditoria e assistente.",
@@ -1801,7 +1801,7 @@ export default function MedicalControl() {
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-200 border-4 border-white shadow-sm" />
                                             <div>
-                                                <p className="text-xs font-black text-slate-500 uppercase tracking-tight mb-2">Dez/2025 - Janelas & Fluxo</p>
+                                                <p className="text-xs font-black text-slate-500 uppercase tracking-tight mb-2">3ª Nota - Janelas & Fluxo</p>
                                                 <ul className="space-y-2">
                                                     {[
                                                         "Suporte a Drag & Drop (Arraste e Solte) para anexos direto nas pastas",
