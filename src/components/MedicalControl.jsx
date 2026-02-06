@@ -349,6 +349,40 @@ export default function MedicalControl() {
     };
 
 
+    const getTiebreakerMissingCount = (request) => {
+        if (!request) return 0;
+        let count = 0;
+
+        // 1. Mandatory Fields
+        if (!request.desempatador_nome) count++;
+        if (!request.desempatador_crm) count++;
+        if (!request.desempatador_especialidade) count++;
+
+        // Assistant (check saved values or fallbacks)
+        if (!request.desempate_ass_nome && !request.ass_nome) count++;
+        if (!request.desempate_ass_crm && !request.ass_crm) count++;
+        if (!request.desempate_ass_especialidade && !request.ass_especialidade) count++;
+
+        // 2. Conclusion
+        if (!request.parecer_conclusao) count++;
+
+        // 3. Procedures & Materials
+        if (request.medical_procedures) {
+            request.medical_procedures.forEach(p => {
+                if (!p.conclusao_desempate) count++;
+            });
+        }
+
+        if (request.medical_materials) {
+            request.medical_materials.forEach(m => {
+                if (!m.conclusao_desempate) count++;
+            });
+        }
+
+        return count;
+    };
+
+
     const handleSaveTiebreaker = async () => {
         try {
             // 1. Update main request with tiebreaker data
@@ -723,10 +757,15 @@ export default function MedicalControl() {
                                                             );
                                                             setShowTiebreakerModal(true);
                                                         }}
-                                                        className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all border border-indigo-100"
+                                                        className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all border border-indigo-100 relative"
                                                         title="Conclusão Junta"
                                                     >
                                                         <Gavel size={18} />
+                                                        {getTiebreakerMissingCount(r) > 0 && r.situacao !== 'Finalizado' && (
+                                                            <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-rose-300">
+                                                                {getTiebreakerMissingCount(r)}
+                                                            </span>
+                                                        )}
                                                     </button>
                                                     {r.parecer_conclusao && (
                                                         <button
