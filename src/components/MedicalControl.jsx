@@ -1298,7 +1298,7 @@ export default function MedicalControl() {
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#1D7874]">Relatório de Junta Médica</h2>
+                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#1D7874]">Parecer de 2° opinião</h2>
                                             <div className="mt-2 space-y-0.5">
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                                     Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
@@ -1501,7 +1501,12 @@ export default function MedicalControl() {
 
                                         </div>
 
-
+                                        {selectedRequest.referencias_bibliograficas && (
+                                            <div className="mt-8 border border-[#1D7874] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VIII. Referências Bibliográficas</h3>
+                                                <p className="text-xs font-medium text-slate-500 italic whitespace-pre-wrap">{selectedRequest.referencias_bibliograficas}</p>
+                                            </div>
+                                        )}
 
                                         <div className="mt-12 text-center">
                                             <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#1D7874]/50">
@@ -1892,7 +1897,7 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">2. Médico Assistente (Opinião Final)</h4>
+                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">2. Médico Assistente</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
@@ -2128,7 +2133,7 @@ export default function MedicalControl() {
             <p style="font-size: 11px; color: #64748b;">CRM: ${r.desempatador_crm || '-'} • ${r.desempatador_especialidade || '-'}</p>
         </div>
         <div>
-            <div class="section-title">III. Médico Assistente (Final)</div>
+            <div class="section-title">III. Médico Assistente</div>
             <p class="field-value">${r.desempate_ass_nome || '-'}</p>
             <p style="font-size: 11px; color: #64748b;">CRM: ${r.desempate_ass_crm || '-'} • ${r.desempate_ass_especialidade || '-'}</p>
         </div>
@@ -2288,7 +2293,7 @@ export default function MedicalControl() {
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempatador_crm || '-'} • {selectedRequest.desempatador_especialidade || '-'}</p>
                                         </div>
                                         <div className="flex-1 p-4 border-r border-[#1D7874]">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente (Final)</h3>
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente</h3>
                                             <p className="text-sm font-bold">{selectedRequest.desempate_ass_nome || '-'}</p>
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempate_ass_crm || '-'} • {selectedRequest.desempate_ass_especialidade || '-'}</p>
                                         </div>
