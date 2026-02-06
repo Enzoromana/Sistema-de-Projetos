@@ -688,9 +688,9 @@ export default function MedicalControl() {
                                                                 desempatador_nome: r.desempatador_nome || '',
                                                                 desempatador_crm: r.desempatador_crm || '',
                                                                 desempatador_especialidade: r.desempatador_especialidade || '',
-                                                                desempate_ass_nome: r.desempate_ass_nome || '',
-                                                                desempate_ass_crm: r.desempate_ass_crm || '',
-                                                                desempate_ass_especialidade: r.desempate_ass_especialidade || '',
+                                                                desempate_ass_nome: r.desempate_ass_nome || r.ass_nome || '',
+                                                                desempate_ass_crm: r.desempate_ass_crm || r.ass_crm || '',
+                                                                desempate_ass_especialidade: r.desempate_ass_especialidade || r.ass_especialidade || '',
                                                                 parecer_conclusao: r.parecer_conclusao || '',
                                                                 referencias_bibliograficas: r.referencias_bibliograficas || ''
                                                             });
