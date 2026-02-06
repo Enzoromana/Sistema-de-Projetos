@@ -673,6 +673,11 @@ export default function MedicalControl() {
                                                         title="Status / Etapas"
                                                     >
                                                         <Activity size={18} />
+                                                        {getPendingDocsCount(r) > 0 && (
+                                                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
+                                                                {getPendingDocsCount(r)}
+                                                            </span>
+                                                        )}
                                                     </button>
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowReportModal(true); }}
@@ -1763,10 +1768,29 @@ export default function MedicalControl() {
                                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
                                             <div className="w-8 h-1 bg-amber-400 rounded-full" /> Notas de Atualização
                                         </h4>
-                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.3.0</span>
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Versão 2.3.1</span>
                                     </div>
 
                                     <div className="space-y-4">
+                                        <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+                                            <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm" />
+                                            <div>
+                                                <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">Novo! - Relatórios & Identidade Visual</p>
+                                                <ul className="space-y-2">
+                                                    {[
+                                                        "Novo Título de Parecer: Atualização da nomenclatura oficial para 'Parecer de 2° opinião' no relatório inicial.",
+                                                        "Referências Bibliográficas: Inclusão de seção dedicada para citações bibliográficas no rodapé dos relatórios.",
+                                                        "Ajuste de Nomenclatura: Padronização do termo 'Médico Assistente' em todos os modais e impressões.",
+                                                        "Correção de UI: Restauração da badge (indicador vermelho) de contagem de documentos pendentes no ícone de Status."
+                                                    ].map((note, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-black text-emerald-600 leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" /> {note}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
                                         <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
                                             <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 border-white shadow-sm" />
                                             <div>
