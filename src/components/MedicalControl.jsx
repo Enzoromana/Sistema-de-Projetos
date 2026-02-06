@@ -10,6 +10,7 @@ import {
     ArrowLeft, Loader2, Gavel, Download
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
+import SPECIALTIES from '../data/specialties.json';
 
 const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
@@ -90,7 +91,8 @@ export default function MedicalControl() {
         desempate_ass_nome: '',
         desempate_ass_crm: '',
         desempate_ass_especialidade: '',
-        parecer_conclusao: ''
+        parecer_conclusao: '',
+        referencias_bibliograficas: ''
     });
     const [procedureConclusions, setProcedureConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
@@ -689,7 +691,8 @@ export default function MedicalControl() {
                                                                 desempate_ass_nome: r.desempate_ass_nome || '',
                                                                 desempate_ass_crm: r.desempate_ass_crm || '',
                                                                 desempate_ass_especialidade: r.desempate_ass_especialidade || '',
-                                                                parecer_conclusao: r.parecer_conclusao || ''
+                                                                parecer_conclusao: r.parecer_conclusao || '',
+                                                                referencias_bibliograficas: r.referencias_bibliograficas || ''
                                                             });
                                                             // Initialize item-level conclusions
                                                             setProcedureConclusions(
@@ -1178,7 +1181,12 @@ export default function MedicalControl() {
                             <div className="space-y-8 animate-in slide-in-from-right">
                                 <FormHeader icon={<AlertTriangle />} title="Divergência Técnica" sub="Motivação técnica para a instauração da junta." />
                                 <div className="space-y-6">
-                                    <Input label="Especialidade da Divergência" required value={formData.div_especialidade} onChange={v => setFormData({ ...formData, div_especialidade: v })} placeholder="Ex: Ortopedia / Oncologia" />
+                                    <SpecialtyAutocomplete
+                                        required
+                                        value={formData.div_especialidade}
+                                        onChange={v => setFormData({ ...formData, div_especialidade: v })}
+                                        placeholder="Ex: Ortopedia / Oncologia"
+                                    />
                                     <div className="space-y-4">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Motivo da Divergência Técnico-Assistencial</label>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1996,6 +2004,15 @@ export default function MedicalControl() {
                                             placeholder="Descreva a conclusão final da junta médica..."
                                         />
                                     </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-[#1D7874] uppercase tracking-widest ml-1">Referências Bibliográficas</label>
+                                        <textarea
+                                            value={tiebreakerData.referencias_bibliograficas}
+                                            onChange={e => setTiebreakerData({ ...tiebreakerData, referencias_bibliograficas: e.target.value })}
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]/20 transition-all min-h-[100px]"
+                                            placeholder="Cite as referências bibliográficas utilizadas..."
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
@@ -2178,7 +2195,14 @@ export default function MedicalControl() {
 
     <div class="conclusion-box">
         <div class="section-title">VII. Conclusão Final do Parecer</div>
-        <p style="font-size: 12px; white-space: pre-wrap;">${r.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+        <p style="font-size: 12px; white-space: pre-wrap; margin-bottom: 12px;">${r.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+        
+        ${r.referencias_bibliograficas ? `
+            <div style="border-top: 1px solid rgba(29, 120, 116, 0.2); padding-top: 8px; margin-top: 8px;">
+                <div class="section-title" style="font-size: 8px;">VIII. Referências Bibliográficas</div>
+                <p style="font-size: 11px; white-space: pre-wrap; font-style: italic; color: #475569;">${r.referencias_bibliograficas}</p>
+            </div>
+        ` : ''}
     </div>
 
     <div class="signature">
@@ -2334,7 +2358,14 @@ export default function MedicalControl() {
                                     {/* Final Conclusion */}
                                     <div className="border border-[#1D7874] bg-teal-50/30 p-4 mt-6">
                                         <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">VII. Conclusão Final do Parecer</h3>
-                                        <p className="text-sm font-medium text-slate-800 whitespace-pre-wrap">{selectedRequest.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+                                        <p className="text-sm font-medium text-slate-800 whitespace-pre-wrap mb-4">{selectedRequest.parecer_conclusao || 'Sem conclusão registrada.'}</p>
+
+                                        {selectedRequest.referencias_bibliograficas && (
+                                            <div className="border-t border-[#1D7874]/20 pt-3">
+                                                <h3 className="text-[9px] font-black uppercase tracking-widest text-[#1D7874] mb-1 opacity-70">VIII. Referências Bibliográficas</h3>
+                                                <p className="text-xs font-medium text-slate-500 italic whitespace-pre-wrap">{selectedRequest.referencias_bibliograficas}</p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Signature Block */}
@@ -2359,6 +2390,83 @@ export default function MedicalControl() {
                     </div>
                 )
             }
+        </div>
+    );
+}
+
+function SpecialtyAutocomplete({ value, onChange, placeholder, required }) {
+    const [search, setSearch] = useState(value || '');
+    const [showOptions, setShowOptions] = useState(false);
+    const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        setSearch(value || '');
+    }, [value]);
+
+    const handleSearch = (term) => {
+        setSearch(term);
+        onChange(term); // Allow manual typing
+
+        if (term.length < 1) {
+            setResults([]);
+            return;
+        }
+
+        const lowerTerm = term.toLowerCase().trim();
+        const filtered = SPECIALTIES.filter(s =>
+            s.toLowerCase().includes(lowerTerm)
+        ).slice(0, 10);
+
+        setResults(filtered);
+        setShowOptions(true);
+    };
+
+    return (
+        <div className="space-y-2 relative">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                Especialidade da Divergência {required && <span className="text-red-500 font-black">*</span>}
+            </label>
+            <div className="relative">
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    onFocus={() => {
+                        if (search.length >= 1) setShowOptions(true);
+                        else {
+                            setResults(SPECIALTIES.slice(0, 10));
+                            setShowOptions(true);
+                        }
+                    }}
+                    placeholder={placeholder}
+                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                />
+
+                {showOptions && results.length > 0 && (
+                    <div className="absolute z-50 top-full left-0 right-0 mt-3 bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-white/20 max-h-60 overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+                        <div className="p-2">
+                            {results.map((item) => (
+                                <button
+                                    key={item}
+                                    onClick={() => {
+                                        onChange(item);
+                                        setSearch(item);
+                                        setShowOptions(false);
+                                    }}
+                                    className="w-full text-left px-6 py-4 hover:bg-[#1D7874] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
+                                >
+                                    <span className="block text-sm font-bold text-slate-600 group-hover/item:text-white truncate">{item}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {showOptions && (
+                    <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} />
+                )}
+            </div>
         </div>
     );
 }
