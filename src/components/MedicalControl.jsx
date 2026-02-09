@@ -7,7 +7,7 @@ import {
     FileText, Search,
     User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, Loader2, Gavel, Download
+    ArrowLeft, Loader2, Gavel, Download, Link
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 import SPECIALTIES from '../data/specialties.json';
@@ -2085,6 +2085,36 @@ export default function MedicalControl() {
                             </div>
 
                             <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+                                <button
+                                    onClick={async () => {
+                                        if (!selectedRequest) return;
+                                        try {
+                                            let token = selectedRequest.tiebreaker_token;
+                                            if (!token) {
+                                                token = crypto.randomUUID();
+                                                const { error } = await supabase
+                                                    .from('medical_requests')
+                                                    .update({ tiebreaker_token: token })
+                                                    .eq('id', selectedRequest.id);
+                                                if (error) throw error;
+
+                                                setSelectedRequest(prev => ({ ...prev, tiebreaker_token: token }));
+                                                setRequests(prev => prev.map(r => r.id === selectedRequest.id ? { ...r, tiebreaker_token: token } : r));
+                                            }
+
+                                            const link = `${window.location.origin}/parecer/${token}`;
+                                            await navigator.clipboard.writeText(link);
+                                            alert('Link para preenchimento externo copiado!');
+                                        } catch (e) {
+                                            console.error('Erro ao gerar link:', e);
+                                            alert('Erro ao gerar link.');
+                                        }
+                                    }}
+                                    className="px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-widest text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-all flex items-center gap-2 mr-auto"
+                                    title="Copiar link para preenchimento externo"
+                                >
+                                    <Link size={18} /> Copiar Link Externo
+                                </button>
                                 <button onClick={() => setShowTiebreakerModal(false)} className="px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
                                     Cancelar
                                 </button>

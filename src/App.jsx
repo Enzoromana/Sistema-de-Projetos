@@ -8,6 +8,7 @@ import MedicalControl from './components/MedicalControl';
 import ProfileUpdateModal from './components/ProfileUpdateModal';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
@@ -15,6 +16,15 @@ import {
 } from 'lucide-react';
 
 function App() {
+    // Manual Routing for External Forms
+    const path = window.location.pathname;
+    const isTiebreakerRoute = path.startsWith('/parecer/');
+    const tiebreakerToken = isTiebreakerRoute ? path.split('/parecer/')[1] : null;
+
+    if (tiebreakerToken) {
+        return <TiebreakerExternalForm token={tiebreakerToken} />;
+    }
+
     const [session, setSession] = useState(null);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
