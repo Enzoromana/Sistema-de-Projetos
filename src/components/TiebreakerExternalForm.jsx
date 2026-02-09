@@ -262,20 +262,17 @@ export default function TiebreakerExternalForm({ token }) {
                                     <h4 className="font-bold text-slate-800 mb-2">{proc.descricao}</h4>
                                     <p className="text-xs text-slate-500 mb-4 font-mono">{proc.codigo}</p>
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
-                                    <select
-                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700"
+                                    <textarea
+                                        rows={3}
+                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]"
+                                        placeholder="Digite o parecer técnico para este item..."
                                         value={proc.conclusao_desempate}
                                         onChange={(e) => {
                                             const newconclusions = [...procedureConclusions];
                                             newconclusions[idx].conclusao_desempate = e.target.value;
                                             setProcedureConclusions(newconclusions);
                                         }}
-                                    >
-                                        <option value="">Selecione...</option>
-                                        <option value="Favorável">Favorável</option>
-                                        <option value="Desfavorável">Desfavorável</option>
-                                        <option value="Parcialmente Favorável">Parcialmente Favorável</option>
-                                    </select>
+                                    />
                                 </div>
                             ))}
 
@@ -283,20 +280,17 @@ export default function TiebreakerExternalForm({ token }) {
                                 <div key={mat.id} className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                                     <h4 className="font-bold text-slate-800 mb-2">{mat.descricao}</h4>
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
-                                    <select
-                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700"
+                                    <textarea
+                                        rows={3}
+                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]"
+                                        placeholder="Digite o parecer técnico para este item..."
                                         value={mat.conclusao_desempate}
                                         onChange={(e) => {
                                             const newM = [...materialConclusions];
                                             newM[idx].conclusao_desempate = e.target.value;
                                             setMaterialConclusions(newM);
                                         }}
-                                    >
-                                        <option value="">Selecione...</option>
-                                        <option value="Favorável">Favorável</option>
-                                        <option value="Desfavorável">Desfavorável</option>
-                                        <option value="Parcialmente Favorável">Parcialmente Favorável</option>
-                                    </select>
+                                    />
                                 </div>
                             ))}
                         </div>
