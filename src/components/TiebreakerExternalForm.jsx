@@ -109,7 +109,7 @@ export default function TiebreakerExternalForm({ token }) {
 
     if (loading) return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-            <Loader2 className="text-[#1D7874] animate-spin" size={48} />
+            <Loader2 className="text-[#259591] animate-spin" size={48} />
         </div>
     );
 
@@ -126,10 +126,10 @@ export default function TiebreakerExternalForm({ token }) {
     );
 
     if (success) return (
-        <div className="min-h-screen bg-[#1D7874] flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-[#259591] flex items-center justify-center p-4 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
             <div className="bg-white p-12 rounded-[2.5rem] shadow-2xl max-w-lg w-full text-center relative z-10 animate-in zoom-in duration-500">
-                <div className="w-20 h-20 bg-teal-50 text-[#1D7874] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-teal-100">
+                <div className="w-20 h-20 bg-teal-50 text-[#259591] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-teal-100">
                     <CheckCircle2 size={40} />
                 </div>
                 <h2 className="text-3xl font-black text-slate-800 mb-4 tracking-tight">Parecer Enviado!</h2>
@@ -149,7 +149,7 @@ export default function TiebreakerExternalForm({ token }) {
             <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
                 <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#1D7874] rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-teal-200">K</div>
+                        <div className="w-10 h-10 bg-[#259591] rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-teal-200">K</div>
                         <div>
                             <h1 className="font-black text-slate-800 text-lg tracking-tight">Junta Médica</h1>
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Parecer de Desempate</p>
@@ -206,7 +206,7 @@ export default function TiebreakerExternalForm({ token }) {
                     {/* Physician Info */}
                     <section className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 bg-[#1d78741a] text-[#1D7874] rounded-lg">
+                            <div className="p-2 bg-[#1d78741a] text-[#259591] rounded-lg">
                                 <User size={20} />
                             </div>
                             <h2 className="text-lg font-black text-slate-800 uppercase tracking-tight">Seus Dados (Desempatador)</h2>
@@ -218,7 +218,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#1D7874]"
+                                    className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#259591]"
                                     value={formData.desempatador_nome}
                                     onChange={e => setFormData({ ...formData, desempatador_nome: e.target.value })}
                                 />
@@ -229,7 +229,7 @@ export default function TiebreakerExternalForm({ token }) {
                                     <input
                                         required
                                         type="text"
-                                        className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#1D7874]"
+                                        className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#259591]"
                                         value={formData.desempatador_crm}
                                         onChange={e => setFormData({ ...formData, desempatador_crm: e.target.value })}
                                     />
@@ -238,7 +238,7 @@ export default function TiebreakerExternalForm({ token }) {
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Especialidade</label>
                                     <input
                                         type="text"
-                                        className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#1D7874]"
+                                        className="w-full p-4 bg-slate-50 rounded-xl border-slate-200 font-bold text-slate-700 focus:ring-2 focus:ring-[#259591]"
                                         value={formData.desempatador_especialidade}
                                         onChange={e => setFormData({ ...formData, desempatador_especialidade: e.target.value })}
                                     />
@@ -264,7 +264,7 @@ export default function TiebreakerExternalForm({ token }) {
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]"
+                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#259591]"
                                         placeholder="Digite o parecer técnico para este item..."
                                         value={proc.conclusao_desempate}
                                         onChange={(e) => {
@@ -282,7 +282,7 @@ export default function TiebreakerExternalForm({ token }) {
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]"
+                                        className="w-full p-3 bg-white rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#259591]"
                                         placeholder="Digite o parecer técnico para este item..."
                                         value={mat.conclusao_desempate}
                                         onChange={(e) => {
@@ -299,7 +299,7 @@ export default function TiebreakerExternalForm({ token }) {
                     {/* Final Conclusion */}
                     <section className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 bg-[#1d78741a] text-[#1D7874] rounded-lg">
+                            <div className="p-2 bg-[#1d78741a] text-[#259591] rounded-lg">
                                 <Gavel size={20} />
                             </div>
                             <h2 className="text-lg font-black text-slate-800 uppercase tracking-tight">Conclusão Final</h2>
@@ -311,7 +311,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 <textarea
                                     required
                                     rows={8}
-                                    className="w-full p-4 bg-slate-50 rounded-2xl border-slate-200 font-medium text-slate-700 focus:ring-2 focus:ring-[#1D7874] focus:bg-white transition-all"
+                                    className="w-full p-4 bg-slate-50 rounded-2xl border-slate-200 font-medium text-slate-700 focus:ring-2 focus:ring-[#259591] focus:bg-white transition-all"
                                     placeholder="Descreva detalhadamente a análise técnica e a conclusão final..."
                                     value={formData.parecer_conclusao}
                                     onChange={e => setFormData({ ...formData, parecer_conclusao: e.target.value })}
@@ -321,7 +321,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Referências Bibliográficas</label>
                                 <textarea
                                     rows={4}
-                                    className="w-full p-4 bg-slate-50 rounded-2xl border-slate-200 font-medium text-slate-700 focus:ring-2 focus:ring-[#1D7874] focus:bg-white transition-all"
+                                    className="w-full p-4 bg-slate-50 rounded-2xl border-slate-200 font-medium text-slate-700 focus:ring-2 focus:ring-[#259591] focus:bg-white transition-all"
                                     placeholder="Cite as referências utilizadas (opcional)..."
                                     value={formData.referencias_bibliograficas}
                                     onChange={e => setFormData({ ...formData, referencias_bibliograficas: e.target.value })}
@@ -333,7 +333,7 @@ export default function TiebreakerExternalForm({ token }) {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full py-6 bg-[#1D7874] hover:bg-[#155a57] text-white rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-teal-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                        className="w-full py-6 bg-[#259591] hover:bg-[#155a57] text-white rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-teal-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                     >
                         {submitting ? <Loader2 className="animate-spin" /> : <Save />}
                         {submitting ? 'Enviando...' : 'Assinar e Finalizar Parecer'}

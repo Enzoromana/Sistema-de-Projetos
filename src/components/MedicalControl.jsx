@@ -550,7 +550,7 @@ export default function MedicalControl() {
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Header */}
-            <div className="bg-gradient-to-br from-[#074F4B] to-[#1D7874] rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl">
+            <div className="bg-gradient-to-br from-[#074F4B] to-[#259591] rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
@@ -614,14 +614,14 @@ export default function MedicalControl() {
                                     placeholder="Beneficiário ou requisição..."
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}
-                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#259591]/10 outline-none font-bold text-slate-600"
                                 />
                             </div>
                             <div className="flex-1 w-full">
                                 <select
                                     value={statusFilter}
                                     onChange={e => setStatusFilter(e.target.value)}
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#1D7874]/10"
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10"
                                 >
                                     <option value="">Todos os status</option>
                                     {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
@@ -631,7 +631,7 @@ export default function MedicalControl() {
                                 <select
                                     value={specialtyFilter}
                                     onChange={e => setSpecialtyFilter(e.target.value)}
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#1D7874]/10"
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10"
                                 >
                                     <option value="">Todas as especialidades</option>
                                     {specialties.map(s => <option key={s} value={s}>{s}</option>)}
@@ -647,7 +647,7 @@ export default function MedicalControl() {
                                     placeholder="Buscar por nome do médico..."
                                     value={doctorSearch}
                                     onChange={e => setDoctorSearch(e.target.value)}
-                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#259591]/10 outline-none font-bold text-slate-600"
                                 />
                             </div>
                             <div className="relative flex-1 w-full">
@@ -657,7 +657,7 @@ export default function MedicalControl() {
                                     placeholder="Buscar por CRM..."
                                     value={crmSearch}
                                     onChange={e => setCrmSearch(e.target.value)}
-                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#1D7874]/10 outline-none font-bold text-slate-600"
+                                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#259591]/10 outline-none font-bold text-slate-600"
                                 />
                             </div>
                         </div>
@@ -679,7 +679,7 @@ export default function MedicalControl() {
                                     {filteredRequests.map(r => (
                                         <tr key={r.id} className="hover:bg-slate-50/30 transition-colors group">
                                             <td className="px-8 py-6">
-                                                <span className="font-black text-[#1D7874]">{r.requisicao}</span>
+                                                <span className="font-black text-[#259591]">{r.requisicao}</span>
                                             </td>
                                             <td className="px-8 py-6">
                                                 <div>
@@ -703,7 +703,7 @@ export default function MedicalControl() {
                                                     </button>
                                                     <button
                                                         onClick={() => { setSelectedRequest(r); setShowStatusModal(true); }}
-                                                        className="p-3 text-[#1D7874] bg-slate-50 hover:bg-[#1D7874] hover:text-white rounded-xl transition-all relative"
+                                                        className="p-3 text-[#259591] bg-slate-50 hover:bg-[#259591] hover:text-white rounded-xl transition-all relative"
                                                         title="Status / Etapas"
                                                     >
                                                         <Activity size={18} />
@@ -807,7 +807,7 @@ export default function MedicalControl() {
                             <div
                                 key={idx}
                                 onClick={() => setCurrentStep(idx)}
-                                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${currentStep === idx ? 'bg-[#1D7874] text-white shadow-lg border-[#1D7874]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#1D7874]/30 hover:text-slate-600'}`}
+                                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${currentStep === idx ? 'bg-[#259591] text-white shadow-lg border-[#259591]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#259591]/30 hover:text-slate-600'}`}
                             >
                                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${currentStep === idx ? 'bg-white/20' : 'bg-slate-50 text-slate-300'}`}>
                                     {s.icon}
@@ -840,7 +840,7 @@ export default function MedicalControl() {
                                         <select
                                             value={formData.ben_sexo}
                                             onChange={e => setFormData({ ...formData, ben_sexo: e.target.value })}
-                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
                                         >
                                             <option value="">Selecione...</option>
                                             <option value="Masculino">Masculino</option>
@@ -1188,7 +1188,7 @@ export default function MedicalControl() {
                                         onDragOver={(e) => { e.preventDefault(); setDragOverId('general'); }}
                                         onDragLeave={() => setDragOverId(null)}
                                         onDrop={(e) => handleDrop(e, 'general')}
-                                        className={`border-4 border-dashed rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center group transition-all cursor-pointer ${dragOverId === 'general' ? 'border-[#1D7874] bg-[#1D7874]/5 scale-[1.01]' : 'border-slate-100 hover:border-[#1D7874]/30 hover:bg-slate-50/50'}`}
+                                        className={`border-4 border-dashed rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center group transition-all cursor-pointer ${dragOverId === 'general' ? 'border-[#259591] bg-[#259591]/5 scale-[1.01]' : 'border-slate-100 hover:border-[#259591]/30 hover:bg-slate-50/50'}`}
                                         onClick={() => document.getElementById('medical-file-input').click()}
                                     >
                                         <input
@@ -1269,7 +1269,7 @@ export default function MedicalControl() {
                             {currentStep < 6 ? (
                                 <button
                                     onClick={() => setCurrentStep(currentStep + 1)}
-                                    className="bg-[#1D7874] text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-200"
+                                    className="bg-[#259591] text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-200"
                                 >
                                     Próximo Passo
                                 </button>
@@ -1333,8 +1333,8 @@ export default function MedicalControl() {
                                     }}
                                 >
                                     {/* Klini Header - Executive (Brand Colors) */}
-                                    <div className="flex justify-between items-end border-b-[4px] border-[#1D7874] pb-4 mb-6">
-                                        <div className="flex items-center gap-4 text-[#1D7874]">
+                                    <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
+                                        <div className="flex items-center gap-4 text-[#259591]">
                                             <Activity size={48} className="stroke-[2.5]" />
                                             <div>
                                                 <h1 className="text-4xl font-black tracking-tighter leading-none uppercase">Klini</h1>
@@ -1342,7 +1342,7 @@ export default function MedicalControl() {
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#1D7874]">Parecer de 2° opinião</h2>
+                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de 2° opinião</h2>
                                             <div className="mt-2 space-y-0.5">
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                                     Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
@@ -1356,40 +1356,40 @@ export default function MedicalControl() {
 
                                     <div className="space-y-6 text-slate-900 font-sans">
                                         {/* Block 1: Beneficiary & Request Data */}
-                                        <div className="border border-[#1D7874] flex rounded-none relative overflow-hidden">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#1D7874]"></div>
+                                        <div className="border border-[#259591] flex rounded-none relative overflow-hidden">
+                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#259591]"></div>
                                             {/* Beneficiary Col */}
-                                            <div className="flex-[2] p-5 border-r border-[#1D7874] pl-8">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-slate-100 pb-1">I. Beneficiário</h3>
+                                            <div className="flex-[2] p-5 border-r border-[#259591] pl-8">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-100 pb-1">I. Beneficiário</h3>
                                                 <div className="grid grid-cols-2 gap-y-3 gap-x-6">
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Nome Completo</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Nome Completo</p>
                                                         <p className="text-base font-bold truncate">{selectedRequest.ben_nome}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">CPF</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">CPF</p>
                                                         <p className="text-base font-bold">{selectedRequest.ben_cpf}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Data de Nasc.</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Data de Nasc.</p>
                                                         <p className="text-sm font-medium">{selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Telefone</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Telefone</p>
                                                         <p className="text-sm font-medium">{selectedRequest.ben_telefone}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                             {/* Request Details Col */}
                                             <div className="flex-1 p-5 bg-teal-50/30 break-inside-avoid">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-slate-200 pb-1">Status Interno</h3>
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-200 pb-1">Status Interno</h3>
                                                 <div className="space-y-3">
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Situação Atual</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Situação Atual</p>
                                                         <p className="text-xs font-black uppercase text-slate-800">{selectedRequest.situacao}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Prazo ANS</p>
+                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Prazo ANS</p>
                                                         <p className="text-xs font-bold text-slate-800">{selectedRequest.prazo_ans ? new Date(selectedRequest.prazo_ans).toLocaleDateString('pt-BR') : 'A calcular'}</p>
                                                     </div>
                                                 </div>
@@ -1397,16 +1397,16 @@ export default function MedicalControl() {
                                         </div>
 
                                         {/* Block 2: Professionals */}
-                                        <div className="border border-[#1D7874] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
-                                            <div className="flex-1 p-4 border-r border-[#1D7874]">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">II. Médico Auditor</h3>
+                                        <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
+                                            <div className="flex-1 p-4 border-r border-[#259591]">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">II. Médico Auditor</h3>
                                                 <div className="space-y-1">
                                                     <p className="text-sm font-bold">{selectedRequest.aud_nome}</p>
                                                     <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
                                                 </div>
                                             </div>
                                             <div className="flex-1 p-4 bg-teal-50/10">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente</h3>
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Médico Assistente</h3>
                                                 <div className="space-y-1">
                                                     <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
                                                     <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
@@ -1416,60 +1416,60 @@ export default function MedicalControl() {
 
                                         {/* Table: Procedures */}
                                         <div className="mt-8 break-inside-avoid">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> IV. Procedimentos Solicitados
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> IV. Procedimentos Solicitados
                                             </h3>
-                                            <table className="w-full text-left border border-[#1D7874] text-xs">
-                                                <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                            <table className="w-full text-left border border-[#259591] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#259591]">
                                                     <tr>
-                                                        <th className="p-3 border-r border-[#1D7874]/20 font-black uppercase w-24 text-[#1D7874]">TUSS</th>
-                                                        <th className="p-3 border-r border-[#1D7874]/20 font-black uppercase text-[#1D7874]">Descrição Técnica</th>
-                                                        <th className="p-3 border-r border-[#1D7874]/20 font-black uppercase text-center w-16 text-[#1D7874]">Sol.</th>
-                                                        <th className="p-3 font-black uppercase text-center w-16 text-[#1D7874]">Aut.</th>
+                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase w-24 text-[#259591]">TUSS</th>
+                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição Técnica</th>
+                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-16 text-[#259591]">Sol.</th>
+                                                        <th className="p-3 font-black uppercase text-center w-16 text-[#259591]">Aut.</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-[#1D7874]/20">
+                                                <tbody className="divide-y divide-[#259591]/20">
                                                     {selectedRequest.medical_procedures?.map((p, i) => (
                                                         <tr key={i} className="even:bg-slate-50 hover:bg-teal-50/10">
-                                                            <td className="p-3 border-r border-[#1D7874]/20 font-bold font-mono text-slate-700">{p.codigo || '-'}</td>
-                                                            <td className="p-3 border-r border-[#1D7874]/20">
+                                                            <td className="p-3 border-r border-[#259591]/20 font-bold font-mono text-slate-700">{p.codigo || '-'}</td>
+                                                            <td className="p-3 border-r border-[#259591]/20">
                                                                 <div className="font-bold text-slate-900">{p.descricao}</div>
                                                                 {p.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {p.justificativa}</div>}
                                                             </td>
-                                                            <td className="p-3 border-r border-[#1D7874]/20 text-center font-bold text-slate-600">{p.qtd_solicitada}</td>
-                                                            <td className="p-3 text-center font-bold text-[#1D7874]">{p.qtd_autorizada}</td>
+                                                            <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{p.qtd_solicitada}</td>
+                                                            <td className="p-3 text-center font-bold text-[#259591]">{p.qtd_autorizada}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
                                             </table>
                                             {(!selectedRequest.medical_procedures || selectedRequest.medical_procedures.length === 0) && (
-                                                <div className="text-center p-4 border border-t-0 border-[#1D7874] text-xs italic text-slate-500">Nenhum procedimento listado.</div>
+                                                <div className="text-center p-4 border border-t-0 border-[#259591] text-xs italic text-slate-500">Nenhum procedimento listado.</div>
                                             )}
                                         </div>
 
                                         {/* Table: Materials */}
                                         {selectedRequest.medical_materials?.length > 0 && (
                                             <div className="mt-6 break-inside-avoid">
-                                                <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> V. Materiais & OPME
+                                                <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> V. Materiais & OPME
                                                 </h3>
-                                                <table className="w-full text-left border border-[#1D7874] text-xs">
-                                                    <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                                <table className="w-full text-left border border-[#259591] text-xs">
+                                                    <thead className="bg-teal-50 border-b border-[#259591]">
                                                         <tr>
-                                                            <th className="p-3 border-r border-[#1D7874]/20 font-black uppercase text-[#1D7874]">Descrição do Material</th>
-                                                            <th className="p-3 border-r border-[#1D7874]/20 font-black uppercase text-center w-24 text-[#1D7874]">Sol.</th>
-                                                            <th className="p-3 font-black uppercase text-center w-24 text-[#1D7874]">Aut.</th>
+                                                            <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição do Material</th>
+                                                            <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-24 text-[#259591]">Sol.</th>
+                                                            <th className="p-3 font-black uppercase text-center w-24 text-[#259591]">Aut.</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody className="divide-y divide-[#1D7874]/20">
+                                                    <tbody className="divide-y divide-[#259591]/20">
                                                         {selectedRequest.medical_materials.map((m, i) => (
                                                             <tr key={i} className="even:bg-slate-50">
-                                                                <td className="p-3 border-r border-[#1D7874]/20">
+                                                                <td className="p-3 border-r border-[#259591]/20">
                                                                     <div className="font-bold text-slate-900">{m.descricao}</div>
                                                                     {m.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {m.justificativa}</div>}
                                                                 </td>
-                                                                <td className="p-3 border-r border-[#1D7874]/20 text-center font-bold text-slate-600">{m.qtd_solicitada}</td>
-                                                                <td className="p-3 text-center font-bold text-[#1D7874]">{m.qtd_autorizada}</td>
+                                                                <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{m.qtd_solicitada}</td>
+                                                                <td className="p-3 text-center font-bold text-[#259591]">{m.qtd_autorizada}</td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -1479,16 +1479,16 @@ export default function MedicalControl() {
 
                                         {/* Block 6: Documents */}
                                         <div className="mt-8 break-inside-avoid">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874]"></div> VI. Documentos & Anexos
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> VI. Documentos & Anexos
                                             </h3>
-                                            <div className="border border-[#1D7874] bg-white text-xs">
+                                            <div className="border border-[#259591] bg-white text-xs">
                                                 {DOC_TYPES.map(type => {
                                                     const docs = selectedRequest.documentos_internos?.[type.id];
                                                     if (!docs || docs.length === 0) return null;
                                                     return (
-                                                        <div key={type.id} className="p-3 border-b border-[#1D7874]/20 last:border-b-0">
-                                                            <p className="font-black text-[#1D7874] uppercase text-[10px] mb-1">{type.label}</p>
+                                                        <div key={type.id} className="p-3 border-b border-[#259591]/20 last:border-b-0">
+                                                            <p className="font-black text-[#259591] uppercase text-[10px] mb-1">{type.label}</p>
                                                             <div className="space-y-1 pl-2">
                                                                 {docs.map((doc, i) => (
                                                                     <div key={i} className="flex items-center gap-2">
@@ -1504,8 +1504,8 @@ export default function MedicalControl() {
 
                                                 {/* General Attachments */}
                                                 {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
-                                                    <div className="p-3 border-b border-[#1D7874]/20 last:border-b-0">
-                                                        <p className="font-black text-[#1D7874] uppercase text-[10px] mb-1">Outros Anexos</p>
+                                                    <div className="p-3 border-b border-[#259591]/20 last:border-b-0">
+                                                        <p className="font-black text-[#259591] uppercase text-[10px] mb-1">Outros Anexos</p>
                                                         <div className="space-y-1 pl-2">
                                                             {selectedRequest.medical_attachments.map((att, i) => (
                                                                 <div key={i} className="flex items-center gap-2">
@@ -1526,18 +1526,18 @@ export default function MedicalControl() {
                                         </div>
 
                                         {/* Block 7: Divergence (Renumbered) */}
-                                        <div className="mt-8 border border-[#1D7874] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VII. Parecer de Divergência</h3>
+                                        <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-[#259591]/20 pb-1">VII. Parecer de Divergência</h3>
                                             <div className="grid grid-cols-1 gap-y-1 relative z-10">
                                                 <div>
-                                                    <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Especialidade Analisada</p>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Especialidade Analisada</p>
                                                     <p className="text-sm font-bold text-slate-900">{selectedRequest.div_especialidade}</p>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <p className="text-[9px] uppercase font-bold text-[#1D7874]/70">Considerações Técnicas</p>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Considerações Técnicas</p>
                                                     <div className="flex flex-wrap gap-2 mt-1">
                                                         {selectedRequest.div_motivos?.map((m, i) => (
-                                                            <span key={i} className="px-3 py-1 bg-white border border-[#1D7874]/30 rounded text-[10px] font-bold text-[#1D7874]">{m}</span>
+                                                            <span key={i} className="px-3 py-1 bg-white border border-[#259591]/30 rounded text-[10px] font-bold text-[#259591]">{m}</span>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -1546,14 +1546,14 @@ export default function MedicalControl() {
                                         </div>
 
                                         {selectedRequest.referencias_bibliograficas && (
-                                            <div className="mt-8 border border-[#1D7874] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-3 border-b border-[#1D7874]/20 pb-1">VIII. Referências Bibliográficas</h3>
+                                            <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
+                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-[#259591]/20 pb-1">VIII. Referências Bibliográficas</h3>
                                                 <p className="text-xs font-medium text-slate-500 italic whitespace-pre-wrap">{selectedRequest.referencias_bibliograficas}</p>
                                             </div>
                                         )}
 
                                         <div className="mt-12 text-center">
-                                            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#1D7874]/50">
+                                            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
                                                 Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
                                             </p>
                                         </div>
@@ -1744,7 +1744,7 @@ export default function MedicalControl() {
                 showHelpModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
                         <div className="bg-white rounded-[2.5rem] w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#1D7874] text-white">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#259591] text-white">
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-white/20 rounded-2xl">
                                         <AlertCircle size={24} />
@@ -1763,39 +1763,39 @@ export default function MedicalControl() {
                                 {/* Guia de Utilização */}
                                 <section className="space-y-6">
                                     <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
-                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full" /> Guia de Utilização
+                                        <div className="w-8 h-1 bg-[#259591] rounded-full" /> Guia de Utilização
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">1. Cadastro de Junta</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">1. Cadastro de Junta</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Preencha os dados do beneficiário e médicos. Os campos de CPF, CRM e Telefone agora aceitam apenas números.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">2. Documentação</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">2. Documentação</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Na penúltima etapa, anexe os documentos específicos em suas respectivas categorias para melhor organização.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">3. Acompanhamento</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">3. Acompanhamento</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Utilize o botão de "Status" na lista principal para gerenciar as etapas e anexos após a criação.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">4. Emissão de PDF</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">4. Emissão de PDF</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Gere o documento inicial clicando no ícone de impressora na visualização de detalhes.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">5. Fase de Desempate</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">5. Fase de Desempate</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Para solicitações divergentes, use o ícone de Martelo para inserir o parecer do desempatador e itens específicos.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">6. Parecer Final</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">6. Parecer Final</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Após finalizar o desempate, imprima o Parecer de Junta Médica (ícone de Check verde) para o fechamento oficial.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">7. Filtros Avançados</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">7. Filtros Avançados</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Filtre a lista por Especialidade, CRM ou Nome de qualquer médico na barra superior.</p>
                                         </div>
                                         <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
-                                            <p className="font-black text-[#1D7874] text-sm uppercase">8. Download em Lote</p>
+                                            <p className="font-black text-[#259591] text-sm uppercase">8. Download em Lote</p>
                                             <p className="text-xs font-medium text-slate-500 leading-relaxed">Baixe todos os anexos de uma só vez com o botão "Baixar Todos os Arquivos" em detalhes.</p>
                                         </div>
                                     </div>
@@ -1843,8 +1843,8 @@ export default function MedicalControl() {
                                                         "Tooltips de UX: Adição de nomenclatura descritiva ao passar o mouse em ícones de Status e Ações na tabela principal.",
                                                         "Proteção de Credenciais: Migração de chaves Supabase para variáveis de ambiente (.env) seguindo normas de segurança OWASP."
                                                     ].map((note, i) => (
-                                                        <li key={i} className="flex items-start gap-2 text-xs font-black text-[#1D7874] leading-relaxed">
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#1D7874] mt-1.5" /> {note}
+                                                        <li key={i} className="flex items-start gap-2 text-xs font-black text-[#259591] leading-relaxed">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#259591] mt-1.5" /> {note}
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -1912,7 +1912,7 @@ export default function MedicalControl() {
                 showTiebreakerModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
                         <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#1D7874] text-white">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#259591] text-white">
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-white/20 rounded-2xl">
                                         <Gavel size={24} />
@@ -1931,27 +1931,27 @@ export default function MedicalControl() {
                                 {/* Section 1: Desempatador */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">1. Dados do Desempatador</h4>
+                                        <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
+                                        <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">1. Dados do Desempatador</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
                                             label="Nome Completo"
                                             value={tiebreakerData.desempatador_nome}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_nome: v })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                         <Input
                                             label="Especialidade"
                                             value={tiebreakerData.desempatador_especialidade}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_especialidade: v })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                         <Input
                                             label="CRM"
                                             value={tiebreakerData.desempatador_crm}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v.replace(/\D/g, '') })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                     </div>
                                 </div>
@@ -1959,27 +1959,27 @@ export default function MedicalControl() {
                                 {/* Section 2: Assistant Physician (Tiebreaker Phase) */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">2. Médico Assistente</h4>
+                                        <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
+                                        <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">2. Médico Assistente</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
                                             label="Nome Completo"
                                             value={tiebreakerData.desempate_ass_nome}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_nome: v })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                         <Input
                                             label="Especialidade"
                                             value={tiebreakerData.desempate_ass_especialidade}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_especialidade: v })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                         <Input
                                             label="CRM"
                                             value={tiebreakerData.desempate_ass_crm}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempate_ass_crm: v.replace(/\D/g, '') })}
-                                            labelClass="text-[#1D7874]"
+                                            labelClass="text-[#259591]"
                                         />
                                     </div>
                                 </div>
@@ -1988,14 +1988,14 @@ export default function MedicalControl() {
                                 {procedureConclusions.length > 0 && (
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                            <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">3. Conclusões dos Procedimentos</h4>
+                                            <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
+                                            <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">3. Conclusões dos Procedimentos</h4>
                                         </div>
                                         <div className="space-y-4">
                                             {procedureConclusions.map((proc, idx) => (
                                                 <div key={proc.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                                                     <div className="flex flex-wrap gap-2 text-xs mb-3">
-                                                        <span className="px-2 py-1 bg-[#1D7874]/10 text-[#1D7874] rounded font-bold">{proc.codigo || 'S/C'}</span>
+                                                        <span className="px-2 py-1 bg-[#259591]/10 text-[#259591] rounded font-bold">{proc.codigo || 'S/C'}</span>
                                                         <span className="font-bold text-slate-700">{proc.descricao}</span>
                                                         <span className="text-slate-400">Sol: {proc.qtd_solicitada} | Aut: {proc.qtd_autorizada}</span>
                                                     </div>
@@ -2013,7 +2013,7 @@ export default function MedicalControl() {
                                                             setProcedureConclusions(updated);
                                                         }}
                                                         placeholder="Parecer sobre este procedimento..."
-                                                        labelClass="text-[#1D7874]"
+                                                        labelClass="text-[#259591]"
                                                     />
                                                 </div>
                                             ))}
@@ -2025,8 +2025,8 @@ export default function MedicalControl() {
                                 {materialConclusions.length > 0 && (
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                            <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">4. Conclusões dos Materiais</h4>
+                                            <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
+                                            <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">4. Conclusões dos Materiais</h4>
                                         </div>
                                         <div className="space-y-4">
                                             {materialConclusions.map((mat, idx) => (
@@ -2049,7 +2049,7 @@ export default function MedicalControl() {
                                                             setMaterialConclusions(updated);
                                                         }}
                                                         placeholder="Parecer sobre este material..."
-                                                        labelClass="text-[#1D7874]"
+                                                        labelClass="text-[#259591]"
                                                     />
                                                 </div>
                                             ))}
@@ -2060,24 +2060,24 @@ export default function MedicalControl() {
                                 {/* Section 5: Final Conclusion */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-[#1D7874] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#1D7874] uppercase tracking-widest">5. Conclusão Final do Parecer</h4>
+                                        <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
+                                        <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">5. Conclusão Final do Parecer</h4>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-[#1D7874] uppercase tracking-widest ml-1">Parecer Final</label>
+                                        <label className="text-[10px] font-black text-[#259591] uppercase tracking-widest ml-1">Parecer Final</label>
                                         <textarea
                                             value={tiebreakerData.parecer_conclusao}
                                             onChange={e => setTiebreakerData({ ...tiebreakerData, parecer_conclusao: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]/20 transition-all min-h-[150px]"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#259591]/20 transition-all min-h-[150px]"
                                             placeholder="Descreva a conclusão final da junta médica..."
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-[#1D7874] uppercase tracking-widest ml-1">Referências Bibliográficas</label>
+                                        <label className="text-[10px] font-black text-[#259591] uppercase tracking-widest ml-1">Referências Bibliográficas</label>
                                         <textarea
                                             value={tiebreakerData.referencias_bibliograficas}
                                             onChange={e => setTiebreakerData({ ...tiebreakerData, referencias_bibliograficas: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1D7874]/20 transition-all min-h-[100px]"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#259591]/20 transition-all min-h-[100px]"
                                             placeholder="Cite as referências bibliográficas utilizadas..."
                                         />
                                     </div>
@@ -2120,7 +2120,7 @@ export default function MedicalControl() {
                                 </button>
                                 <button
                                     onClick={handleSaveTiebreaker}
-                                    className="bg-[#1D7874] hover:bg-[#155a57] text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-900/20 flex items-center gap-2"
+                                    className="bg-[#259591] hover:bg-[#155a57] text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-900/20 flex items-center gap-2"
                                 >
                                     Finalizar <CheckCircle2 size={18} />
                                 </button>
@@ -2159,32 +2159,32 @@ export default function MedicalControl() {
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; padding: 15mm; color: #1e293b; font-size: 12px; }
-        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 4px solid #1D7874; padding-bottom: 16px; margin-bottom: 24px; }
-        .logo { display: flex; align-items: center; gap: 12px; color: #1D7874; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 4px solid #259591; padding-bottom: 16px; margin-bottom: 24px; }
+        .logo { display: flex; align-items: center; gap: 12px; color: #259591; }
         .logo-icon { width: 48px; height: 48px; }
         .logo h1 { font-size: 36px; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; margin: 0; line-height: 1; }
         .logo p { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #64748b; margin: 0; }
         .header-right { text-align: right; }
-        .header-right h2 { font-size: 18px; font-weight: 900; text-transform: uppercase; color: #1D7874; margin-bottom: 8px; }
+        .header-right h2 { font-size: 18px; font-weight: 900; text-transform: uppercase; color: #259591; margin-bottom: 8px; }
         .header-right p { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
         .header-right span { color: #1e293b; font-weight: 900; }
-        .section { border: 1px solid #1D7874; padding: 12px 16px; margin-bottom: 12px; }
-        .section-title { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #1D7874; margin-bottom: 8px; }
+        .section { border: 1px solid #259591; padding: 12px 16px; margin-bottom: 12px; }
+        .section-title { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #259591; margin-bottom: 8px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .field-label { font-size: 9px; text-transform: uppercase; font-weight: 700; color: rgba(29, 120, 116, 0.7); }
         .field-value { font-weight: 700; font-size: 13px; }
-        .professionals { display: flex; border: 1px solid #1D7874; margin-bottom: 12px; }
+        .professionals { display: flex; border: 1px solid #259591; margin-bottom: 12px; }
         .professionals > div { flex: 1; padding: 12px 16px; }
-        .professionals > div:not(:last-child) { border-right: 1px solid #1D7874; }
+        .professionals > div:not(:last-child) { border-right: 1px solid #259591; }
         .professionals .last { background: rgba(240, 253, 250, 0.3); }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #1D7874; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #259591; }
         th { background: #f0fdfa; border: 1px solid rgba(29, 120, 116, 0.2); padding: 8px; text-align: left; font-weight: 700; font-size: 10px; text-transform: uppercase; }
         td { border: 1px solid rgba(29, 120, 116, 0.2); padding: 8px; }
         .code { font-family: monospace; }
         .center { text-align: center; }
         .bold { font-weight: 700; }
-        .teal { color: #1D7874; }
-        .conclusion-box { border: 1px solid #1D7874; background: rgba(240, 253, 250, 0.3); padding: 16px; margin-top: 24px; }
+        .teal { color: #259591; }
+        .conclusion-box { border: 1px solid #259591; background: rgba(240, 253, 250, 0.3); padding: 16px; margin-top: 24px; }
         .signature { margin-top: 48px; display: flex; justify-content: center; }
         .sig-line { width: 200px; border-top: 1px solid #64748b; padding-top: 8px; text-align: center; }
         .sig-line p { font-size: 11px; font-weight: 700; margin: 0; }
@@ -2196,7 +2196,7 @@ export default function MedicalControl() {
 <body>
     <div class="header">
         <div class="logo">
-            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#1D7874" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#259591" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
             </svg>
             <div>
@@ -2348,8 +2348,8 @@ export default function MedicalControl() {
                                     }}
                                 >
                                     {/* Header */}
-                                    <div className="flex justify-between items-end border-b-[4px] border-[#1D7874] pb-4 mb-6">
-                                        <div className="flex items-center gap-4 text-[#1D7874]">
+                                    <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
+                                        <div className="flex items-center gap-4 text-[#259591]">
                                             <Activity size={48} className="stroke-[2.5]" />
                                             <div>
                                                 <h1 className="text-4xl font-black tracking-tighter leading-none uppercase">Klini</h1>
@@ -2357,7 +2357,7 @@ export default function MedicalControl() {
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#1D7874]">Parecer de Junta Médica</h2>
+                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de Junta Médica</h2>
                                             <div className="mt-2 space-y-0.5">
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                                     Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
@@ -2370,28 +2370,28 @@ export default function MedicalControl() {
                                     </div>
 
                                     {/* Beneficiary */}
-                                    <div className="border border-[#1D7874] p-4 mb-4">
-                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">I. Beneficiário</h3>
+                                    <div className="border border-[#259591] p-4 mb-4">
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">I. Beneficiário</h3>
                                         <div className="grid grid-cols-2 gap-4 text-sm">
-                                            <div><span className="text-[9px] uppercase font-bold text-[#1D7874]/70">Nome:</span> <span className="font-bold">{selectedRequest.ben_nome}</span></div>
-                                            <div><span className="text-[9px] uppercase font-bold text-[#1D7874]/70">CPF:</span> <span className="font-bold">{selectedRequest.ben_cpf}</span></div>
+                                            <div><span className="text-[9px] uppercase font-bold text-[#259591]/70">Nome:</span> <span className="font-bold">{selectedRequest.ben_nome}</span></div>
+                                            <div><span className="text-[9px] uppercase font-bold text-[#259591]/70">CPF:</span> <span className="font-bold">{selectedRequest.ben_cpf}</span></div>
                                         </div>
                                     </div>
 
                                     {/* Professionals */}
-                                    <div className="border border-[#1D7874] flex mb-4">
-                                        <div className="flex-1 p-4 border-r border-[#1D7874]">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">II. Desempatador</h3>
+                                    <div className="border border-[#259591] flex mb-4">
+                                        <div className="flex-1 p-4 border-r border-[#259591]">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">II. Desempatador</h3>
                                             <p className="text-sm font-bold">{selectedRequest.desempatador_nome || '-'}</p>
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempatador_crm || '-'} • {selectedRequest.desempatador_especialidade || '-'}</p>
                                         </div>
-                                        <div className="flex-1 p-4 border-r border-[#1D7874]">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">III. Médico Assistente</h3>
+                                        <div className="flex-1 p-4 border-r border-[#259591]">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Médico Assistente</h3>
                                             <p className="text-sm font-bold">{selectedRequest.desempate_ass_nome || '-'}</p>
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempate_ass_crm || '-'} • {selectedRequest.desempate_ass_especialidade || '-'}</p>
                                         </div>
                                         <div className="flex-1 p-4 bg-teal-50/30">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">IV. Operadora</h3>
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">IV. Operadora</h3>
                                             <p className="text-sm font-bold">Klini Planos de Saúde</p>
                                             <p className="text-xs text-slate-600">ANS: 42.202-9</p>
                                         </div>
@@ -2400,24 +2400,24 @@ export default function MedicalControl() {
                                     {/* Procedures Table */}
                                     {selectedRequest.medical_procedures?.length > 0 && (
                                         <div className="mb-4">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2">V. Procedimentos</h3>
-                                            <table className="w-full text-left border border-[#1D7874] text-xs">
-                                                <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2">V. Procedimentos</h3>
+                                            <table className="w-full text-left border border-[#259591] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#259591]">
                                                     <tr>
-                                                        <th className="p-2 border-r border-[#1D7874]/20 w-20">TUSS</th>
-                                                        <th className="p-2 border-r border-[#1D7874]/20">Descrição</th>
-                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Sol.</th>
-                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Aut.</th>
+                                                        <th className="p-2 border-r border-[#259591]/20 w-20">TUSS</th>
+                                                        <th className="p-2 border-r border-[#259591]/20">Descrição</th>
+                                                        <th className="p-2 border-r border-[#259591]/20 w-12 text-center">Sol.</th>
+                                                        <th className="p-2 border-r border-[#259591]/20 w-12 text-center">Aut.</th>
                                                         <th className="p-2">Conclusão Desempatador</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {selectedRequest.medical_procedures.map((p, i) => (
-                                                        <tr key={i} className="border-b border-[#1D7874]/20">
-                                                            <td className="p-2 border-r border-[#1D7874]/20 font-mono">{p.codigo || '-'}</td>
-                                                            <td className="p-2 border-r border-[#1D7874]/20 font-bold">{p.descricao}</td>
-                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center">{p.qtd_solicitada}</td>
-                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center font-bold text-[#1D7874]">{p.qtd_autorizada}</td>
+                                                        <tr key={i} className="border-b border-[#259591]/20">
+                                                            <td className="p-2 border-r border-[#259591]/20 font-mono">{p.codigo || '-'}</td>
+                                                            <td className="p-2 border-r border-[#259591]/20 font-bold">{p.descricao}</td>
+                                                            <td className="p-2 border-r border-[#259591]/20 text-center">{p.qtd_solicitada}</td>
+                                                            <td className="p-2 border-r border-[#259591]/20 text-center font-bold text-[#259591]">{p.qtd_autorizada}</td>
                                                             <td className="p-2">{p.conclusao_desempate || '-'}</td>
                                                         </tr>
                                                     ))}
@@ -2429,22 +2429,22 @@ export default function MedicalControl() {
                                     {/* Materials Table */}
                                     {selectedRequest.medical_materials?.length > 0 && (
                                         <div className="mb-4">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#1D7874] mb-2">VI. Materiais & OPME</h3>
-                                            <table className="w-full text-left border border-[#1D7874] text-xs">
-                                                <thead className="bg-teal-50 border-b border-[#1D7874]">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2">VI. Materiais & OPME</h3>
+                                            <table className="w-full text-left border border-[#259591] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#259591]">
                                                     <tr>
-                                                        <th className="p-2 border-r border-[#1D7874]/20">Descrição</th>
-                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Sol.</th>
-                                                        <th className="p-2 border-r border-[#1D7874]/20 w-12 text-center">Aut.</th>
+                                                        <th className="p-2 border-r border-[#259591]/20">Descrição</th>
+                                                        <th className="p-2 border-r border-[#259591]/20 w-12 text-center">Sol.</th>
+                                                        <th className="p-2 border-r border-[#259591]/20 w-12 text-center">Aut.</th>
                                                         <th className="p-2">Conclusão Desempatador</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {selectedRequest.medical_materials.map((m, i) => (
-                                                        <tr key={i} className="border-b border-[#1D7874]/20">
-                                                            <td className="p-2 border-r border-[#1D7874]/20 font-bold">{m.descricao}</td>
-                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center">{m.qtd_solicitada}</td>
-                                                            <td className="p-2 border-r border-[#1D7874]/20 text-center font-bold text-[#1D7874]">{m.qtd_autorizada}</td>
+                                                        <tr key={i} className="border-b border-[#259591]/20">
+                                                            <td className="p-2 border-r border-[#259591]/20 font-bold">{m.descricao}</td>
+                                                            <td className="p-2 border-r border-[#259591]/20 text-center">{m.qtd_solicitada}</td>
+                                                            <td className="p-2 border-r border-[#259591]/20 text-center font-bold text-[#259591]">{m.qtd_autorizada}</td>
                                                             <td className="p-2">{m.conclusao_desempate || '-'}</td>
                                                         </tr>
                                                     ))}
@@ -2454,13 +2454,13 @@ export default function MedicalControl() {
                                     )}
 
                                     {/* Final Conclusion */}
-                                    <div className="border border-[#1D7874] bg-teal-50/30 p-4 mt-6">
-                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1D7874] mb-2">VII. Conclusão Final do Parecer</h3>
+                                    <div className="border border-[#259591] bg-teal-50/30 p-4 mt-6">
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">VII. Conclusão Final do Parecer</h3>
                                         <p className="text-sm font-medium text-slate-800 whitespace-pre-wrap mb-4">{selectedRequest.parecer_conclusao || 'Sem conclusão registrada.'}</p>
 
                                         {selectedRequest.referencias_bibliograficas && (
-                                            <div className="border-t border-[#1D7874]/20 pt-3">
-                                                <h3 className="text-[9px] font-black uppercase tracking-widest text-[#1D7874] mb-1 opacity-70">VIII. Referências Bibliográficas</h3>
+                                            <div className="border-t border-[#259591]/20 pt-3">
+                                                <h3 className="text-[9px] font-black uppercase tracking-widest text-[#259591] mb-1 opacity-70">VIII. Referências Bibliográficas</h3>
                                                 <p className="text-xs font-medium text-slate-500 italic whitespace-pre-wrap">{selectedRequest.referencias_bibliograficas}</p>
                                             </div>
                                         )}
@@ -2478,7 +2478,7 @@ export default function MedicalControl() {
 
                                     {/* Footer */}
                                     <div className="mt-12 text-center">
-                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#1D7874]/50">
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
                                             Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
                                         </p>
                                     </div>
@@ -2538,7 +2538,7 @@ function SpecialtyAutocomplete({ value, onChange, placeholder, required }) {
                         }
                     }}
                     placeholder={placeholder}
-                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                    className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
                 />
 
                 {showOptions && results.length > 0 && (
@@ -2552,7 +2552,7 @@ function SpecialtyAutocomplete({ value, onChange, placeholder, required }) {
                                         setSearch(item);
                                         setShowOptions(false);
                                     }}
-                                    className="w-full text-left px-6 py-4 hover:bg-[#1D7874] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
+                                    className="w-full text-left px-6 py-4 hover:bg-[#259591] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
                                 >
                                     <span className="block text-sm font-bold text-slate-600 group-hover/item:text-white truncate">{item}</span>
                                 </button>
@@ -2572,7 +2572,7 @@ function SpecialtyAutocomplete({ value, onChange, placeholder, required }) {
 // Internal Components
 function StatCard({ icon, label, value, color }) {
     const colors = {
-        primary: 'bg-[#1D7874]/10 text-[#1D7874] border-[#1D7874]/20',
+        primary: 'bg-[#259591]/10 text-[#259591] border-[#259591]/20',
         warning: 'bg-amber-100 text-amber-600 border-amber-200',
         info: 'bg-blue-100 text-blue-600 border-blue-200',
         success: 'bg-emerald-100 text-emerald-600 border-emerald-200'
@@ -2593,7 +2593,7 @@ function StatCard({ icon, label, value, color }) {
 function FormHeader({ icon, title, sub }) {
     return (
         <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-slate-50 text-[#1D7874] flex items-center justify-center border border-[#1D7874]/10 shadow-sm">
+            <div className="w-14 h-14 rounded-2xl bg-slate-50 text-[#259591] flex items-center justify-center border border-[#259591]/10 shadow-sm">
                 {icon}
             </div>
             <div>
@@ -2616,7 +2616,7 @@ function Input({ label, required, value, onChange, placeholder, type = "text", m
                 onChange={e => onChange(e.target.value)}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
             />
         </div>
     );
@@ -2625,7 +2625,7 @@ function Input({ label, required, value, onChange, placeholder, type = "text", m
 function Checkbox({ label, checked, onChange }) {
     return (
         <label className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 cursor-pointer group transition-all hover:bg-slate-100">
-            <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${checked ? 'bg-[#1D7874] border-[#1D7874]' : 'border-slate-300 bg-white group-hover:border-[#1D7874]'}`}>
+            <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${checked ? 'bg-[#259591] border-[#259591]' : 'border-slate-300 bg-white group-hover:border-[#259591]'}`}>
                 {checked && <X size={14} className="text-white" />}
             </div>
             <span className="text-sm font-bold text-slate-600 transition-colors group-hover:text-slate-900">{label}</span>
@@ -2762,7 +2762,7 @@ function TussAutocomplete({ value, onChange }) {
                                     if (search.length >= 2) setShowOptions(true);
                                 }}
                                 placeholder="Cód..."
-                                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#1D7874]/10 transition-all"
+                                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
                             />
 
                             {showOptions && results.length > 0 && (
@@ -2775,9 +2775,9 @@ function TussAutocomplete({ value, onChange }) {
                                                     onChange({ codigo: item.code, descricao: item.description });
                                                     setShowOptions(false);
                                                 }}
-                                                className="w-full text-left px-6 py-4 hover:bg-[#1D7874] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
+                                                className="w-full text-left px-6 py-4 hover:bg-[#259591] hover:text-white rounded-[1.5rem] transition-all group/item mb-1 last:mb-0"
                                             >
-                                                <span className="block text-[10px] font-black text-[#1D7874] group-hover/item:text-teal-200 uppercase tracking-widest mb-1">{item.code}</span>
+                                                <span className="block text-[10px] font-black text-[#259591] group-hover/item:text-teal-200 uppercase tracking-widest mb-1">{item.code}</span>
                                                 <span className="block text-sm font-bold text-slate-600 group-hover/item:text-white truncate">{item.description}</span>
                                             </button>
                                         ))}
@@ -2946,7 +2946,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         }, index * 400); // 400ms delay to prevent browser block
                                     });
                                 }}
-                                className="bg-[#1D7874] hover:bg-[#155a57] text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-sm"
+                                className="bg-[#259591] hover:bg-[#155a57] text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-sm"
                             >
                                 <Download size={14} /> Baixar Todos os Arquivos
                             </button>
