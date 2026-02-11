@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, cloneElement } from 'react';
 import { supabase } from '../lib/supabase';
 import {
     Plus, Activity, CheckCircle2, Clock,
@@ -99,6 +99,8 @@ export default function MedicalControl() {
     const [procedureConclusions, setProcedureConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [showTiebreakerReportModal, setShowTiebreakerReportModal] = useState(false);
+    const [showLinkModal, setShowLinkModal] = useState(false);
+    const [generatedLink, setGeneratedLink] = useState('');
 
     const loadRequests = async () => {
         setLoading(true);
@@ -666,7 +668,7 @@ export default function MedicalControl() {
                     </div>
 
                     {/* Requests Table */}
-                    <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden">
+                    <div className="bg-white rounded-[3rem] border border-slate-200/50 shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden transition-all hover:shadow-[0_40px_80px_rgba(0,0,0,0.08)]">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
@@ -690,7 +692,8 @@ export default function MedicalControl() {
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6 text-center">
-                                                <span className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest ${SITUACAO[r.situacao]?.textColor} ${SITUACAO[r.situacao]?.bgLight}`}>
+                                                <span className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 w-fit mx-auto shadow-sm border ${SITUACAO[r.situacao]?.textColor} ${SITUACAO[r.situacao]?.bgLight} border-current/10`}>
+                                                    <div className={`w-1.5 h-1.5 rounded-full ${SITUACAO[r.situacao]?.color}`} />
                                                     {r.situacao}
                                                 </span>
                                             </td>
@@ -780,6 +783,28 @@ export default function MedicalControl() {
                                                             <CheckCircle2 size={18} />
                                                         </button>
                                                     )}
+                                                    <button
+                                                        onClick={async () => {
+                                                            try {
+                                                                let token = r.tiebreaker_token;
+                                                                if (!token) {
+                                                                    token = crypto.randomUUID();
+                                                                    await supabase.from('medical_requests').update({ tiebreaker_token: token }).eq('id', r.id);
+                                                                    loadRequests();
+                                                                }
+                                                                const link = `${window.location.origin}/parecer/${token}`;
+                                                                setGeneratedLink(link);
+                                                                setShowLinkModal(true);
+                                                                await navigator.clipboard.writeText(link);
+                                                            } catch (e) {
+                                                                alert('Erro ao gerar link.');
+                                                            }
+                                                        }}
+                                                        className="p-3 text-teal-600 bg-teal-50 hover:bg-teal-600 hover:text-white rounded-xl transition-all border border-teal-100 shadow-sm"
+                                                        title="Copiar Link Externo"
+                                                    >
+                                                        <Link size={18} />
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2135,8 +2160,9 @@ export default function MedicalControl() {
                                             }
 
                                             const link = `${window.location.origin}/parecer/${token}`;
+                                            setGeneratedLink(link);
+                                            setShowLinkModal(true);
                                             await navigator.clipboard.writeText(link);
-                                            alert('Link para preenchimento externo copiado!');
                                         } catch (e) {
                                             console.error('Erro ao gerar link:', e);
                                             alert('Erro ao gerar link.');
@@ -2156,6 +2182,55 @@ export default function MedicalControl() {
                                 >
                                     Finalizar <CheckCircle2 size={18} />
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                showLinkModal && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[3rem] w-full max-w-lg overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)] border border-white/20 animate-in zoom-in-95 duration-300">
+                            <div className="p-10 text-center">
+                                <div className="w-24 h-24 bg-teal-50 rounded-[2rem] flex items-center justify-center text-teal-600 mx-auto mb-8 shadow-inner">
+                                    <Link size={40} className="stroke-[2.5]" />
+                                </div>
+                                <h3 className="text-3xl font-black text-slate-800 tracking-tight mb-4">Link Gerado com Sucesso!</h3>
+                                <p className="text-slate-500 font-bold text-sm uppercase tracking-widest mb-8 px-4">
+                                    O link para preenchimento externo foi copiado para sua área de transferência.
+                                </p>
+
+                                <div className="bg-slate-50 border border-slate-100 rounded-[1.5rem] p-5 mb-8 flex items-center gap-3 group">
+                                    <div className="flex-1 truncate text-xs font-mono font-black text-slate-400 text-left">
+                                        {generatedLink}
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(generatedLink);
+                                            alert('Link copiado!');
+                                        }}
+                                        className="p-3 bg-white text-teal-600 rounded-xl border border-teal-50 shadow-sm hover:scale-105 transition-all"
+                                    >
+                                        <Download size={16} />
+                                    </button>
+                                </div>
+
+                                <div className="flex flex-col gap-3">
+                                    <a
+                                        href={generatedLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full bg-[#259591] hover:bg-[#1a6e6a] text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center justify-center gap-2"
+                                    >
+                                        Abrir para Teste <Activity size={16} />
+                                    </a>
+                                    <button
+                                        onClick={() => setShowLinkModal(false)}
+                                        className="w-full py-5 text-slate-400 font-black text-xs uppercase tracking-widest hover:text-slate-600 transition-all"
+                                    >
+                                        Fechar Janela
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2604,18 +2679,20 @@ function SpecialtyAutocomplete({ value, onChange, placeholder, required }) {
 // Internal Components
 function StatCard({ icon, label, value, color }) {
     const colors = {
-        primary: 'bg-[#259591]/10 text-[#259591] border-[#259591]/20',
-        warning: 'bg-amber-100 text-amber-600 border-amber-200',
-        info: 'bg-blue-100 text-blue-600 border-blue-200',
-        success: 'bg-emerald-100 text-emerald-600 border-emerald-200'
+        primary: 'bg-teal-50 text-teal-600 border-teal-100 shadow-[0_8px_16px_rgba(37,149,145,0.1)]',
+        warning: 'bg-amber-50 text-amber-600 border-amber-100 shadow-[0_8px_16px_rgba(217,119,6,0.1)]',
+        info: 'bg-blue-50 text-blue-600 border-blue-100 shadow-[0_8px_16px_rgba(37,99,235,0.1)]',
+        success: 'bg-emerald-50 text-emerald-600 border-emerald-100 shadow-[0_8px_16px_rgba(5,150,105,0.1)]'
     };
     return (
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-xl border border-slate-100">
-            <div className="flex items-center gap-4">
-                <div className={`p-4 rounded-2xl ${colors[color]} border`}>{icon}</div>
+        <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 transition-all hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] hover:-translate-y-1 group">
+            <div className="flex items-center gap-6">
+                <div className={`w-16 h-16 rounded-[1.2rem] ${colors[color]} border flex items-center justify-center transition-all group-hover:scale-110 group-hover:rotate-3`}>
+                    {icon && cloneElement(icon, { size: 28, className: "stroke-[2.5]" })}
+                </div>
                 <div>
-                    <p className="text-3xl font-black text-slate-800 tracking-tighter">{value}</p>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest line-clamp-1">{label}</p>
+                    <p className="text-4xl font-black text-slate-800 tracking-tighter mb-0.5">{value}</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</p>
                 </div>
             </div>
         </div>
