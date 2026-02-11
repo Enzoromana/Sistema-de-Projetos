@@ -1,6 +1,11 @@
 -- 1. Add tiebreaker_token column if not exists
 DO $$ 
 BEGIN
+    -- Check if target table exists first
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'medical_requests') THEN
+        RAISE EXCEPTION 'A tabela "medical_requests" não existe. Você deve executar o arquivo "migration_medical_module.sql" antes desta migração.';
+    END IF;
+
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_token') THEN
         ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_token uuid DEFAULT gen_random_uuid();
         ALTER TABLE public.medical_requests ADD CONSTRAINT medical_requests_tiebreaker_token_key UNIQUE (tiebreaker_token);
