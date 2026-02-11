@@ -5,6 +5,14 @@ BEGIN
         ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_token uuid DEFAULT gen_random_uuid();
         ALTER TABLE public.medical_requests ADD CONSTRAINT medical_requests_tiebreaker_token_key UNIQUE (tiebreaker_token);
     END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_verify_crm') THEN
+        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_verify_crm text;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_verify_cpf') THEN
+        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_verify_cpf text;
+    END IF;
 END $$;
 
 -- 2. Secure Function to GET data by token (Public Access)
@@ -39,7 +47,7 @@ BEGIN
     RETURN jsonb_build_object(
         'id', req.id,
         'requisicao', req.requisicao,
-        'ben_nome', req.ben_nome, -- Only initials might be better for privacy, but name is standard for medical
+        'ben_nome', req.ben_nome,
         'ben_sexo', req.ben_sexo,
         'ben_nascimento', req.ben_nascimento,
         'ass_nome', req.ass_nome,
@@ -49,7 +57,9 @@ BEGIN
         'div_motivos', req.div_motivos,
         'medical_procedures', COALESCE(procs, '[]'::jsonb),
         'medical_materials', COALESCE(mats, '[]'::jsonb),
-        'situacao', req.situacao
+        'situacao', req.situacao,
+        'tiebreaker_verify_crm', req.tiebreaker_verify_crm,
+        'tiebreaker_verify_cpf', req.tiebreaker_verify_cpf
     );
 END;
 $$;

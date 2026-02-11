@@ -92,7 +92,9 @@ export default function MedicalControl() {
         desempate_ass_crm: '',
         desempate_ass_especialidade: '',
         parecer_conclusao: '',
-        referencias_bibliograficas: ''
+        referencias_bibliograficas: '',
+        tiebreaker_verify_crm: '',
+        tiebreaker_verify_cpf: ''
     });
     const [procedureConclusions, setProcedureConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
@@ -731,7 +733,9 @@ export default function MedicalControl() {
                                                                 desempate_ass_crm: r.desempate_ass_crm || r.ass_crm || '',
                                                                 desempate_ass_especialidade: r.desempate_ass_especialidade || r.ass_especialidade || '',
                                                                 parecer_conclusao: r.parecer_conclusao || '',
-                                                                referencias_bibliograficas: r.referencias_bibliograficas || ''
+                                                                referencias_bibliograficas: r.referencias_bibliograficas || '',
+                                                                tiebreaker_verify_crm: r.tiebreaker_verify_crm || '',
+                                                                tiebreaker_verify_cpf: r.tiebreaker_verify_cpf || ''
                                                             });
                                                             // Initialize item-level conclusions
                                                             setProcedureConclusions(
@@ -1952,6 +1956,34 @@ export default function MedicalControl() {
                                             value={tiebreakerData.desempatador_crm}
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v.replace(/\D/g, '') })}
                                             labelClass="text-[#259591]"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Section 1.1: Verification Config */}
+                                <div className="space-y-4 p-6 bg-amber-50 rounded-[2rem] border border-amber-100">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-1 bg-amber-500 rounded-full"></div>
+                                        <h4 className="text-xs font-black text-amber-600 uppercase tracking-widest">Segurança: Verificação de Link Externo (2FA)</h4>
+                                    </div>
+                                    <p className="text-[10px] text-amber-700 font-bold uppercase tracking-tight mb-2">
+                                        Defina os dados que o médico externo deve validar para acessar o formulário.
+                                    </p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Input
+                                            label="CRM de Verificação"
+                                            value={tiebreakerData.tiebreaker_verify_crm}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_crm: v.replace(/\D/g, '') })}
+                                            placeholder="CRM que será solicitado"
+                                            labelClass="text-amber-700"
+                                        />
+                                        <Input
+                                            label="CPF de Verificação"
+                                            value={tiebreakerData.tiebreaker_verify_cpf}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_cpf: v.replace(/\D/g, '') })}
+                                            placeholder="CPF que será solicitado"
+                                            maxLength={11}
+                                            labelClass="text-amber-700"
                                         />
                                     </div>
                                 </div>

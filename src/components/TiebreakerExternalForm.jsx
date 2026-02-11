@@ -11,6 +11,10 @@ export default function TiebreakerExternalForm({ token }) {
     const [error, setError] = useState(null);
     const [request, setRequest] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [isVerified, setIsVerified] = useState(false);
+    const [verifyCrm, setVerifyCrm] = useState('');
+    const [verifyCpf, setVerifyCpf] = useState('');
+    const [verificationError, setVerificationError] = useState(null);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -107,6 +111,21 @@ export default function TiebreakerExternalForm({ token }) {
         }
     };
 
+    const handleVerify = (e) => {
+        e.preventDefault();
+        setVerificationError(null);
+
+        const cleanVerifyCpf = verifyCpf.replace(/\D/g, '');
+        const targetCrm = request.tiebreaker_verify_crm;
+        const targetCpf = request.tiebreaker_verify_cpf?.replace(/\D/g, '');
+
+        if (verifyCrm === targetCrm && cleanVerifyCpf === targetCpf) {
+            setIsVerified(true);
+        } else {
+            setVerificationError('Dados de verificação incorretos. Por favor, confira seu CRM e CPF.');
+        }
+    };
+
     if (loading) return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center">
             <Loader2 className="text-[#259591] animate-spin" size={48} />
@@ -142,6 +161,64 @@ export default function TiebreakerExternalForm({ token }) {
             </div>
         </div>
     );
+
+    if (!isVerified && request && (request.tiebreaker_verify_crm || request.tiebreaker_verify_cpf)) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+                <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl max-w-md w-full border border-slate-100">
+                    <div className="text-center mb-8">
+                        <div className="w-16 h-16 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                            <Activity size={32} />
+                        </div>
+                        <h2 className="text-2xl font-black text-slate-800 tracking-tight">Verificação de Segurança</h2>
+                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-2">Valide seus dados para acessar o formulário</p>
+                    </div>
+
+                    <form onSubmit={handleVerify} className="space-y-6">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2">CRM de Verificação</label>
+                                <input
+                                    required
+                                    type="text"
+                                    placeholder="Digite seu CRM"
+                                    value={verifyCrm}
+                                    onChange={e => setVerifyCrm(e.target.value.replace(/\D/g, ''))}
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500/50 transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2">CPF de Verificação</label>
+                                <input
+                                    required
+                                    type="text"
+                                    placeholder="000.000.000-00"
+                                    value={verifyCpf}
+                                    onChange={e => setVerifyCpf(e.target.value.replace(/\D/g, '').slice(0, 11))}
+                                    maxLength={11}
+                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500/50 transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        {verificationError && (
+                            <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 animate-in fade-in slide-in-from-top-2">
+                                <AlertCircle size={18} />
+                                <p className="text-xs font-bold leading-tight">{verificationError}</p>
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            className="w-full py-5 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-slate-200 transition-all active:scale-[0.98]"
+                        >
+                            Acessar Formulário
+                        </button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans">
