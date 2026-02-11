@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import {
+    Users, ShieldCheck, ShieldAlert, CheckCircle2,
+    XCircle, Lock, Eye,
     LayoutDashboard, Calendar, Search, User, Activity, Key, Briefcase, Presentation
 } from 'lucide-react';
 
