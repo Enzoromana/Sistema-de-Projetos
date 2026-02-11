@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+    LayoutDashboard, Calendar, Users, Settings, Bell, Search,
     ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
