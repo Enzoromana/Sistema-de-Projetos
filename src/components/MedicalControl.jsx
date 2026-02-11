@@ -7,7 +7,7 @@ import {
     FileText, Search,
     User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, Loader2, Gavel, Download, Link
+    ArrowLeft, Loader2, Gavel, Download, Link, ShieldCheck
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 import SPECIALTIES from '../data/specialties.json';
@@ -1983,6 +1983,27 @@ export default function MedicalControl() {
                                             onChange={v => setTiebreakerData({ ...tiebreakerData, desempatador_crm: v.replace(/\D/g, '') })}
                                             labelClass="text-[#259591]"
                                         />
+                                    </div>
+                                    {/* 2FA Read-only visibility for admin context */}
+                                    <div className="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between group hover:border-teal-100 transition-all">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center text-teal-600">
+                                                <ShieldCheck size={20} />
+                                            </div>
+                                            <div>
+                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Dados de Verificação (2FA)</p>
+                                                <p className="text-xs font-bold text-slate-600">
+                                                    CRM: <span className="text-teal-600">{tiebreakerData.tiebreaker_verify_crm || '-'}</span> •
+                                                    CPF: <span className="text-teal-600">{tiebreakerData.tiebreaker_verify_cpf || '-'}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => setShowVerifyConfigModal(true)}
+                                            className="text-[9px] font-black text-teal-600 hover:text-teal-700 uppercase tracking-widest bg-white px-3 py-2 rounded-lg border border-teal-50 shadow-sm hover:shadow-md transition-all"
+                                        >
+                                            Alterar
+                                        </button>
                                     </div>
                                 </div>
 
