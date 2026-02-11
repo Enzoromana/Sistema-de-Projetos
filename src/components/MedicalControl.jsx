@@ -100,6 +100,7 @@ export default function MedicalControl() {
     const [materialConclusions, setMaterialConclusions] = useState([]); // [{id, conclusao_desempate}]
     const [showTiebreakerReportModal, setShowTiebreakerReportModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
+    const [showVerifyConfigModal, setShowVerifyConfigModal] = useState(false);
     const [generatedLink, setGeneratedLink] = useState('');
 
     const loadRequests = async () => {
@@ -762,7 +763,7 @@ export default function MedicalControl() {
                                                                     conclusao_desempate: m.conclusao_desempate || ''
                                                                 }))
                                                             );
-                                                            setShowTiebreakerModal(true);
+                                                            setShowVerifyConfigModal(true);
                                                         }}
                                                         className="p-3 text-indigo-600 bg-slate-50 hover:bg-indigo-600 hover:text-white rounded-xl transition-all border border-indigo-100 relative"
                                                         title="Conclusão Junta"
@@ -1985,33 +1986,6 @@ export default function MedicalControl() {
                                     </div>
                                 </div>
 
-                                {/* Section 1.1: Verification Config */}
-                                <div className="space-y-4 p-6 bg-amber-50 rounded-[2rem] border border-amber-100">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-1 bg-amber-500 rounded-full"></div>
-                                        <h4 className="text-xs font-black text-amber-600 uppercase tracking-widest">Segurança: Verificação de Link Externo (2FA)</h4>
-                                    </div>
-                                    <p className="text-[10px] text-amber-700 font-bold uppercase tracking-tight mb-2">
-                                        Defina os dados que o médico externo deve validar para acessar o formulário.
-                                    </p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <Input
-                                            label="CRM de Verificação"
-                                            value={tiebreakerData.tiebreaker_verify_crm}
-                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_crm: v.replace(/\D/g, '') })}
-                                            placeholder="CRM que será solicitado"
-                                            labelClass="text-amber-700"
-                                        />
-                                        <Input
-                                            label="CPF de Verificação"
-                                            value={tiebreakerData.tiebreaker_verify_cpf}
-                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_cpf: v.replace(/\D/g, '') })}
-                                            placeholder="CPF que será solicitado"
-                                            maxLength={11}
-                                            labelClass="text-amber-700"
-                                        />
-                                    </div>
-                                </div>
 
                                 {/* Section 2: Assistant Physician (Tiebreaker Phase) */}
                                 <div className="space-y-4">
@@ -2182,6 +2156,98 @@ export default function MedicalControl() {
                                 >
                                     Finalizar <CheckCircle2 size={18} />
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                showVerifyConfigModal && (
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden flex flex-col shadow-2xl border border-white/20">
+                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-amber-500 text-white">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-white/20 rounded-2xl shadow-lg">
+                                        <AlertTriangle size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black tracking-tight">Segurança: 2FA</h3>
+                                        <p className="text-sm font-black text-white/60 uppercase tracking-widest leading-none mt-1">Configuração de Link</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setShowVerifyConfigModal(false)} className="p-2 hover:bg-white/10 rounded-xl transition-all text-white/60 hover:text-white">
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <div className="p-10 space-y-8">
+                                <div className="space-y-4">
+                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center px-4">
+                                        Defina os dados que o médico externo deve validar para acessar o formulário.
+                                    </p>
+                                    <div className="space-y-4 pt-4">
+                                        <Input
+                                            label="CRM de Verificação"
+                                            value={tiebreakerData.tiebreaker_verify_crm}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_crm: v.replace(/\D/g, '') })}
+                                            placeholder="Ex: 123456"
+                                            labelClass="text-amber-600"
+                                        />
+                                        <Input
+                                            label="CPF de Verificação"
+                                            value={tiebreakerData.tiebreaker_verify_cpf}
+                                            onChange={v => setTiebreakerData({ ...tiebreakerData, tiebreaker_verify_cpf: v.replace(/\D/g, '') })}
+                                            placeholder="Apenas números"
+                                            maxLength={11}
+                                            labelClass="text-amber-600"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-3 pt-4">
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const { error } = await supabase
+                                                    .from('medical_requests')
+                                                    .update({
+                                                        tiebreaker_verify_crm: tiebreakerData.tiebreaker_verify_crm,
+                                                        tiebreaker_verify_cpf: tiebreakerData.tiebreaker_verify_cpf
+                                                    })
+                                                    .eq('id', selectedRequest.id);
+                                                if (error) throw error;
+                                                setShowVerifyConfigModal(false);
+                                                setShowTiebreakerModal(true);
+                                            } catch (e) {
+                                                alert('Erro ao salvar configuração.');
+                                            }
+                                        }}
+                                        className="w-full bg-[#259591] hover:bg-[#1a6e6a] text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center justify-center gap-2"
+                                    >
+                                        Continuar para Conclusão <CheckCircle2 size={16} />
+                                    </button>
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const { error } = await supabase
+                                                    .from('medical_requests')
+                                                    .update({
+                                                        tiebreaker_verify_crm: tiebreakerData.tiebreaker_verify_crm,
+                                                        tiebreaker_verify_cpf: tiebreakerData.tiebreaker_verify_cpf
+                                                    })
+                                                    .eq('id', selectedRequest.id);
+                                                if (error) throw error;
+                                                setShowVerifyConfigModal(false);
+                                                loadRequests();
+                                            } catch (e) {
+                                                alert('Erro ao salvar configuração.');
+                                            }
+                                        }}
+                                        className="w-full py-5 text-amber-600 font-black text-xs uppercase tracking-widest hover:text-amber-700 transition-all border-2 border-amber-50 rounded-[1.5rem] hover:bg-amber-50"
+                                    >
+                                        Apenas Salvar Dados
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
