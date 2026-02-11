@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import {
-    Users, ShieldCheck, ShieldAlert, CheckCircle2,
-    XCircle, Lock, Eye,
-    LayoutDashboard, Calendar, Search, User, Activity, Key, Briefcase
+    LayoutDashboard, Calendar, Search, User, Activity, Key, Briefcase, Presentation
 } from 'lucide-react';
 
 export default function UserAudit() {
@@ -173,6 +171,12 @@ export default function UserAudit() {
                                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.access_medical ? 'bg-teal-700 text-white shadow-lg shadow-teal-100' : 'bg-slate-100 text-slate-400'}`}
                                             >
                                                 <Activity size={14} /> Médico
+                                            </button>
+                                            <button
+                                                onClick={() => togglePermission(p.id, 'access_sheet_to_slide', p.access_sheet_to_slide)}
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${p.access_sheet_to_slide ? 'bg-orange-600 text-white shadow-lg shadow-orange-100' : 'bg-slate-100 text-slate-400'}`}
+                                            >
+                                                <Presentation size={14} /> Slide
                                             </button>
                                         </div>
                                     </td>
