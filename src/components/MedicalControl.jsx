@@ -784,28 +784,7 @@ export default function MedicalControl() {
                                                             <CheckCircle2 size={18} />
                                                         </button>
                                                     )}
-                                                    <button
-                                                        onClick={async () => {
-                                                            try {
-                                                                let token = r.tiebreaker_token;
-                                                                if (!token) {
-                                                                    token = crypto.randomUUID();
-                                                                    await supabase.from('medical_requests').update({ tiebreaker_token: token }).eq('id', r.id);
-                                                                    loadRequests();
-                                                                }
-                                                                const link = `${window.location.origin}/parecer/${token}`;
-                                                                setGeneratedLink(link);
-                                                                setShowLinkModal(true);
-                                                                await navigator.clipboard.writeText(link);
-                                                            } catch (e) {
-                                                                alert('Erro ao gerar link.');
-                                                            }
-                                                        }}
-                                                        className="p-3 text-teal-600 bg-teal-50 hover:bg-teal-600 hover:text-white rounded-xl transition-all border border-teal-100 shadow-sm"
-                                                        title="Copiar Link Externo"
-                                                    >
-                                                        <Link size={18} />
-                                                    </button>
+
                                                 </div>
                                             </td>
                                         </tr>
