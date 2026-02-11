@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Utilização - Klini Saúde</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary: #1D7874;
+            --secondary: #F7931E;
+            --surface: #F8FAFC;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 30px;
+            font-size: 1.5rem;
+            border-left: 4px solid var(--secondary);
+            padding-left: 12px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        p,
+        ul,
+        li {
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .highlight {
+            background-color: #FFF8F0;
+            border: 1px solid #FED7AA;
+            color: #9A3412;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight::before {
+            content: "💡";
+            font-size: 1.5rem;
+        }
+
+        .step {
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        code {
+            background-color: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d97706;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s;
+        }
+
+        .btn-print:hover {
+            background-color: #145c59;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .btn-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="btn-print" onclick="window.print()">🖨️ Salvar como PDF</button>
+
+    <div class="container">
+        <header>
+            <h1>Guia de Utilização</h1>
+            <p>Sistema de Cotação Automática <strong>Sheet to Slide Pro</strong></p>
+        </header>
+
+        <section>
+            <p>Bem-vindo ao sistema oficial de geração de propostas da <strong>Klini Saúde</strong>. Este guia orienta
+                sobre como transformar suas planilhas de cotação em apresentações PowerPoint profissionais em segundos.
+            </p>
+        </section>
+
+        <section>
+            <h2>1. Acessando a Ferramenta</h2>
+            <p>Acesse o sistema através do link oficial:</p>
+            <p><a href="https://sheet-to-slide-pro-klini.vercel.app"
+                    style="color: var(--primary); font-weight: bold;">https://sheet-to-slide-pro-klini.vercel.app</a>
+            </p>
+        </section>
+
+        <section>
+            <h2>2. Carregando sua Planilha</h2>
+            <p>O sistema foi atualizado para inteligência automática.</p>
+
+            <div class="step">
+                <h3><span class="step-number">1</span> Selecione o Arquivo</h3>
+                <p>Clique no botão de upload e escolha seu arquivo Excel (<code>.xlsx</code>).</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span> Detecção Automática</h3>
+                <p>O sistema irá procurar automaticamente pelos dados:</p>
+                <ul>
+                    <li><strong>Planilha Principal:</strong> Busca por abas com nome "ACIMA DE 100 VIDAS" ou "100
+                        VIDAS".</li>
+                    <li><strong>Produtos G:</strong> Se houver uma aba "PRODUTOS G", ela será detectada e incluída
+                        automaticamente na proposta.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <p><strong>Atenção:</strong> Você não precisa mais apagar a aba "Tabela de Preços" ou reordenar as
+                    planilhas. O sistema ignora abas desnecessárias automaticamente.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Personalizando a Capa</h2>
+            <p>Você tem duas opções para a capa da apresentação:</p>
+            <ul>
+                <li><strong>Padrão Klini:</strong> Se você não fizer nada, o sistema usará a capa oficial "PROPOSTA
+                    COMERCIAL PME - Dezembro 2025".</li>
+                <li><strong>Personalizada:</strong> Você pode clicar em "Trocar Imagem" na tela inicial para fazer
+                    upload de uma imagem específica para aquele cliente.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Exportando a Proposta</h2>
+
+            <div class="step">
+                <h3>Exportar para PowerPoint (Recomendado)</h3>
+                <p>Clique no botão <strong>laranja</strong>. O arquivo <code>.pptx</code> será baixado contendo:</p>
+                <ul>
+                    <li>Slide de Capa (Imagem Total)</li>
+                    <li>Slide de Dados da Empresa e Demografia</li>
+                    <li>Slides de Planos (Com e Sem Coparticipação)</li>
+                    <li>Slides de Produtos G (se houver)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Exportar para PDF</h3>
+                <p>Clique no botão <strong>verde</strong> para gerar um documento estático para envio rápido.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Dicas de Resolução</h2>
+            <ul>
+                <li><strong>Slide em Branco?</strong> Isso foi corrigido na última versão. Se persistir, limpe o cache
+                    do navegador (Ctrl + F5).</li>
+                <li><strong>Dados Cortados?</strong> O sistema ajusta automaticamente o layout, mas verifique se a
+                    planilha original segue o modelo padrão da Klini.</li>
+            </ul>
+        </section>
+
+        <div class="footer">
+            <p>© 2026 Klini Saúde - Departamento de Tecnologia</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

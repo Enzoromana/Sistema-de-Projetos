@@ -9,10 +9,11 @@ import ProfileUpdateModal from './components/ProfileUpdateModal';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import TiebreakerExternalForm from './components/TiebreakerExternalForm';
+import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
-    ShieldAlert, Activity
+    ShieldAlert, Activity, Presentation
 } from 'lucide-react';
 
 function App() {
@@ -166,6 +167,15 @@ function App() {
                                     Junta Médica
                                 </button>
                             )}
+                            {(profile?.role === 'admin' || profile?.access_sheet_to_slide) && (
+                                <button
+                                    onClick={() => setActiveModule('sheet-to-slide')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'sheet-to-slide' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <Presentation size={16} />
+                                    Planilha p/ Slide
+                                </button>
+                            )}
                         </div>
                     </div>
 
@@ -196,6 +206,7 @@ function App() {
                 {activeModule === 'rooms' && <RoomControl setView={setActiveModule} />}
                 {activeModule === 'audit' && <UserAudit />}
                 {activeModule === 'medical' && <MedicalControl />}
+                {activeModule === 'sheet-to-slide' && <SheetToSlideModule />}
             </main>
 
             {/* Profile Update Mandatory Modal */}

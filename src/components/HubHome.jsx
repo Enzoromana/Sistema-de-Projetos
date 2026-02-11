@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-    LayoutDashboard, Calendar, Users, Settings, Bell, Search,
-    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity
+    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -38,6 +37,14 @@ export default function HubHome({ setActiveModule, userProfile }) {
             icon: <Activity size={32} />,
             color: 'bg-[#1D7874]',
             permission: userProfile?.access_medical || userProfile?.role === 'admin'
+        },
+        {
+            id: 'sheet-to-slide',
+            title: 'Planilha p/ Slide',
+            description: 'Converta planilhas Excel em apresentações de slides profissionais.',
+            icon: <Presentation size={32} />,
+            color: 'bg-orange-500',
+            permission: userProfile?.access_sheet_to_slide || userProfile?.role === 'admin'
         },
         {
             id: 'settings',
