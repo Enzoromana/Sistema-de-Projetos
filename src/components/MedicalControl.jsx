@@ -64,7 +64,7 @@ export default function MedicalControl() {
     const [formData, setFormData] = useState({
         requisicao: '',
         ben_nome: '', ben_cpf: '', ben_email: '', ben_sexo: '', ben_nascimento: '', ben_telefone: '', ben_estado: '', ben_cidade: '',
-        aud_nome: '', aud_estado: '', aud_crm: '', aud_data: '',
+        aud_nome: '', aud_estado: '', aud_crm: '', aud_data: '', guia: '',
         ass_nome: '', ass_crm: '', ass_email: '', ass_telefone: '', ass_endereco: '', ass_especialidade: '',
         div_especialidade: '', div_motivos: [],
         prazo_ans: ''
@@ -875,6 +875,7 @@ export default function MedicalControl() {
                                 <FormHeader icon={<Activity />} title="Dados do Médico Auditor" sub="Informações do profissional responsável pela análise técnica." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Número da Requisição" required value={formData.requisicao} onChange={v => setFormData({ ...formData, requisicao: v })} placeholder="EX: REQ-2025-0001" />
+                                    <Input label="Número da Guia" value={formData.guia} onChange={v => setFormData({ ...formData, guia: v })} placeholder="EX: 123456789" />
                                     <Input label="Nome do Médico" required value={formData.aud_nome} onChange={v => setFormData({ ...formData, aud_nome: v })} placeholder="Dr. Nome Completo" />
                                     <Input
                                         label="CRM/CRO" required
@@ -2405,7 +2406,7 @@ export default function MedicalControl() {
     </div>
 
     <div style="margin-bottom: 24px; line-height: 1.6; text-align: justify; color: #334155;">
-        <p>Em continuidade ao processo de <b>junta médica</b>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <b>${r.ben_nome}</b>, CPF <b>${r.ben_cpf}</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
+        <p>Em continuidade ao processo de <b>junta médica</b>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <b>${r.ben_nome}</b>, CPF <b>${r.ben_cpf}</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o número de guia nº <b>${r.guia || '-'}</b>, protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
     </div>
 
     ${(r.medical_procedures?.length > 0) ? `
@@ -2571,7 +2572,7 @@ export default function MedicalControl() {
                                     {/* Introductory Note */}
                                     <div className="mb-8 text-sm leading-relaxed text-slate-600 text-justify bg-slate-50 p-6 rounded-2xl border border-slate-100">
                                         <p>
-                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <span className="font-bold text-slate-900">{selectedRequest.ben_nome}</span>, CPF <span className="font-bold text-slate-900">{selectedRequest.ben_cpf}</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
+                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <span className="font-bold text-slate-900">{selectedRequest.ben_nome}</span>, CPF <span className="font-bold text-slate-900">{selectedRequest.ben_cpf}</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o número de guia nº <span className="font-bold text-slate-900">{selectedRequest.guia || '-'}</span>, protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
                                         </p>
                                     </div>
 
@@ -3023,10 +3024,17 @@ function RequestDetails({ request, onEdit, onBack }) {
                         <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><User size={20} className="text-teal-600" /> Beneficiário</h3>
                         <div className="space-y-4">
                             <ReportItem label="Nome" value={request.ben_nome} />
-                            <ReportItem label="CPF" value={request.ben_cpf} />
+                            <div className="flex gap-4">
+                                <ReportItem label="CPF" value={request.ben_cpf} className="flex-1" />
+                                <ReportItem label="Sexo" value={request.ben_sexo} className="flex-1" />
+                            </div>
                             <ReportItem label="E-mail" value={request.ben_email} />
                             <ReportItem label="Telefone" value={request.ben_telefone} />
                             <ReportItem label="Nascimento" value={request.ben_nascimento ? new Date(request.ben_nascimento).toLocaleDateString('pt-BR') : '-'} />
+                            <div className="flex gap-4">
+                                <ReportItem label="Cidade" value={request.ben_cidade} className="flex-1" />
+                                <ReportItem label="Estado" value={request.ben_estado} className="flex-1" />
+                            </div>
                         </div>
                     </div>
 
@@ -3034,7 +3042,11 @@ function RequestDetails({ request, onEdit, onBack }) {
                         <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Activity size={20} className="text-teal-600" /> Auditor</h3>
                         <div className="space-y-4">
                             <ReportItem label="Nome" value={request.aud_nome} />
-                            <ReportItem label="CRM" value={request.aud_crm} />
+                            <div className="flex gap-4">
+                                <ReportItem label="CRM" value={request.aud_crm} className="flex-1" />
+                                <ReportItem label="Estado (CRM)" value={request.aud_estado} className="flex-1" />
+                            </div>
+                            <ReportItem label="Guia" value={request.guia} />
                             <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
                         </div>
                     </div>
@@ -3049,6 +3061,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                             </div>
                             <ReportItem label="Email" value={request.ass_email} />
                             <ReportItem label="Telefone" value={request.ass_telefone} />
+                            <ReportItem label="Endereço" value={request.ass_endereco} />
                         </div>
                     </div>
                 </div>
@@ -3057,7 +3070,10 @@ function RequestDetails({ request, onEdit, onBack }) {
                     <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
                         <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><AlertTriangle size={20} className="text-teal-600" /> Divergência</h3>
                         <div className="space-y-4">
-                            <ReportItem label="Especialidade Afetada" value={request.div_especialidade} />
+                            <div className="flex gap-4">
+                                <ReportItem label="Especialidade Afetada" value={request.div_especialidade} className="flex-1" />
+                                <ReportItem label="Prazo ANS" value={request.prazo_ans ? new Date(request.prazo_ans).toLocaleDateString('pt-BR') : '-'} className="flex-1" />
+                            </div>
                             <div className="space-y-2">
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Motivos</p>
                                 <div className="flex flex-wrap gap-2">
@@ -3093,6 +3109,40 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest mt-1">Qtd: {m.qtd_solicitada}</p>
                                     </div>
                                 ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {request.parecer_conclusao && (
+                        <div className="bg-emerald-50 p-8 rounded-[2rem] border border-emerald-100">
+                            <h3 className="text-lg font-black text-emerald-900 mb-6 flex items-center gap-2"><CheckCircle2 size={20} className="text-emerald-600" /> Parecer Final (Desempate)</h3>
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-2 gap-4 border-b border-emerald-200/50 pb-4">
+                                    <div>
+                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Desempatador</p>
+                                        <p className="text-xs font-bold text-emerald-900">{request.desempatador_nome}</p>
+                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.desempatador_crm}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Médico Assistente (Final)</p>
+                                        <p className="text-xs font-bold text-emerald-900">{request.desempate_ass_nome}</p>
+                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.desempate_ass_crm}</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Conclusão</p>
+                                    <p className="text-xs text-emerald-800 leading-relaxed font-medium whitespace-pre-wrap italic bg-white/50 p-4 rounded-xl border border-emerald-100">
+                                        {request.parecer_conclusao}
+                                    </p>
+                                </div>
+                                {request.referencias_bibliograficas && (
+                                    <div className="space-y-2">
+                                        <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Referências Bibliográficas</p>
+                                        <p className="text-[11px] text-emerald-700/70 leading-relaxed font-medium whitespace-pre-wrap italic">
+                                            {request.referencias_bibliograficas}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
