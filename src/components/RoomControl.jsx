@@ -16,17 +16,25 @@ const formatDate = (dateStr) => {
 const HOURS = Array.from({ length: 15 }, (_, i) => `${(i + 7).toString().padStart(2, '0')}:00`); // 07:00 to 21:00
 const DAYS_OF_WEEK = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
-const isBookingInHour = (booking, hour) => {
-    const hStart = parseInt(hour.split(':')[0]);
-    const hEnd = hStart + 1;
+const timeToDecimal = (time) => {
+    const [h, m] = time.split(':').map(Number);
+    return h + (m || 0) / 60;
+};
 
-    const bStartParts = booking.start_time.split(':');
-    const bStartDec = parseInt(bStartParts[0]) + (parseInt(bStartParts[1] || 0) / 60);
+const getEventStyles = (startTime, endTime) => {
+    const start = timeToDecimal(startTime);
+    const end = timeToDecimal(endTime);
+    const startOfDay = 7; // HOURS starts at 07:00
+    const totalHours = 14; // 07:00 to 21:00 is 14 hours
 
-    const bEndParts = booking.end_time.split(':');
-    const bEndDec = parseInt(bEndParts[0]) + (parseInt(bEndParts[1] || 0) / 60);
+    const top = ((start - startOfDay) / totalHours) * 100;
+    const height = ((end - start) / totalHours) * 100;
 
-    return Math.max(bStartDec, hStart) < Math.min(bEndDec, hEnd);
+    return {
+        top: `${Math.max(0, top)}%`,
+        height: `${Math.min(100 - top, height)}%`,
+        minHeight: '24px'
+    };
 };
 
 export default function RoomControl({ setView }) {
@@ -115,54 +123,79 @@ export default function RoomControl({ setView }) {
     };
 
     // View Components
-    const DayView = () => (
-        <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
-            <div className="grid grid-cols-1 divide-y divide-slate-100">
-                {HOURS.map((hour) => {
-                    const hourBookings = bookings.filter(b => b.date === selectedDate && isBookingInHour(b, hour));
-                    return (
-                        <div key={hour} className="flex group min-h-[70px] relative transition-all">
-                            <div className="w-20 md:w-28 py-6 flex flex-col items-center justify-start border-r border-slate-100 bg-slate-50/20">
-                                <span className="text-xs font-black text-slate-400 group-hover:text-indigo-600 transition-colors tracking-tighter">{hour}</span>
+    const DayView = () => {
+        const dayBookings = bookings.filter(b => b.date === selectedDate);
+        const SLOT_HEIGHT = 80; // pixels per hour
+        const TOTAL_HOURS = 14;
+
+        return (
+            <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+                <div className="flex relative" style={{ height: TOTAL_HOURS * SLOT_HEIGHT }}>
+                    {/* Time Labels Column */}
+                    <div className="w-20 md:w-28 flex flex-col border-r border-slate-100 bg-slate-50/20 z-10">
+                        {HOURS.slice(0, 14).map((hour) => (
+                            <div key={hour} className="flex-1 flex flex-col items-center justify-start py-4 border-b border-slate-100/50">
+                                <span className="text-xs font-black text-slate-400 tracking-tighter">{hour}</span>
                             </div>
-                            <div className="flex-1 p-2 space-y-2">
-                                {hourBookings.length > 0 ? (
-                                    hourBookings.map((booking) => (
-                                        <div key={booking.id} className="bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-xl p-3 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600">
-                                            <div className="flex items-center gap-3">
-                                                <div>
-                                                    <div className="flex items-center gap-2 mb-0.5">
-                                                        <h4 className="font-black text-sm text-slate-800 tracking-tight">{booking.title}</h4>
-                                                        <span className="text-[9px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold">
-                                                        <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button onClick={() => deleteBooking(booking.id)} className="p-2.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover/card:opacity-100">
-                                                <Trash2 size={18} />
-                                            </button>
-                                        </div>
-                                    ))
-                                ) : (
+                        ))}
+                    </div>
+
+                    {/* Grid and Events Area */}
+                    <div className="flex-1 relative overflow-hidden">
+                        {/* Background Grid Lines */}
+                        <div className="absolute inset-0 flex flex-col">
+                            {HOURS.slice(0, 14).map((hour) => (
+                                <div key={hour} className="flex-1 border-b border-slate-100/50 group/row relative">
                                     <button
                                         onClick={() => {
                                             setFormData({ ...formData, start_time: hour, date: selectedDate });
                                             setShowModal(true);
                                         }}
-                                        className="w-full h-full rounded-2xl border-2 border-dashed border-transparent hover:border-slate-100 hover:bg-slate-50/50 transition-all flex items-center justify-center group/btn"
+                                        className="absolute inset-0 w-full h-full hover:bg-slate-50/50 transition-all opacity-0 hover:opacity-100 flex items-center justify-center"
                                     >
-                                        <Plus className="text-slate-200 group-hover/btn:text-indigo-300 transition-colors" size={24} />
+                                        <Plus className="text-indigo-200" size={24} />
                                     </button>
-                                )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Events Layer */}
+                        <div className="absolute inset-0 pointer-events-none p-2">
+                            <div className="relative w-full h-full">
+                                {dayBookings.map((booking) => {
+                                    const styles = getEventStyles(booking.start_time, booking.end_time);
+                                    return (
+                                        <div
+                                            key={booking.id}
+                                            className="absolute left-0 right-0 pointer-events-auto transition-all"
+                                            style={styles}
+                                        >
+                                            <div className="h-full bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-xl p-3 flex items-center justify-between shadow-sm hover:shadow-md transition-all group/card border-l-4 border-l-indigo-600 overflow-hidden">
+                                                <div className="flex items-center gap-3 overflow-hidden">
+                                                    <div className="overflow-hidden">
+                                                        <div className="flex items-center gap-2 mb-0.5 whitespace-nowrap overflow-hidden">
+                                                            <h4 className="font-black text-sm text-slate-800 tracking-tight truncate">{booking.title}</h4>
+                                                            <span className="text-[9px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest">{booking.sector}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold">
+                                                            <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button onClick={() => deleteBooking(booking.id)} className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover/card:opacity-100 shrink-0">
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                    );
-                })}
+                    </div>
+                </div>
             </div>
-        </div>
-    );
+        );
+    };
 
     const WeekView = () => {
         const date = new Date(selectedDate);
@@ -176,49 +209,74 @@ export default function RoomControl({ setView }) {
             return d;
         });
 
+        const SLOT_HEIGHT = 80;
+        const TOTAL_HOURS = 14;
+
         return (
             <div className="max-w-6xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
-                <div className="grid grid-cols-8 divide-x divide-slate-100">
-                    <div className="bg-slate-50/50">
-                        <div className="h-14 border-b border-slate-100 flex items-center justify-center font-black text-[9px] text-slate-400 uppercase tracking-widest">Hora</div>
-                        {HOURS.map(h => (
-                            <div key={h} className="h-20 flex items-center justify-center border-b border-slate-50 text-[10px] font-black text-slate-400">{h}</div>
+                <div className="grid grid-cols-8 divide-x divide-slate-100" style={{ height: (TOTAL_HOURS * SLOT_HEIGHT) + 56 }}>
+                    {/* Time Column */}
+                    <div className="bg-slate-50/50 flex flex-col pt-14">
+                        {HOURS.slice(0, 14).map(h => (
+                            <div key={h} className="flex-1 flex items-center justify-center border-b border-slate-50 text-[10px] font-black text-slate-400">{h}</div>
                         ))}
                     </div>
+
+                    {/* Day Columns */}
                     {days.map((d, i) => {
                         const dateStr = d.toISOString().split('T')[0];
                         const isToday = dateStr === new Date().toISOString().split('T')[0];
+                        const dayBookings = bookings.filter(b => b.date === dateStr);
+
                         return (
-                            <div key={i} className={`flex-1 ${isToday ? 'bg-indigo-50/20' : ''}`}>
-                                <div className={`h-14 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'}`}>
+                            <div key={i} className={`flex-1 relative flex flex-col ${isToday ? 'bg-indigo-50/20' : ''}`}>
+                                {/* Header */}
+                                <div className={`h-14 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'} z-20`}>
                                     <span className="text-[9px] font-black uppercase tracking-tighter opacity-70">{DAYS_OF_WEEK[i].slice(0, 3)}</span>
                                     <span className="text-lg font-black tracking-tighter">{d.getDate()}</span>
                                 </div>
-                                {HOURS.map(h => {
-                                    const hourBookings = bookings.filter(b => b.date === dateStr && isBookingInHour(b, h));
-                                    return (
-                                        <div key={h} className="h-20 border-b border-slate-50 p-1 relative overflow-hidden">
-                                            {hourBookings.length > 0 ? (
-                                                <div className="flex flex-col gap-1 h-full">
-                                                    {hourBookings.map(booking => (
-                                                        <div key={booking.id} className="flex-1 min-h-0 bg-indigo-600 rounded-lg p-1.5 text-[8px] text-white flex flex-col justify-between shadow-md shadow-indigo-100 overflow-hidden">
-                                                            <p className="font-black leading-tight uppercase truncate">{booking.title}</p>
-                                                            <p className="font-bold opacity-70 truncate">{booking.sector}</p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
+
+                                {/* Day Grid Content */}
+                                <div className="flex-1 relative">
+                                    {/* Background Grid Lines */}
+                                    <div className="absolute inset-0 flex flex-col">
+                                        {HOURS.slice(0, 14).map((h) => (
+                                            <div key={h} className="flex-1 border-b border-slate-50 relative group/row">
                                                 <button
                                                     onClick={() => {
                                                         setFormData({ ...formData, date: dateStr, start_time: h });
                                                         setShowModal(true);
                                                     }}
-                                                    className="w-full h-full hover:bg-indigo-50/50 rounded-lg transition-all"
+                                                    className="absolute inset-0 w-full h-full hover:bg-slate-50/50 transition-all opacity-0 group-hover/row:opacity-100"
                                                 />
-                                            )}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Events Layer */}
+                                    <div className="absolute inset-0 pointer-events-none p-1">
+                                        <div className="relative w-full h-full">
+                                            {dayBookings.map(booking => {
+                                                const styles = getEventStyles(booking.start_time, booking.end_time);
+                                                return (
+                                                    <div
+                                                        key={booking.id}
+                                                        className="absolute left-0 right-0 pointer-events-auto transition-all px-0.5"
+                                                        style={styles}
+                                                    >
+                                                        <div className="h-full bg-indigo-600 rounded-lg p-1.5 text-[8px] text-white flex flex-col justify-between shadow-md shadow-indigo-100 overflow-hidden border border-white/10">
+                                                            <div>
+                                                                <p className="font-black leading-tight uppercase truncate">{booking.title}</p>
+                                                                <p className="font-bold opacity-70 truncate">{booking.sector}</p>
+                                                            </div>
+                                                            <p className="text-[7px] font-black opacity-50 mt-1">{booking.start_time.slice(0, 5)}</p>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
-                                    );
-                                })}
+                                    </div>
+                                </div>
                             </div>
                         );
                     })}
