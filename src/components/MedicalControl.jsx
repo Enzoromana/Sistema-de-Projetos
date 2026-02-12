@@ -2404,6 +2404,10 @@ export default function MedicalControl() {
         </div>
     </div>
 
+    <div style="margin-bottom: 24px; line-height: 1.6; text-align: justify; color: #334155;">
+        <p>Em continuidade ao processo de <b>junta médica</b>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <b>${r.ben_nome}</b>, CPF <b>${r.ben_cpf}</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
+    </div>
+
     ${(r.medical_procedures?.length > 0) ? `
     <div style="margin-bottom: 12px;">
         <div class="section-title" style="margin-bottom: 8px;">V. Procedimentos</div>
@@ -2562,6 +2566,13 @@ export default function MedicalControl() {
                                             <p className="text-sm font-bold">Klini Planos de Saúde</p>
                                             <p className="text-xs text-slate-600">ANS: 42.202-9</p>
                                         </div>
+                                    </div>
+
+                                    {/* Introductory Note */}
+                                    <div className="mb-8 text-sm leading-relaxed text-slate-600 text-justify bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                                        <p>
+                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <span className="font-bold text-slate-900">{selectedRequest.ben_nome}</span>, CPF <span className="font-bold text-slate-900">{selectedRequest.ben_cpf}</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
+                                        </p>
                                     </div>
 
                                     {/* Procedures Table */}
