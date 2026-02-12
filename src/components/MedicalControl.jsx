@@ -1554,12 +1554,6 @@ export default function MedicalControl() {
 
                                         </div>
 
-                                        {selectedRequest.referencias_bibliograficas && (
-                                            <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-[#259591]/20 pb-1">VIII. Referências Bibliográficas</h3>
-                                                <p className="text-xs font-medium text-slate-500 italic whitespace-pre-wrap">{selectedRequest.referencias_bibliograficas}</p>
-                                            </div>
-                                        )}
 
                                         <div className="mt-12 text-center">
                                             <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
