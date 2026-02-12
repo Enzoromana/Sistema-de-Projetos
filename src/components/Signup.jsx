@@ -6,6 +6,7 @@ export default function Signup({ onLoginClick }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
+    const [cpf, setCpf] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -20,7 +21,8 @@ export default function Signup({ onLoginClick }) {
             password,
             options: {
                 data: {
-                    full_name: fullName
+                    full_name: fullName,
+                    cpf: cpf.replace(/\D/g, '')
                 }
             }
         });
@@ -119,6 +121,28 @@ export default function Signup({ onLoginClick }) {
                                     onChange={e => setFullName(e.target.value)}
                                 />
                                 <User className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">CPF</label>
+                            <div className="relative">
+                                <input
+                                    type="text" required
+                                    className="w-full pl-14 pr-6 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none font-bold text-slate-700"
+                                    placeholder="000.000.000-00"
+                                    value={cpf}
+                                    onChange={e => {
+                                        let v = e.target.value.replace(/\D/g, '');
+                                        if (v.length <= 11) {
+                                            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                                            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                                            v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                                            setCpf(v);
+                                        }
+                                    }}
+                                />
+                                <ShieldCheck className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                             </div>
                         </div>
 

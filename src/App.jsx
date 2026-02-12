@@ -210,7 +210,7 @@ function App() {
             </main>
 
             {/* Profile Update Mandatory Modal */}
-            {profile && !profile.setor && (
+            {profile && (!profile.setor || !profile.cpf) && (
                 <ProfileUpdateModal
                     profile={profile}
                     onUpdate={(updatedProfile) => setProfile(updatedProfile)}
