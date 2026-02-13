@@ -41,7 +41,7 @@ export default function TiebreakerExternalForm({ token }) {
             if (error) throw error;
             if (!data) throw new Error('Solicitação não encontrada ou token inválido.');
 
-            if (data.situacao === 'Finalizado') {
+            if (data.situacao === 'Finalizado' && !data.tiebreaker_allow_edit) {
                 setSuccess(true); // Already done
                 setLoading(false);
                 return;
@@ -49,21 +49,48 @@ export default function TiebreakerExternalForm({ token }) {
 
             setRequest(data);
 
-            // Initialize item conclusions
-            if (data.medical_procedures) {
-                setProcedureConclusions(data.medical_procedures.map(p => ({
-                    id: p.id,
-                    codigo: p.codigo,
-                    descricao: p.descricao,
-                    conclusao_desempate: ''
-                })));
-            }
-            if (data.medical_materials) {
-                setMaterialConclusions(data.medical_materials.map(m => ({
-                    id: m.id,
-                    descricao: m.descricao,
-                    conclusao_desempate: ''
-                })));
+            // If in edit mode, populate form with existing data
+            if (data.tiebreaker_allow_edit && data.parecer_conclusao) {
+                setFormData({
+                    desempatador_nome: data.desempatador_nome || '',
+                    desempatador_crm: data.desempatador_crm || '',
+                    desempatador_especialidade: data.desempatador_especialidade || '',
+                    parecer_conclusao: data.parecer_conclusao || '',
+                    referencias_bibliograficas: data.referencias_bibliograficas || ''
+                });
+
+                if (data.medical_procedures) {
+                    setProcedureConclusions(data.medical_procedures.map(p => ({
+                        id: p.id,
+                        codigo: p.codigo,
+                        descricao: p.descricao,
+                        conclusao_desempate: p.conclusao_desempate || ''
+                    })));
+                }
+                if (data.medical_materials) {
+                    setMaterialConclusions(data.medical_materials.map(m => ({
+                        id: m.id,
+                        descricao: m.descricao,
+                        conclusao_desempate: m.conclusao_desempate || ''
+                    })));
+                }
+            } else {
+                // Initialize item mapping for new submission
+                if (data.medical_procedures) {
+                    setProcedureConclusions(data.medical_procedures.map(p => ({
+                        id: p.id,
+                        codigo: p.codigo,
+                        descricao: p.descricao,
+                        conclusao_desempate: ''
+                    })));
+                }
+                if (data.medical_materials) {
+                    setMaterialConclusions(data.medical_materials.map(m => ({
+                        id: m.id,
+                        descricao: m.descricao,
+                        conclusao_desempate: ''
+                    })));
+                }
             }
 
         } catch (err) {
@@ -229,7 +256,7 @@ export default function TiebreakerExternalForm({ token }) {
                         <div className="w-10 h-10 bg-[#259591] rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-teal-200">K</div>
                         <div>
                             <h1 className="font-black text-slate-800 text-lg tracking-tight">Junta Médica</h1>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Parecer de Desempate</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Parecer de Desempatador</p>
                         </div>
                     </div>
                     <div className="px-4 py-2 bg-slate-100 rounded-lg text-xs font-bold text-slate-600">
@@ -407,6 +434,16 @@ export default function TiebreakerExternalForm({ token }) {
                         </div>
                     </section>
 
+                    {request && request.tiebreaker_allow_edit && (
+                        <div className="bg-amber-50 border border-amber-200 p-6 rounded-3xl mb-8 flex items-center gap-4 animate-pulse">
+                            <AlertCircle className="text-amber-600" size={24} />
+                            <div>
+                                <h4 className="font-black text-amber-900 text-sm uppercase tracking-tight">Modo de Reedição Ativo</h4>
+                                <p className="text-xs text-amber-700 font-medium">Você pode alterar seu parecer e enviar novamente para atualização.</p>
+                            </div>
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         disabled={submitting}
@@ -415,7 +452,7 @@ export default function TiebreakerExternalForm({ token }) {
                         {submitting ? <Loader2 className="animate-spin" /> : <Save />}
                         {submitting ? 'Enviando...' : 'Assinar e Finalizar Parecer'}
                     </button>
-                    <p className="text-center text-xs text-slate-400 font-medium pb-8">Ao clicar em finalizar, o parecer será registrado e não poderá ser alterado.</p>
+                    <p className="text-center text-xs text-slate-400 font-medium pb-8">Ao clicar em finalizar, o parecer será registrado e o processo será atualizado.</p>
                 </form>
             </main>
         </div>

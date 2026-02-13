@@ -64,7 +64,8 @@ BEGIN
         'medical_materials', COALESCE(mats, '[]'::jsonb),
         'situacao', req.situacao,
         'tiebreaker_verify_crm', req.tiebreaker_verify_crm,
-        'tiebreaker_verify_cpf', req.tiebreaker_verify_cpf
+        'tiebreaker_verify_cpf', req.tiebreaker_verify_cpf,
+        'tiebreaker_allow_edit', req.tiebreaker_allow_edit
     );
 END;
 $$;

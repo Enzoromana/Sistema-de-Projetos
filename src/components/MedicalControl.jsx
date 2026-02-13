@@ -58,6 +58,7 @@ export default function MedicalControl() {
     const [specialtyFilter, setSpecialtyFilter] = useState('');
     const [doctorSearch, setDoctorSearch] = useState('');
     const [crmSearch, setCrmSearch] = useState('');
+    const [monthFilter, setMonthFilter] = useState(''); // YYYY-MM
 
     // Form State
     const [currentStep, setCurrentStep] = useState(0);
@@ -506,6 +507,36 @@ export default function MedicalControl() {
         }
     };
 
+    const exportToExcel = () => {
+        // Prepare CSV headers and data
+        const headers = ['Protocolo', 'Beneficiário', 'Situação', 'Especialidade', 'Data Criação'];
+        const rows = filteredRequests.map(r => [
+            r.requisicao,
+            r.ben_nome,
+            r.situacao,
+            r.div_especialidade || '-',
+            r.created_at ? new Date(r.created_at).toLocaleDateString('pt-BR') : '-'
+        ]);
+
+        const csvContent = [headers, ...rows].map(e => e.join(';')).join('\n');
+
+        // Proper Brazilian encoding (UTF-8 with BOM)
+        const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+
+        // Dynamic filename with period if filter is active
+        const periodSuffix = monthFilter ? `_${monthFilter}` : '';
+        const filename = `resumo_juntas_medicas${periodSuffix}.csv`;
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const resetForm = () => {
         setFormData({
             requisicao: '',
@@ -534,7 +565,9 @@ export default function MedicalControl() {
         const matchCRM = crmSearch === '' || [r.aud_crm, r.ass_crm, r.desempatador_crm, r.desempate_ass_crm]
             .some(crm => crm?.toLowerCase().includes(crmSearch.toLowerCase()));
 
-        return matchSearch && matchStatus && matchSpecialty && matchDoctor && matchCRM;
+        const matchMonth = monthFilter === '' || (r.created_at && r.created_at.startsWith(monthFilter));
+
+        return matchSearch && matchStatus && matchSpecialty && matchDoctor && matchCRM && matchMonth;
     });
 
     const specialties = [...new Set(requests.map(r => r.div_especialidade).filter(Boolean))].sort();
@@ -621,6 +654,17 @@ export default function MedicalControl() {
                                     onChange={e => setSearchTerm(e.target.value)}
                                     className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:ring-4 focus:ring-[#259591]/10 outline-none font-bold text-slate-600"
                                 />
+                            </div>
+                            <div className="flex-1 w-full">
+                                <div className="relative">
+                                    <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                                    <input
+                                        type="month"
+                                        value={monthFilter}
+                                        onChange={e => setMonthFilter(e.target.value)}
+                                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10"
+                                    />
+                                </div>
                             </div>
                             <div className="flex-1 w-full">
                                 <select
@@ -1406,6 +1450,11 @@ export default function MedicalControl() {
                                             </div>
                                         </div>
 
+                                        {/* Reporting Note */}
+                                        <p className="text-xs leading-relaxed font-bold italic text-slate-700 pt-4 pb-4">
+                                            Prezado(a) Senhor(a) {selectedRequest.ben_nome}, CPF nº {selectedRequest.ben_cpf}, a Klini vem apresentar o Parecer de Junta Médica referente à Requisição: {selectedRequest.requisicao}, cujo atendimento foi em {selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}.
+                                        </p>
+
                                         {/* Block 2: Professionals */}
                                         <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
                                             <div className="flex-1 p-4 border-r border-[#259591]">
@@ -2031,7 +2080,7 @@ export default function MedicalControl() {
                                                         </p>
                                                     )}
                                                     <Input
-                                                        label="Conclusão do Desempatador"
+                                                        label="Conclusão Desempatador"
                                                         value={proc.conclusao_desempate}
                                                         onChange={v => {
                                                             const updated = [...procedureConclusions];
@@ -2067,7 +2116,7 @@ export default function MedicalControl() {
                                                         </p>
                                                     )}
                                                     <Input
-                                                        label="Conclusão do Desempatador"
+                                                        label="Conclusão Desempatador"
                                                         value={mat.conclusao_desempate}
                                                         onChange={v => {
                                                             const updated = [...materialConclusions];
@@ -2406,7 +2455,7 @@ export default function MedicalControl() {
     </div>
 
     <div style="margin-bottom: 24px; line-height: 1.6; text-align: justify; color: #334155;">
-        <p>Em continuidade ao processo de <b>junta médica</b>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <b>${r.ben_nome}</b>, CPF <b>${r.ben_cpf}</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o número de guia nº <b>${r.guia || '-'}</b>, protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
+        <p>Em continuidade ao processo de <b>junta médica</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o número de guia nº <b>${r.guia || '-'}</b>, protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
     </div>
 
     ${(r.medical_procedures?.length > 0) ? `
@@ -2572,7 +2621,7 @@ export default function MedicalControl() {
                                     {/* Introductory Note */}
                                     <div className="mb-8 text-sm leading-relaxed text-slate-600 text-justify bg-slate-50 p-6 rounded-2xl border border-slate-100">
                                         <p>
-                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, estabelecido para dirimir divergência assistencial relativa ao procedimento indicado para o(a) beneficiário(a) <span className="font-bold text-slate-900">{selectedRequest.ben_nome}</span>, CPF <span className="font-bold text-slate-900">{selectedRequest.ben_cpf}</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o número de guia nº <span className="font-bold text-slate-900">{selectedRequest.guia || '-'}</span>, protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
+                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o número de guia nº <span className="font-bold text-slate-900">{selectedRequest.guia || '-'}</span>, protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
                                         </p>
                                     </div>
 
@@ -3115,7 +3164,8 @@ function RequestDetails({ request, onEdit, onBack }) {
 
                     {request.parecer_conclusao && (
                         <div className="bg-emerald-50 p-8 rounded-[2rem] border border-emerald-100">
-                            <h3 className="text-lg font-black text-emerald-900 mb-6 flex items-center gap-2"><CheckCircle2 size={20} className="text-emerald-600" /> Parecer Final (Desempate)</h3>
+                            <h3 className="text-lg font-black text-emerald-900 mb-6 flex items-center gap-2">
+                                <CheckCircle2 size={20} className="text-emerald-600" /> Conclusão Desempatador</h3>
                             <div className="space-y-6">
                                 <div className="grid grid-cols-2 gap-4 border-b border-emerald-200/50 pb-4">
                                     <div>
@@ -3124,9 +3174,9 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         <p className="text-[10px] text-emerald-600/70">CRM: {request.desempatador_crm}</p>
                                     </div>
                                     <div>
-                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Médico Assistente (Final)</p>
-                                        <p className="text-xs font-bold text-emerald-900">{request.desempate_ass_nome}</p>
-                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.desempate_ass_crm}</p>
+                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Médico Assistente</p>
+                                        <p className="text-xs font-bold text-emerald-900">{request.ass_nome}</p>
+                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.ass_crm}</p>
                                     </div>
                                 </div>
                                 <div className="space-y-2">
@@ -3141,6 +3191,28 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         <p className="text-[11px] text-emerald-700/70 leading-relaxed font-medium whitespace-pre-wrap italic">
                                             {request.referencias_bibliograficas}
                                         </p>
+                                    </div>
+                                )}
+                                {request.situacao === 'Finalizado' && (
+                                    <div className="mt-4 pt-4 border-t border-emerald-200/50">
+                                        <button
+                                            onClick={async () => {
+                                                if (!confirm('Deseja liberar este parecer para reedição pelo médico desempatador?')) return;
+                                                const { error } = await supabase
+                                                    .from('medical_requests')
+                                                    .update({ tiebreaker_allow_edit: true, situacao: 'Aguardando Desempatador' })
+                                                    .eq('id', request.id);
+
+                                                if (error) alert('Erro ao liberar: ' + error.message);
+                                                else {
+                                                    alert('Reedição liberada com sucesso!');
+                                                    onBack(); // Return to list to refresh data
+                                                }
+                                            }}
+                                            className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline"
+                                        >
+                                            Liberar Reedição do Desempatador
+                                        </button>
                                     </div>
                                 )}
                             </div>
@@ -3234,7 +3306,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                     Voltar para lista
                 </button>
             </div>
-        </div>
+        </div >
     );
 }
 

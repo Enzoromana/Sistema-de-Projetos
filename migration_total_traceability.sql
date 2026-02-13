@@ -63,4 +63,22 @@ CREATE TRIGGER audit_medical_attachments
 AFTER INSERT OR UPDATE OR DELETE ON public.medical_attachments
 FOR EACH ROW EXECUTE FUNCTION public.handle_audit_log();
 
--- Note: medical_requests and medical_procedures are already handled in migration_audit_logs.sql
+-- Subtasks
+DROP TRIGGER IF EXISTS audit_subtasks ON public.subtasks;
+CREATE TRIGGER audit_subtasks
+AFTER INSERT OR UPDATE OR DELETE ON public.subtasks
+FOR EACH ROW EXECUTE FUNCTION public.handle_audit_log();
+
+-- Medical Requests
+DROP TRIGGER IF EXISTS audit_medical_requests ON public.medical_requests;
+CREATE TRIGGER audit_medical_requests
+AFTER INSERT OR UPDATE OR DELETE ON public.medical_requests
+FOR EACH ROW EXECUTE FUNCTION public.handle_audit_log();
+
+-- Medical Procedures
+DROP TRIGGER IF EXISTS audit_medical_procedures ON public.medical_procedures;
+CREATE TRIGGER audit_medical_procedures
+AFTER INSERT OR UPDATE OR DELETE ON public.medical_procedures
+FOR EACH ROW EXECUTE FUNCTION public.handle_audit_log();
+
+-- Note: All core tables are now covered for total traceability.
