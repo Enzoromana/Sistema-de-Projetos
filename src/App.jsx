@@ -173,7 +173,7 @@ function App() {
                                     className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'sheet-to-slide' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
                                 >
                                     <Presentation size={16} />
-                                    Planilha p/ Slide
+                                    Conversor de Propostas Comerciais
                                 </button>
                             )}
                         </div>

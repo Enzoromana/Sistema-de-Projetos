@@ -41,7 +41,7 @@ export default function HubHome({ setActiveModule, userProfile }) {
         },
         {
             id: 'sheet-to-slide',
-            title: 'Planilha p/ Slide',
+            title: 'Conversor de Propostas Comerciais',
             description: 'Converta planilhas Excel em apresentações de slides profissionais.',
             icon: <Presentation size={32} />,
             color: 'bg-orange-500',

@@ -313,7 +313,7 @@ export default function UserAudit() {
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_sheet_to_slide', p.access_sheet_to_slide)}
                                                         className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-orange-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
-                                                        title="Slides"
+                                                        title="Conversor de Propostas"
                                                     >
                                                         <Presentation size={18} />
                                                     </button>
@@ -461,8 +461,8 @@ export default function UserAudit() {
                                             </td>
                                             <td className="px-8 py-6">
                                                 <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight border ${log.action === 'INSERT' ? 'bg-teal-50 text-teal-600 border-teal-100' :
-                                                        log.action === 'UPDATE' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' :
-                                                            'bg-rose-50 text-rose-600 border-rose-100'
+                                                    log.action === 'UPDATE' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' :
+                                                        'bg-rose-50 text-rose-600 border-rose-100'
                                                     }`}>
                                                     {log.action === 'INSERT' ? <Plus size={10} className="inline mr-1" /> :
                                                         log.action === 'UPDATE' ? <Edit3 size={10} className="inline mr-1" /> :
