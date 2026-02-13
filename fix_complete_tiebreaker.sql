@@ -1,54 +1,46 @@
--- 1. Add tiebreaker_token column if not exists
+-- =======================================================================
+-- FIX COMPLETO: Adicionar coluna + atualizar funções RPC
+-- Execute TUDO de uma vez no Supabase SQL Editor
+-- =======================================================================
+
+-- 1. Adicionar coluna tiebreaker_allow_edit (se não existir)
 DO $$ 
 BEGIN
-    -- Check if target table exists first
-    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'medical_requests') THEN
-        RAISE EXCEPTION 'A tabela "medical_requests" não existe. Você deve executar o arquivo "migration_medical_module.sql" antes desta migração.';
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_token') THEN
-        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_token uuid DEFAULT gen_random_uuid();
-        ALTER TABLE public.medical_requests ADD CONSTRAINT medical_requests_tiebreaker_token_key UNIQUE (tiebreaker_token);
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_verify_crm') THEN
-        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_verify_crm text;
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'medical_requests' AND column_name = 'tiebreaker_verify_cpf') THEN
-        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_verify_cpf text;
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_schema = 'public' 
+        AND table_name = 'medical_requests' 
+        AND column_name = 'tiebreaker_allow_edit'
+    ) THEN
+        ALTER TABLE public.medical_requests ADD COLUMN tiebreaker_allow_edit boolean DEFAULT false;
     END IF;
 END $$;
 
--- 2. Secure Function to GET data by token (Public Access)
+-- 2. Recriar função GET (leitura por token)
 CREATE OR REPLACE FUNCTION public.get_tiebreaker_request_by_token(token_input uuid)
 RETURNS jsonb
 LANGUAGE plpgsql
-SECURITY DEFINER -- Runs with owner privileges to bypass RLS for unauthenticated users
+SECURITY DEFINER
 AS $$
 DECLARE
     req public.medical_requests;
     procs jsonb;
     mats jsonb;
 BEGIN
-    -- Fetch the request
     SELECT * INTO req FROM public.medical_requests WHERE tiebreaker_token = token_input;
 
     IF req IS NULL THEN
         RETURN NULL;
     END IF;
 
-    -- Fetch procedures
     SELECT jsonb_agg(to_jsonb(p)) INTO procs 
     FROM public.medical_procedures p 
     WHERE p.request_id = req.id;
 
-    -- Fetch materials
     SELECT jsonb_agg(to_jsonb(m)) INTO mats 
     FROM public.medical_materials m 
     WHERE m.request_id = req.id;
 
-    -- Return filtered object (Safety: Only needed fields)
     RETURN jsonb_build_object(
         'id', req.id,
         'requisicao', req.requisicao,
@@ -65,17 +57,22 @@ BEGIN
         'situacao', req.situacao,
         'tiebreaker_verify_crm', req.tiebreaker_verify_crm,
         'tiebreaker_verify_cpf', req.tiebreaker_verify_cpf,
-        'tiebreaker_allow_edit', req.tiebreaker_allow_edit
+        'tiebreaker_allow_edit', req.tiebreaker_allow_edit,
+        'parecer_conclusao', req.parecer_conclusao,
+        'desempatador_nome', req.desempatador_nome,
+        'desempatador_crm', req.desempatador_crm,
+        'desempatador_especialidade', req.desempatador_especialidade,
+        'referencias_bibliograficas', req.referencias_bibliograficas
     );
 END;
 $$;
 
--- 3. Secure Function to SUBMIT opinion (Public Access)
+-- 3. Recriar função SUBMIT (envio do parecer)
 CREATE OR REPLACE FUNCTION public.submit_tiebreaker_opinion(
     token_input uuid,
     desempatador_data jsonb,
-    procedure_conclusions jsonb, -- array of {id, conclusion}
-    material_conclusions jsonb   -- array of {id, conclusion}
+    procedure_conclusions jsonb,
+    material_conclusions jsonb
 )
 RETURNS boolean
 LANGUAGE plpgsql
@@ -85,14 +82,12 @@ DECLARE
     req_id bigint;
     item jsonb;
 BEGIN
-    -- Get Request ID
     SELECT id INTO req_id FROM public.medical_requests WHERE tiebreaker_token = token_input;
 
     IF req_id IS NULL THEN
         RETURN false;
     END IF;
 
-    -- Update Request Data
     UPDATE public.medical_requests
     SET 
         desempatador_nome = desempatador_data->>'desempatador_nome',
@@ -100,11 +95,10 @@ BEGIN
         desempatador_especialidade = desempatador_data->>'describe_especialidade',
         parecer_conclusao = desempatador_data->>'parecer_conclusao',
         referencias_bibliograficas = desempatador_data->>'referencias_bibliograficas',
-        situacao = 'Finalizado',
+        situacao = 'Finalizado Junta Médica',
         tiebreaker_allow_edit = false
     WHERE id = req_id;
 
-    -- Update Procedures
     IF procedure_conclusions IS NOT NULL THEN
         FOR item IN SELECT * FROM jsonb_array_elements(procedure_conclusions)
         LOOP
@@ -114,7 +108,6 @@ BEGIN
         END LOOP;
     END IF;
 
-    -- Update Materials
     IF material_conclusions IS NOT NULL THEN
         FOR item IN SELECT * FROM jsonb_array_elements(material_conclusions)
         LOOP

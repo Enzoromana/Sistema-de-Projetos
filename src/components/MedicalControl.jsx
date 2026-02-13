@@ -16,8 +16,13 @@ const SITUACAO = {
     'Aguardando Análise': { color: 'bg-amber-500', textColor: 'text-amber-600', bgLight: 'bg-amber-50' },
     'Aguardando Desempatador': { color: 'bg-blue-500', textColor: 'text-blue-600', bgLight: 'bg-blue-50' },
     'Aguardando Visualização de Abertura': { color: 'bg-purple-500', textColor: 'text-purple-600', bgLight: 'bg-purple-50' },
-    'Finalizado': { color: 'bg-emerald-500', textColor: 'text-emerald-600', bgLight: 'bg-emerald-50' }
+    'Finalizado Junta Médica': { color: 'bg-emerald-500', textColor: 'text-emerald-600', bgLight: 'bg-emerald-50' },
+    'Finalizado 2° Opinião': { color: 'bg-teal-500', textColor: 'text-teal-600', bgLight: 'bg-teal-50' },
+    'Finalizado Consenso': { color: 'bg-green-500', textColor: 'text-green-600', bgLight: 'bg-green-50' }
 };
+
+const FINALIZED_STATUSES = ['Finalizado Junta Médica', 'Finalizado 2° Opinião', 'Finalizado Consenso'];
+const isFinalized = (situacao) => FINALIZED_STATUSES.includes(situacao);
 
 const DOC_TYPES = [
     { id: 'aberturaBeneficiario', label: 'Confirmação abertura beneficiário' },
@@ -396,7 +401,7 @@ export default function MedicalControl() {
                 .from('medical_requests')
                 .update({
                     ...tiebreakerData,
-                    situacao: 'Finalizado'
+                    situacao: 'Finalizado Junta Médica'
                 })
                 .eq('id', selectedRequest.id);
 
@@ -423,7 +428,7 @@ export default function MedicalControl() {
             }
 
             // Update local state
-            setSelectedRequest(prev => ({ ...prev, ...tiebreakerData, situacao: 'Finalizado' }));
+            setSelectedRequest(prev => ({ ...prev, ...tiebreakerData, situacao: 'Finalizado Junta Médica' }));
             setShowTiebreakerModal(false);
             loadRequests();
         } catch (error) {
@@ -574,9 +579,9 @@ export default function MedicalControl() {
 
     const stats = {
         total: requests.length,
-        abertos: requests.filter(r => r.situacao !== 'Finalizado').length,
+        abertos: requests.filter(r => !isFinalized(r.situacao)).length,
         aguardando: requests.filter(r => r.situacao === 'Aguardando Análise').length,
-        finalizados: requests.filter(r => r.situacao === 'Finalizado').length
+        finalizados: requests.filter(r => isFinalized(r.situacao)).length
     };
 
     if (loading) return (
@@ -813,7 +818,7 @@ export default function MedicalControl() {
                                                         title="Conclusão Junta"
                                                     >
                                                         <Gavel size={18} />
-                                                        {getTiebreakerMissingCount(r) > 0 && r.situacao !== 'Finalizado' && (
+                                                        {getTiebreakerMissingCount(r) > 0 && !isFinalized(r.situacao) && (
                                                             <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-rose-300">
                                                                 {getTiebreakerMissingCount(r)}
                                                             </span>
@@ -3193,7 +3198,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         </p>
                                     </div>
                                 )}
-                                {request.situacao === 'Finalizado' && (
+                                {isFinalized(request.situacao) && (
                                     <div className="mt-4 pt-4 border-t border-emerald-200/50">
                                         <button
                                             onClick={async () => {

@@ -41,7 +41,8 @@ export default function TiebreakerExternalForm({ token }) {
             if (error) throw error;
             if (!data) throw new Error('Solicitação não encontrada ou token inválido.');
 
-            if (data.situacao === 'Finalizado' && !data.tiebreaker_allow_edit) {
+            const FINALIZED = ['Finalizado Junta Médica', 'Finalizado 2° Opinião', 'Finalizado Consenso'];
+            if (FINALIZED.includes(data.situacao) && !data.tiebreaker_allow_edit) {
                 setSuccess(true); // Already done
                 setLoading(false);
                 return;
