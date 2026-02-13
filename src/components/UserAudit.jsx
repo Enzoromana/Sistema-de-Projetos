@@ -313,7 +313,7 @@ export default function UserAudit() {
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_sheet_to_slide', p.access_sheet_to_slide)}
                                                         className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-orange-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
-                                                        title="Conversor de Propostas"
+                                                        title="Conversor Comercial"
                                                     >
                                                         <Presentation size={18} />
                                                     </button>
