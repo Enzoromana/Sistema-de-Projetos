@@ -35,10 +35,10 @@ export default function SearchableSelect({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-sm"
+                className="w-full flex items-center justify-between px-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm font-semibold text-slate-700 hover:border-orange-500/50 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all shadow-sm"
             >
                 <span className="truncate">{selectedOption || placeholder}</span>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {/* Dropdown Panel */}
@@ -75,7 +75,7 @@ export default function SearchableSelect({
                                         setIsOpen(false);
                                         setSearchTerm('');
                                     }}
-                                    className={`w-full text-left px-4 py-2 rounded-xl text-sm font-medium transition-all ${!value ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50'}`}
+                                    className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${!value ? 'bg-orange-50 text-orange-600' : 'text-slate-500 hover:bg-slate-50'}`}
                                 >
                                     {placeholder}
                                 </button>
@@ -87,7 +87,7 @@ export default function SearchableSelect({
                                             setIsOpen(false);
                                             setSearchTerm('');
                                         }}
-                                        className={`w-full text-left px-4 py-2 rounded-xl text-sm font-medium transition-all ${value === opt ? 'bg-indigo-50 text-indigo-600' : 'text-slate-700 hover:bg-slate-50'}`}
+                                        className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${value === opt ? 'bg-purple-50 text-purple-600 border-l-4 border-purple-600 pl-3' : 'text-slate-700 hover:bg-purple-50 hover:text-purple-600'}`}
                                     >
                                         {opt}
                                     </button>

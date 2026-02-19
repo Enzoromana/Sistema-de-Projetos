@@ -11,6 +11,14 @@ const getField = (item, ...keys) => {
     for (const key of keys) {
         if (item[key] !== undefined && item[key] !== null && item[key] !== '') return String(item[key]).trim();
     }
+    // Check inside endereco object if available
+    if (item.endereco && typeof item.endereco === 'object') {
+        for (const key of keys) {
+            if (item.endereco[key] !== undefined && item.endereco[key] !== null && item.endereco[key] !== '') {
+                return String(item.endereco[key]).trim();
+            }
+        }
+    }
     return '';
 };
 
@@ -212,31 +220,42 @@ export default function GuiaMedicoRede() {
     return (
         <div style={{ fontFamily: "'Inter', sans-serif", background: '#F5F7FA', color: '#111827' }}>
             {/* HEADER */}
-            <header style={{
-                background: `linear-gradient(135deg, ${productConfig.color} 0%, ${productConfig.dark} 100%)`,
-                color: 'white', padding: '1rem 2rem',
-                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', borderRadius: '12px 12px 0 0'
+            <header className="relative overflow-hidden" style={{
+                background: 'linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%)',
+                color: 'white', padding: '1.5rem 2rem',
+                boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', borderRadius: '24px 24px 0 0'
             }}>
-                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 900, background: 'white', color: productConfig.color, padding: '0.5rem 1rem', borderRadius: '8px' }}>Klini Saúde</div>
-                    <div style={{ fontWeight: '600' }}>Guia Médico Unificado</div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-400/10 rounded-full -ml-10 -mb-10 blur-2xl"></div>
+
+                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+                    <div className="flex items-center gap-4">
+                        <div style={{ fontSize: '1.75rem', fontWeight: 900, background: 'white', color: '#6D28D9', padding: '0.5rem 1.25rem', borderRadius: '14px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Klini</div>
+                        <div>
+                            <div style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>Guia Médico Unificado</div>
+                            <div className="text-purple-200 text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5">Rede Credenciada • Atualizado</div>
+                        </div>
+                    </div>
                 </div>
             </header>
 
             {/* PRODUCT SELECTOR */}
-            <div style={{ background: '#0F172A', padding: '0.75rem 2rem' }}>
-                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '0.5rem' }}>
+            <div style={{ background: '#0F172A', padding: '0.75rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-4">Plano:</span>
                     {Object.keys(PRODUCT_MAP).map(key => (
                         <button
                             key={key}
                             onClick={() => setActiveProduct(key)}
                             style={{
-                                background: activeProduct === key ? 'white' : 'rgba(255,255,255,0.1)',
-                                border: activeProduct === key ? 'none' : '1px solid rgba(255,255,255,0.2)',
-                                color: activeProduct === key ? '#0F172A' : 'white',
-                                fontWeight: activeProduct === key ? 'bold' : 'normal',
-                                padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s'
+                                background: activeProduct === key ? 'white' : 'transparent',
+                                border: activeProduct === key ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                color: activeProduct === key ? '#0F172A' : '#94A3B8',
+                                fontWeight: activeProduct === key ? '800' : '600',
+                                padding: '0.5rem 1.25rem', borderRadius: '10px', cursor: 'pointer', transition: 'all 0.3s',
+                                fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'
                             }}
+                            className={activeProduct === key ? 'shadow-[0_0_20px_rgba(255,255,255,0.15)] scale-105' : 'hover:bg-white/5 hover:text-white'}
                         >
                             {PRODUCT_MAP[key].name}
                         </button>
@@ -245,20 +264,24 @@ export default function GuiaMedicoRede() {
             </div>
 
             {/* TABS */}
-            <nav style={{ background: '#F4793B', padding: '0.5rem 2rem', overflowX: 'auto' }}>
+            <nav style={{ background: '#F4793B', padding: '0.5rem 2rem', overflowX: 'auto', boxShadow: 'inset 0 -2px 10px rgba(0,0,0,0.05)' }}>
                 <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '0.5rem' }}>
                     {['Visão Geral', 'Hospitais', 'Consultas', 'Exames', 'Terapias'].map(tab => {
                         const id = tab.toLowerCase().replace(' ', '-').replace('ã', 'a');
+                        const isActive = activeTab === id;
                         return (
                             <button
                                 key={id}
                                 onClick={() => setActiveTab(id)}
                                 style={{
-                                    background: activeTab === id ? 'white' : 'rgba(255,255,255,0.2)',
-                                    color: activeTab === id ? '#F4793B' : 'white',
-                                    border: 'none', padding: '0.5rem 1rem',
-                                    borderRadius: '6px', cursor: 'pointer', whiteSpace: 'nowrap', fontWeight: 600
+                                    background: isActive ? 'white' : 'transparent',
+                                    color: isActive ? '#F4793B' : 'white',
+                                    border: 'none', padding: '0.6rem 1.5rem',
+                                    borderRadius: '10px', cursor: 'pointer', whiteSpace: 'nowrap',
+                                    fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase',
+                                    transition: 'all 0.3s', letterSpacing: '0.05em'
                                 }}
+                                className={isActive ? 'shadow-lg ring-2 ring-orange-600/10' : 'hover:bg-white/10 opacity-80 hover:opacity-100'}
                             >
                                 {tab}
                             </button>
@@ -308,22 +331,42 @@ export default function GuiaMedicoRede() {
             <main style={{ maxWidth: '1600px', margin: '0 auto', padding: '2rem' }}>
                 {/* DASHBOARD VIEW */}
                 {activeTab === 'visao-geral' && !filters.municipio && !filters.especialidade && (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-                        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: 800, color: productConfig.color }}>{stats.hospitais}</div>
-                            <div style={{ fontSize: '0.875rem', color: '#6B7280', fontWeight: 600 }}>Hospitais / PS</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
+                        <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <div className="flex justify-between items-start mb-4">
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#6D28D9', lineHeight: 1 }}>{stats.hospitais}</div>
+                                <div className="p-2 bg-purple-50 rounded-xl text-purple-600">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Hospitais / PS</div>
                         </div>
-                        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: 800, color: productConfig.color }}>{stats.consultas}</div>
-                            <div style={{ fontSize: '0.875rem', color: '#6B7280', fontWeight: 600 }}>Consultórios</div>
+                        <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <div className="flex justify-between items-start mb-4">
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#F4793B', lineHeight: 1 }}>{stats.consultas}</div>
+                                <div className="p-2 bg-orange-50 rounded-xl text-orange-600">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Consultórios</div>
                         </div>
-                        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: 800, color: productConfig.color }}>{stats.exames}</div>
-                            <div style={{ fontSize: '0.875rem', color: '#6B7280', fontWeight: 600 }}>Locais de Exame</div>
+                        <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <div className="flex justify-between items-start mb-4">
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#199A8E', lineHeight: 1 }}>{stats.exames}</div>
+                                <div className="p-2 bg-teal-50 rounded-xl text-teal-600">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Locais de Exame</div>
                         </div>
-                        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: 800, color: productConfig.color }}>{stats.terapias}</div>
-                            <div style={{ fontSize: '0.875rem', color: '#6B7280', fontWeight: 600 }}>Centros de Terapia</div>
+                        <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <div className="flex justify-between items-start mb-4">
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#3B82F6', lineHeight: 1 }}>{stats.terapias}</div>
+                                <div className="p-2 bg-blue-50 rounded-xl text-blue-600">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Centros de Terapia</div>
                         </div>
                     </div>
                 )}
