@@ -1,0 +1,80 @@
+{
+  "codigo_rede": "KSTARTPLUSZS",
+  "nome_rede": "KLINI START PLUS ZS",
+  "total_prestadores": 4,
+  "data_atualizacao": "2026-02-19",
+  "prestadores": [
+    {
+      "codigo_prestador": "27820053000105",
+      "cnpj_cpf": "27820053000105",
+      "nome": "REUTATHI REUMATOLOGIA",
+      "nome_fantasia": "REUTATHI REUMATOLOGIA",
+      "razao_social": "REUTATHI REUMATOLOGIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552135945777",
+      "endereco": {
+        "logradouro": "AVENIDA EMBAIXADOR ABELARDO BUENO, 3300 - SALA 1005",
+        "bairro": "BARRA DA TIJUCA",
+        "cep": "22775040",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "REUMATOLOGIA"
+    },
+    {
+      "codigo_prestador": "61486650108464",
+      "cnpj_cpf": "61486650108464",
+      "nome": "SERGIO FRANCO - AMERICAS CORPORATE",
+      "nome_fantasia": "DASA LSF BARRA CORPORATE",
+      "razao_social": "DIAGNOSTICOS DA AMERICA S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": null,
+      "endereco": {
+        "logradouro": "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
+        "bairro": "BARRA DA TIJUCA",
+        "cep": "22631003",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANÁLISES CLÍNICAS"
+    },
+    {
+      "codigo_prestador": "61486650108464",
+      "cnpj_cpf": "61486650108464",
+      "nome": "SERGIO FRANCO - AMERICAS CORPORATE",
+      "nome_fantasia": "DASA LSF BARRA CORPORATE",
+      "razao_social": "DIAGNOSTICOS DA AMERICA S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": null,
+      "endereco": {
+        "logradouro": "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
+        "bairro": "BARRA DA TIJUCA",
+        "cep": "22631003",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANATOMOPATOLOGIA"
+    },
+    {
+      "codigo_prestador": "5947166000133",
+      "cnpj_cpf": "05947166000133",
+      "nome": "CEIGO - DR. BRUNO - MASTOLOGISTA",
+      "nome_fantasia": "CEIGO - DR. BRUNO - MASTOLOGISTA",
+      "razao_social": "CEIGO SERVIÇOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552133698600",
+      "endereco": {
+        "logradouro": "RUA AMÉRICO BRASILIENSE, 248 - PARTE",
+        "bairro": "MADUREIRA",
+        "cep": "21351060",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "MASTOLOGIA"
+    }
+  ]
+}

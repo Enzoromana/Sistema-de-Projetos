@@ -1,0 +1,212 @@
+[
+  {
+    "codigo_rede": "K180",
+    "nome": "KLINI 180",
+    "registros": 933,
+    "municipios": 6,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "K200",
+    "nome": "KLINI 200",
+    "registros": 1009,
+    "municipios": 3,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "K400",
+    "nome": "KLINI 400",
+    "registros": 1861,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "K600",
+    "nome": "KLINI 600 QC",
+    "registros": 2811,
+    "municipios": 23,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "K600QP",
+    "nome": "KLINI 600 QP",
+    "registros": 2932,
+    "municipios": 23,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KAMBULATORIAL",
+    "nome": "KLINI AMBULATORIAL",
+    "registros": 1722,
+    "municipios": 16,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KCLEAN",
+    "nome": "KLINI CLEAN",
+    "registros": 1334,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KCOSTAVERDE",
+    "nome": "KLINI COSTA VERDE",
+    "registros": 1149,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KESSENCIAL",
+    "nome": "KLINI ESSENCIAL",
+    "registros": 1977,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KESSENCIALPZC",
+    "nome": "KLINI ESSENCIAL PZC",
+    "registros": 2001,
+    "municipios": 15,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KFACIL",
+    "nome": "KLINI FÁCIL",
+    "registros": 1128,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KNACIONALG100",
+    "nome": "KLINI NACIONAL G100",
+    "registros": 36762,
+    "municipios": 389,
+    "estados": 27
+  },
+  {
+    "codigo_rede": "KNACIONALG100PLUS",
+    "nome": "KLINI NACIONAL G100 PLUS",
+    "registros": 36741,
+    "municipios": 389,
+    "estados": 27
+  },
+  {
+    "codigo_rede": "KNACIONALG600",
+    "nome": "KLINI NACIONAL G600",
+    "registros": 43667,
+    "municipios": 402,
+    "estados": 27
+  },
+  {
+    "codigo_rede": "KPOP",
+    "nome": "KLINI POP",
+    "registros": 1087,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KPRIME",
+    "nome": "KLINI PRIME",
+    "registros": 1114,
+    "municipios": 15,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KPRIME100",
+    "nome": "KLINI PRIME 100",
+    "registros": 2036,
+    "municipios": 29,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KPRIME200",
+    "nome": "KLINI PRIME 200",
+    "registros": 2400,
+    "municipios": 30,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KREDECASA",
+    "nome": "KLINI REDE HOSPITALAR CASA",
+    "registros": 348,
+    "municipios": 3,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KREFERENCIA",
+    "nome": "KLINI REFERÊNCIA",
+    "registros": 123,
+    "municipios": 4,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KRIO",
+    "nome": "KLINI RIO",
+    "registros": 1625,
+    "municipios": 13,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KRIOSERV",
+    "nome": "KLINI RIOSERV",
+    "registros": 1679,
+    "municipios": 13,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KSENIORPF",
+    "nome": "KLINI SENIOR 50+ PF",
+    "registros": 800,
+    "municipios": 3,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KSTART",
+    "nome": "KLINI START",
+    "registros": 1191,
+    "municipios": 12,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KSTARTPLUS",
+    "nome": "KLINI START PLUS",
+    "registros": 1480,
+    "municipios": 13,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KSTARTPLUSZS",
+    "nome": "KLINI START PLUS ZS",
+    "registros": 4,
+    "municipios": 1,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KSENIOR",
+    "nome": "KLINI SÊNIOR 50+",
+    "registros": 1258,
+    "municipios": 11,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KTECH",
+    "nome": "KLINI TECH",
+    "registros": 1067,
+    "municipios": 14,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KTOTALQP",
+    "nome": "KLINI TOTAL  QP",
+    "registros": 2650,
+    "municipios": 19,
+    "estados": 1
+  },
+  {
+    "codigo_rede": "KTOTALQC",
+    "nome": "KLINI TOTAL QC",
+    "registros": 2647,
+    "municipios": 19,
+    "estados": 1
+  }
+]

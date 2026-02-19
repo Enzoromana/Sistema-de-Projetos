@@ -1,0 +1,2222 @@
+{
+  "codigo_rede": "KREFERENCIA",
+  "nome_rede": "KLINI REFERÊNCIA",
+  "total_prestadores": 123,
+  "data_atualizacao": "2026-02-19",
+  "prestadores": [
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANÁLISES CLÍNICAS"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA DA MAMA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "HOLTER"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "M.A.P.A. - MONITORIZACAO AMBULATORIAL DA PRESSAO ARTERIAL"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA OBSTÉTRICA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "TESTE ERGOMÉTRICO"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ELETROCARDIOGRAMA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ARTRO-RESSONÂNCIA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "RESSONÂNCIA MAGNÉTICA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ELASTOGRAFIA HEPÁTICA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANATOMOPATOLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANGIORESSONÂNCIA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ECODOPPLERCARDIOGRAMA"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "DOPPLER"
+    },
+    {
+      "codigo_prestador": "60840055026521",
+      "cnpj_cpf": "60840055026521",
+      "nome": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA OTAVIO CARNEIRO",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "RUA OTÁVIO CARNEIRO, 106",
+        "bairro": "ICARAÍ",
+        "cep": "24230191",
+        "municipio": "NITEROI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA TRANSVAGINAL"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "ORTOPEDIA E TRAUMATOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CLÍNICO GERAL"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA VASCULAR"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PEDIATRIA PUERICULTURA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "DERMATOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "OBSTETRÍCIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "ENDOCRINOLOGIA E METABOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PEDIATRIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CARDIOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "GINECOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "UROLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROLOGIA PEDIÁTRICA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PSIQUIATRIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "OTORRINOLARINGOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA GERAL"
+    },
+    {
+      "codigo_prestador": "38825002000192",
+      "cnpj_cpf": "38825002000940",
+      "nome": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "nome_fantasia": "CENTRO MEDICO KLINI - NOVA IGUAÇU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA DOM WALMOR, 383 - SALA 403 SALA 404 SALA 405",
+        "bairro": "CENTRO",
+        "cep": "26215220",
+        "municipio": "NOVA IGUACU",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "GASTROENTEROLOGIA"
+    },
+    {
+      "codigo_prestador": "28628405000198",
+      "cnpj_cpf": "28628405000198",
+      "nome": "HOSPITAL CASA MENSSANA",
+      "nome_fantasia": "HOSPITAL CASA MENSSANA",
+      "razao_social": "HOSPITAL CASA MENSSANA HOSPITAL GERAL, ADMINISTRACAO E GESTAO HOSPITALAR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "RUA MARECHAL JOFRE, 30",
+        "bairro": "GRAJAÚ",
+        "cep": "20560185",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "PSIQUIATRIA PEDIÁTRICA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "CARDIOTOCOGRAFIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA PLÁSTICA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "DENSINTOMETRIA ÓSSEA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA DA MAMA"
+    },
+    {
+      "codigo_prestador": "28628405000198",
+      "cnpj_cpf": "28628405000198",
+      "nome": "HOSPITAL CASA MENSSANA",
+      "nome_fantasia": "HOSPITAL CASA MENSSANA",
+      "razao_social": "HOSPITAL CASA MENSSANA HOSPITAL GERAL, ADMINISTRACAO E GESTAO HOSPITALAR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "RUA MARECHAL JOFRE, 30",
+        "bairro": "GRAJAÚ",
+        "cep": "20560185",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "PSIQUIATRIA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "FONOAUDIOLOGIA TEA"
+    },
+    {
+      "codigo_prestador": "22233557000105",
+      "cnpj_cpf": "22233557000105",
+      "nome": "HOSPITAL ILHA DO GOVERNADOR",
+      "nome_fantasia": "HOSPITAL ILHA DO GOVERNADOR",
+      "razao_social": "HOSPITAL ILHA DO GOVERNADOR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "ESTRADA DO DO DENDÊ, 668 - LOTE 28 PAL 2040 QDR 145",
+        "bairro": "TAUÁ",
+        "cep": "21920000",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "ORTOPEDIA 12H"
+    },
+    {
+      "codigo_prestador": "28017218002626",
+      "cnpj_cpf": "28017218002626",
+      "nome": "LABORMED - LABORATORIOS MEDICOS â€“ VISTA ALEGRE",
+      "nome_fantasia": "LABORMED - LABORATORIOS MEDICOS â€“ VISTA ALEGRE",
+      "razao_social": "CENTRO  MÉDICO DE ANALISE  CLINICAS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521972975151 / +552125657799",
+      "endereco": {
+        "logradouro": "RUA SANTA LUZ, 210 - APT 101",
+        "bairro": "VISTA ALEGRE",
+        "cep": "21230760",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANATOMOPATOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "GASTROENTEROLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA VASCULAR"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANATOMOPATOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "MUSICOTERAPIA TEA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CLÍNICO GERAL"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "MASTOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "PSICOLOGIA TEA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "MUSICOTERAPIA TEA"
+    },
+    {
+      "codigo_prestador": "29776968000196",
+      "cnpj_cpf": "29776968000196",
+      "nome": "CONSULTÓRIO PARCEIRO TIJUCA 2",
+      "nome_fantasia": "CONSULTÓRIO PARCEIRO TIJUCA 2",
+      "razao_social": "DAFLON ATENDIMENTOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE FIDELIZADA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "ALMIRANTE COCHRANE, 280 - 7° ANDAR",
+        "bairro": "TIJUCA",
+        "cep": "20550040",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PROCTOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "NUTRIÇÃO TEA"
+    },
+    {
+      "codigo_prestador": "22233557000105",
+      "cnpj_cpf": "22233557000105",
+      "nome": "HOSPITAL ILHA DO GOVERNADOR",
+      "nome_fantasia": "HOSPITAL ILHA DO GOVERNADOR",
+      "razao_social": "HOSPITAL ILHA DO GOVERNADOR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "ESTRADA DO DO DENDÊ, 668 - LOTE 28 PAL 2040 QDR 145",
+        "bairro": "TAUÁ",
+        "cep": "21920000",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "CARDIOLOGIA"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "OTORRINOLARINGOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "FISIOTERAPIA TEA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PROCTOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "OTORRINOLARINGOLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANGIORESSONÂNCIA"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "TERAPIA OCUPACIONAL TEA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA TRANSVAGINAL"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PSIQUIATRIA PEDIATRICA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "TERAPIA OCUPACIONAL TEA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "ORTOPEDIA E TRAUMATOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "FISIOTERAPIA TEA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "GINECOLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA OBSTÉTRICA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROLOGIA PEDIÁTRICA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ENDOSCOPIA NASAL"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ARTRO-RESSONÂNCIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "VIDEO-FARINGO-LARINGOSCOPIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ELASTOGRAFIA HEPÁTICA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "HOLTER"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "UROLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "DOPPLER"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROCIRURGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PSIQUIATRIA"
+    },
+    {
+      "codigo_prestador": "28017218002626",
+      "cnpj_cpf": "28017218002626",
+      "nome": "LABORMED - LABORATORIOS MEDICOS â€“ VISTA ALEGRE",
+      "nome_fantasia": "LABORMED - LABORATORIOS MEDICOS â€“ VISTA ALEGRE",
+      "razao_social": "CENTRO  MÉDICO DE ANALISE  CLINICAS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521972975151 / +552125657799",
+      "endereco": {
+        "logradouro": "RUA SANTA LUZ, 210 - APT 101",
+        "bairro": "VISTA ALEGRE",
+        "cep": "21230760",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANÁLISES CLÍNICAS"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "ENDOCRINOLOGIA E METABOLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA GERAL"
+    },
+    {
+      "codigo_prestador": "22233557000105",
+      "cnpj_cpf": "22233557000105",
+      "nome": "HOSPITAL ILHA DO GOVERNADOR",
+      "nome_fantasia": "HOSPITAL ILHA DO GOVERNADOR",
+      "razao_social": "HOSPITAL ILHA DO GOVERNADOR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "ESTRADA DO DO DENDÊ, 668 - LOTE 28 PAL 2040 QDR 145",
+        "bairro": "TAUÁ",
+        "cep": "21920000",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "CLÍNICO GERAL"
+    },
+    {
+      "codigo_prestador": "22233557000105",
+      "cnpj_cpf": "22233557000105",
+      "nome": "HOSPITAL ILHA DO GOVERNADOR",
+      "nome_fantasia": "HOSPITAL ILHA DO GOVERNADOR",
+      "razao_social": "HOSPITAL ILHA DO GOVERNADOR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "ESTRADA DO DO DENDÊ, 668 - LOTE 28 PAL 2040 QDR 145",
+        "bairro": "TAUÁ",
+        "cep": "21920000",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "PRONTO ATENDIMENTO",
+      "especialidade": "CIRURGIA GERAL"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "NASOFIBROLARINGOSCOPIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ANÁLISES CLÍNICAS"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ECODOPPLERCARDIOGRAMA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA PÉ E TORNOZELO"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "AUDIOMETRIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROLOGIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "DERMATOLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "M.A.P.A. - MONITORIZACAO AMBULATORIAL DA PRESSAO ARTERIAL"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "MAMOGRAFIA"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "PSICOLOGIA TEA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "ORTOPEDIA E TRAUMATOLOGIA PEDIÁTRICO"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA PEDIÁTRICA"
+    },
+    {
+      "codigo_prestador": "28628405000198",
+      "cnpj_cpf": "28628405000198",
+      "nome": "HOSPITAL CASA MENSSANA",
+      "nome_fantasia": "HOSPITAL CASA MENSSANA",
+      "razao_social": "HOSPITAL CASA MENSSANA HOSPITAL GERAL, ADMINISTRACAO E GESTAO HOSPITALAR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "RUA MARECHAL JOFRE, 30",
+        "bairro": "GRAJAÚ",
+        "cep": "20560185",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "INTERNAÇÃO",
+      "especialidade": "PSIQUIATRIA"
+    },
+    {
+      "codigo_prestador": "38825002001598",
+      "cnpj_cpf": "38825002001598",
+      "nome": "INTEGRA+ BANGU",
+      "nome_fantasia": "INTEGRA+ BANGU",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA FONSECA, 580 - SALA 401, 402, 403 E 404",
+        "bairro": "BANGU",
+        "cep": "21820005",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROPSICOLOGIA"
+    },
+    {
+      "codigo_prestador": "5947166000133",
+      "cnpj_cpf": "05947166000133",
+      "nome": "CEIGO - DR. BRUNO - MASTOLOGISTA",
+      "nome_fantasia": "CEIGO - DR. BRUNO - MASTOLOGISTA",
+      "razao_social": "CEIGO SERVIÇOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552133698600",
+      "endereco": {
+        "logradouro": "RUA AMÉRICO BRASILIENSE, 248 - PARTE",
+        "bairro": "MADUREIRA",
+        "cep": "21351060",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "MASTOLOGIA"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "POTENCIAL EVOCADO"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA MÃO E PUNHO"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "FONOAUDIOLOGIA TEA"
+    },
+    {
+      "codigo_prestador": "22233557000105",
+      "cnpj_cpf": "22233557000105",
+      "nome": "HOSPITAL ILHA DO GOVERNADOR",
+      "nome_fantasia": "HOSPITAL ILHA DO GOVERNADOR",
+      "razao_social": "HOSPITAL ILHA DO GOVERNADOR LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552132168000",
+      "endereco": {
+        "logradouro": "ESTRADA DO DO DENDÊ, 668 - LOTE 28 PAL 2040 QDR 145",
+        "bairro": "TAUÁ",
+        "cep": "21920000",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "INTERNAÇÃO",
+      "especialidade": "CIRURGIA GERAL"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CARDIOLOGIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "RESSONÂNCIA MAGNÉTICA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PEDIATRIA"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA QUADRIL"
+    },
+    {
+      "codigo_prestador": "38825002001083",
+      "cnpj_cpf": "38825002001083",
+      "nome": "CENTRO MÉDICO KLINI - TIJUCA",
+      "nome_fantasia": "CENTRO MÉDICO KLINI - TIJUCA",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA MAJOR ÁVILA, 260 - SALA 801",
+        "bairro": "TIJUCA",
+        "cep": "20540092",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "PEDIATRIA PUERICULTURA"
+    },
+    {
+      "codigo_prestador": "37998246000104",
+      "cnpj_cpf": "37998246000104",
+      "nome": "LACATIVA SERVIÇOS MEDICOS VARCULARIS",
+      "nome_fantasia": "LACATIVA SERVIÇOS MEDICOS VARCULARIS",
+      "razao_social": "LACATIVA SERVIÇOS MEDICOS VASCULARIS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521984581769",
+      "endereco": {
+        "logradouro": "AVENIDA PRINCESA ISABEL, 150 - SALA 704",
+        "bairro": "COPACABANA",
+        "cep": "22011010",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "CIRURGIA VASCULAR"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "IMPEDANCIOMETRIA"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "VIDEOLARINGOSCOPIA"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "VECTOELETRONISTAGMOGRAFIA"
+    },
+    {
+      "codigo_prestador": "60840055026602",
+      "cnpj_cpf": "60840055026602",
+      "nome": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "nome_fantasia": "LABS A MEDICINA DIAGNOSTICA PENHA 667",
+      "razao_social": "FLEURY S.A.",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552125383600",
+      "endereco": {
+        "logradouro": "AVENIDA BRAZ DE PINA, 667 - LOJA A",
+        "bairro": "PENHA CIRCULAR",
+        "cep": "21210673",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ELETROCARDIOGRAMA"
+    },
+    {
+      "codigo_prestador": "38825002001245",
+      "cnpj_cpf": "38825002001245",
+      "nome": "INTEGRA+ CAMPO GRANDE",
+      "nome_fantasia": "INTEGRA+ CAMPO GRANDE",
+      "razao_social": "KLINI SERVICOS MEDICOS LTDA",
+      "tipo_rede_prestador": "REDE PROPRIA",
+      "telefones": "+552130550790",
+      "endereco": {
+        "logradouro": "RUA IVO DO PRADO, 79 - SALAS 405 A 407",
+        "bairro": "CAMPO GRANDE",
+        "cep": "23080200",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA ESPECIAL",
+      "especialidade": "NUTRIÇÃO TEA"
+    },
+    {
+      "codigo_prestador": "42598516000120",
+      "cnpj_cpf": "42598516000120",
+      "nome": "CLÍNICA SAO MARCOS",
+      "nome_fantasia": "CLÍNICA SAO MARCOS",
+      "razao_social": "CLÍNICA SAO MARCOS LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552122656002",
+      "endereco": {
+        "logradouro": "RUA IPIRANGA, 97",
+        "bairro": "LARANJEIRAS",
+        "cep": "22231120",
+        "municipio": "RIO DE JANEIRO",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ENDOSCOPIA NASAL"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ECODOPPLERCARDIOGRAMA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "MAMOGRAFIA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA",
+      "especialidade": "FONOAUDIOLOGIA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA OBSTÉTRICA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "TERAPIA",
+      "especialidade": "PSICOLOGIA CLÍNICA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NUTRIÇÃO"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA TRANSVAGINAL"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "DOPPLER"
+    },
+    {
+      "codigo_prestador": "9508428000114",
+      "cnpj_cpf": "09508428000114",
+      "nome": "CLÍNICA NEUROCARE NEUROCIRURGIA ESPECIALIZADA LTDA",
+      "nome_fantasia": "CLÍNICA NEUROCARE NEUROCIRURGIA ESPECIALIZADA LTDA",
+      "razao_social": "CLÍNICA NEUROCARE NEUROCIRURGIA ESPECIALIZADA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+552126671948",
+      "endereco": {
+        "logradouro": "RUA GESSYR GONÇALVES FONTES, 139 - SALA 1003 SALA 1005",
+        "bairro": "CENTRO",
+        "cep": "25520570",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "CONSULTA",
+      "especialidade": "NEUROCIRURGIA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA DA MAMA"
+    },
+    {
+      "codigo_prestador": "49856715000130",
+      "cnpj_cpf": "49856715000130",
+      "nome": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "nome_fantasia": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA",
+      "razao_social": "MERITI CENTRO MEDICO E ULTRASSONOGRAFIA LTDA",
+      "tipo_rede_prestador": "REDE CREDENCIADA",
+      "telefones": "+5521983658777",
+      "endereco": {
+        "logradouro": "AVENIDA DAS NOSSA SENHORA DAS GRAÇAS, 258 - SALAS 101,102,103 E 104",
+        "bairro": "CENTRO",
+        "cep": "25515001",
+        "municipio": "SAO JOAO DE MERITI",
+        "uf": "RJ"
+      },
+      "tipo_servico": "EXAME",
+      "especialidade": "ULTRASSONOGRAFIA"
+    }
+  ]
+}

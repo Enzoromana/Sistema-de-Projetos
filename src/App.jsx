@@ -10,10 +10,11 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
+import GuiaMedicoModule from './modules/GuiaMedico/GuiaMedicoModule';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
-    ShieldAlert, Activity, Presentation
+    ShieldAlert, Activity, Presentation, BookOpen
 } from 'lucide-react';
 
 function App() {
@@ -176,6 +177,15 @@ function App() {
                                     Conversor Comercial
                                 </button>
                             )}
+                            {(profile?.role === 'admin' || profile?.access_guia_medico) && (
+                                <button
+                                    onClick={() => setActiveModule('guia-medico')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'guia-medico' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <BookOpen size={16} />
+                                    Guia Médico
+                                </button>
+                            )}
                         </div>
                     </div>
 
@@ -207,6 +217,7 @@ function App() {
                 {activeModule === 'audit' && <UserAudit />}
                 {activeModule === 'medical' && <MedicalControl />}
                 {activeModule === 'sheet-to-slide' && <SheetToSlideModule />}
+                {activeModule === 'guia-medico' && <GuiaMedicoModule onBack={() => setActiveModule('hub')} />}
             </main>
 
             {/* Profile Update Mandatory Modal */}

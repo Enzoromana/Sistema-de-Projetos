@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Calendar, Users, Settings, Bell, Search,
-    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation
+    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation, BookOpen
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -46,6 +46,14 @@ export default function HubHome({ setActiveModule, userProfile }) {
             icon: <Presentation size={32} />,
             color: 'bg-orange-500',
             permission: userProfile?.access_sheet_to_slide || userProfile?.role === 'admin'
+        },
+        {
+            id: 'guia-medico',
+            title: 'Guia Médico',
+            description: 'Geração de guias médicos em PDF e análise comparativa de rede credenciada.',
+            icon: <BookOpen size={32} />,
+            color: 'bg-teal-600',
+            permission: userProfile?.access_guia_medico || userProfile?.role === 'admin'
         },
         {
             id: 'settings',
