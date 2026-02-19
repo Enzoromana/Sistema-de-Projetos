@@ -4,10 +4,18 @@ import GuiaMedicoGerador from './GuiaMedicoGerador';
 import GuiaMedicoAnalise from './GuiaMedicoAnalise';
 import GuiaMedicoRede from './GuiaMedicoRede';
 
-export default function GuiaMedicoModule({ onBack }) {
-    const [activeView, setActiveView] = useState('gerador');
+export default function GuiaMedicoModule({ onBack, userProfile }) {
     const [produtos, setProdutos] = useState([]);
     const [loadingProdutos, setLoadingProdutos] = useState(true);
+
+    const isAdmin = userProfile?.role === 'admin';
+    const availableViews = [
+        { id: 'gerador', label: 'Gerador de Guia', icon: BookOpen, description: 'Gerar PDF do Guia Médico', allowed: isAdmin || userProfile?.access_guia_gerador },
+        { id: 'analise', label: 'Análise de Rede', icon: BarChart3, description: 'Comparativo de rede credenciada', allowed: isAdmin || userProfile?.access_guia_analise },
+        { id: 'rede', label: 'Rede Completa', icon: Network, description: 'Navegar prestadores da rede', allowed: isAdmin || userProfile?.access_guia_rede },
+    ].filter(v => v.allowed !== false); // Default to true if not explicitly false, but here we check for explicit true/admin
+
+    const [activeView, setActiveView] = useState(availableViews[0]?.id || 'gerador');
 
     // Load product list from static JSON
     useEffect(() => {
@@ -28,12 +36,6 @@ export default function GuiaMedicoModule({ onBack }) {
         load();
     }, []);
 
-    const views = [
-        { id: 'gerador', label: 'Gerador de Guia', icon: BookOpen, description: 'Gerar PDF do Guia Médico' },
-        { id: 'analise', label: 'Análise de Rede', icon: BarChart3, description: 'Comparativo de rede credenciada' },
-        { id: 'rede', label: 'Rede Completa', icon: Network, description: 'Navegar prestadores da rede' },
-    ];
-
     return (
         <div className="space-y-6">
             {/* Back + Title */}
@@ -51,7 +53,7 @@ export default function GuiaMedicoModule({ onBack }) {
 
             {/* Navigation Tabs */}
             <div className="flex gap-2 border-b border-gray-200 pb-0">
-                {views.map(v => {
+                {availableViews.map(v => {
                     const Icon = v.icon;
                     const isActive = activeView === v.id;
                     return (

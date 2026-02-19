@@ -217,7 +217,7 @@ function App() {
                 {activeModule === 'audit' && <UserAudit />}
                 {activeModule === 'medical' && <MedicalControl />}
                 {activeModule === 'sheet-to-slide' && <SheetToSlideModule />}
-                {activeModule === 'guia-medico' && <GuiaMedicoModule onBack={() => setActiveModule('hub')} />}
+                {activeModule === 'guia-medico' && <GuiaMedicoModule userProfile={profile} onBack={() => setActiveModule('hub')} />}
             </main>
 
             {/* Profile Update Mandatory Modal */}

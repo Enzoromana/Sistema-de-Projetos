@@ -90,10 +90,46 @@ export default function GuiaMedicoRede() {
         const grouped = {};
         filteredData.forEach(item => {
             const mun = getField(item, 'municipio', 'MUNICIPIO', 'cidade', 'CIDADE') || 'OUTROS';
-            if (!grouped[mun]) grouped[mun] = [];
-            grouped[mun].push(item);
+            const nome = getField(item, 'nome_fantasia', 'nome', 'prestador');
+
+            // Fix address rendering
+            let endereco = '';
+            if (item.endereco && typeof item.endereco === 'object') {
+                endereco = [
+                    item.endereco.logradouro || item.endereco.endereco,
+                    item.endereco.numero,
+                    item.endereco.bairro
+                ].filter(Boolean).join(', ');
+            } else {
+                endereco = getField(item, 'endereco', 'ENDERECO', 'logradouro');
+            }
+
+            const providerKey = `${nome}|${endereco}`;
+
+            if (!grouped[mun]) grouped[mun] = {};
+
+            if (!grouped[mun][providerKey]) {
+                grouped[mun][providerKey] = {
+                    ...item,
+                    fullEndereco: endereco, // Store the fixed address
+                    especialidades: new Set(),
+                    tipos: new Set()
+                };
+            }
+
+            const esp = getField(item, 'especialidade', 'ESPECIALIDADE');
+            if (esp) esp.split(';').forEach(e => grouped[mun][providerKey].especialidades.add(e.trim()));
+
+            const tipo = getField(item, 'tipo_servico', 'TIPO_SERVICO');
+            if (tipo) tipo.split(';').forEach(t => grouped[mun][providerKey].tipos.add(t.trim()));
         });
-        return grouped;
+
+        // Convert grouped objects back to arrays for rendering
+        const finalGrouped = {};
+        Object.keys(grouped).forEach(mun => {
+            finalGrouped[mun] = Object.values(grouped[mun]);
+        });
+        return finalGrouped;
     }, [filteredData]);
 
     const stats = useMemo(() => {
@@ -108,18 +144,19 @@ export default function GuiaMedicoRede() {
         return s;
     }, [currentProductData]);
 
-    const renderCard = (item, idx) => {
-        const nome = getField(item, 'nome_fantasia', 'nome', 'prestador');
-        const bairro = getField(item, 'bairro', 'BAIRRO');
-        const tipo = getField(item, 'tipo_servico', 'TIPO_SERVICO');
-        const endereco = getField(item, 'endereco', 'ENDERECO', 'logradouro');
-        const telefone = getField(item, 'telefones', 'telefone');
-        const esp = getField(item, 'especialidade', 'ESPECIALIDADE');
+    const renderCard = (provider, idx) => {
+        const nome = getField(provider, 'nome_fantasia', 'nome', 'prestador');
+        const bairro = getField(provider, 'bairro', 'BAIRRO');
+        const tipos = Array.from(provider.tipos);
+        const endereco = provider.fullEndereco;
+        const telefone = getField(provider, 'telefones', 'telefone');
+        const especialidades = Array.from(provider.especialidades);
 
         return (
             <div key={idx} style={{
                 border: '1px solid #E5E7EB', borderRadius: '8px', padding: '1rem',
-                transition: 'all 0.2s', cursor: 'default'
+                transition: 'all 0.2s', cursor: 'default',
+                display: 'flex', flexDirection: 'column', height: '100%'
             }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = productConfig.color; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -128,26 +165,29 @@ export default function GuiaMedicoRede() {
                     <h4 style={{ fontWeight: 700, color: '#111827', fontSize: '0.95rem' }}>{nome}</h4>
                     {bairro && <span style={{ fontSize: '0.75rem', background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#4B5563' }}>{bairro}</span>}
                 </div>
-                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                    {tipo.includes('INTERNAÇÃO') && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FEE2E2', color: '#991B1B' }}>Internação</span>}
-                    {tipo.includes('PRONTO ATENDIMENTO') && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FFEDD5', color: '#9A3412' }}>Pronto Socorro</span>}
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    {tipos.some(t => t.includes('INTERNAÇÃO')) && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FEE2E2', color: '#991B1B' }}>Internação</span>}
+                    {tipos.some(t => t.includes('PRONTO ATENDIMENTO')) && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FFEDD5', color: '#9A3412' }}>Pronto Socorro</span>}
                 </div>
-                <div style={{ margin: '0.5rem 0', fontSize: '0.875rem', color: '#6B7280' }}>
+
+                <div style={{ margin: '0.5rem 0', fontSize: '0.875rem', color: '#6B7280', flex: 1 }}>
                     <div>{endereco}</div>
-                    <div>{telefone}</div>
+                    {telefone && <div style={{ marginTop: '0.25rem' }}>{telefone}</div>}
                 </div>
-                {esp && (
-                    <>
+
+                {especialidades.length > 0 && (
+                    <div style={{ marginTop: '0.75rem' }}>
                         <div style={{ fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.25rem' }}>Especialidades</div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', fontSize: '0.75rem' }}>
-                            {esp.split(';').slice(0, 3).map((e, i) => (
-                                <span key={i} style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>{e.trim()}</span>
+                            {especialidades.slice(0, 5).map((e, i) => (
+                                <span key={i} style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>{e}</span>
                             ))}
-                            {esp.split(';').length > 3 && (
-                                <span style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>+{esp.split(';').length - 3}</span>
+                            {especialidades.length > 5 && (
+                                <span style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>+{especialidades.length - 5}</span>
                             )}
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         );
@@ -248,7 +288,7 @@ export default function GuiaMedicoRede() {
                     </select>
 
                     <div style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
-                        {filteredData.length} resultados
+                        {Object.values(groupedData).reduce((acc, curr) => acc + curr.length, 0)} resultados
                     </div>
                 </div>
             </div>
