@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import SearchableSelect from './components/SearchableSelect';
 
 const PRODUCT_MAP = {
     'k200': { name: 'Klini 200', color: '#3B82F6', dark: '#1D4ED8', file: 'K200' },
@@ -267,28 +268,38 @@ export default function GuiaMedicoRede() {
             </nav>
 
             {/* FILTERS */}
-            <div style={{ background: 'white', padding: '1rem 2rem', borderBottom: '1px solid #E5E7EB' }}>
+            <div style={{ background: 'white', padding: '1.5rem 2rem', borderBottom: '1px solid #E5E7EB' }}>
                 <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-                    <select
-                        style={{ padding: '0.5rem', border: '1px solid #E5E7EB', borderRadius: '6px', minWidth: '200px' }}
-                        value={filters.municipio}
-                        onChange={(e) => setFilters(curr => ({ ...curr, municipio: e.target.value }))}
-                    >
-                        <option value="">Todos Municípios</option>
-                        {municipios.map(m => <option key={m} value={m}>{m}</option>)}
-                    </select>
 
-                    <select
-                        style={{ padding: '0.5rem', border: '1px solid #E5E7EB', borderRadius: '6px', minWidth: '200px' }}
-                        value={filters.especialidade}
-                        onChange={(e) => setFilters(curr => ({ ...curr, especialidade: e.target.value }))}
-                    >
-                        <option value="">Todas Especialidades</option>
-                        {especialidades.map(e => <option key={e} value={e}>{e}</option>)}
-                    </select>
+                    <div style={{ minWidth: '240px' }}>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Município</label>
+                        <SearchableSelect
+                            options={municipios}
+                            value={filters.municipio}
+                            onChange={(val) => setFilters(curr => ({ ...curr, municipio: val }))}
+                            placeholder="Todos Municípios"
+                            searchPlaceholder="Filtrar cidade..."
+                        />
+                    </div>
 
-                    <div style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
-                        {Object.values(groupedData).reduce((acc, curr) => acc + curr.length, 0)} resultados
+                    <div style={{ minWidth: '320px' }}>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Especialidade / Serviço</label>
+                        <SearchableSelect
+                            options={especialidades}
+                            value={filters.especialidade}
+                            onChange={(val) => setFilters(curr => ({ ...curr, especialidade: val }))}
+                            placeholder="Todas Especialidades"
+                            searchPlaceholder="Buscar especialidade..."
+                        />
+                    </div>
+
+                    <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                        <div style={{ fontSize: '1.25rem', fontWeight: 900, color: productConfig.color }}>
+                            {Object.values(groupedData).reduce((acc, curr) => acc + curr.length, 0)}
+                        </div>
+                        <div style={{ fontSize: '10px', fontBlack: 'bold', textTransform: 'uppercase', color: '#6B7280', letterSpacing: '0.05em' }}>
+                            RESULTADOS ENCONTRADOS
+                        </div>
                     </div>
                 </div>
             </div>

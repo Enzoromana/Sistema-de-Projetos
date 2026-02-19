@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
+import SearchableSelect from './components/SearchableSelect';
 
 const GUIA_API_BASE = 'https://guia-medico.klinisaude.com.br';
 
@@ -278,22 +279,26 @@ export default function GuiaMedicoAnalise({ produtos }) {
 
                         {/* Formulário */}
                         <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-                            <div className="grid md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">1. Selecione o Produto Klini</label>
-                                    <select value={produtoSelecionado} onChange={(e) => setProdutoSelecionado(e.target.value)}
-                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#199A8E] focus:border-transparent">
-                                        <option value="">Selecione um produto...</option>
-                                        {produtos.map((produto, idx) => (
-                                            <option key={idx} value={produto.nome}>{produto.nome} ({produto.registros?.toLocaleString()} registros)</option>
-                                        ))}
-                                    </select>
+                            <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">1. Selecione o Produto Klini</label>
+                                    <SearchableSelect
+                                        options={produtos.map(p => p.nome)}
+                                        value={produtoSelecionado}
+                                        onChange={setProdutoSelecionado}
+                                        placeholder="Selecione um produto..."
+                                        searchPlaceholder="Ex: Klini 200..."
+                                    />
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">2. Nome do Concorrente (opcional)</label>
-                                    <input type="text" value={nomeConcorrente} onChange={(e) => setNomeConcorrente(e.target.value)}
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">2. Nome do Concorrente (opcional)</label>
+                                    <input
+                                        type="text"
+                                        value={nomeConcorrente}
+                                        onChange={(e) => setNomeConcorrente(e.target.value)}
                                         placeholder="Ex: Amil, Bradesco, Unimed..."
-                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#199A8E] focus:border-transparent" />
+                                        className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-300 shadow-sm"
+                                    />
                                 </div>
                             </div>
 
@@ -468,14 +473,15 @@ export default function GuiaMedicoAnalise({ produtos }) {
                                 <h2 className="text-xl font-bold text-[#199A8E]">Comparativo por Município</h2>
                             </div>
 
-                            <div className="mb-4">
-                                <select value={municipioSelecionado} onChange={(e) => setMunicipioSelecionado(e.target.value)}
-                                    className="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#199A8E]">
-                                    <option value="">Selecione um município para detalhar...</option>
-                                    {estatisticasMunicipio.map((m, idx) => (
-                                        <option key={idx} value={m.municipio}>{m.municipio} (K: {m.kliniTotal} | C: {m.concTotal})</option>
-                                    ))}
-                                </select>
+                            <div className="mb-6 max-w-md">
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Detalhar Município Específico</label>
+                                <SearchableSelect
+                                    options={estatisticasMunicipio.map(m => m.municipio)}
+                                    value={municipioSelecionado}
+                                    onChange={setMunicipioSelecionado}
+                                    placeholder="Todos os municípios..."
+                                    searchPlaceholder="Buscar cidade..."
+                                />
                             </div>
 
                             {!municipioSelecionado ? (
