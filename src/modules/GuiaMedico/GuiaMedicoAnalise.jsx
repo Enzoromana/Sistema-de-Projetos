@@ -38,11 +38,17 @@ export default function GuiaMedicoAnalise({ produtos }) {
             if (!response.ok) throw new Error(`Erro ao carregar produto: ${response.status}`);
             const data = await response.json();
             if (data.dados && Array.isArray(data.dados)) {
-                const dadosProcessados = data.dados.map(item => ({
-                    ...item,
-                    categoria: item.categoria || item.tipo_servico || classificarTipo(item.especialidade),
-                    nome: item.nome || item.nome_fantasia || ''
-                }));
+                const dadosProcessados = data.dados.map(item => {
+                    const mun = item.municipio || (item.endereco && typeof item.endereco === 'object' ? item.endereco.municipio : '');
+                    const esp = item.especialidade || (item.endereco && typeof item.endereco === 'object' ? item.endereco.especialidade : '');
+                    return {
+                        ...item,
+                        municipio: mun,
+                        especialidade: esp,
+                        categoria: item.categoria || item.tipo_servico || classificarTipo(esp),
+                        nome: item.nome || item.nome_fantasia || ''
+                    };
+                });
                 setDadosKlini(dadosProcessados);
             } else {
                 setDadosKlini([]);
@@ -267,14 +273,19 @@ export default function GuiaMedicoAnalise({ produtos }) {
                 {!mostrarResultados ? (
                     <>
                         {/* Título */}
-                        <div className="mb-8">
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                    <span className="text-purple-600">📊</span>
+                        <div className="mb-10 p-8 bg-white rounded-[32px] shadow-sm border border-slate-100 border-b-4 border-b-purple-600 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-full -mr-32 -mt-32 opacity-50"></div>
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="w-12 h-12 bg-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-200">
+                                        <span className="text-white text-xl">📊</span>
+                                    </div>
+                                    <h1 className="text-3xl font-black text-slate-800 tracking-tight">Análise Comparativa de Rede</h1>
                                 </div>
-                                <h1 className="text-2xl font-bold text-[#199A8E]">Análise Comparativa de Rede Credenciada</h1>
+                                <p className="text-slate-500 max-w-2xl font-medium leading-relaxed">
+                                    Compare a cobertura da Klini Saúde com o mercado. Identifique gaps, diferenciais competitivos e otimize sua estratégia comercial.
+                                </p>
                             </div>
-                            <p className="text-gray-600">Compare a rede credenciada de um produto Klini com a rede de um concorrente.</p>
                         </div>
 
                         {/* Formulário */}
