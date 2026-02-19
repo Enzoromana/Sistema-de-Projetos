@@ -240,22 +240,22 @@ export default function GuiaMedicoRede() {
             </header>
 
             {/* PRODUCT SELECTOR */}
-            <div style={{ background: '#0F172A', padding: '0.75rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-4">Plano:</span>
+            <div style={{ background: '#F8FAFC', padding: '1rem 2rem', borderBottom: '1px solid #E2E8F0' }}>
+                <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mr-2">Selecione o Plano:</span>
                     {Object.keys(PRODUCT_MAP).map(key => (
                         <button
                             key={key}
                             onClick={() => setActiveProduct(key)}
                             style={{
                                 background: activeProduct === key ? 'white' : 'transparent',
-                                border: activeProduct === key ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                                color: activeProduct === key ? '#0F172A' : '#94A3B8',
-                                fontWeight: activeProduct === key ? '800' : '600',
-                                padding: '0.5rem 1.25rem', borderRadius: '10px', cursor: 'pointer', transition: 'all 0.3s',
+                                border: activeProduct === key ? `2px solid ${PRODUCT_MAP[key].color}` : '2px solid transparent',
+                                color: activeProduct === key ? (activeProduct === key ? PRODUCT_MAP[key].color : '#64748B') : '#64748B',
+                                fontWeight: '800',
+                                padding: '0.6rem 1.5rem', borderRadius: '14px', cursor: 'pointer', transition: 'all 0.3s',
                                 fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em'
                             }}
-                            className={activeProduct === key ? 'shadow-[0_0_20px_rgba(255,255,255,0.15)] scale-105' : 'hover:bg-white/5 hover:text-white'}
+                            className={activeProduct === key ? 'shadow-md scale-105' : 'hover:bg-slate-200/50 hover:text-slate-800'}
                         >
                             {PRODUCT_MAP[key].name}
                         </button>
@@ -334,8 +334,8 @@ export default function GuiaMedicoRede() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
                         <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <div className="flex justify-between items-start mb-4">
-                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#6D28D9', lineHeight: 1 }}>{stats.hospitais}</div>
-                                <div className="p-2 bg-purple-50 rounded-xl text-purple-600">
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#14B8A6', lineHeight: 1 }}>{stats.hospitais}</div>
+                                <div className="p-2 bg-teal-50 rounded-xl text-teal-600">
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                                 </div>
                             </div>
