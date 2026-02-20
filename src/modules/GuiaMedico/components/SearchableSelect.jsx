@@ -87,7 +87,7 @@ export default function SearchableSelect({
                                             setIsOpen(false);
                                             setSearchTerm('');
                                         }}
-                                        className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${value === opt ? 'bg-purple-50 text-purple-600 border-l-4 border-purple-600 pl-3' : 'text-slate-700 hover:bg-purple-50 hover:text-purple-600'}`}
+                                        className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${value === opt ? 'bg-teal-50 text-teal-600 border-l-4 border-teal-600 pl-3' : 'text-slate-700 hover:bg-teal-50 hover:text-teal-600'}`}
                                     >
                                         {opt}
                                     </button>

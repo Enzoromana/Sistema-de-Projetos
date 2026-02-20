@@ -221,19 +221,22 @@ export default function GuiaMedicoRede() {
         <div style={{ fontFamily: "'Inter', sans-serif", background: '#F5F7FA', color: '#111827' }}>
             {/* HEADER */}
             <header className="relative overflow-hidden" style={{
-                background: 'linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%)',
-                color: 'white', padding: '1.5rem 2rem',
+                background: 'linear-gradient(135deg, #199A8E 0%, #148578 100%)',
+                color: 'white', padding: '1.75rem 2rem',
                 boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', borderRadius: '24px 24px 0 0'
             }}>
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-400/10 rounded-full -ml-10 -mb-10 blur-2xl"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400/10 rounded-full -ml-10 -mb-10 blur-2xl"></div>
 
                 <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-                    <div className="flex items-center gap-4">
-                        <div style={{ fontSize: '1.75rem', fontWeight: 900, background: 'white', color: '#6D28D9', padding: '0.5rem 1.25rem', borderRadius: '14px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Klini</div>
+                    <div className="flex items-center gap-5">
+                        <div style={{ fontSize: '1.75rem', fontWeight: 900, background: 'white', color: '#199A8E', padding: '0.5rem 1.25rem', borderRadius: '16px', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>Klini</div>
                         <div>
-                            <div style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>Guia Médico Unificado</div>
-                            <div className="text-purple-200 text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5">Rede Credenciada • Atualizado</div>
+                            <div style={{ fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Guia Médico Unificado</div>
+                            <div className="text-teal-50 text-[10px] font-black uppercase tracking-[0.25em] mt-0.5 flex items-center gap-2">
+                                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                Rede Credenciada • Base Atualizada
+                            </div>
                         </div>
                     </div>
                 </div>
