@@ -114,7 +114,7 @@ function App() {
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
             {/* Global Navbar */}
             <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-200 px-6 py-4 sticky top-0 z-50">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                <div className="max-w-[75vw] mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-12">
                         <div
                             className="flex items-center gap-3 cursor-pointer group"
@@ -210,7 +210,7 @@ function App() {
                 </div>
             </nav>
 
-            <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-10">
+            <main className="flex-1 max-w-[75vw] w-full mx-auto px-6 py-10">
                 {activeModule === 'hub' && <HubHome setActiveModule={setActiveModule} userProfile={profile} />}
                 {activeModule === 'projects' && <ProjectControl />}
                 {activeModule === 'rooms' && <RoomControl setView={setActiveModule} />}
@@ -229,7 +229,7 @@ function App() {
             )}
 
             <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="max-w-[75vw] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-3 opacity-50">
                         <div className="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-white font-black text-xs">K</div>
                         <span className="font-black text-slate-800 tracking-tighter">HUB MANAGER KLINI</span>
