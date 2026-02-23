@@ -25,9 +25,10 @@ const getField = (item, ...keys) => {
 export default function GuiaMedicoRede() {
     const [activeProduct, setActiveProduct] = useState('k400');
     const [activeTab, setActiveTab] = useState('visao-geral');
-    const [filters, setFilters] = useState({ municipio: '', especialidade: '' });
+    const [filters, setFilters] = useState({ municipio: '', especialidade: '', rede: '' });
     const [productData, setProductData] = useState({ k200: [], k400: [], k600: [] });
     const [loadingData, setLoadingData] = useState(true);
+    const [expandedProviders, setExpandedProviders] = useState(new Set());
 
     // Load data via fetch (instead of getStaticProps)
     useEffect(() => {
@@ -54,8 +55,9 @@ export default function GuiaMedicoRede() {
     }, []);
 
     useEffect(() => {
-        setFilters({ municipio: '', especialidade: '' });
+        setFilters({ municipio: '', especialidade: '', rede: '' });
         setActiveTab('visao-geral');
+        setExpandedProviders(new Set());
     }, [activeProduct]);
 
     const currentProductData = useMemo(() => productData[activeProduct] || [], [productData, activeProduct]);
@@ -84,6 +86,15 @@ export default function GuiaMedicoRede() {
             const mun = getField(item, 'municipio', 'MUNICIPIO', 'cidade', 'CIDADE');
             const esp = getField(item, 'especialidade', 'ESPECIALIDADE');
             const tipo = getField(item, 'tipo_servico', 'TIPO_SERVICO');
+            const nome = getField(item, 'nome_fantasia', 'nome', 'prestador').toUpperCase();
+
+            // Network filter logic
+            if (filters.rede === 'interna') {
+                const isKlini = nome.includes('CENTRO MEDICO KLINI') || nome.includes('CENTRO MÉDICO KLINI');
+                const isRedeCasa = nome.includes('HOSPITAL CASA');
+                if (!isKlini && !isRedeCasa) return false;
+            }
+
             if (filters.municipio && mun !== filters.municipio) return false;
             if (filters.especialidade && !esp.includes(filters.especialidade)) return false;
             if (activeTab === 'visao-geral') return true;
@@ -161,39 +172,73 @@ export default function GuiaMedicoRede() {
         const telefone = getField(provider, 'telefones', 'telefone');
         const especialidades = Array.from(provider.especialidades);
 
+        const providerKey = `${nome}|${endereco}`;
+        const isExpanded = expandedProviders.has(providerKey);
+
+        const toggleExpand = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const newExpanded = new Set(expandedProviders);
+            if (isExpanded) newExpanded.delete(providerKey);
+            else newExpanded.add(providerKey);
+            setExpandedProviders(newExpanded);
+        };
+
         return (
             <div key={idx} style={{
-                border: '1px solid #E5E7EB', borderRadius: '8px', padding: '1rem',
-                transition: 'all 0.2s', cursor: 'default',
-                display: 'flex', flexDirection: 'column', height: '100%'
+                border: '1px solid #E5E7EB', borderRadius: '12px', padding: '1.25rem',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', cursor: 'default',
+                display: 'flex', flexDirection: 'column', height: '100%',
+                background: 'white'
             }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = productConfig.color; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.boxShadow = 'none'; }}
+                className="hover:shadow-xl transition-shadow"
+                onMouseEnter={e => { e.currentTarget.style.borderColor = productConfig.color; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; }}
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.25rem' }}>
-                    <h4 style={{ fontWeight: 700, color: '#111827', fontSize: '0.95rem' }}>{nome}</h4>
-                    {bairro && <span style={{ fontSize: '0.75rem', background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#4B5563' }}>{bairro}</span>}
+                    <h4 style={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem', lineHeight: '1.4' }}>{nome}</h4>
+                    {bairro && <span style={{ fontSize: '0.7rem', background: '#F1F5F9', padding: '0.2rem 0.5rem', borderRadius: '6px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>{bairro}</span>}
                 </div>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                    {tipos.some(t => t.includes('INTERNAÇÃO')) && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FEE2E2', color: '#991B1B' }}>Internação</span>}
-                    {tipos.some(t => t.includes('PRONTO ATENDIMENTO')) && <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 'bold', background: '#FFEDD5', color: '#9A3412' }}>Pronto Socorro</span>}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
+                    {tipos.some(t => t.includes('INTERNAÇÃO')) && <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 800, background: '#FEF2F2', color: '#DC2626', textTransform: 'uppercase' }}>Internação</span>}
+                    {tipos.some(t => t.includes('PRONTO ATENDIMENTO')) && <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 800, background: '#FFF7ED', color: '#EA580C', textTransform: 'uppercase' }}>Pronto Socorro</span>}
                 </div>
 
-                <div style={{ margin: '0.5rem 0', fontSize: '0.875rem', color: '#6B7280', flex: 1 }}>
-                    <div>{endereco}</div>
-                    {telefone && <div style={{ marginTop: '0.25rem' }}>{telefone}</div>}
+                <div style={{ margin: '0.5rem 0', fontSize: '0.875rem', color: '#64748B', flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                        <span style={{ opacity: 0.5 }}>📍</span>
+                        <span>{endereco}</span>
+                    </div>
+                    {telefone && (
+                        <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ opacity: 0.5 }}>📞</span>
+                            <span style={{ fontWeight: 600 }}>{telefone}</span>
+                        </div>
+                    )}
                 </div>
 
                 {especialidades.length > 0 && (
-                    <div style={{ marginTop: '0.75rem' }}>
-                        <div style={{ fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.25rem' }}>Especialidades</div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', fontSize: '0.75rem' }}>
-                            {especialidades.slice(0, 5).map((e, i) => (
-                                <span key={i} style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>{e}</span>
+                    <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #F1F5F9' }}>
+                        <div style={{ fontSize: '0.7rem', fontWeight: '800', color: '#94A3B8', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Especialidades</div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                            {(isExpanded ? especialidades : especialidades.slice(0, 5)).map((e, i) => (
+                                <span key={i} style={{ background: '#F8FAFC', padding: '0.2rem 0.5rem', borderRadius: '6px', color: '#475569', fontSize: '0.75rem', border: '1px solid #F1F5F9' }}>{e}</span>
                             ))}
                             {especialidades.length > 5 && (
-                                <span style={{ background: '#F3F4F6', padding: '0.1rem 0.4rem', borderRadius: '4px', color: '#374151' }}>+{especialidades.length - 5}</span>
+                                <button
+                                    onClick={toggleExpand}
+                                    style={{
+                                        background: isExpanded ? productConfig.color : '#F1F5F9',
+                                        color: isExpanded ? 'white' : '#64748B',
+                                        border: 'none', padding: '0.2rem 0.6rem', borderRadius: '6px',
+                                        fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    className="hover:shadow-md active:scale-95"
+                                >
+                                    {isExpanded ? 'Ver menos' : `+${especialidades.length - 5}`}
+                                </button>
                             )}
                         </div>
                     </div>
@@ -306,6 +351,24 @@ export default function GuiaMedicoRede() {
                             placeholder="Todos Municípios"
                             searchPlaceholder="Filtrar cidade..."
                         />
+                    </div>
+
+                    <div style={{ minWidth: '180px' }}>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Rede</label>
+                        <select
+                            value={filters.rede}
+                            onChange={(e) => setFilters(curr => ({ ...curr, rede: e.target.value }))}
+                            style={{
+                                width: '100%', padding: '0.75rem 1rem', borderRadius: '12px',
+                                border: '1px solid #E2E8F0', background: '#F8FAFC',
+                                fontWeight: 700, fontSize: '0.85rem', color: '#1E293B',
+                                outline: 'none', cursor: 'pointer'
+                            }}
+                            className="focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                        >
+                            <option value="">Todos</option>
+                            <option value="interna">Rede Interna</option>
+                        </select>
                     </div>
 
                     <div style={{ minWidth: '320px' }}>
