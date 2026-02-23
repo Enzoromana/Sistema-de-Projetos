@@ -89,7 +89,7 @@ export default function GuiaMedicoRede() {
             const nome = getField(item, 'nome_fantasia', 'nome', 'prestador').toUpperCase();
 
             // Network filter logic
-            if (filters.rede === 'interna') {
+            if (filters.rede === 'Rede Interna') {
                 const isKlini = nome.includes('CENTRO MEDICO KLINI') || nome.includes('CENTRO MÉDICO KLINI');
                 const isRedeCasa = nome.includes('HOSPITAL CASA');
                 if (!isKlini && !isRedeCasa) return false;
@@ -353,22 +353,15 @@ export default function GuiaMedicoRede() {
                         />
                     </div>
 
-                    <div style={{ minWidth: '180px' }}>
+                    <div style={{ minWidth: '220px' }}>
                         <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Rede</label>
-                        <select
+                        <SearchableSelect
+                            options={['Rede Interna']}
                             value={filters.rede}
-                            onChange={(e) => setFilters(curr => ({ ...curr, rede: e.target.value }))}
-                            style={{
-                                width: '100%', padding: '0.75rem 1rem', borderRadius: '12px',
-                                border: '1px solid #E2E8F0', background: '#F8FAFC',
-                                fontWeight: 700, fontSize: '0.85rem', color: '#1E293B',
-                                outline: 'none', cursor: 'pointer'
-                            }}
-                            className="focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
-                        >
-                            <option value="">Todos</option>
-                            <option value="interna">Rede Interna</option>
-                        </select>
+                            onChange={(val) => setFilters(curr => ({ ...curr, rede: val }))}
+                            placeholder="Todas as Redes"
+                            searchPlaceholder="Filtrar rede..."
+                        />
                     </div>
 
                     <div style={{ minWidth: '320px' }}>
