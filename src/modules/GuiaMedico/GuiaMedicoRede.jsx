@@ -92,7 +92,10 @@ export default function GuiaMedicoRede() {
             if (filters.rede === 'Rede Interna') {
                 const isKlini = nome.includes('CENTRO MEDICO KLINI') || nome.includes('CENTRO MÉDICO KLINI');
                 const isRedeCasa = nome.includes('HOSPITAL CASA');
-                if (!isKlini && !isRedeCasa) return false;
+                const isRio = nome.includes('HOSPITAL RIO LARANJEIRAS') || nome.includes('HOSPITAL RIO BOTAFOGO');
+                const isOftalmo = nome.includes('OFTALMOCASA');
+
+                if (!isKlini && !isRedeCasa && !isRio && !isOftalmo) return false;
             }
 
             if (filters.municipio && mun !== filters.municipio) return false;
