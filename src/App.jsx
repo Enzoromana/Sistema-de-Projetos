@@ -11,11 +11,10 @@ import Signup from './components/Signup';
 import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
 import GuiaMedicoModule from './modules/GuiaMedico/GuiaMedicoModule';
-import {
-    LayoutDashboard, Calendar, LayoutGrid,
-    Bell, ShieldCheck, LogOut, Loader2,
-    ShieldAlert, Activity, Presentation, BookOpen
+ShieldAlert, Activity, Presentation, BookOpen,
+    ChevronLeft, ChevronRight
 } from 'lucide-react';
+import { useRef } from 'react';
 
 function App() {
     // Manual Routing for External Forms
@@ -35,6 +34,19 @@ function App() {
         const params = new URLSearchParams(window.location.search);
         return params.get('mode') === 'signup' ? 'signup' : 'login';
     }); // 'login' or 'signup'
+
+    const scrollRef = useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const scrollAmount = 200; // Adjust as needed
+            if (direction === 'left') {
+                scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
 
     useEffect(() => {
         // Initial session check
@@ -124,68 +136,87 @@ function App() {
                             <span className="font-black text-slate-800 tracking-tighter text-xl">HUB MANAGER</span>
                         </div>
 
-                        <div className="hidden md:flex items-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200 overflow-x-auto flex-nowrap max-w-[45vw] scrollbar-hide">
+                        <div className="relative flex items-center group/nav">
                             <button
-                                onClick={() => setActiveModule('hub')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'hub' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                onClick={() => scroll('left')}
+                                className="absolute -left-4 z-10 p-1.5 bg-white border border-slate-200 rounded-full shadow-md text-slate-400 hover:text-indigo-600 opacity-0 group-hover/nav:opacity-100 transition-opacity hidden md:flex"
                             >
-                                <LayoutGrid size={16} />
-                                Início
+                                <ChevronLeft size={16} />
                             </button>
-                            {profile?.access_projects && (
+
+                            <div
+                                ref={scrollRef}
+                                className="hidden md:flex items-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200 overflow-x-auto flex-nowrap max-w-[45vw] scrollbar-hide scroll-smooth"
+                            >
                                 <button
-                                    onClick={() => setActiveModule('projects')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'projects' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    onClick={() => setActiveModule('hub')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'hub' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
                                 >
-                                    <LayoutDashboard size={16} />
-                                    Projetos
+                                    <LayoutGrid size={16} />
+                                    Início
                                 </button>
-                            )}
-                            {profile?.access_rooms && (
-                                <button
-                                    onClick={() => setActiveModule('rooms')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'rooms' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
-                                >
-                                    <Calendar size={16} />
-                                    Sala Reunião
-                                </button>
-                            )}
-                            {(profile?.access_audit || profile?.role === 'admin') && (
-                                <button
-                                    onClick={() => setActiveModule('audit')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'audit' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
-                                >
-                                    <ShieldCheck size={16} />
-                                    Auditoria
-                                </button>
-                            )}
-                            {(profile?.access_medical || profile?.role === 'admin') && (
-                                <button
-                                    onClick={() => setActiveModule('medical')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'medical' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
-                                >
-                                    <Activity size={16} />
-                                    Junta Médica
-                                </button>
-                            )}
-                            {(profile?.role === 'admin' || profile?.access_sheet_to_slide) && (
-                                <button
-                                    onClick={() => setActiveModule('sheet-to-slide')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'sheet-to-slide' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
-                                >
-                                    <Presentation size={16} />
-                                    Conversor Comercial
-                                </button>
-                            )}
-                            {(profile?.role === 'admin' || profile?.access_guia_medico) && (
-                                <button
-                                    onClick={() => setActiveModule('guia-medico')}
-                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'guia-medico' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
-                                >
-                                    <BookOpen size={16} />
-                                    Guia Médico
-                                </button>
-                            )}
+                                {profile?.access_projects && (
+                                    <button
+                                        onClick={() => setActiveModule('projects')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'projects' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <LayoutDashboard size={16} />
+                                        Projetos
+                                    </button>
+                                )}
+                                {profile?.access_rooms && (
+                                    <button
+                                        onClick={() => setActiveModule('rooms')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'rooms' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <Calendar size={16} />
+                                        Sala Reunião
+                                    </button>
+                                )}
+                                {(profile?.access_audit || profile?.role === 'admin') && (
+                                    <button
+                                        onClick={() => setActiveModule('audit')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'audit' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <ShieldCheck size={16} />
+                                        Auditoria
+                                    </button>
+                                )}
+                                {(profile?.access_medical || profile?.role === 'admin') && (
+                                    <button
+                                        onClick={() => setActiveModule('medical')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'medical' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <Activity size={16} />
+                                        Junta Médica
+                                    </button>
+                                )}
+                                {(profile?.role === 'admin' || profile?.access_sheet_to_slide) && (
+                                    <button
+                                        onClick={() => setActiveModule('sheet-to-slide')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'sheet-to-slide' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <Presentation size={16} />
+                                        Conversor Comercial
+                                    </button>
+                                )}
+                                {(profile?.role === 'admin' || profile?.access_guia_medico) && (
+                                    <button
+                                        onClick={() => setActiveModule('guia-medico')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'guia-medico' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <BookOpen size={16} />
+                                        Guia Médico
+                                    </button>
+                                )}
+                            </div>
+
+                            <button
+                                onClick={() => scroll('right')}
+                                className="absolute -right-4 z-10 p-1.5 bg-white border border-slate-200 rounded-full shadow-md text-slate-400 hover:text-indigo-600 opacity-0 group-hover/nav:opacity-100 transition-opacity hidden md:flex"
+                            >
+                                <ChevronRight size={16} />
+                            </button>
                         </div>
                     </div>
 
