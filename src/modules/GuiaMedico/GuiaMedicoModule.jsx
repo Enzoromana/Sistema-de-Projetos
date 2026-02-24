@@ -51,8 +51,8 @@ export default function GuiaMedicoModule({ onBack, userProfile }) {
                 </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <div className="flex gap-2 border-b border-gray-200 pb-0">
+            {/* Navigation Tabs - Modern Segmented Control Style */}
+            <div className="flex p-1.5 bg-gray-100/80 backdrop-blur-sm rounded-2xl w-fit border border-gray-200/50 shadow-inner">
                 {availableViews.map(v => {
                     const Icon = v.icon;
                     const isActive = activeView === v.id;
@@ -60,13 +60,13 @@ export default function GuiaMedicoModule({ onBack, userProfile }) {
                         <button
                             key={v.id}
                             onClick={() => setActiveView(v.id)}
-                            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all
+                            className={`flex items-center gap-2.5 px-6 py-2.5 text-sm font-bold rounded-xl transition-all duration-300
                                 ${isActive
-                                    ? 'border-[#199A8E] text-[#199A8E]'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    ? 'bg-white text-[#199A8E] shadow-[0_4px_12px_rgba(0,0,0,0.08)] ring-1 ring-black/5'
+                                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-200/60'
                                 }`}
                         >
-                            <Icon className="w-4 h-4" />
+                            <Icon className={`w-4 h-4 transition-transform duration-300 ${isActive ? 'scale-110' : ''}`} />
                             {v.label}
                         </button>
                     );
