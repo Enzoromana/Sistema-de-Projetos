@@ -11,7 +11,10 @@ import Signup from './components/Signup';
 import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
 import GuiaMedicoModule from './modules/GuiaMedico/GuiaMedicoModule';
-ShieldAlert, Activity, Presentation, BookOpen,
+import {
+    LayoutDashboard, Calendar, LayoutGrid,
+    Bell, ShieldCheck, LogOut, Loader2,
+    ShieldAlert, Activity, Presentation, BookOpen,
     ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { useRef } from 'react';
