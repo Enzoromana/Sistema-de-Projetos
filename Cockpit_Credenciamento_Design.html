@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto: Cockpit de Credenciamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #199A8E;
+            --primary-dark: #148578;
+            --secondary: #F4793B;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --bg-light: #F8FAFC;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .content-box {
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E2E8F0;
+        }
+
+        .header {
+            border-bottom: 4px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            border-left: 5px solid var(--secondary);
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-top: 30px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: #475569;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .mermaid {
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            margin: 30px 0;
+        }
+
+        .phase-box {
+            background: #F1F5F9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .phase-title {
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(25, 154, 142, 0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="btn-print no-print" onclick="window.print()">
+        <span>🖨️</span> Salvar como PDF / Imprimir
+    </button>
+
+    <div class="container content-box">
+        <div class="header">
+            <h1>Projeto: Cockpit de Credenciamento 🚀</h1>
+            <p>Este projeto visa centralizar a gestão da rede credenciada, integrando dados do Guia Médico com
+                inteligência de substituição de rede suspensa e auditoria de movimentações.</p>
+        </div>
+
+        <h2>Visão Geral do Sistema</h2>
+        <p>O Cockpit será dividido em três pilares principais:</p>
+
+        <div class="mermaid">
+            graph TD
+            A[Cockpit de Credenciamento] --> B[Dashboard de Saúde da Rede]
+            A --> C[Portal de Rede Suspensa & Interligador]
+            A --> D[Portal de Auditoria & Movimentações]
+
+            B --> B1[KPIs: Ativos vs Suspensos]
+            B --> B2[Alertas de Cobertura por Região]
+
+            C --> C1[Visualização de Médicos/Hospitais Suspensos]
+            C --> C2[Motor de Proximidade: Sugestão de Substitutos]
+
+            D --> D1[Delta Tracking: Identificação de Novos/Excluídos]
+            D --> D2[Justificativa de Status: Motivo + Financeiro]
+        </div>
+
+        <h2>1. Dashboard de Saúde da Rede</h2>
+        <p>Visualização analítica da rede atual em tempo real.</p>
+        <ul>
+            <li><strong>Gráficos:</strong> Proporção Ativa x Suspensa por Especialidade.</li>
+            <li><strong>Mapas:</strong> Heatmap de vazios assistenciais gerados por suspensões.</li>
+            <li><strong>Integração:</strong> Consome dados consolidados do sistema Guia Médico.</li>
+        </ul>
+
+        <h2>2. Portal de Rede Suspensa (O "Interligador")</h2>
+        <p>Evolução integrada para gestão de contingência.</p>
+        <ul>
+            <li><strong>Funcionalidade:</strong> Para cada prestador suspenso, o sistema sugere o prestador
+                <strong>ativo</strong> mais próximo.</li>
+            <li><strong>Critérios de Match:</strong> Mesma Especialidade, Proximidade Geográfica e Compatibilidade de
+                Planos.</li>
+            <li><strong>Ação:</strong> Link direto para encaminhamento imediato.</li>
+        </ul>
+
+        <h2>3. Portal de Auditoria do Credenciamento</h2>
+        <p>Sistema de controle de qualidade para atualizações de base.</p>
+        <ul>
+            <li><strong>Detecção de Mudanças:</strong> Identificação automática de novos prestadores ou
+                descredenciamentos.</li>
+            <li><strong>Justificativas Obrigatórias:</strong> Registro de motivos e valores de débitos pendentes em
+                suspensões.</li>
+            <li><strong>Status de Pendência:</strong> Publicação da base condicionada à aprovação da auditoria.</li>
+        </ul>
+
+        <h2>🌟 Recursos Adicionais Sugeridos</h2>
+        <ul>
+            <li><strong>Vigência Contratual:</strong> Notificação automática de vencimentos e reajustes.</li>
+            <li><strong>Análise de Cobertura:</strong> Identificação de gaps assistenciais para expansão.</li>
+            <li><strong>Timeline de Movimentação:</strong> Histórico visual de status por prestador.</li>
+            <li><strong>Exportação Financeira:</strong> Relatórios consolidados de débitos para o setor financeiro.</li>
+        </ul>
+
+        <h2>🗺️ Roadmap de Implementação</h2>
+
+        <div class="phase-box">
+            <span class="phase-title">Fase 1: Fundação & Visibilidade</span>
+            <ul>
+                <li>Centralização dos dados do Guia Médico.</li>
+                <li>Dashboard Inicial (Total de Ativos vs Suspensos).</li>
+            </ul>
+        </div>
+
+        <div class="phase-box">
+            <span class="phase-title">Fase 2: Inteligência & Interligador</span>
+            <ul>
+                <li>Implementação do Motor de Match (Interligador).</li>
+                <li>Mapeamento dinâmico de Municípios Limítrofes.</li>
+            </ul>
+        </div>
+
+        <div class="phase-box">
+            <span class="phase-title">Fase 3: Auditoria & Controle</span>
+            <ul>
+                <li>Motor de Delta Tracking (Novos vs Excluídos).</li>
+                <li>Fluxo de Justificativas e Pendências Financeiras.</li>
+            </ul>
+        </div>
+
+        <div class="phase-box">
+            <span class="phase-title">Fase 4: Avançado & Preditivo</span>
+            <ul>
+                <li>Heatmap de Cobertura Geográfica.</li>
+                <li>Gestão Automatizada de Contratos.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Klini Saúde · Projeto Cockpit de Credenciamento · 2026<br>
+            Documento Técnico para Apresentação Claude
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</body>
+
+</html>

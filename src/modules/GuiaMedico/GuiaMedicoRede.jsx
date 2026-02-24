@@ -25,7 +25,7 @@ const getField = (item, ...keys) => {
 export default function GuiaMedicoRede() {
     const [activeProduct, setActiveProduct] = useState('k400');
     const [activeTab, setActiveTab] = useState('visao-geral');
-    const [filters, setFilters] = useState({ municipio: '', especialidade: '', rede: '' });
+    const [filters, setFilters] = useState({ municipio: '', especialidade: '', rede: '', nome: '' });
     const [productData, setProductData] = useState({ k200: [], k400: [], k600: [] });
     const [loadingData, setLoadingData] = useState(true);
     const [expandedProviders, setExpandedProviders] = useState(new Set());
@@ -55,7 +55,7 @@ export default function GuiaMedicoRede() {
     }, []);
 
     useEffect(() => {
-        setFilters({ municipio: '', especialidade: '', rede: '' });
+        setFilters({ municipio: '', especialidade: '', rede: '', nome: '' });
         setActiveTab('visao-geral');
         setExpandedProviders(new Set());
     }, [activeProduct]);
@@ -100,6 +100,7 @@ export default function GuiaMedicoRede() {
 
             if (filters.municipio && mun !== filters.municipio) return false;
             if (filters.especialidade && !esp.includes(filters.especialidade)) return false;
+            if (filters.nome && !nome.includes(filters.nome.toUpperCase())) return false;
             if (activeTab === 'visao-geral') return true;
             if (activeTab === 'hospitais' && !tipo.includes('PRONTO ATENDIMENTO') && !tipo.includes('INTERNAÇÃO')) return false;
             if (activeTab === 'consultas' && !tipo.includes('CONSULTA')) return false;
@@ -344,6 +345,51 @@ export default function GuiaMedicoRede() {
             {/* FILTERS */}
             <div style={{ background: 'white', padding: '1.5rem 2rem', borderBottom: '1px solid #E5E7EB' }}>
                 <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+
+                    <div style={{ flex: '1', minWidth: '300px' }}>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Buscar Consultório ou Hospital</label>
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                type="text"
+                                value={filters.nome}
+                                onChange={(e) => setFilters(curr => ({ ...curr, nome: e.target.value }))}
+                                placeholder="Digite o nome..."
+                                style={{
+                                    width: '100%',
+                                    padding: '0.75rem 1rem 0.75rem 2.5rem',
+                                    borderRadius: '12px',
+                                    border: '1.5px solid #E2E8F0',
+                                    fontSize: '0.875rem',
+                                    outline: 'none',
+                                    transition: 'all 0.2s',
+                                    fontWeight: '600'
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = productConfig.color}
+                                onBlur={(e) => e.target.style.borderColor = '#E2E8F0'}
+                            />
+                            <span style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }}>
+                                🔍
+                            </span>
+                            {filters.nome && (
+                                <button
+                                    onClick={() => setFilters(curr => ({ ...curr, nome: '' }))}
+                                    style={{
+                                        position: 'absolute',
+                                        right: '0.75rem',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        background: 'transparent',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        fontSize: '0.8rem',
+                                        opacity: 0.4
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
+                    </div>
 
                     <div style={{ minWidth: '240px' }}>
                         <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Município</label>
