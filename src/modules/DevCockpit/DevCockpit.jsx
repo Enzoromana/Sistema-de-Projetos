@@ -4,8 +4,8 @@ import {
     Plus, Play, Info, CheckCircle2, Layout,
     ChevronRight, ArrowUpRight, Zap, Target
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import MermaidRenderer from '../components/MermaidRenderer';
+import { supabase } from '../../lib/supabase';
+import MermaidRenderer from '../../components/MermaidRenderer';
 
 const MODULE_ARCHITECTURE = {
     auth: {
