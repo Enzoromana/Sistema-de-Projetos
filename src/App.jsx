@@ -15,7 +15,7 @@ import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
     ShieldAlert, Activity, Presentation, BookOpen,
-    ChevronLeft, ChevronRight
+    ChevronLeft, ChevronRight, X
 } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -334,7 +334,9 @@ function App() {
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">CPF</p>
-                                    <p className="font-bold text-slate-700">***.{profile.cpf?.substring(3, 6)}.-**</p>
+                                    <p className="font-bold text-slate-700">
+                                        {profile.cpf ? `***.${profile.cpf.substring(3, 6)}.-**` : 'Não informado'}
+                                    </p>
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nascimento</p>
