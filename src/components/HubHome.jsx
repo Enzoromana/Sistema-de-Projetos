@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Calendar, Users, Settings, Bell, Search,
-    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation, BookOpen
+    ArrowRight, CheckCircle2, AlertCircle, Clock, TrendingUp, Activity, Presentation, BookOpen, Code2
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -54,6 +54,14 @@ export default function HubHome({ setActiveModule, userProfile }) {
             icon: <BookOpen size={32} />,
             color: 'bg-teal-600',
             permission: userProfile?.access_guia_medico || userProfile?.role === 'admin'
+        },
+        {
+            id: 'dev-cockpit',
+            title: 'Cockpit de Arquitetura',
+            description: 'Visualização técnica, diagramas Mermaid e roadmap de desenvolvimento.',
+            icon: <Code2 size={32} />,
+            color: 'bg-slate-900',
+            permission: userProfile?.role === 'admin'
         },
         {
             id: 'settings',

@@ -11,11 +11,12 @@ import Signup from './components/Signup';
 import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
 import GuiaMedicoModule from './modules/GuiaMedico/GuiaMedicoModule';
+import DevCockpit from './modules/DevCockpit/DevCockpit';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
     ShieldAlert, Activity, Presentation, BookOpen,
-    ChevronLeft, ChevronRight, X
+    ChevronLeft, ChevronRight, X, Code2
 } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -240,6 +241,15 @@ function App() {
                                         Guia Médico
                                     </button>
                                 )}
+                                {(profile?.role === 'admin') && (
+                                    <button
+                                        onClick={() => setActiveModule('dev-cockpit')}
+                                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'dev-cockpit' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                    >
+                                        <Code2 size={16} />
+                                        Arquitetura
+                                    </button>
+                                )}
                             </div>
 
                             <button
@@ -290,6 +300,7 @@ function App() {
                 {activeModule === 'medical' && <MedicalControl />}
                 {activeModule === 'sheet-to-slide' && <SheetToSlideModule />}
                 {activeModule === 'guia-medico' && <GuiaMedicoModule userProfile={profile} onBack={() => setActiveModule('hub')} />}
+                {activeModule === 'dev-cockpit' && <DevCockpit />}
             </main>
 
             {/* Profile Update Mandatory Modal */}
