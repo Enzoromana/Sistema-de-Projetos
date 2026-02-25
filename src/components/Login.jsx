@@ -109,9 +109,27 @@ export default function Login({ onSignupClick }) {
                         </div>
 
                         {error && (
-                            <div className="p-4 rounded-2xl bg-red-50 text-red-600 text-sm font-bold flex items-center gap-3 animate-in slide-in-from-top-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                {error}
+                            <div className="p-4 rounded-2xl bg-red-50 text-red-600 text-sm font-bold flex flex-col gap-3 animate-in slide-in-from-top-2">
+                                <div className="flex items-center gap-3">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                    {error}
+                                </div>
+                                {error.includes('Conexão') && (
+                                    <button
+                                        type="button"
+                                        onClick={async () => {
+                                            try {
+                                                await fetch('https://vyibcbedcilkxpdrizet.supabase.co', { mode: 'no-cors' });
+                                                alert('Conexão estabelecida com sucesso! O domínio não está bloqueado.');
+                                            } catch (e) {
+                                                alert('Falha no teste: O domínio continua inacessível na sua rede atual.');
+                                            }
+                                        }}
+                                        className="text-xs text-indigo-600 hover:underline w-fit ml-4"
+                                    >
+                                        Verificar conexão agora →
+                                    </button>
+                                )}
                             </div>
                         )}
 
