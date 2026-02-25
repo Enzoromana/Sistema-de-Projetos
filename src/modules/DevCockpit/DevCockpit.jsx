@@ -186,8 +186,8 @@ export default function DevCockpit() {
                                 <X size={28} />
                             </button>
                         </div>
-                        <div className="flex-1 overflow-auto p-12 bg-black/40 flex items-center justify-center custom-scrollbar">
-                            <div className="w-full min-h-[500px]">
+                        <div className="flex-1 overflow-auto p-8 md:p-12 bg-black/60 flex flex-col custom-scrollbar">
+                            <div className="w-full h-fit min-h-full flex items-center justify-center">
                                 <MermaidRenderer chart={viewingDiagram.flow} id="modal-diagram-full" />
                             </div>
                         </div>
@@ -341,8 +341,10 @@ export default function DevCockpit() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="bg-slate-900/80 rounded-3xl p-8 mb-8 flex-1 min-h-[250px] flex items-center justify-center border border-white/5 shadow-inner">
-                                            <MermaidRenderer chart={p.diagram_code || 'graph LR\nA[Projeto] --> B[Inificado]'} id={`p-chart-${p.id}`} />
+                                        <div className="bg-slate-900/80 rounded-3xl p-6 mb-8 flex-1 min-h-[350px] flex items-center justify-center border border-white/5 shadow-inner overflow-hidden">
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <MermaidRenderer chart={p.diagram_code || 'graph LR\nA[Projeto] --> B[Inificado]'} id={`p-chart-${p.id}`} />
+                                            </div>
                                         </div>
                                         <button
                                             onClick={() => {

@@ -30,11 +30,12 @@ export default function MermaidRenderer({ chart, id = 'mermaid-chart' }) {
             window.mermaid.render(id, cleanChart).then(({ svg }) => {
                 if (mermaidRef.current) {
                     mermaidRef.current.innerHTML = svg;
-                    // Ajustar SVG para ser responsivo
                     const svgElement = mermaidRef.current.querySelector('svg');
                     if (svgElement) {
+                        svgElement.removeAttribute('height');
+                        svgElement.style.width = '100%';
+                        svgElement.style.height = '100%';
                         svgElement.style.maxWidth = '100%';
-                        svgElement.style.height = 'auto';
                     }
                 }
             }).catch(err => {
@@ -49,7 +50,7 @@ export default function MermaidRenderer({ chart, id = 'mermaid-chart' }) {
     return (
         <div
             ref={mermaidRef}
-            className="flex justify-center p-10 bg-black/20 backdrop-blur-md rounded-[3rem] border border-white/5 shadow-inner overflow-x-auto min-h-[300px] w-full transition-all duration-700 hover:bg-black/40"
+            className="flex justify-center bg-black/5 hover:bg-black/10 transition-colors p-4 md:p-8 rounded-[2rem] w-full h-full min-h-[inherit]"
         />
     );
 }
