@@ -1,5 +1,5 @@
 {
-    "data_atualizacao":  "2026-02-25 16:57:42",
+    "data_atualizacao":  "2026-02-25 18:51:41",
     "produtos":  [
                      {
                          "codigo_rede":  "K180",
@@ -11,15 +11,15 @@
                      {
                          "codigo_rede":  "K200",
                          "nome":  "KLINI 200",
-                         "registros":  1004,
-                         "municipios":  3,
+                         "registros":  987,
+                         "municipios":  1,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "K400",
                          "nome":  "KLINI 400",
-                         "registros":  1869,
-                         "municipios":  14,
+                         "registros":  1844,
+                         "municipios":  13,
                          "estados":  1
                      },
                      {
@@ -198,16 +198,16 @@
                          "estados":  1
                      },
                      {
-                         "codigo_rede":  "KTOTALQC",
-                         "nome":  "KLINI TOTAL QC",
-                         "registros":  2634,
+                         "codigo_rede":  "KTOTALQP",
+                         "nome":  "KLINI TOTAL  QP",
+                         "registros":  2642,
                          "municipios":  19,
                          "estados":  1
                      },
                      {
-                         "codigo_rede":  "KTOTALQP",
-                         "nome":  "KLINI TOTAL  QP",
-                         "registros":  2642,
+                         "codigo_rede":  "KTOTALQC",
+                         "nome":  "KLINI TOTAL QC",
+                         "registros":  2634,
                          "municipios":  19,
                          "estados":  1
                      }
