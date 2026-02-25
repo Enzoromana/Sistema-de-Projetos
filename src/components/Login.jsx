@@ -13,13 +13,30 @@ export default function Login({ onSignupClick }) {
         setLoading(true);
         setError('');
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            const { error: authError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        if (error) setError(error.message);
-        setLoading(false);
+            if (authError) {
+                // Traduzindo e detectando erros comuns
+                if (authError.message === 'Invalid login credentials') {
+                    setError('E-mail ou senha incorretos.');
+                } else {
+                    setError(authError.message);
+                }
+            }
+        } catch (err) {
+            console.error('Erro detalhado no login:', err);
+            if (err.message?.includes('fetch') || err.name === 'TypeError') {
+                setError('Erro de Conexão: O acesso ao banco de dados foi bloqueado pela sua rede ou firewall. Entre em contato com o suporte de TI local para liberar o domínio do Supabase.');
+            } else {
+                setError('Ocorreu um erro inesperado. Tente novamente em instantes.');
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
