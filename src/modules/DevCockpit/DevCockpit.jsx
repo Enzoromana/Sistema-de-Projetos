@@ -3,7 +3,7 @@ import {
     Code2, Box, Database, GitBranch, Cpu, Layers,
     Plus, Play, Info, CheckCircle2, Layout,
     ChevronRight, ArrowUpRight, Zap, Target, Save,
-    RefreshCw, Globe, Server, Shield, Smartphone
+    RefreshCw, Globe, Server, Shield, Smartphone, Activity
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import MermaidRenderer from '../../components/MermaidRenderer';
