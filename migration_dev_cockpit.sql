@@ -1,7 +1,8 @@
 -- Migration for Dev Cockpit Diagrams
 
 -- 1. Add diagram_code to projects
-ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS diagram_code TEXT DEFAULT 'graph TD\nA[Início] --> B[Desenvolvimento]';
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS diagram_code TEXT DEFAULT 'graph TD
+A[Início] --> B[Desenvolvimento]';
 
 -- 2. Add diagram_code to tasks
 ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS diagram_code TEXT;

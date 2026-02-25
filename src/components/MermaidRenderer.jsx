@@ -5,7 +5,8 @@ export default function MermaidRenderer({ chart, id = 'mermaid-chart' }) {
 
     useEffect(() => {
         if (window.mermaid && chart) {
-            window.mermaid.render(id, chart).then(({ svg }) => {
+            const cleanChart = chart.replace(/\\n/g, '\n');
+            window.mermaid.render(id, cleanChart).then(({ svg }) => {
                 if (mermaidRef.current) {
                     mermaidRef.current.innerHTML = svg;
                 }
