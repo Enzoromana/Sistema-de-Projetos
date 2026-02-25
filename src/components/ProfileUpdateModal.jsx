@@ -5,6 +5,7 @@ import { User, Briefcase, Save, Loader2, Mail, ShieldCheck } from 'lucide-react'
 export default function ProfileUpdateModal({ profile, onUpdate }) {
     const [setor, setSetor] = useState(profile?.setor || '');
     const [cpf, setCpf] = useState(profile?.cpf || '');
+    const [birthDate, setBirthDate] = useState(profile?.birth_date || '');
     const [loading, setLoading] = useState(false);
 
     const handleSave = async () => {
@@ -24,14 +25,20 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                 .from('profiles')
                 .update({
                     setor: setor.trim(),
-                    cpf: cpf.replace(/\D/g, '')
+                    cpf: cpf.replace(/\D/g, ''),
+                    birth_date: birthDate
                 })
                 .eq('id', profile.id);
 
             if (error) throw error;
 
             // Notify parent to refresh profile
-            onUpdate({ ...profile, setor: setor.trim(), cpf: cpf.replace(/\D/g, '') });
+            onUpdate({
+                ...profile,
+                setor: setor.trim(),
+                cpf: cpf.replace(/\D/g, ''),
+                birth_date: birthDate
+            });
         } catch (e) {
             alert('Erro ao atualizar perfil: ' + e.message);
         } finally {
@@ -118,6 +125,18 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                                     className="w-full px-6 py-4 rounded-2xl bg-white border-2 border-slate-100 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/5 outline-none font-bold text-slate-700 transition-all placeholder:text-slate-300"
                                 />
                             </div>
+
+                            <div>
+                                <label className="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-1 mb-2 block flex items-center gap-2">
+                                    <ShieldCheck size={12} /> Data de Nascimento <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="date"
+                                    value={birthDate}
+                                    onChange={e => setBirthDate(e.target.value)}
+                                    className="w-full px-6 py-4 rounded-2xl bg-white border-2 border-slate-100 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/5 outline-none font-bold text-slate-700 transition-all"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +144,7 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                 <div className="p-10 bg-slate-50/50 flex flex-col gap-4">
                     <button
                         onClick={handleSave}
-                        disabled={loading || !setor.trim() || !cpf.trim()}
+                        disabled={loading || !setor.trim() || !cpf.trim() || !birthDate}
                         className="w-full bg-indigo-600 text-white font-black py-5 rounded-[1.5rem] flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 disabled:opacity-50 disabled:cursor-not-allowed group"
                     >
                         {loading ? (

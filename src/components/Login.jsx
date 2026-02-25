@@ -8,6 +8,18 @@ export default function Login({ onSignupClick }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // Reset Password States
+    const [showResetModal, setShowResetModal] = useState(false);
+    const [resetStep, setResetStep] = useState(1); // 1: validation, 2: new password
+    const [resetData, setResetData] = useState({
+        email: '',
+        cpf: '',
+        birthDate: '',
+        newPassword: ''
+    });
+    const [resetLoading, setResetLoading] = useState(false);
+    const [resetMessage, setResetMessage] = useState({ type: '', text: '' });
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -133,6 +145,21 @@ export default function Login({ onSignupClick }) {
                             </div>
                         )}
 
+                        <div className="flex justify-end pr-2">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowResetModal(true);
+                                    setResetStep(1);
+                                    setResetMessage({ type: '', text: '' });
+                                    setResetData({ ...resetData, email: email || '' });
+                                }}
+                                className="text-xs font-black text-indigo-600 hover:text-indigo-800 uppercase tracking-widest transition-colors"
+                            >
+                                Esqueci minha senha
+                            </button>
+                        </div>
+
                         <button
                             type="submit" disabled={loading}
                             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-[1.5rem] flex items-center justify-center gap-3 transition-all shadow-2xl shadow-indigo-200 disabled:opacity-50"
@@ -154,6 +181,141 @@ export default function Login({ onSignupClick }) {
                     </p>
                 </div>
             </div>
+
+            {/* Modal de Redefinição de Senha */}
+            {showResetModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500">
+                        <div className="p-10 border-b border-slate-50 relative">
+                            <button
+                                onClick={() => setShowResetModal(false)}
+                                className="absolute top-8 right-8 p-2 hover:bg-slate-100 rounded-xl transition-all"
+                            >
+                                <Lock size={20} className="text-slate-300" />
+                            </button>
+
+                            <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                                <Key size={32} />
+                            </div>
+                            <h3 className="text-2xl font-black text-slate-800 tracking-tight">Recuperar Acesso</h3>
+                            <p className="text-sm text-slate-400 font-medium">Valide seus dados para redefinir sua senha.</p>
+                        </div>
+
+                        <div className="p-10 space-y-6">
+                            {resetMessage.text && (
+                                <div className={`p-4 rounded-xl text-xs font-bold ${resetMessage.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-teal-50 text-teal-600'}`}>
+                                    {resetMessage.text}
+                                </div>
+                            )}
+
+                            {resetStep === 1 ? (
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">E-mail Corporativo</label>
+                                        <input
+                                            type="email"
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none font-bold text-slate-700 text-sm"
+                                            placeholder="seu@email.com.br"
+                                            value={resetData.email}
+                                            onChange={e => setResetData({ ...resetData, email: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">CPF</label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none font-bold text-slate-700 text-sm"
+                                            placeholder="000.000.000-00"
+                                            value={resetData.cpf}
+                                            onChange={e => {
+                                                let v = e.target.value.replace(/\D/g, '');
+                                                if (v.length <= 11) {
+                                                    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                                                    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                                                    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                                                    setResetData({ ...resetData, cpf: v });
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Data de Nascimento</label>
+                                        <input
+                                            type="date"
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none font-bold text-slate-700 text-sm"
+                                            value={resetData.birthDate}
+                                            onChange={e => setResetData({ ...resetData, birthDate: e.target.value })}
+                                        />
+                                    </div>
+                                    <button
+                                        onClick={() => setResetStep(2)}
+                                        disabled={!resetData.email || !resetData.cpf || !resetData.birthDate}
+                                        className="w-full bg-slate-900 text-white font-black py-5 rounded-[1.5rem] flex items-center justify-center gap-3 hover:bg-black transition-all disabled:opacity-50"
+                                    >
+                                        Próximo Passo <ArrowRight size={18} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nova Senha (Mínimo 6 caracteres)</label>
+                                        <input
+                                            type="password"
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none font-bold text-slate-700 text-sm"
+                                            placeholder="••••••••"
+                                            value={resetData.newPassword}
+                                            onChange={e => setResetData({ ...resetData, newPassword: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <button
+                                            onClick={() => setResetStep(1)}
+                                            className="flex-1 bg-slate-100 text-slate-600 font-black py-5 rounded-[1.5rem] hover:bg-slate-200 transition-all"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            disabled={resetData.newPassword.length < 6 || resetLoading}
+                                            onClick={async () => {
+                                                setResetLoading(true);
+                                                setResetMessage({ type: '', text: '' });
+                                                try {
+                                                    const { data, error: rpcError } = await supabase.rpc('admin_reset_password_via_validation', {
+                                                        email_input: resetData.email,
+                                                        cpf_input: resetData.cpf.replace(/\D/g, ''),
+                                                        birth_date_input: resetData.birthDate,
+                                                        new_password: resetData.newPassword
+                                                    });
+
+                                                    if (rpcError) throw rpcError;
+
+                                                    if (data.success) {
+                                                        setResetMessage({ type: 'success', text: 'Senha alterada com sucesso! Você já pode entrar.' });
+                                                        setTimeout(() => setShowResetModal(false), 2000);
+                                                    } else {
+                                                        setResetMessage({ type: 'error', text: data.message });
+                                                        setResetStep(1);
+                                                    }
+                                                } catch (err) {
+                                                    setResetMessage({ type: 'error', text: 'Erro ao processar: ' + err.message });
+                                                } finally {
+                                                    setResetLoading(false);
+                                                }
+                                            }}
+                                            className="flex-[2] bg-indigo-600 text-white font-black py-5 rounded-[1.5rem] flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 disabled:opacity-50"
+                                        >
+                                            {resetLoading ? <Loader2 className="animate-spin" size={20} /> : 'Definir Nova Senha'}
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
+
+// Hook locally to use Key icon
+import { Key } from 'lucide-react';

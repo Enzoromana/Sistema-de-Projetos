@@ -11,15 +11,40 @@ import {
 function LogDetailModal({ log, onClose }) {
     if (!log) return null;
 
-    const renderData = (data, title) => {
-        if (!data) return null;
+    const renderDiff = () => {
+        const oldData = log.old_data || {};
+        const newData = log.new_data || {};
+        const allKeys = Array.from(new Set([...Object.keys(oldData), ...Object.keys(newData)]));
+
         return (
-            <div className="space-y-2">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</p>
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 overflow-auto max-h-[300px]">
-                    <pre className="text-[11px] font-mono text-slate-600 leading-relaxed">
-                        {JSON.stringify(data, null, 2)}
-                    </pre>
+            <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4 pb-4 border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <div>Campo</div>
+                    <div>Antes</div>
+                    <div>Depois</div>
+                </div>
+                <div className="space-y-3 max-h-[500px] overflow-auto pr-2 custom-scrollbar">
+                    {allKeys.map(key => {
+                        const isChanged = JSON.stringify(oldData[key]) !== JSON.stringify(newData[key]);
+                        if (!isChanged && log.action === 'UPDATE') return null;
+
+                        return (
+                            <div key={key} className={`grid grid-cols-3 gap-4 py-3 px-4 rounded-xl border ${isChanged ? 'bg-indigo-50/30 border-indigo-100/50' : 'bg-slate-50 border-slate-100'}`}>
+                                <div className="font-mono text-[11px] font-bold text-slate-500 break-all">{key}</div>
+                                <div className="font-mono text-[11px] text-red-500 break-all bg-red-50/50 p-2 rounded-lg">
+                                    {oldData[key] !== undefined ? (typeof oldData[key] === 'object' ? JSON.stringify(oldData[key]) : String(oldData[key])) : '-'}
+                                </div>
+                                <div className="font-mono text-[11px] text-teal-600 break-all bg-teal-50/50 p-2 rounded-lg font-bold">
+                                    {newData[key] !== undefined ? (typeof newData[key] === 'object' ? JSON.stringify(newData[key]) : String(newData[key])) : '-'}
+                                </div>
+                            </div>
+                        );
+                    })}
+                    {allKeys.length === 0 && (
+                        <div className="py-10 text-center text-slate-400 text-xs font-medium">
+                            Nenhum detalhe de campo disponível.
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -27,15 +52,17 @@ function LogDetailModal({ log, onClose }) {
 
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2.5rem] w-full max-w-4xl max-h-[90vh] shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500 overflow-hidden">
+            <div className="bg-white rounded-[2.5rem] w-full max-w-5xl shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500 overflow-hidden">
                 <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-900 text-white">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-white/10 rounded-2xl">
                             <Database size={24} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-black tracking-tight">Detalhes da Ação</h3>
-                            <p className="text-xs text-slate-400 font-medium uppercase tracking-widest">ID: {log.record_id} • Tabela: {log.table_name}</p>
+                            <h3 className="text-xl font-black tracking-tight">Rastreabilidade de Alteração</h3>
+                            <p className="text-xs text-slate-400 font-medium uppercase tracking-widest">
+                                Registro: {log.record_id} • Tabela: <span className="text-indigo-400 font-black">{log.table_name}</span> • Ação: {log.action}
+                            </p>
                         </div>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-xl transition-all">
@@ -43,19 +70,14 @@ function LogDetailModal({ log, onClose }) {
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {renderData(log.old_data, "Dados Anteriores")}
-                        {renderData(log.new_data, "Novos Dados")}
-                    </div>
-                    {!log.old_data && !log.new_data && (
-                        <div className="py-20 text-center text-slate-400">
-                            Nenhum dado detalhado disponível.
-                        </div>
-                    )}
+                <div className="flex-1 p-8 bg-white">
+                    {renderDiff()}
                 </div>
 
-                <div className="p-8 bg-slate-50 flex justify-end">
+                <div className="p-8 bg-slate-50 flex justify-end gap-4 border-t border-slate-100">
+                    <p className="mr-auto self-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Executado em: {new Date(log.created_at).toLocaleString('pt-BR')}
+                    </p>
                     <button
                         onClick={onClose}
                         className="bg-slate-900 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"

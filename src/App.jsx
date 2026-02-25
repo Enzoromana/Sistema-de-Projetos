@@ -37,6 +37,7 @@ function App() {
         const params = new URLSearchParams(window.location.search);
         return params.get('mode') === 'signup' ? 'signup' : 'login';
     }); // 'login' or 'signup'
+    const [showProfileView, setShowProfileView] = useState(false);
 
     const scrollRef = useRef(null);
 
@@ -71,6 +72,33 @@ function App() {
 
         return () => subscription.unsubscribe();
     }, []);
+
+    // Timeout Logic (4 hours)
+    useEffect(() => {
+        if (!session) return;
+
+        let timeoutId;
+        const TIMEOUT_DURATION = 4 * 60 * 60 * 1000; // 4 hours
+
+        const resetTimer = () => {
+            if (timeoutId) clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                console.log('Session timeout reached. Logging out...');
+                handleLogout();
+            }, TIMEOUT_DURATION);
+        };
+
+        // Events to track activity
+        const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+        events.forEach(event => document.addEventListener(event, resetTimer));
+
+        resetTimer(); // Initialize timer
+
+        return () => {
+            events.forEach(event => document.removeEventListener(event, resetTimer));
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [session]);
 
     const fetchProfile = async (userId) => {
         const { data, error } = await supabase
@@ -229,15 +257,25 @@ function App() {
                         </button>
                         <div className="h-10 w-px bg-slate-200 mx-2"></div>
                         <div className="flex items-center gap-3 pl-2 group relative">
-                            <div className="text-right hidden sm:block">
+                            <button
+                                onClick={() => setShowProfileView(true)}
+                                className="text-right hidden sm:block hover:opacity-70 transition-opacity"
+                            >
                                 <p className="text-sm font-bold text-slate-800">{profile?.full_name}</p>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{profile?.role === 'admin' ? 'Administrador' : 'Colaborador'}</p>
-                            </div>
+                            </button>
+                            <button
+                                onClick={() => setShowProfileView(true)}
+                                className="w-12 h-12 rounded-2xl bg-slate-100 p-0.5 hover:bg-slate-200 transition-all flex items-center justify-center text-indigo-600 font-black text-lg shadow-sm"
+                            >
+                                {profile?.full_name?.charAt(0) || 'U'}
+                            </button>
                             <button
                                 onClick={handleLogout}
-                                className="w-12 h-12 rounded-2xl bg-slate-100 p-0.5 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center text-slate-400"
+                                className="w-10 h-10 rounded-xl bg-slate-50 p-0.5 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center text-slate-300"
+                                title="Sair"
                             >
-                                <LogOut size={20} />
+                                <LogOut size={18} />
                             </button>
                         </div>
                     </div>
@@ -255,11 +293,78 @@ function App() {
             </main>
 
             {/* Profile Update Mandatory Modal */}
-            {profile && (!profile.setor || !profile.cpf) && (
+            {profile && (!profile.setor || !profile.cpf || !profile.birth_date) && (
                 <ProfileUpdateModal
                     profile={profile}
                     onUpdate={(updatedProfile) => setProfile(updatedProfile)}
                 />
+            )}
+
+            {/* Profile View Modal */}
+            {showProfileView && profile && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500">
+                        <div className="p-10 border-b border-slate-50 bg-slate-900 text-white relative">
+                            <button
+                                onClick={() => setShowProfileView(false)}
+                                className="absolute top-8 right-8 p-2 hover:bg-white/10 rounded-xl transition-all"
+                            >
+                                <X size={24} />
+                            </button>
+                            <div className="flex items-center gap-6">
+                                <div className="w-20 h-20 bg-white/10 rounded-[1.5rem] flex items-center justify-center text-white font-black text-3xl shadow-xl">
+                                    {profile.full_name?.charAt(0)}
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-black tracking-tight">{profile.full_name}</h3>
+                                    <p className="text-xs text-indigo-400 font-black uppercase tracking-widest">{profile.role === 'admin' ? 'Acesso Administrativo' : 'Colaborador Klini'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-10 space-y-8">
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">E-mail</p>
+                                    <p className="font-bold text-slate-700 truncate">{profile.email}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Setor</p>
+                                    <p className="font-bold text-slate-700">{profile.setor || 'Não informado'}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">CPF</p>
+                                    <p className="font-bold text-slate-700">***.{profile.cpf?.substring(3, 6)}.-**</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nascimento</p>
+                                    <p className="font-bold text-slate-700">{profile.birth_date ? new Date(profile.birth_date).toLocaleDateString('pt-BR') : 'Não informado'}</p>
+                                </div>
+                            </div>
+
+                            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                    <ShieldCheck size={14} className="text-teal-500" /> Permissões Ativas
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {profile.access_projects && <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Projetos</span>}
+                                    {profile.access_rooms && <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Salas</span>}
+                                    {(profile.access_audit || profile.role === 'admin') && <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Auditoria</span>}
+                                    {profile.access_medical && <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Junta Médica</span>}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-8 bg-slate-50/50 flex justify-end">
+                            <button
+                                onClick={() => setShowProfileView(false)}
+                                className="bg-slate-900 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
+                            >
+                                Fechar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
 
             <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">
