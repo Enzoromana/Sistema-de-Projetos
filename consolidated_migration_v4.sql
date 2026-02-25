@@ -52,3 +52,6 @@ EXCEPTION WHEN OTHERS THEN
     );
 END;
 $$;
+
+-- 3. Forçar refresh do cache da API
+COMMENT ON TABLE public.profiles IS 'Hub Manager User Profiles - Schema Refreshed (v4)';
