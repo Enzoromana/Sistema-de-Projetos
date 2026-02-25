@@ -322,7 +322,7 @@ export default function DevCockpit() {
                                         <div className="flex items-start justify-between mb-8">
                                             <div className="flex-1">
                                                 <h4 className="font-black text-2xl mb-1 text-white group-hover:text-indigo-400 transition-colors">{p.name}</h4>
-                                                <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest">ID: {p.id.substring(0, 8)}</p>
+                                                <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest">ID: {String(p.id).substring(0, 8)}</p>
                                             </div>
                                             <div className="flex gap-2">
                                                 <button
