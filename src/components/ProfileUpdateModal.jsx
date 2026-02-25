@@ -21,7 +21,7 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
 
         setLoading(true);
         try {
-            const { error } = await supabase
+            const { error: updateError } = await supabase
                 .from('profiles')
                 .update({
                     setor: setor.trim(),
@@ -30,7 +30,10 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                 })
                 .eq('id', profile.id);
 
-            if (error) throw error;
+            if (updateError) {
+                console.error('Erro detalhado Supabase:', updateError);
+                throw new Error(updateError.message + ' (' + updateError.code + ')');
+            }
 
             // Notify parent to refresh profile
             onUpdate({
@@ -40,7 +43,8 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                 birth_date: birthDate
             });
         } catch (e) {
-            alert('Erro ao atualizar perfil: ' + e.message);
+            console.error('Erro na atualização:', e);
+            alert('Erro ao atualizar perfil: ' + e.message + '\n\nDICA: Tente recarregar a página (Ctrl+F5) se acabou de rodar o SQL.');
         } finally {
             setLoading(false);
         }
