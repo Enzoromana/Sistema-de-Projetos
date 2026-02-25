@@ -182,10 +182,9 @@ export default function Login({ onSignupClick }) {
                 </div>
             </div>
 
-            {/* Modal de Redefinição de Senha */}
             {showResetModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500 scrollbar-hide">
                         <div className="p-10 border-b border-slate-50 relative">
                             <button
                                 onClick={() => setShowResetModal(false)}

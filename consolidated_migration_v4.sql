@@ -1,3 +1,6 @@
+-- 0. Garantir que a extensão pgcrypto está habilitada (necessária para crypt e gen_salt)
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 1. Adicionar colunas de validação na tabela profiles (se não existirem)
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS cpf TEXT;
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS birth_date DATE;
@@ -16,7 +19,7 @@ CREATE OR REPLACE FUNCTION admin_reset_password_via_validation(
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, auth
+SET search_path = public, auth, extensions
 AS $$
 DECLARE
     target_user_id UUID;
