@@ -30,9 +30,17 @@ if (!(Test-Path $PRODUTOS_INDEX)) {
     exit 1
 }
 
-$produtosIndex = Get-Content $PRODUTOS_INDEX -Raw -Encoding UTF8 | ConvertFrom-Json
+$rawJson = Get-Content $PRODUTOS_INDEX -Raw -Encoding UTF8
+$jsonObj = $rawJson | ConvertFrom-Json
+$produtosIndex = $jsonObj.produtos
+
+if ($null -eq $produtosIndex) {
+    Write-Error "A propriedade 'produtos' nao foi encontrada no JSON."
+    exit 1
+}
+
 $totalProdutos = $produtosIndex.Count
-Write-Host "      $totalProdutos produtos encontrados." -ForegroundColor Green
+Write-Host "      $totalProdutos produtos encontrados no indice." -ForegroundColor Green
 
 # ----- ETAPA 2: Baixar dados de cada produto da API -----
 Write-Host ""
@@ -45,6 +53,12 @@ $atualizados = 0
 foreach ($produto in $produtosIndex) {
     $codigo = $produto.codigo_rede
     $nome = $produto.nome
+    
+    if ([string]::IsNullOrWhiteSpace($codigo) -or [string]::IsNullOrWhiteSpace($nome)) {
+        Write-Host "      -> Pulando produto com dados incompletos" -ForegroundColor Gray
+        continue
+    }
+    
     $outputFile = "$PRODUTOS_DIR\$codigo.json"
 
     Write-Host "      -> $nome ($codigo)... " -NoNewline
@@ -105,20 +119,25 @@ Write-Host ""
 Write-Host "[3/3] Regenerando indice produtos.json..." -ForegroundColor Yellow
 
 $novoIndex = @()
+$processados = @{}
+
+# Adicionar os que foram atualizados agora
 foreach ($r in $resultados) {
-    $novoIndex += [ordered]@{
-        codigo_rede = $r.Codigo
-        nome        = $r.Nome
-        registros   = $r.Registros
-        municipios  = $r.Municipios
-        estados     = $r.Estados
+    if (!$processados.ContainsKey($r.Codigo)) {
+        $novoIndex += [ordered]@{
+            codigo_rede = $r.Codigo
+            nome        = $r.Nome
+            registros   = $r.Registros
+            municipios  = $r.Municipios
+            estados     = $r.Estados
+        }
+        $processados[$r.Codigo] = $true
     }
 }
 
-# Manter no indice tambem os produtos que falharam (com dados antigos)
+# Manter no indice os produtos que falharam ou nao foram processados (usando dados antigos)
 foreach ($produto in $produtosIndex) {
-    $jaExiste = $novoIndex | Where-Object { $_.codigo_rede -eq $produto.codigo_rede }
-    if (!$jaExiste) {
+    if (!$processados.ContainsKey($produto.codigo_rede) -and ![string]::IsNullOrWhiteSpace($produto.codigo_rede)) {
         $novoIndex += [ordered]@{
             codigo_rede = $produto.codigo_rede
             nome        = $produto.nome
@@ -126,6 +145,7 @@ foreach ($produto in $produtosIndex) {
             municipios  = $produto.municipios
             estados     = $produto.estados
         }
+        $processados[$produto.codigo_rede] = $true
     }
 }
 
@@ -143,7 +163,8 @@ Write-Host ""
 Write-Host "====================================================" -ForegroundColor Cyan
 Write-Host "  RESUMO DA ATUALIZACAO" -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "  Produtos atualizados: $atualizados / $totalProdutos" -ForegroundColor $(if ($atualizados -eq $totalProdutos) { "Green" } else { "Yellow" })
+Write-Host "  Produtos no indice: $totalProdutos" -ForegroundColor White
+Write-Host "  Produtos atualizados: $atualizados" -ForegroundColor $(if ($atualizados -eq $totalProdutos) { "Green" } else { "Yellow" })
 
 if ($erros.Count -gt 0) {
     Write-Host ""
