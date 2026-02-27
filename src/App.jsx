@@ -12,6 +12,8 @@ import TiebreakerExternalForm from './components/TiebreakerExternalForm';
 import SheetToSlideModule from './modules/SheetToSlide/SheetToSlideModule';
 import GuiaMedicoModule from './modules/GuiaMedico/GuiaMedicoModule';
 import DevCockpit from './modules/DevCockpit/DevCockpit';
+import UpdateNotes from './modules/UpdateNotes/UpdateNotes';
+import UpdateAnnouncementPopup from './components/UpdateAnnouncementPopup';
 import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
@@ -251,6 +253,13 @@ function App() {
                                         Arquitetura
                                     </button>
                                 )}
+                                <button
+                                    onClick={() => setActiveModule('update-notes')}
+                                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeModule === 'update-notes' ? 'bg-white text-indigo-600 shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-700'}`}
+                                >
+                                    <Bell size={16} />
+                                    Novidades
+                                </button>
                             </div>
 
                             <button
@@ -270,8 +279,13 @@ function App() {
                         >
                             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
                         </button>
-                        <button className="hidden md:flex p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-all relative">
+                        <button
+                            onClick={() => { setActiveModule('update-notes'); setMobileMenuOpen(false); }}
+                            className="hidden md:flex p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-all relative"
+                            title="Novidades"
+                        >
                             <Bell size={20} />
+                            <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-indigo-600 rounded-full border-2 border-white"></span>
                         </button>
                         <div className="hidden md:block h-10 w-px bg-slate-200 mx-2"></div>
                         <div className="flex items-center gap-2 md:gap-3 pl-1 md:pl-2 group relative">
@@ -315,13 +329,14 @@ function App() {
                                 { id: 'sheet-to-slide', icon: <Presentation size={20} />, label: 'Conversor Comercial', show: profile?.role === 'admin' || profile?.access_sheet_to_slide },
                                 { id: 'guia-medico', icon: <BookOpen size={20} />, label: 'Guia Médico', show: profile?.role === 'admin' || profile?.access_guia_medico },
                                 { id: 'dev-cockpit', icon: <Code2 size={20} />, label: 'Arquitetura', show: profile?.role === 'admin' },
+                                { id: 'update-notes', icon: <Bell size={20} />, label: 'Novidades', show: true },
                             ].filter(m => m.show).map(mod => (
                                 <button
                                     key={mod.id}
                                     onClick={() => { setActiveModule(mod.id); setMobileMenuOpen(false); }}
                                     className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-bold transition-all ${activeModule === mod.id
-                                            ? 'bg-indigo-50 text-indigo-600 shadow-sm'
-                                            : 'text-slate-600 hover:bg-slate-50'
+                                        ? 'bg-indigo-50 text-indigo-600 shadow-sm'
+                                        : 'text-slate-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     {mod.icon}
@@ -359,6 +374,7 @@ function App() {
                 {activeModule === 'sheet-to-slide' && <SheetToSlideModule />}
                 {activeModule === 'guia-medico' && <GuiaMedicoModule userProfile={profile} onBack={() => setActiveModule('hub')} />}
                 {activeModule === 'dev-cockpit' && <DevCockpit />}
+                {activeModule === 'update-notes' && <UpdateNotes />}
             </main>
 
             {/* Profile Update Mandatory Modal */}
@@ -368,6 +384,12 @@ function App() {
                     onUpdate={(updatedProfile) => setProfile(updatedProfile)}
                 />
             )}
+
+            {/* Update Announcement Popup */}
+            <UpdateAnnouncementPopup
+                onViewAll={() => setActiveModule('update-notes')}
+                onClose={() => { }}
+            />
 
             {/* Profile View Modal */}
             {showProfileView && profile && (

@@ -64,6 +64,14 @@ export default function HubHome({ setActiveModule, userProfile }) {
             permission: userProfile?.role === 'admin'
         },
         {
+            id: 'update-notes',
+            title: 'Notas de Atualização',
+            description: 'Histórico de versões, novos módulos, funcionalidades e melhorias.',
+            icon: <Bell size={32} />,
+            color: 'bg-purple-600',
+            permission: true
+        },
+        {
             id: 'settings',
             title: 'Configurações',
             description: 'Ajustes do sistema e customização da plataforma.',
