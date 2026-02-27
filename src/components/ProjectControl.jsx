@@ -392,7 +392,7 @@ export default function ProjectControl() {
     return (
         <div className="min-h-screen bg-slate-50">
             {/* Header / Branding */}
-            <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl mb-8">
+            <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-14 text-white relative overflow-hidden shadow-2xl mb-8">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
@@ -433,7 +433,7 @@ export default function ProjectControl() {
 
             <main className="space-y-8">
                 {/* Modern Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                     <StatCard icon={<BarChart3 size={24} />} label="Projetos Ativos" value={stats.total} color="slate" />
                     <StatCard icon={<CheckCircle2 size={24} />} label="Finalizados" value={stats.done} color="emerald" />
                     <StatCard icon={<Clock size={24} />} label="Em Operação" value={stats.progress} color="blue" />
@@ -488,7 +488,7 @@ export default function ProjectControl() {
                         ))}
                     </div>
                 ) : (
-                    <div className="flex gap-4 overflow-x-auto pb-4 items-start h-[calc(100vh-280px)]">
+                    <div className="flex gap-4 overflow-x-auto pb-4 items-start h-[calc(100vh-320px)] md:h-[calc(100vh-280px)]">
                         {['pending', 'progress', 'blocked', 'done'].map(status => (
                             <KanbanColumn
                                 key={status}

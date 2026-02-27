@@ -52,8 +52,8 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-slate-100 flex flex-col animate-in zoom-in duration-500">
-                <div className="p-10 border-b border-slate-50">
+            <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-slate-100 flex flex-col animate-in zoom-in duration-500 max-h-[90vh] overflow-y-auto">
+                <div className="p-6 md:p-10 border-b border-slate-50">
                     <div className="flex items-center gap-5 mb-6">
                         <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center shadow-inner">
                             <User size={32} />
@@ -145,7 +145,7 @@ export default function ProfileUpdateModal({ profile, onUpdate }) {
                     </div>
                 </div>
 
-                <div className="p-10 bg-slate-50/50 flex flex-col gap-4">
+                <div className="p-6 md:p-10 bg-slate-50/50 flex flex-col gap-4">
                     <button
                         onClick={handleSave}
                         disabled={loading || !setor.trim() || !cpf.trim() || !birthDate}

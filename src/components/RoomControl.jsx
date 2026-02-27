@@ -213,73 +213,75 @@ export default function RoomControl({ setView }) {
         const TOTAL_HOURS = 14;
 
         return (
-            <div className="max-w-6xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
-                <div className="grid grid-cols-8 divide-x divide-slate-100" style={{ height: (TOTAL_HOURS * SLOT_HEIGHT) + 56 }}>
-                    {/* Time Column */}
-                    <div className="bg-slate-50/50 flex flex-col pt-14">
-                        {HOURS.slice(0, 14).map(h => (
-                            <div key={h} className="flex-1 flex items-center justify-center border-b border-slate-50 text-[10px] font-black text-slate-400">{h}</div>
-                        ))}
-                    </div>
+            <div className="max-w-6xl mx-auto bg-white rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+                <div className="overflow-x-auto">
+                    <div className="grid grid-cols-8 divide-x divide-slate-100 min-w-[700px]" style={{ height: (TOTAL_HOURS * SLOT_HEIGHT) + 56 }}>
+                        {/* Time Column */}
+                        <div className="bg-slate-50/50 flex flex-col pt-14">
+                            {HOURS.slice(0, 14).map(h => (
+                                <div key={h} className="flex-1 flex items-center justify-center border-b border-slate-50 text-[10px] font-black text-slate-400">{h}</div>
+                            ))}
+                        </div>
 
-                    {/* Day Columns */}
-                    {days.map((d, i) => {
-                        const dateStr = d.toISOString().split('T')[0];
-                        const isToday = dateStr === new Date().toISOString().split('T')[0];
-                        const dayBookings = bookings.filter(b => b.date === dateStr);
+                        {/* Day Columns */}
+                        {days.map((d, i) => {
+                            const dateStr = d.toISOString().split('T')[0];
+                            const isToday = dateStr === new Date().toISOString().split('T')[0];
+                            const dayBookings = bookings.filter(b => b.date === dateStr);
 
-                        return (
-                            <div key={i} className={`flex-1 relative flex flex-col ${isToday ? 'bg-indigo-50/20' : ''}`}>
-                                {/* Header */}
-                                <div className={`h-14 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'} z-20`}>
-                                    <span className="text-[9px] font-black uppercase tracking-tighter opacity-70">{DAYS_OF_WEEK[i].slice(0, 3)}</span>
-                                    <span className="text-lg font-black tracking-tighter">{d.getDate()}</span>
-                                </div>
-
-                                {/* Day Grid Content */}
-                                <div className="flex-1 relative">
-                                    {/* Background Grid Lines */}
-                                    <div className="absolute inset-0 flex flex-col">
-                                        {HOURS.slice(0, 14).map((h) => (
-                                            <div key={h} className="flex-1 border-b border-slate-50 relative group/row">
-                                                <button
-                                                    onClick={() => {
-                                                        setFormData({ ...formData, date: dateStr, start_time: h });
-                                                        setShowModal(true);
-                                                    }}
-                                                    className="absolute inset-0 w-full h-full hover:bg-slate-50/50 transition-all opacity-0 group-hover/row:opacity-100"
-                                                />
-                                            </div>
-                                        ))}
+                            return (
+                                <div key={i} className={`flex-1 relative flex flex-col ${isToday ? 'bg-indigo-50/20' : ''}`}>
+                                    {/* Header */}
+                                    <div className={`h-14 border-b border-slate-100 flex flex-col items-center justify-center ${isToday ? 'bg-indigo-600 text-white' : 'bg-slate-50/50'} z-20`}>
+                                        <span className="text-[9px] font-black uppercase tracking-tighter opacity-70">{DAYS_OF_WEEK[i].slice(0, 3)}</span>
+                                        <span className="text-lg font-black tracking-tighter">{d.getDate()}</span>
                                     </div>
 
-                                    {/* Events Layer */}
-                                    <div className="absolute inset-0 pointer-events-none p-1">
-                                        <div className="relative w-full h-full">
-                                            {dayBookings.map(booking => {
-                                                const styles = getEventStyles(booking.start_time, booking.end_time);
-                                                return (
-                                                    <div
-                                                        key={booking.id}
-                                                        className="absolute left-0 right-0 pointer-events-auto transition-all px-0.5"
-                                                        style={styles}
-                                                    >
-                                                        <div className="h-full bg-indigo-600 rounded-lg p-1.5 text-[8px] text-white flex flex-col justify-between shadow-md shadow-indigo-100 overflow-hidden border border-white/10">
-                                                            <div>
-                                                                <p className="font-black leading-tight uppercase truncate">{booking.title}</p>
-                                                                <p className="font-bold opacity-70 truncate">{booking.sector}</p>
+                                    {/* Day Grid Content */}
+                                    <div className="flex-1 relative">
+                                        {/* Background Grid Lines */}
+                                        <div className="absolute inset-0 flex flex-col">
+                                            {HOURS.slice(0, 14).map((h) => (
+                                                <div key={h} className="flex-1 border-b border-slate-50 relative group/row">
+                                                    <button
+                                                        onClick={() => {
+                                                            setFormData({ ...formData, date: dateStr, start_time: h });
+                                                            setShowModal(true);
+                                                        }}
+                                                        className="absolute inset-0 w-full h-full hover:bg-slate-50/50 transition-all opacity-0 group-hover/row:opacity-100"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Events Layer */}
+                                        <div className="absolute inset-0 pointer-events-none p-1">
+                                            <div className="relative w-full h-full">
+                                                {dayBookings.map(booking => {
+                                                    const styles = getEventStyles(booking.start_time, booking.end_time);
+                                                    return (
+                                                        <div
+                                                            key={booking.id}
+                                                            className="absolute left-0 right-0 pointer-events-auto transition-all px-0.5"
+                                                            style={styles}
+                                                        >
+                                                            <div className="h-full bg-indigo-600 rounded-lg p-1.5 text-[8px] text-white flex flex-col justify-between shadow-md shadow-indigo-100 overflow-hidden border border-white/10">
+                                                                <div>
+                                                                    <p className="font-black leading-tight uppercase truncate">{booking.title}</p>
+                                                                    <p className="font-bold opacity-70 truncate">{booking.sector}</p>
+                                                                </div>
+                                                                <p className="text-[7px] font-black opacity-50 mt-1">{booking.start_time.slice(0, 5)}</p>
                                                             </div>
-                                                            <p className="text-[7px] font-black opacity-50 mt-1">{booking.start_time.slice(0, 5)}</p>
                                                         </div>
-                                                    </div>
-                                                );
-                                            })}
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );
@@ -301,48 +303,50 @@ export default function RoomControl({ setView }) {
         for (let i = 1; i <= daysInMonth; i++) days.push(new Date(y, m, i));
 
         return (
-            <div className="max-w-6xl mx-auto bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
-                <div className="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
-                    {DAYS_OF_WEEK.map(d => (
-                        <div key={d} className="py-2 text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">{d.slice(0, 3)}</div>
-                    ))}
-                </div>
-                <div className="grid grid-cols-7">
-                    {days.map((d, i) => {
-                        if (!d) return <div key={i} className="h-24 border-b border-r border-slate-50 bg-slate-50/10"></div>;
-                        const dateStr = d.toISOString().split('T')[0];
-                        const dayBookings = bookings.filter(b => b.date === dateStr);
-                        const isToday = dateStr === new Date().toISOString().split('T')[0];
+            <div className="max-w-6xl mx-auto bg-white rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden animate-in fade-in duration-500">
+                <div className="overflow-x-auto">
+                    <div className="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
+                        {DAYS_OF_WEEK.map(d => (
+                            <div key={d} className="py-2 text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">{d.slice(0, 3)}</div>
+                        ))}
+                    </div>
+                    <div className="grid grid-cols-7">
+                        {days.map((d, i) => {
+                            if (!d) return <div key={i} className="h-24 border-b border-r border-slate-50 bg-slate-50/10"></div>;
+                            const dateStr = d.toISOString().split('T')[0];
+                            const dayBookings = bookings.filter(b => b.date === dateStr);
+                            const isToday = dateStr === new Date().toISOString().split('T')[0];
 
-                        return (
-                            <div key={i} className={`h-24 border-b border-r border-slate-100 p-2 group hover:bg-slate-50 transition-all ${isToday ? 'bg-indigo-50/30' : ''}`}>
-                                <div className="flex justify-between items-start mb-1">
-                                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${isToday ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}>
-                                        {d.getDate()}
-                                    </span>
-                                    <button
-                                        onClick={() => {
-                                            setFormData({ ...formData, date: dateStr });
-                                            setShowModal(true);
-                                        }}
-                                        className="opacity-0 group-hover:opacity-100 p-1 text-indigo-600 bg-indigo-50 rounded-lg transition-all"
-                                    >
-                                        <Plus size={12} />
-                                    </button>
+                            return (
+                                <div key={i} className={`h-20 md:h-24 border-b border-r border-slate-100 p-1.5 md:p-2 group hover:bg-slate-50 transition-all ${isToday ? 'bg-indigo-50/30' : ''}`}>
+                                    <div className="flex justify-between items-start mb-1">
+                                        <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${isToday ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}>
+                                            {d.getDate()}
+                                        </span>
+                                        <button
+                                            onClick={() => {
+                                                setFormData({ ...formData, date: dateStr });
+                                                setShowModal(true);
+                                            }}
+                                            className="opacity-0 group-hover:opacity-100 p-1 text-indigo-600 bg-indigo-50 rounded-lg transition-all"
+                                        >
+                                            <Plus size={12} />
+                                        </button>
+                                    </div>
+                                    <div className="space-y-0.5 overflow-hidden">
+                                        {dayBookings.slice(0, 2).map(b => (
+                                            <div key={b.id} className="text-[8px] bg-indigo-100/50 text-indigo-700 px-1.5 py-0.5 rounded font-black truncate max-w-full">
+                                                {b.title}
+                                            </div>
+                                        ))}
+                                        {dayBookings.length > 2 && (
+                                            <div className="text-[8px] text-slate-400 font-black pl-1">+{dayBookings.length - 2}</div>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="space-y-0.5 overflow-hidden">
-                                    {dayBookings.slice(0, 2).map(b => (
-                                        <div key={b.id} className="text-[8px] bg-indigo-100/50 text-indigo-700 px-1.5 py-0.5 rounded font-black truncate max-w-full">
-                                            {b.title}
-                                        </div>
-                                    ))}
-                                    {dayBookings.length > 2 && (
-                                        <div className="text-[8px] text-slate-400 font-black pl-1">+{dayBookings.length - 2}</div>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );
@@ -351,7 +355,7 @@ export default function RoomControl({ setView }) {
     return (
         <div className="space-y-6 animate-in slide-in-from-right duration-700 pb-20">
             {/* Professional Branding Header */}
-            <div className="max-w-6xl mx-auto bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[2rem] p-8 md:p-10 text-white relative overflow-hidden shadow-2xl">
+            <div className="max-w-6xl mx-auto bg-gradient-to-br from-slate-900 to-indigo-900 rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-10 text-white relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                 <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div>
@@ -481,7 +485,7 @@ export default function RoomControl({ setView }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-1.5">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Data</label>
                                     <input

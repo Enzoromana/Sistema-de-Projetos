@@ -39,7 +39,7 @@ export default function Signup({ onLoginClick }) {
     if (success) {
         return (
             <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-                <div className="w-full max-w-[600px] bg-white rounded-[3rem] p-16 shadow-2xl border border-slate-100 text-center animate-in zoom-in duration-500">
+                <div className="w-full max-w-[600px] bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 shadow-2xl border border-slate-100 text-center animate-in zoom-in duration-500">
                     <div className="w-24 h-24 bg-teal-50 text-teal-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-teal-100">
                         <CheckCircle2 size={48} />
                     </div>
@@ -60,9 +60,9 @@ export default function Signup({ onLoginClick }) {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-            <div className="w-full max-w-[1100px] h-[700px] bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-100 animate-in fade-in zoom-in duration-700">
+            <div className="w-full max-w-[1100px] min-h-[500px] md:h-[700px] bg-white rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-100 animate-in fade-in zoom-in duration-700">
                 {/* Visual Side */}
-                <div className="flex-1 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 p-16 text-white flex flex-col justify-between relative overflow-hidden">
+                <div className="hidden md:flex flex-1 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 p-10 lg:p-16 text-white flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
 
                     <div className="relative z-10">
@@ -103,9 +103,16 @@ export default function Signup({ onLoginClick }) {
                 </div>
 
                 {/* Form Side */}
-                <div className="flex-1 p-16 md:p-24 flex flex-col justify-center bg-white">
-                    <div className="mb-12">
-                        <h3 className="text-4xl font-black text-slate-800 mb-2">Novo Acesso.</h3>
+                <div className="flex-1 p-8 md:p-16 lg:p-24 flex flex-col justify-center bg-white">
+                    <div className="mb-8 md:mb-12">
+                        {/* Mobile back button */}
+                        <button
+                            onClick={onLoginClick}
+                            className="md:hidden flex items-center gap-2 text-indigo-600 font-bold text-sm mb-6 hover:text-indigo-800 transition-colors"
+                        >
+                            <ArrowLeft size={16} /> Voltar ao Login
+                        </button>
+                        <h3 className="text-3xl md:text-4xl font-black text-slate-800 mb-2">Novo Acesso.</h3>
                         <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Crie sua conta para solicitar entrada no Hub</p>
                     </div>
 

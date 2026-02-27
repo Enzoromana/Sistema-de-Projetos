@@ -16,7 +16,7 @@ import {
     LayoutDashboard, Calendar, LayoutGrid,
     Bell, ShieldCheck, LogOut, Loader2,
     ShieldAlert, Activity, Presentation, BookOpen,
-    ChevronLeft, ChevronRight, X, Code2
+    ChevronLeft, ChevronRight, X, Code2, Menu
 } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -39,6 +39,7 @@ function App() {
         return params.get('mode') === 'signup' ? 'signup' : 'login';
     }); // 'login' or 'signup'
     const [showProfileView, setShowProfileView] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const scrollRef = useRef(null);
 
@@ -157,15 +158,15 @@ function App() {
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
             {/* Global Navbar */}
-            <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-200 px-6 py-4 sticky top-0 z-50">
-                <div className="max-w-[75vw] mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-12">
+            <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-200 px-4 md:px-6 py-3 md:py-4 sticky top-0 z-50">
+                <div className="max-w-[95vw] md:max-w-[75vw] mx-auto flex items-center justify-between">
+                    <div className="flex items-center gap-4 md:gap-12">
                         <div
-                            className="flex items-center gap-3 cursor-pointer group"
-                            onClick={() => setActiveModule('hub')}
+                            className="flex items-center gap-2 md:gap-3 cursor-pointer group"
+                            onClick={() => { setActiveModule('hub'); setMobileMenuOpen(false); }}
                         >
-                            <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-black shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform">K</div>
-                            <span className="font-black text-slate-800 tracking-tighter text-xl">HUB MANAGER</span>
+                            <div className="w-9 h-9 md:w-10 md:h-10 bg-indigo-600 rounded-xl md:rounded-2xl flex items-center justify-center text-white font-black shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform text-sm md:text-base">K</div>
+                            <span className="font-black text-slate-800 tracking-tighter text-base md:text-xl">HUB MANAGER</span>
                         </div>
 
                         <div className="relative flex items-center group/nav">
@@ -261,28 +262,35 @@ function App() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <button className="p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-all relative">
+                    <div className="flex items-center gap-2 md:gap-4">
+                        {/* Mobile hamburger button */}
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden p-2.5 bg-slate-50 text-slate-500 rounded-xl hover:bg-slate-100 transition-all"
+                        >
+                            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                        <button className="hidden md:flex p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-all relative">
                             <Bell size={20} />
                         </button>
-                        <div className="h-10 w-px bg-slate-200 mx-2"></div>
-                        <div className="flex items-center gap-3 pl-2 group relative">
+                        <div className="hidden md:block h-10 w-px bg-slate-200 mx-2"></div>
+                        <div className="flex items-center gap-2 md:gap-3 pl-1 md:pl-2 group relative">
                             <button
                                 onClick={() => setShowProfileView(true)}
-                                className="text-right hidden sm:block hover:opacity-70 transition-opacity"
+                                className="text-right hidden lg:block hover:opacity-70 transition-opacity"
                             >
                                 <p className="text-sm font-bold text-slate-800">{profile?.full_name}</p>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{profile?.role === 'admin' ? 'Administrador' : 'Colaborador'}</p>
                             </button>
                             <button
                                 onClick={() => setShowProfileView(true)}
-                                className="w-12 h-12 rounded-2xl bg-slate-100 p-0.5 hover:bg-slate-200 transition-all flex items-center justify-center text-indigo-600 font-black text-lg shadow-sm"
+                                className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-100 p-0.5 hover:bg-slate-200 transition-all flex items-center justify-center text-indigo-600 font-black text-base md:text-lg shadow-sm"
                             >
                                 {profile?.full_name?.charAt(0) || 'U'}
                             </button>
                             <button
                                 onClick={handleLogout}
-                                className="w-10 h-10 rounded-xl bg-slate-50 p-0.5 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center text-slate-300"
+                                className="hidden md:flex w-10 h-10 rounded-xl bg-slate-50 p-0.5 hover:bg-red-50 hover:text-red-500 transition-all items-center justify-center text-slate-300"
                                 title="Sair"
                             >
                                 <LogOut size={18} />
@@ -292,7 +300,57 @@ function App() {
                 </div>
             </nav>
 
-            <main className="flex-1 max-w-[75vw] w-full mx-auto px-6 py-10">
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+                <div className="md:hidden fixed inset-0 z-40 animate-in fade-in duration-200">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)}></div>
+                    <div className="absolute top-[60px] left-0 right-0 bg-white border-b border-slate-200 shadow-2xl animate-in slide-in-from-top duration-300 max-h-[80vh] overflow-y-auto">
+                        <div className="p-4 space-y-1">
+                            {[
+                                { id: 'hub', icon: <LayoutGrid size={20} />, label: 'Início', show: true },
+                                { id: 'projects', icon: <LayoutDashboard size={20} />, label: 'Projetos', show: profile?.access_projects },
+                                { id: 'rooms', icon: <Calendar size={20} />, label: 'Sala de Reunião', show: profile?.access_rooms },
+                                { id: 'audit', icon: <ShieldCheck size={20} />, label: 'Auditoria', show: profile?.access_audit || profile?.role === 'admin' },
+                                { id: 'medical', icon: <Activity size={20} />, label: 'Junta Médica', show: profile?.access_medical || profile?.role === 'admin' },
+                                { id: 'sheet-to-slide', icon: <Presentation size={20} />, label: 'Conversor Comercial', show: profile?.role === 'admin' || profile?.access_sheet_to_slide },
+                                { id: 'guia-medico', icon: <BookOpen size={20} />, label: 'Guia Médico', show: profile?.role === 'admin' || profile?.access_guia_medico },
+                                { id: 'dev-cockpit', icon: <Code2 size={20} />, label: 'Arquitetura', show: profile?.role === 'admin' },
+                            ].filter(m => m.show).map(mod => (
+                                <button
+                                    key={mod.id}
+                                    onClick={() => { setActiveModule(mod.id); setMobileMenuOpen(false); }}
+                                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-bold transition-all ${activeModule === mod.id
+                                            ? 'bg-indigo-50 text-indigo-600 shadow-sm'
+                                            : 'text-slate-600 hover:bg-slate-50'
+                                        }`}
+                                >
+                                    {mod.icon}
+                                    {mod.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="border-t border-slate-100 p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-indigo-600 font-black">
+                                    {profile?.full_name?.charAt(0) || 'U'}
+                                </div>
+                                <div>
+                                    <p className="text-sm font-bold text-slate-800">{profile?.full_name}</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{profile?.role === 'admin' ? 'Admin' : 'Colaborador'}</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                                className="p-3 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-all"
+                            >
+                                <LogOut size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <main className="flex-1 max-w-[95vw] md:max-w-[75vw] w-full mx-auto px-4 md:px-6 py-6 md:py-10">
                 {activeModule === 'hub' && <HubHome setActiveModule={setActiveModule} userProfile={profile} />}
                 {activeModule === 'projects' && <ProjectControl />}
                 {activeModule === 'rooms' && <RoomControl setView={setActiveModule} />}
@@ -334,7 +392,7 @@ function App() {
                         </div>
 
                         <div className="p-10 space-y-8">
-                            <div className="grid grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">E-mail</p>
                                     <p className="font-bold text-slate-700 truncate">{profile.email}</p>
@@ -380,8 +438,8 @@ function App() {
                 </div>
             )}
 
-            <footer className="bg-white border-t border-slate-100 py-10 px-6 mt-20">
-                <div className="max-w-[75vw] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <footer className="bg-white border-t border-slate-100 py-6 md:py-10 px-4 md:px-6 mt-10 md:mt-20">
+                <div className="max-w-[95vw] md:max-w-[75vw] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                     <div className="flex items-center gap-3 opacity-50">
                         <div className="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-white font-black text-xs">K</div>
                         <span className="font-black text-slate-800 tracking-tighter">HUB MANAGER KLINI</span>

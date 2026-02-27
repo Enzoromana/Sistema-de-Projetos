@@ -77,7 +77,7 @@ export default function HubHome({ setActiveModule, userProfile }) {
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
             {/* Cleaner Welcome Header */}
-            <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-[2.5rem] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl">
+            <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-14 text-white relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                 <div className="relative z-10 max-w-3xl">
                     <div className="flex items-center gap-3 mb-6">
@@ -132,7 +132,7 @@ export default function HubHome({ setActiveModule, userProfile }) {
 
             {/* Quick Actions & Recent Tasks */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-                <div className="group bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500">
+                <div className="group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500">
                     <div className="flex items-center gap-4 mb-10">
                         <div className="p-4 bg-teal-50 text-teal-600 rounded-3xl">
                             <CheckCircle2 size={24} />
@@ -155,7 +155,7 @@ export default function HubHome({ setActiveModule, userProfile }) {
                     </div>
                 </div>
 
-                <div className="group bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500">
+                <div className="group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500">
                     <div className="flex items-center gap-4 mb-10">
                         <div className="p-4 bg-orange-50 text-orange-600 rounded-3xl">
                             <AlertCircle size={24} />

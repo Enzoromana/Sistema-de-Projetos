@@ -53,9 +53,9 @@ export default function Login({ onSignupClick }) {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-            <div className="w-full max-w-[1100px] h-[700px] bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-100 animate-in fade-in zoom-in duration-700">
+            <div className="w-full max-w-[1100px] min-h-[500px] md:h-[700px] bg-white rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-100 animate-in fade-in zoom-in duration-700">
                 {/* Visual Side */}
-                <div className="flex-1 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 p-16 text-white flex flex-col justify-between relative overflow-hidden">
+                <div className="hidden md:flex flex-1 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 p-10 lg:p-16 text-white flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full -ml-10 -mb-10 blur-3xl"></div>
 
@@ -85,9 +85,9 @@ export default function Login({ onSignupClick }) {
                 </div>
 
                 {/* Form Side */}
-                <div className="flex-1 p-16 md:p-24 flex flex-col justify-center bg-white">
+                <div className="flex-1 p-8 md:p-16 lg:p-24 flex flex-col justify-center bg-white">
                     <div className="mb-12">
-                        <h3 className="text-4xl font-black text-slate-800 mb-2">Bem-vindo.</h3>
+                        <h3 className="text-3xl md:text-4xl font-black text-slate-800 mb-2">Bem-vindo.</h3>
                         <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Acesse sua conta corporativa</p>
                     </div>
 

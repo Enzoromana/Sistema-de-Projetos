@@ -18,7 +18,7 @@ function LogDetailModal({ log, onClose }) {
 
         return (
             <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-4 pb-4 border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                     <div>Campo</div>
                     <div>Antes</div>
                     <div>Depois</div>
@@ -29,7 +29,7 @@ function LogDetailModal({ log, onClose }) {
                         if (!isChanged && log.action === 'UPDATE') return null;
 
                         return (
-                            <div key={key} className={`grid grid-cols-3 gap-4 py-3 px-4 rounded-xl border ${isChanged ? 'bg-indigo-50/30 border-indigo-100/50' : 'bg-slate-50 border-slate-100'}`}>
+                            <div key={key} className={`grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 py-3 px-4 rounded-xl border ${isChanged ? 'bg-indigo-50/30 border-indigo-100/50' : 'bg-slate-50 border-slate-100'}`}>
                                 <div className="font-mono text-[11px] font-bold text-slate-500 break-all">{key}</div>
                                 <div className="font-mono text-[11px] text-red-500 break-all bg-red-50/50 p-2 rounded-lg">
                                     {oldData[key] !== undefined ? (typeof oldData[key] === 'object' ? JSON.stringify(oldData[key]) : String(oldData[key])) : '-'}
@@ -52,8 +52,8 @@ function LogDetailModal({ log, onClose }) {
 
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2.5rem] w-full max-w-5xl shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500 overflow-hidden">
-                <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-900 text-white">
+            <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] w-full max-w-5xl shadow-2xl border border-slate-100 flex flex-col animate-in zoom-in duration-500 overflow-hidden max-h-[90vh]">
+                <div className="p-4 md:p-8 border-b border-slate-50 flex items-center justify-between bg-slate-900 text-white">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-white/10 rounded-2xl">
                             <Database size={24} />
@@ -203,7 +203,7 @@ export default function UserAudit() {
     return (
         <div className="space-y-8 animate-in slide-in-from-right duration-700">
             {/* Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 md:gap-6 bg-white p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm">
                 <div className="flex items-center gap-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1.5rem] flex items-center justify-center text-white shadow-xl shadow-indigo-200">
                         <ShieldCheck size={32} />
@@ -296,10 +296,10 @@ export default function UserAudit() {
                                                 )}
                                             </td>
                                             <td className="px-8 py-6">
-                                                <div className="flex items-center justify-center gap-2">
+                                                <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'role', p.role)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title={p.role === 'admin' ? 'Admin' : 'Tornar Admin'}
                                                     >
                                                         <ShieldCheck size={18} />
@@ -307,7 +307,7 @@ export default function UserAudit() {
                                                     <div className="w-px h-6 bg-slate-200 mx-1"></div>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_projects', p.access_projects)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Projetos"
                                                     >
                                                         <LayoutDashboard size={18} />
@@ -412,7 +412,7 @@ export default function UserAudit() {
             ) : (
                 <div className="space-y-6">
                     {/* Log Filters */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 bg-white p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                 <User size={12} /> Colaborador
