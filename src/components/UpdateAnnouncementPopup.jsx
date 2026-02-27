@@ -34,7 +34,7 @@ export default function UpdateAnnouncementPopup({ onViewAll, onClose }) {
 
     return (
         <div className={`fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md transition-opacity duration-300 ${closing ? 'opacity-0' : 'animate-in fade-in duration-500'}`}>
-            <div className={`bg-white rounded-[1.5rem] md:rounded-[2.5rem] w-full max-w-lg shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border border-slate-100 overflow-hidden transition-all duration-300 ${closing ? 'scale-95 opacity-0' : 'animate-in zoom-in duration-500'}`}>
+            <div className={`bg-white rounded-[1.5rem] md:rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border border-slate-100 transition-all duration-300 ${closing ? 'scale-95 opacity-0' : 'animate-in zoom-in duration-500'}`}>
                 {/* Hero section */}
                 <div className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 p-8 md:p-12 text-white overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
