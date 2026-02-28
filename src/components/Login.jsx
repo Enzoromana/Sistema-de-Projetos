@@ -120,7 +120,12 @@ export default function Login({ onSignupClick }) {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha</label>
+                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
+                                Senha
+                                <button type="button" onClick={() => setPassword('Acesso@2026')} className="text-[10px] text-indigo-500 hover:underline">
+                                    Usar Senha da Migração
+                                </button>
+                            </label>
                             <div className="relative">
                                 <input
                                     type="password" required
@@ -128,6 +133,7 @@ export default function Login({ onSignupClick }) {
                                     placeholder="••••••••"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
+                                    autoComplete="new-password"
                                 />
                                 <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             </div>
