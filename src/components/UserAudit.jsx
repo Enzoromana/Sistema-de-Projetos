@@ -138,10 +138,7 @@ export default function UserAudit() {
         setLogsLoading(true);
         let query = supabase
             .from('audit_logs')
-            .select(`
-                *,
-                profiles:user_id (full_name, email)
-            `)
+            .select('*')
             .order('created_at', { ascending: false })
             .limit(100);
 
@@ -154,8 +151,20 @@ export default function UserAudit() {
         }
 
         const { data, error } = await query;
-        if (error) console.error(error);
-        else setLogs(data);
+        if (error) {
+            console.error(error);
+        } else {
+            // Em vez de depender do join PostgREST no banco (que causa o PGRST200),
+            // juntamos com a lista de profiles que já carregamos na memória do JS:
+            const enrichedLogs = data.map(log => {
+                const profileMatch = profiles.find(p => p.id === log.user_id);
+                return {
+                    ...log,
+                    profiles: profileMatch || { full_name: 'Sistema/Desconhecido', email: '-' }
+                };
+            });
+            setLogs(enrichedLogs);
+        }
         setLogsLoading(false);
     };
 
@@ -295,8 +304,8 @@ export default function UserAudit() {
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="px-8 py-6">
-                                                <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
+                                            <td className="px-8 py-6 w-1/3">
+                                                <div className="flex items-center justify-start gap-1.5 md:gap-2 flex-wrap max-w-sm">
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'role', p.role)}
                                                         className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
