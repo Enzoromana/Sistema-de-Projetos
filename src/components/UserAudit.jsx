@@ -304,79 +304,79 @@ export default function UserAudit() {
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="px-8 py-6 w-1/3">
-                                                <div className="flex items-center justify-start gap-1.5 md:gap-2 flex-wrap max-w-sm">
+                                            <td className="px-8 py-6 w-[40%]">
+                                                <div className="flex items-center justify-start gap-2 flex-wrap">
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'role', p.role)}
-                                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title={p.role === 'admin' ? 'Admin' : 'Tornar Admin'}
                                                     >
-                                                        <ShieldCheck size={18} />
+                                                        <ShieldCheck size={16} />
                                                     </button>
-                                                    <div className="w-px h-6 bg-slate-200 mx-1"></div>
+                                                    <div className="w-px h-5 bg-slate-200 mx-1"></div>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_projects', p.access_projects)}
-                                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Projetos"
                                                     >
-                                                        <LayoutDashboard size={18} />
+                                                        <LayoutDashboard size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_rooms', p.access_rooms)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_rooms ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_rooms ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Salas"
                                                     >
-                                                        <Calendar size={18} />
+                                                        <Calendar size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_audit', p.access_audit)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_audit ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_audit ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Auditoria"
                                                     >
-                                                        <History size={18} />
+                                                        <History size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_medical', p.access_medical)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_medical ? 'bg-teal-700 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_medical ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Médico"
                                                     >
-                                                        <Activity size={18} />
+                                                        <Activity size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_sheet_to_slide', p.access_sheet_to_slide)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-orange-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Conversor Comercial"
                                                     >
-                                                        <Presentation size={18} />
+                                                        <Presentation size={16} />
                                                     </button>
-                                                    <div className="w-px h-6 bg-slate-200 mx-1"></div>
+                                                    <div className="w-px h-5 bg-slate-200 mx-1"></div>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_guia_medico', p.access_guia_medico)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_medico ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_medico ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Guia Médico"
                                                     >
-                                                        <BookOpen size={18} />
+                                                        <BookOpen size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_guia_gerador', p.access_guia_gerador)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_gerador ? 'bg-teal-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_gerador ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Guia: Gerador"
                                                     >
-                                                        <FileText size={18} />
+                                                        <FileText size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_guia_rede', p.access_guia_rede)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_rede ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_rede ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Guia: Rede"
                                                     >
-                                                        <Network size={18} />
+                                                        <Network size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_guia_analise', p.access_guia_analise)}
-                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_analise ? 'bg-rose-600 text-white shadow-lg' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_analise ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
                                                         title="Guia: Análise"
                                                     >
-                                                        <BarChart3 size={18} />
+                                                        <BarChart3 size={16} />
                                                     </button>
                                                 </div>
                                             </td>
