@@ -304,11 +304,11 @@ export default function UserAudit() {
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-6 min-w-[320px]">
+                                            <td className="px-6 py-6 min-w-[420px]">
                                                 <div className="flex items-center justify-start gap-2 flex-wrap">
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'role', p.role)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.role === 'admin' ? 'bg-purple-600 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title={p.role === 'admin' ? 'Admin' : 'Tornar Admin'}
                                                     >
                                                         <ShieldCheck size={16} />
@@ -316,68 +316,77 @@ export default function UserAudit() {
                                                     <div className="w-px h-5 bg-slate-200 mx-1"></div>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_projects', p.access_projects)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_projects ? 'bg-indigo-600 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Projetos"
                                                     >
                                                         <LayoutDashboard size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_rooms', p.access_rooms)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_rooms ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_rooms ? 'bg-blue-600 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Salas"
                                                     >
                                                         <Calendar size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_audit', p.access_audit)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_audit ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_audit ? 'bg-rose-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Auditoria"
                                                     >
                                                         <History size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_medical', p.access_medical)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_medical ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_medical ? 'bg-teal-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Médico"
                                                     >
                                                         <Activity size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_sheet_to_slide', p.access_sheet_to_slide)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_sheet_to_slide ? 'bg-orange-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Conversor Comercial"
                                                     >
                                                         <Presentation size={16} />
                                                     </button>
+
                                                     <div className="w-px h-5 bg-slate-200 mx-1"></div>
+
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'access_guia_medico', p.access_guia_medico)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_medico ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
+                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_medico ? 'bg-sky-500 text-white shadow-sm' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
                                                         title="Guia Médico"
                                                     >
                                                         <BookOpen size={16} />
                                                     </button>
-                                                    <button
-                                                        onClick={() => togglePermission(p.id, 'access_guia_gerador', p.access_guia_gerador)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_gerador ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
-                                                        title="Guia: Gerador"
-                                                    >
-                                                        <FileText size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => togglePermission(p.id, 'access_guia_rede', p.access_guia_rede)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_rede ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
-                                                        title="Guia: Rede"
-                                                    >
-                                                        <Network size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => togglePermission(p.id, 'access_guia_analise', p.access_guia_analise)}
-                                                        className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_analise ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}
-                                                        title="Guia: Análise"
-                                                    >
-                                                        <BarChart3 size={16} />
-                                                    </button>
+
+                                                    {/* Opções filhas só aparecem se o Guia Médico (Pai) estiver ativo */}
+                                                    {p.access_guia_medico && (
+                                                        <>
+                                                            <div className="w-px h-5 bg-slate-200/60 mx-1"></div>
+                                                            <button
+                                                                onClick={() => togglePermission(p.id, 'access_guia_gerador', p.access_guia_gerador)}
+                                                                className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_gerador ? 'bg-emerald-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
+                                                                title="Guia: Gerador"
+                                                            >
+                                                                <FileText size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => togglePermission(p.id, 'access_guia_rede', p.access_guia_rede)}
+                                                                className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_rede ? 'bg-fuchsia-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
+                                                                title="Guia: Rede"
+                                                            >
+                                                                <Network size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => togglePermission(p.id, 'access_guia_analise', p.access_guia_analise)}
+                                                                className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all ${p.access_guia_analise ? 'bg-amber-500 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 border border-slate-100'}`}
+                                                                title="Guia: Análise"
+                                                            >
+                                                                <BarChart3 size={16} />
+                                                            </button>
+                                                        </>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6 text-right">
