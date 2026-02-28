@@ -262,8 +262,8 @@ export default function UserAudit() {
 
                     {/* Users Table */}
                     <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
+                        <div className="overflow-x-auto pb-4">
+                            <table className="w-[1200px] xl:w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-slate-50/50 border-b border-slate-100">
                                         <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Colaborador</th>
@@ -304,7 +304,7 @@ export default function UserAudit() {
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="px-8 py-6 w-[40%]">
+                                            <td className="px-6 py-6 min-w-[320px]">
                                                 <div className="flex items-center justify-start gap-2 flex-wrap">
                                                     <button
                                                         onClick={() => togglePermission(p.id, 'role', p.role)}
