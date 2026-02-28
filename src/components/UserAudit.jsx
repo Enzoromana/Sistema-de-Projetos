@@ -269,11 +269,11 @@ export default function UserAudit() {
                                         <tr key={p.id} className="hover:bg-slate-50/30 transition-colors group">
                                             <td className="px-8 py-6">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-500 text-lg">
-                                                        {p.full_name?.charAt(0) || 'U'}
+                                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-500 text-lg uppercase">
+                                                        {(p.full_name || p.email).charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <p className="font-bold text-slate-800">{p.full_name}</p>
+                                                        <p className="font-bold text-slate-800">{p.full_name || 'Usuário em Configuração'}</p>
                                                         <p className="text-xs text-slate-400 font-medium">{p.email}</p>
                                                     </div>
                                                 </div>
