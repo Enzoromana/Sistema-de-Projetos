@@ -4,14 +4,9 @@ import { Mail, Lock, LogIn, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function Login({ onSignupClick }) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('Acesso@2026'); // Autopreenchido com a senha provisória
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
-    // Force Password Reset Flow
-    const [showForceReset, setShowForceReset] = useState(false);
-    const [newPasswordForm, setNewPasswordForm] = useState('');
-    const [loadingForceReset, setLoadingForceReset] = useState(false);
 
     // Reset Password States
     const [showResetModal, setShowResetModal] = useState(false);
@@ -31,7 +26,7 @@ export default function Login({ onSignupClick }) {
         setError('');
 
         try {
-            const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+            const { error: authError } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
@@ -39,19 +34,11 @@ export default function Login({ onSignupClick }) {
             if (authError) {
                 // Traduzindo e detectando erros comuns
                 if (authError.message === 'Invalid login credentials') {
-                    setError('E-mail ou senha incorretos.');
+                    setError('E-mail ou senha incorretos. Por favor, clique em "Esqueci minha senha" abaixo para redefinir seu acesso na nova plataforma.');
                 } else {
                     setError(authError.message);
                 }
-                return; // Break execution if error
             }
-
-            // Se a senha for a temporária, interceptamos o login para forçar a troca!
-            if (password === 'Acesso@2026') {
-                setShowForceReset(true);
-                return; // Bloqueamos a entrada no sistema até trocar
-            }
-
         } catch (err) {
             console.error('Erro detalhado no login:', err);
             if (err.message?.includes('fetch') || err.name === 'TypeError') {
@@ -120,12 +107,7 @@ export default function Login({ onSignupClick }) {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
-                                Senha
-                                <button type="button" onClick={() => setPassword('Acesso@2026')} className="text-[10px] text-indigo-500 hover:underline">
-                                    Usar Senha da Migração
-                                </button>
-                            </label>
+                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Senha</label>
                             <div className="relative">
                                 <input
                                     type="password" required
@@ -133,7 +115,6 @@ export default function Login({ onSignupClick }) {
                                     placeholder="••••••••"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                    autoComplete="new-password"
                                 />
                                 <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             </div>
@@ -200,59 +181,6 @@ export default function Login({ onSignupClick }) {
                     </p>
                 </div>
             </div>
-
-            {/* Modal de Troca de Senha Obrigatória (Acesso@2026) */}
-            {showForceReset && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white rounded-[2.5rem] w-full max-w-md shadow-2xl overflow-hidden flex flex-col p-10 animate-in zoom-in duration-500">
-                        <div className="w-16 h-16 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-6 shadow-inner mx-auto">
-                            <Lock size={32} />
-                        </div>
-                        <h3 className="text-2xl font-black text-slate-800 text-center mb-2">Atualize sua Senha</h3>
-                        <p className="text-sm text-slate-500 text-center mb-8 font-medium">
-                            Você está acessando a plataforma após a migração usando uma senha temporária. Para sua segurança e para prosseguir ao painel, crie uma **nova senha forte** agora.
-                        </p>
-
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Sua Nova Senha Escolhida</label>
-                                <input
-                                    type="password"
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none font-bold text-slate-700 text-sm"
-                                    placeholder="No mínimo 6 caracteres"
-                                    value={newPasswordForm}
-                                    onChange={e => setNewPasswordForm(e.target.value)}
-                                />
-                            </div>
-
-                            <button
-                                disabled={newPasswordForm.length < 6 || loadingForceReset}
-                                onClick={async () => {
-                                    setLoadingForceReset(true);
-                                    try {
-                                        const { error: updateError } = await supabase.auth.updateUser({
-                                            password: newPasswordForm
-                                        });
-                                        if (updateError) throw updateError;
-
-                                        // Sucesso!
-                                        setShowForceReset(false);
-                                        // window.location.reload() ou apenas deixar o AuthStateChange carregar normalmente
-                                        window.location.href = '/'; // Forçamos refresh pro app ver o novo state logado
-                                    } catch (err) {
-                                        alert('Erro ao atualizar senha: ' + err.message);
-                                    } finally {
-                                        setLoadingForceReset(false);
-                                    }
-                                }}
-                                className="w-full bg-slate-900 text-white font-black py-4 rounded-[1.5rem] flex items-center justify-center gap-3 hover:bg-black transition-all shadow-xl shadow-slate-200 disabled:opacity-50 mt-4"
-                            >
-                                {loadingForceReset ? <Loader2 className="animate-spin" size={20} /> : 'Salvar Nova Senha e Entrar'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {showResetModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
