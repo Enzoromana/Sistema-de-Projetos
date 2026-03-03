@@ -176,16 +176,34 @@ export default function UserAudit() {
             newValue = !currentValue;
         }
 
-        const { error } = await supabase
+        // Atualização otimista imediata na UI
+        setProfiles(prev => prev.map(p =>
+            p.id === profileId ? { ...p, [field]: newValue } : p
+        ));
+
+        const { data, error } = await supabase
             .from('profiles')
             .update({ [field]: newValue })
-            .eq('id', profileId);
+            .eq('id', profileId)
+            .select();
 
-        if (error) alert(error.message);
-        else {
-            setProfiles(profiles.map(p =>
-                p.id === profileId ? { ...p, [field]: newValue } : p
+        if (error) {
+            // Reverte a atualização otimista
+            setProfiles(prev => prev.map(p =>
+                p.id === profileId ? { ...p, [field]: currentValue } : p
             ));
+            alert('Erro ao salvar permissão: ' + error.message);
+            return;
+        }
+
+        // Se nenhuma linha foi afetada, o RLS bloqueou a operação
+        if (!data || data.length === 0) {
+            // Reverte a atualização otimista
+            setProfiles(prev => prev.map(p =>
+                p.id === profileId ? { ...p, [field]: currentValue } : p
+            ));
+            alert('Permissão negada: Somente administradores podem alterar permissões de outros usuários. Verifique se seu perfil possui role "admin" no banco de dados.');
+            return;
         }
     };
 

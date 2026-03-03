@@ -119,16 +119,7 @@ export default function GuiaMedicoGerador({ produtos }) {
     return (
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
             {/* Header */}
-            <div style={{
-                background: 'white',
-                padding: '16px 24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid #eee',
-                borderRadius: '12px 12px 0 0',
-                marginBottom: '24px'
-            }}>
+            <div className="bg-white p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between border-b border-gray-100 rounded-t-xl mb-6 gap-4" style={{ fontFamily: 'Arial, sans-serif' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <div>
                         <span style={{ fontSize: '28px', fontWeight: 'bold', color: COLORS.teal }}>klini</span>
@@ -140,13 +131,13 @@ export default function GuiaMedicoGerador({ produtos }) {
                         <div style={{ fontSize: '12px', color: COLORS.gray }}>Sistema automático • {produtos.length} produtos disponíveis</div>
                     </div>
                 </div>
-                <div style={{ color: COLORS.gray, fontSize: '14px' }}>
+                <div className="text-right md:text-left" style={{ color: COLORS.gray, fontSize: '14px' }}>
                     ANS - Nº 42.202-9
                 </div>
             </div>
 
             {/* Conteúdo Principal */}
-            <div style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: '24px' }}>
+            <div className="grid grid-cols-1 md:grid-cols-[380px_1fr] gap-6">
 
                 {/* Coluna 1 - Selecione o Produto */}
                 <div style={{ background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
@@ -203,11 +194,7 @@ export default function GuiaMedicoGerador({ produtos }) {
                 </div>
 
                 {/* Coluna 2 - Configurar e Gerar */}
-                <div style={{
-                    background: 'white', borderRadius: '16px',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                    width: '100%', maxWidth: '480px', padding: '30px', position: 'relative'
-                }}>
+                <div className="bg-white rounded-2xl shadow-xl w-full md:max-w-[480px] p-6 md:p-8 relative">
                     <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                         <div style={{
                             width: '32px', height: '32px', background: COLORS.teal, borderRadius: '50%',
