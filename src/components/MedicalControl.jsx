@@ -2186,7 +2186,7 @@ export default function MedicalControl() {
                                                 setRequests(prev => prev.map(r => r.id === selectedRequest.id ? { ...r, tiebreaker_token: token } : r));
                                             }
 
-                                            const link = `${window.location.origin}/parecer/${token}`;
+                                            const link = `${window.location.origin}/parecer/junta-${selectedRequest.requisicao}-${token}`;
                                             setGeneratedLink(link);
                                             setShowLinkModal(true);
                                             await navigator.clipboard.writeText(link);
