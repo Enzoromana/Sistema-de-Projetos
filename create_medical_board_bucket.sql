@@ -1,32 +1,35 @@
--- Create the medical-board bucket if it doesn't exist
+-- 1. Create the medical-board bucket if it doesn't exist
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('medical-board', 'medical-board', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Allow public access to read files
-CREATE POLICY "Public Access" 
-ON storage.objects FOR SELECT 
-USING (bucket_id = 'medical-board');
+-- 2. Clean up policies (using unique names to avoid conflicts with other buckets)
+DO $$ 
+BEGIN
+    -- Select Policy
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'medical_board_select_policy') THEN
+        CREATE POLICY "medical_board_select_policy" ON storage.objects FOR SELECT USING (bucket_id = 'medical-board');
+    END IF;
 
--- Allow authenticated users to upload files
-CREATE POLICY "Authenticated users can upload files" 
-ON storage.objects FOR INSERT 
-WITH CHECK (
-    bucket_id = 'medical-board' 
-    AND auth.role() = 'authenticated'
-);
+    -- Insert Policy
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'medical_board_insert_policy') THEN
+        CREATE POLICY "medical_board_insert_policy" ON storage.objects FOR INSERT WITH CHECK (
+            bucket_id = 'medical-board' AND auth.role() = 'authenticated'
+        );
+    END IF;
 
--- Allow authenticated users to delete their own files or any files depending on requirements
-CREATE POLICY "Authenticated users can update files" 
-ON storage.objects FOR UPDATE 
-USING (
-    bucket_id = 'medical-board' 
-    AND auth.role() = 'authenticated'
-);
+    -- Update Policy
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'medical_board_update_policy') THEN
+        CREATE POLICY "medical_board_update_policy" ON storage.objects FOR UPDATE USING (
+            bucket_id = 'medical-board' AND auth.role() = 'authenticated'
+        );
+    END IF;
 
-CREATE POLICY "Authenticated users can delete files" 
-ON storage.objects FOR DELETE 
-USING (
-    bucket_id = 'medical-board' 
-    AND auth.role() = 'authenticated'
-);
+    -- Delete Policy
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'medical_board_delete_policy') THEN
+        CREATE POLICY "medical_board_delete_policy" ON storage.objects FOR DELETE USING (
+            bucket_id = 'medical-board' AND auth.role() = 'authenticated'
+        );
+    END IF;
+END $$;
+
