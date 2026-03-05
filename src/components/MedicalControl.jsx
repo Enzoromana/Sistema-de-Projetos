@@ -929,7 +929,6 @@ export default function MedicalControl() {
                                 <FormHeader icon={<Activity />} title="Dados do Médico Auditor" sub="Informações do profissional responsável pela análise técnica." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Número da Requisição" required value={formData.requisicao} onChange={v => setFormData({ ...formData, requisicao: v })} placeholder="EX: REQ-2025-0001" />
-                                    <Input label="Número da Guia" value={formData.guia} onChange={v => setFormData({ ...formData, guia: v })} placeholder="EX: 123456789" />
                                     <Input label="Nome do Médico" required value={formData.aud_nome} onChange={v => setFormData({ ...formData, aud_nome: v })} placeholder="Dr. Nome Completo" />
                                     <Input
                                         label="CRM/CRO" required
@@ -1034,11 +1033,11 @@ export default function MedicalControl() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <Input label="Justificativa Técnica" required={Number(p.qtd_solicitada) !== Number(p.qtd_autorizada)} value={p.justificativa} onChange={v => {
+                                                    <Input label="Justificativa Técnica" value={p.justificativa} onChange={v => {
                                                         const newP = [...procedures];
                                                         newP[idx].justificativa = v;
                                                         setProcedures(newP);
-                                                    }} placeholder={Number(p.qtd_solicitada) !== Number(p.qtd_autorizada) ? "Obrigatório: Quantidades divergem" : "Descreva brevemente a necessidade clínica"} />
+                                                    }} placeholder="Descreva brevemente a necessidade clínica (Opcional)" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1089,11 +1088,11 @@ export default function MedicalControl() {
                                                     setMaterials(newM);
                                                 }} />
                                                 <div className="md:col-span-4 mt-2">
-                                                    <Input label="Justificativa" required={Number(m.qtd_solicitada) !== Number(m.qtd_autorizada)} value={m.justificativa} onChange={v => {
+                                                    <Input label="Justificativa" value={m.justificativa} onChange={v => {
                                                         const newM = [...materials];
                                                         newM[idx].justificativa = v;
                                                         setMaterials(newM);
-                                                    }} placeholder={Number(m.qtd_solicitada) !== Number(m.qtd_autorizada) ? "Obrigatório: Quantidades divergem" : "Justificativa técnica (opcional)"} />
+                                                    }} placeholder="Justificativa técnica (opcional)" />
                                                 </div>
                                             </div>
                                         </div>
@@ -2218,7 +2217,7 @@ export default function MedicalControl() {
             {
                 showVerifyConfigModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden flex flex-col shadow-2xl border border-white/20">
+                        <div className="bg-white rounded-[2.5rem] w-full max-w-md overflow-hidden flex flex-col shadow-2xl border border-white/20">
                             <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-amber-500 text-white">
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-white/20 rounded-2xl shadow-lg">
