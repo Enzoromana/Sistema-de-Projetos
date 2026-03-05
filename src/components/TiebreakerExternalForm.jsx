@@ -50,6 +50,9 @@ export default function TiebreakerExternalForm({ token }) {
 
             setRequest(data);
 
+            // Filter items that need a conclusion (where authorized < requested)
+            const needsConclusion = (item) => (item.qtd_autorizada || 0) < (item.qtd_solicitada || 1);
+
             // If in edit mode, populate form with existing data
             if (data.tiebreaker_allow_edit && data.parecer_conclusao) {
                 setFormData({
@@ -61,36 +64,60 @@ export default function TiebreakerExternalForm({ token }) {
                 });
 
                 if (data.medical_procedures) {
-                    setProcedureConclusions(data.medical_procedures.map(p => ({
-                        id: p.id,
-                        codigo: p.codigo,
-                        descricao: p.descricao,
-                        conclusao_desempate: p.conclusao_desempate || ''
-                    })));
+                    setProcedureConclusions(
+                        data.medical_procedures
+                            .filter(needsConclusion)
+                            .map(p => ({
+                                id: p.id,
+                                codigo: p.codigo,
+                                descricao: p.descricao,
+                                qtd_solicitada: p.qtd_solicitada,
+                                qtd_autorizada: p.qtd_autorizada,
+                                conclusao_desempate: p.conclusao_desempate || ''
+                            }))
+                    );
                 }
                 if (data.medical_materials) {
-                    setMaterialConclusions(data.medical_materials.map(m => ({
-                        id: m.id,
-                        descricao: m.descricao,
-                        conclusao_desempate: m.conclusao_desempate || ''
-                    })));
+                    setMaterialConclusions(
+                        data.medical_materials
+                            .filter(needsConclusion)
+                            .map(m => ({
+                                id: m.id,
+                                descricao: m.descricao,
+                                qtd_solicitada: m.qtd_solicitada,
+                                qtd_autorizada: m.qtd_autorizada,
+                                conclusao_desempate: m.conclusao_desempate || ''
+                            }))
+                    );
                 }
             } else {
                 // Initialize item mapping for new submission
                 if (data.medical_procedures) {
-                    setProcedureConclusions(data.medical_procedures.map(p => ({
-                        id: p.id,
-                        codigo: p.codigo,
-                        descricao: p.descricao,
-                        conclusao_desempate: ''
-                    })));
+                    setProcedureConclusions(
+                        data.medical_procedures
+                            .filter(needsConclusion)
+                            .map(p => ({
+                                id: p.id,
+                                codigo: p.codigo,
+                                descricao: p.descricao,
+                                qtd_solicitada: p.qtd_solicitada,
+                                qtd_autorizada: p.qtd_autorizada,
+                                conclusao_desempate: ''
+                            }))
+                    );
                 }
                 if (data.medical_materials) {
-                    setMaterialConclusions(data.medical_materials.map(m => ({
-                        id: m.id,
-                        descricao: m.descricao,
-                        conclusao_desempate: ''
-                    })));
+                    setMaterialConclusions(
+                        data.medical_materials
+                            .filter(needsConclusion)
+                            .map(m => ({
+                                id: m.id,
+                                descricao: m.descricao,
+                                qtd_solicitada: m.qtd_solicitada,
+                                qtd_autorizada: m.qtd_autorizada,
+                                conclusao_desempate: ''
+                            }))
+                    );
                 }
             }
 
@@ -290,17 +317,31 @@ export default function TiebreakerExternalForm({ token }) {
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="text-sm font-black text-slate-600 uppercase tracking-wider border-b border-slate-100 pb-2">Itens em Divergência</h3>
+                        <h3 className="text-sm font-black text-slate-600 uppercase tracking-wider border-b border-slate-100 pb-2">Solicitação de materiais e procedimentos</h3>
                         {request.medical_procedures?.map((proc, idx) => (
-                            <div key={idx} className="p-4 bg-white border border-slate-200 rounded-xl">
+                            <div key={idx} className="p-4 bg-white border border-slate-200 rounded-xl relative overflow-hidden">
                                 <span className="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500 mb-2 block w-fit">Procedimento</span>
                                 <p className="font-bold text-slate-700">{proc.codigo} - {proc.descricao}</p>
+                                <div className="mt-2 flex items-center gap-4 text-[11px] font-bold">
+                                    <span className="text-slate-400">SOLICITADA: <span className="text-slate-600">{proc.qtd_solicitada}</span></span>
+                                    <span className="text-slate-400">AUTORIZADA: <span className={proc.qtd_autorizada < proc.qtd_solicitada ? "text-amber-600" : "text-teal-600"}>{proc.qtd_autorizada}</span></span>
+                                </div>
+                                {proc.qtd_autorizada < proc.qtd_solicitada && (
+                                    <div className="absolute top-0 right-0 h-full w-1 bg-amber-400"></div>
+                                )}
                             </div>
                         ))}
                         {request.medical_materials?.map((mat, idx) => (
-                            <div key={idx} className="p-4 bg-white border border-slate-200 rounded-xl">
+                            <div key={idx} className="p-4 bg-white border border-slate-200 rounded-xl relative overflow-hidden">
                                 <span className="text-[10px] font-bold bg-amber-50 text-amber-600 px-2 py-1 rounded mb-2 block w-fit">Material</span>
                                 <p className="font-bold text-slate-700">{mat.descricao}</p>
+                                <div className="mt-2 flex items-center gap-4 text-[11px] font-bold">
+                                    <span className="text-slate-400">SOLICITADA: <span className="text-slate-600">{mat.qtd_solicitada}</span></span>
+                                    <span className="text-slate-400">AUTORIZADA: <span className={mat.qtd_autorizada < mat.qtd_solicitada ? "text-amber-600" : "text-teal-600"}>{mat.qtd_autorizada}</span></span>
+                                </div>
+                                {mat.qtd_autorizada < mat.qtd_solicitada && (
+                                    <div className="absolute top-0 right-0 h-full w-1 bg-amber-400"></div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -362,10 +403,23 @@ export default function TiebreakerExternalForm({ token }) {
                         </div>
 
                         <div className="space-y-6">
+                            {procedureConclusions.length === 0 && materialConclusions.length === 0 && (
+                                <div className="p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-center">
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Todos os itens foram autorizados integralmente. Nenhuma justificativa por item é necessária.</p>
+                                </div>
+                            )}
+
                             {procedureConclusions.map((proc, idx) => (
-                                <div key={proc.id} className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                    <h4 className="font-bold text-slate-800 mb-2">{proc.descricao}</h4>
-                                    <p className="text-xs text-slate-500 mb-4 font-mono">{proc.codigo}</p>
+                                <div key={proc.id} className="p-6 bg-slate-50 rounded-2xl border border-slate-200 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-[10px] font-black uppercase">Procedimento</div>
+                                    <h4 className="font-bold text-slate-800 mb-1 pr-20">{proc.descricao}</h4>
+                                    <p className="text-xs text-slate-500 mb-3 font-mono">{proc.codigo}</p>
+
+                                    <div className="mb-4 flex items-center gap-4 text-[10px] font-black bg-white px-3 py-2 rounded-lg w-fit border border-slate-100">
+                                        <span className="text-slate-400">SOLICITADA: <span className="text-slate-900">{proc.qtd_solicitada}</span></span>
+                                        <span className="text-slate-400">AUTORIZADA: <span className="text-amber-600">{proc.qtd_autorizada}</span></span>
+                                    </div>
+
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
                                         rows={3}
@@ -382,8 +436,15 @@ export default function TiebreakerExternalForm({ token }) {
                             ))}
 
                             {materialConclusions.map((mat, idx) => (
-                                <div key={mat.id} className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                    <h4 className="font-bold text-slate-800 mb-2">{mat.descricao}</h4>
+                                <div key={mat.id} className="p-6 bg-slate-50 rounded-2xl border border-slate-200 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 bg-amber-500 text-white px-3 py-1 text-[10px] font-black uppercase">Material</div>
+                                    <h4 className="font-bold text-slate-800 mb-3 pr-20">{mat.descricao}</h4>
+
+                                    <div className="mb-4 flex items-center gap-4 text-[10px] font-black bg-white px-3 py-2 rounded-lg w-fit border border-slate-100">
+                                        <span className="text-slate-400">SOLICITADA: <span className="text-slate-900">{mat.qtd_solicitada}</span></span>
+                                        <span className="text-slate-400">AUTORIZADA: <span className="text-amber-600">{mat.qtd_autorizada}</span></span>
+                                    </div>
+
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
                                         rows={3}
