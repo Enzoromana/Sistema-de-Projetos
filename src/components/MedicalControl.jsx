@@ -3104,7 +3104,6 @@ function RequestDetails({ request, onEdit, onBack }) {
                                 <ReportItem label="CRM" value={request.aud_crm} className="flex-1" />
                                 <ReportItem label="Estado (CRM)" value={request.aud_estado} className="flex-1" />
                             </div>
-                            <ReportItem label="Guia" value={request.guia} />
                             <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
                         </div>
                     </div>
