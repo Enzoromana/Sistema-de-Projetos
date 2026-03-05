@@ -73,6 +73,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 descricao: p.descricao,
                                 qtd_solicitada: p.qtd_solicitada,
                                 qtd_autorizada: p.qtd_autorizada,
+                                justificativa: p.justificativa,
                                 conclusao_desempate: p.conclusao_desempate || ''
                             }))
                     );
@@ -86,6 +87,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 descricao: m.descricao,
                                 qtd_solicitada: m.qtd_solicitada,
                                 qtd_autorizada: m.qtd_autorizada,
+                                justificativa: m.justificativa,
                                 conclusao_desempate: m.conclusao_desempate || ''
                             }))
                     );
@@ -102,6 +104,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 descricao: p.descricao,
                                 qtd_solicitada: p.qtd_solicitada,
                                 qtd_autorizada: p.qtd_autorizada,
+                                justificativa: p.justificativa,
                                 conclusao_desempate: ''
                             }))
                     );
@@ -115,6 +118,7 @@ export default function TiebreakerExternalForm({ token }) {
                                 descricao: m.descricao,
                                 qtd_solicitada: m.qtd_solicitada,
                                 qtd_autorizada: m.qtd_autorizada,
+                                justificativa: m.justificativa,
                                 conclusao_desempate: ''
                             }))
                     );
@@ -326,6 +330,11 @@ export default function TiebreakerExternalForm({ token }) {
                                     <span className="text-slate-400">SOLICITADA: <span className="text-slate-600">{proc.qtd_solicitada}</span></span>
                                     <span className="text-slate-400">AUTORIZADA: <span className={proc.qtd_autorizada < proc.qtd_solicitada ? "text-amber-600" : "text-teal-600"}>{proc.qtd_autorizada}</span></span>
                                 </div>
+                                {proc.justificativa && (
+                                    <p className="mt-2 text-[11px] font-bold text-amber-600">
+                                        Justificativa: {proc.justificativa}
+                                    </p>
+                                )}
                                 {proc.qtd_autorizada < proc.qtd_solicitada && (
                                     <div className="absolute top-0 right-0 h-full w-1 bg-amber-400"></div>
                                 )}
@@ -339,6 +348,11 @@ export default function TiebreakerExternalForm({ token }) {
                                     <span className="text-slate-400">SOLICITADA: <span className="text-slate-600">{mat.qtd_solicitada}</span></span>
                                     <span className="text-slate-400">AUTORIZADA: <span className={mat.qtd_autorizada < mat.qtd_solicitada ? "text-amber-600" : "text-teal-600"}>{mat.qtd_autorizada}</span></span>
                                 </div>
+                                {mat.justificativa && (
+                                    <p className="mt-2 text-[11px] font-bold text-amber-600">
+                                        Justificativa: {mat.justificativa}
+                                    </p>
+                                )}
                                 {mat.qtd_autorizada < mat.qtd_solicitada && (
                                     <div className="absolute top-0 right-0 h-full w-1 bg-amber-400"></div>
                                 )}
@@ -419,6 +433,11 @@ export default function TiebreakerExternalForm({ token }) {
                                         <span className="text-slate-400">SOLICITADA: <span className="text-slate-900">{proc.qtd_solicitada}</span></span>
                                         <span className="text-slate-400">AUTORIZADA: <span className="text-amber-600">{proc.qtd_autorizada}</span></span>
                                     </div>
+                                    {proc.justificativa && (
+                                        <p className="mb-4 text-xs font-bold text-amber-600">
+                                            Justificativa: {proc.justificativa}
+                                        </p>
+                                    )}
 
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
@@ -444,6 +463,11 @@ export default function TiebreakerExternalForm({ token }) {
                                         <span className="text-slate-400">SOLICITADA: <span className="text-slate-900">{mat.qtd_solicitada}</span></span>
                                         <span className="text-slate-400">AUTORIZADA: <span className="text-amber-600">{mat.qtd_autorizada}</span></span>
                                     </div>
+                                    {mat.justificativa && (
+                                        <p className="mb-4 text-xs font-bold text-amber-600">
+                                            Justificativa: {mat.justificativa}
+                                        </p>
+                                    )}
 
                                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Conclusão para este item</label>
                                     <textarea
