@@ -169,7 +169,12 @@ export default function MedicalControl() {
                     .from('medical_requests')
                     .insert([sanitizedData])
                     .select();
-                if (requestError) throw requestError;
+                if (requestError) {
+                    if (requestError.code === '23505') {
+                        throw new Error('Já existe uma Junta Médica cadastrada com este número de protocolo/requisição.');
+                    }
+                    throw requestError;
+                }
                 requestId = requestData[0].id;
             }
 
