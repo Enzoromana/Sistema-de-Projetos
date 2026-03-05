@@ -26,7 +26,7 @@ function App() {
     // Manual Routing for External Forms
     const path = window.location.pathname;
     const isTiebreakerRoute = path.startsWith('/parecer/');
-    const tiebreakerToken = isTiebreakerRoute ? path.split('-').pop() : null;
+    const tiebreakerToken = isTiebreakerRoute ? path.split('-').slice(-5).join('-') : null;
 
     if (tiebreakerToken) {
         return <TiebreakerExternalForm token={tiebreakerToken} />;
