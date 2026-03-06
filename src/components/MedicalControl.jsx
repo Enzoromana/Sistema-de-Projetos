@@ -969,7 +969,7 @@ export default function MedicalControl() {
                         {currentStep === 1 && (
                             <div className="space-y-8 animate-in slide-in-from-right">
                                 <FormHeader icon={<Activity />} title="Dados do Médico Auditor" sub="Informações do profissional responsável pela análise técnica." />
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                                     <Input label="Número da Requisição" required value={formData.requisicao} onChange={v => setFormData({ ...formData, requisicao: v })} placeholder="EX: REQ-2025-0001" />
                                     <Input label="Nome do Médico" required value={formData.aud_nome} onChange={v => setFormData({ ...formData, aud_nome: v })} placeholder="Dr. Nome Completo" />
                                     <div className="space-y-2">
@@ -1010,7 +1010,7 @@ export default function MedicalControl() {
                         {currentStep === 2 && (
                             <div className="space-y-8 animate-in slide-in-from-right">
                                 <FormHeader icon={<Stethoscope />} title="Dados do Profissional Assistente" sub="Informações do médico que solicitou o procedimento." />
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                                     <Input label="Nome" required value={formData.ass_nome} onChange={v => setFormData({ ...formData, ass_nome: v })} placeholder="Dr. Nome Completo" />
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-4 mb-2">
@@ -1075,8 +1075,8 @@ export default function MedicalControl() {
                                                     </button>
                                                 </div>
                                                 <div className="grid grid-cols-1 gap-6">
-                                                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-end">
-                                                        <div className="w-full">
+                                                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 items-start">
+                                                        <div className="w-full xl:col-span-8">
                                                             <TussAutocomplete
                                                                 value={p}
                                                                 onChange={(newValues) => {
@@ -1086,7 +1086,7 @@ export default function MedicalControl() {
                                                                 }}
                                                             />
                                                         </div>
-                                                        <div className="grid grid-cols-2 gap-3 self-stretch">
+                                                        <div className="grid grid-cols-2 gap-3 xl:col-span-4 w-full">
                                                             <Input label="Solicitada" type="number" value={p.qtd_solicitada} onChange={v => {
                                                                 const newP = [...procedures];
                                                                 newP[idx].qtd_solicitada = v;
@@ -1229,8 +1229,8 @@ export default function MedicalControl() {
                                             onDrop={(e) => handleDrop(e, dt.id)}
                                             className={`p-6 rounded-3xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-2xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-xl hover:shadow-teal-900/5'}`}
                                         >
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-3 min-w-0 pr-2">
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3 w-full">
                                                     <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                                                         <FileText size={20} />
                                                     </div>
@@ -3081,9 +3081,9 @@ function TussAutocomplete({ value, onChange }) {
                 Busca de Procedimentos (TUSS) <span className="text-red-500 font-black">*</span>
             </label>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-3">
                 {/* Code Field (Search Input) - Now the interactive one */}
-                <div className="md:col-span-1 relative">
+                <div className="relative">
                     {isSelected ? (
                         <div className="relative">
                             <input
@@ -3145,7 +3145,7 @@ function TussAutocomplete({ value, onChange }) {
                 </div>
 
                 {/* Description Field (Read Only) */}
-                <div className="md:col-span-2">
+                <div>
                     <input
                         readOnly
                         value={value.descricao || ''}
