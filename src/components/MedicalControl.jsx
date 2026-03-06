@@ -1458,7 +1458,7 @@ export default function MedicalControl() {
                                             <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de 2° opinião</h2>
                                             <div className="mt-2 space-y-0.5">
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                                    Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
+                                                    Requisição: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
                                                 </p>
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                                     Emissão: <span className="text-slate-900 font-bold">{new Date().toLocaleDateString('pt-BR')}</span>
@@ -1508,11 +1508,6 @@ export default function MedicalControl() {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* Reporting Note */}
-                                        <p className="text-xs leading-relaxed font-bold italic text-slate-700 pt-4 pb-4">
-                                            Prezado(a) Senhor(a) {selectedRequest.ben_nome}, CPF nº {selectedRequest.ben_cpf}, a Klini vem apresentar o Parecer de Junta Médica referente à Requisição: {selectedRequest.requisicao}, cujo atendimento foi em {selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}.
-                                        </p>
 
                                         {/* Block 2: Professionals */}
                                         <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
