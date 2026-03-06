@@ -292,7 +292,7 @@ export default function TiebreakerExternalForm({ token }) {
                         </div>
                     </div>
                     <div className="px-4 py-2 bg-slate-100 rounded-lg text-xs font-bold text-slate-600">
-                        Protocolo: {request.requisicao}
+                        Requisição: {request.requisicao}
                     </div>
                 </div>
             </header>

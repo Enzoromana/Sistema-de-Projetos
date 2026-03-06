@@ -69,11 +69,25 @@ export default function MedicalControl() {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({
         requisicao: '',
-        ben_nome: '', ben_cpf: '', ben_email: '', ben_sexo: '', ben_nascimento: '', ben_telefone: '', ben_estado: '', ben_cidade: '',
-        aud_nome: '', aud_estado: '', aud_crm: '', aud_data: '', guia: '',
-        ass_nome: '', ass_crm: '', ass_email: '', ass_telefone: '', ass_endereco: '', ass_especialidade: '',
-        div_especialidade: '', div_motivos: [],
-        prazo_ans: ''
+        aud_nome: '',
+        aud_crm: '',
+        aud_estado: '',
+        aud_data: '',
+        ass_nome: '',
+        ass_crm: '',
+        ass_email: '',
+        ass_telefone: '',
+        ass_especialidade: '',
+        ass_endereco: '',
+        ben_nome: '',
+        ben_cpf: '',
+        ben_nascimento: '',
+        ben_telefone: '',
+        prazo_ans: '',
+        div_especialidade: '',
+        div_motivos: [],
+        aud_conselho_tipo: 'CRM',
+        ass_conselho_tipo: 'CRM',
     });
     const [procedures, setProcedures] = useState([{ codigo: '', descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
     const [materials, setMaterials] = useState([{ descricao: '', qtd_solicitada: 1, qtd_autorizada: 0, justificativa: '' }]);
@@ -930,12 +944,24 @@ export default function MedicalControl() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Número da Requisição" required value={formData.requisicao} onChange={v => setFormData({ ...formData, requisicao: v })} placeholder="EX: REQ-2025-0001" />
                                     <Input label="Nome do Médico" required value={formData.aud_nome} onChange={v => setFormData({ ...formData, aud_nome: v })} placeholder="Dr. Nome Completo" />
-                                    <Input
-                                        label="CRM/CRO" required
-                                        value={formData.aud_crm}
-                                        onChange={v => setFormData({ ...formData, aud_crm: v.replace(/\D/g, '') })}
-                                        placeholder="00000 (Somente números)"
-                                    />
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-4 mb-2">
+                                            <label className="flex items-center gap-2 cursor-pointer text-sm font-bold text-slate-600">
+                                                <input type="radio" className="w-4 h-4 text-teal-600 border-slate-300 focus:ring-teal-500" checked={formData.aud_conselho_tipo === 'CRM'} onChange={() => setFormData({ ...formData, aud_conselho_tipo: 'CRM' })} />
+                                                CRM
+                                            </label>
+                                            <label className="flex items-center gap-2 cursor-pointer text-sm font-bold text-slate-600">
+                                                <input type="radio" className="w-4 h-4 text-teal-600 border-slate-300 focus:ring-teal-500" checked={formData.aud_conselho_tipo === 'CRO'} onChange={() => setFormData({ ...formData, aud_conselho_tipo: 'CRO' })} />
+                                                CRO
+                                            </label>
+                                        </div>
+                                        <Input
+                                            label={formData.aud_conselho_tipo} required
+                                            value={formData.aud_crm}
+                                            onChange={v => setFormData({ ...formData, aud_crm: v.replace(/\D/g, '') })}
+                                            placeholder={`00000 (Somente números)`}
+                                        />
+                                    </div>
                                     <Input label="Estado (CRM)" value={formData.aud_estado} onChange={v => setFormData({ ...formData, aud_estado: v })} placeholder="UF" />
                                     <Input label="Data do Atendimento" type="date" value={formData.aud_data} onChange={v => setFormData({ ...formData, aud_data: v })} />
                                     <div className="relative">
@@ -958,12 +984,24 @@ export default function MedicalControl() {
                                 <FormHeader icon={<Stethoscope />} title="Dados do Médico Assistente" sub="Informações do médico que solicitou o procedimento." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Nome" required value={formData.ass_nome} onChange={v => setFormData({ ...formData, ass_nome: v })} placeholder="Dr. Nome Completo" />
-                                    <Input
-                                        label="CRM/CRO" required
-                                        value={formData.ass_crm}
-                                        onChange={v => setFormData({ ...formData, ass_crm: v.replace(/\D/g, '') })}
-                                        placeholder="00000 (Somente números)"
-                                    />
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-4 mb-2">
+                                            <label className="flex items-center gap-2 cursor-pointer text-sm font-bold text-slate-600">
+                                                <input type="radio" className="w-4 h-4 text-teal-600 border-slate-300 focus:ring-teal-500" checked={formData.ass_conselho_tipo === 'CRM'} onChange={() => setFormData({ ...formData, ass_conselho_tipo: 'CRM' })} />
+                                                CRM
+                                            </label>
+                                            <label className="flex items-center gap-2 cursor-pointer text-sm font-bold text-slate-600">
+                                                <input type="radio" className="w-4 h-4 text-teal-600 border-slate-300 focus:ring-teal-500" checked={formData.ass_conselho_tipo === 'CRO'} onChange={() => setFormData({ ...formData, ass_conselho_tipo: 'CRO' })} />
+                                                CRO
+                                            </label>
+                                        </div>
+                                        <Input
+                                            label={formData.ass_conselho_tipo} required
+                                            value={formData.ass_crm}
+                                            onChange={v => setFormData({ ...formData, ass_crm: v.replace(/\D/g, '') })}
+                                            placeholder={`00000 (Somente números)`}
+                                        />
+                                    </div>
                                     <Input label="E-mail" required value={formData.ass_email} onChange={v => setFormData({ ...formData, ass_email: v })} placeholder="email@exemplo.com" />
                                     <Input
                                         label="Telefone" required
@@ -1033,11 +1071,17 @@ export default function MedicalControl() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <Input label="Justificativa Técnica" value={p.justificativa} onChange={v => {
-                                                        const newP = [...procedures];
-                                                        newP[idx].justificativa = v;
-                                                        setProcedures(newP);
-                                                    }} placeholder="Descreva brevemente a necessidade clínica (Opcional)" />
+                                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
+                                                    <textarea
+                                                        value={p.justificativa}
+                                                        onChange={e => {
+                                                            const newP = [...procedures];
+                                                            newP[idx].justificativa = e.target.value;
+                                                            setProcedures(newP);
+                                                        }}
+                                                        placeholder="Descreva brevemente a necessidade clínica (Opcional)"
+                                                        className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -1088,11 +1132,17 @@ export default function MedicalControl() {
                                                     setMaterials(newM);
                                                 }} />
                                                 <div className="md:col-span-4 mt-2">
-                                                    <Input label="Justificativa" value={m.justificativa} onChange={v => {
-                                                        const newM = [...materials];
-                                                        newM[idx].justificativa = v;
-                                                        setMaterials(newM);
-                                                    }} placeholder="Justificativa técnica (opcional)" />
+                                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
+                                                    <textarea
+                                                        value={m.justificativa}
+                                                        onChange={e => {
+                                                            const newM = [...materials];
+                                                            newM[idx].justificativa = e.target.value;
+                                                            setMaterials(newM);
+                                                        }}
+                                                        placeholder="Justificativa técnica (opcional)"
+                                                        className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -1362,7 +1412,7 @@ export default function MedicalControl() {
                                     </div>
                                     <div>
                                         <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
+                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Requisição: {selectedRequest.requisicao}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -1427,7 +1477,7 @@ export default function MedicalControl() {
                                                 <div className="grid grid-cols-2 gap-y-3 gap-x-6">
                                                     <div>
                                                         <p className="text-[9px] uppercase font-bold text-[#259591]/70">Nome Completo</p>
-                                                        <p className="text-base font-bold truncate">{selectedRequest.ben_nome}</p>
+                                                        <p className="text-base font-bold" style={{ wordBreak: 'break-word', whiteSpace: 'normal' }}>{selectedRequest.ben_nome}</p>
                                                     </div>
                                                     <div>
                                                         <p className="text-[9px] uppercase font-bold text-[#259591]/70">CPF</p>
@@ -1580,6 +1630,48 @@ export default function MedicalControl() {
                                                                     <Paperclip size={10} className="text-slate-400" />
                                                                     <span className="font-bold text-slate-700">{att.file_name}</span>
                                                                     <span className="text-[9px] text-slate-400">({new Date(att.created_at).toLocaleDateString('pt-BR')})</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Edit mode: Attachments */}
+                                                {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
+                                                    <div className="mt-4 p-4 border border-teal-100 rounded-xl bg-teal-50">
+                                                        <p className="font-black text-teal-800 uppercase text-[10px] mb-2 tracking-widest flex items-center gap-2"><Paperclip size={12} /> Anexos Gerais</p>
+                                                        <div className="space-y-2">
+                                                            {selectedRequest.medical_attachments.map((att, i) => (
+                                                                <div key={i} className="flex items-center justify-between p-2 bg-white rounded-lg border border-teal-100/50 shadow-sm">
+                                                                    <div className="flex items-center gap-3">
+                                                                        <div className="p-2 bg-slate-50 rounded bg-teal-100/30 text-teal-600">
+                                                                            <FileText size={14} />
+                                                                        </div>
+                                                                        <div>
+                                                                            <p className="text-xs font-bold text-slate-700">{att.file_name}</p>
+                                                                            <p className="text-[10px] font-medium text-slate-400">{new Date(att.created_at).toLocaleDateString('pt-BR')}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        {isEditing && (
+                                                                            <button
+                                                                                onClick={() => alert("Exclusão de anexo só é disponível via supabase ou implantação avançada no momento.")}
+                                                                                className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                                                title="Remover anexo"
+                                                                            >
+                                                                                <Trash2 size={14} />
+                                                                            </button>
+                                                                        )}
+                                                                        <a
+                                                                            href={supabase.storage.from('documentos').getPublicUrl(att.file_path).data.publicUrl}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
+                                                                            title="Download anexo"
+                                                                        >
+                                                                            <Download size={14} />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -1980,7 +2072,7 @@ export default function MedicalControl() {
                                         <Gavel size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="text-2xl font-black tracking-tight">Conclusão de Desempate</h3>
+                                        <h3 className="text-2xl font-black tracking-tight">Conclusão do Desempatador</h3>
                                         <p className="text-sm font-black text-white/60 uppercase tracking-widest leading-none mt-1">Junta Médica</p>
                                     </div>
                                 </div>
@@ -2018,17 +2110,17 @@ export default function MedicalControl() {
                                     </div>
                                     {/* 2FA Read-only visibility for admin context */}
                                     <div className="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between group hover:border-teal-100 transition-all">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center text-teal-600">
-                                                <ShieldCheck size={20} />
+                                        <div className="bg-slate-50 p-6 flex flex-col items-center justify-center text-center">
+                                            <div className="w-16 h-16 rounded-full bg-[#259591]/10 flex items-center justify-center mb-4">
+                                                <FileText className="text-[#259591]" size={32} />
                                             </div>
-                                            <div>
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Dados de Verificação (2FA)</p>
-                                                <p className="text-xs font-bold text-slate-600">
-                                                    CRM: <span className="text-teal-600">{tiebreakerData.tiebreaker_verify_crm || '-'}</span> •
-                                                    CPF: <span className="text-teal-600">{tiebreakerData.tiebreaker_verify_cpf || '-'}</span>
-                                                </p>
-                                            </div>
+                                            <h3 className="text-lg font-black text-slate-800 mb-1">Processo na Mesa de Auditoria</h3>
+                                            <p className="text-sm font-medium text-slate-500 mb-6 max-w-[250px]">
+                                                Requisição <span className="font-bold text-slate-700">{selectedRequest.requisicao}</span> encontra-se em análise.
+                                            </p>
+                                            <p className="text-sm font-medium text-slate-500 mb-6 max-w-[250px]">
+                                                CPF: <span className="text-teal-600">{tiebreakerData.tiebreaker_verify_cpf || '-'}</span>
+                                            </p>
                                         </div>
                                         <button
                                             onClick={() => setShowVerifyConfigModal(true)}
@@ -2211,7 +2303,7 @@ export default function MedicalControl() {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div >
                 )
             }
             {
@@ -2725,7 +2817,7 @@ export default function MedicalControl() {
                     </div>
                 )
             }
-        </div>
+        </div >
     );
 }
 
@@ -3057,7 +3149,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                     </div>
                     <div>
                         <h2 className="text-3xl font-black text-slate-800 tracking-tight">Detalhes do Processo</h2>
-                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Protocolo: {request.requisicao}</p>
+                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Requisição: {request.requisicao}</p>
                     </div>
                 </div>
                 <div className="flex gap-4">
