@@ -1,5 +1,5 @@
 {
-    "data_atualizacao":  "2026-03-06 14:16:14",
+    "data_atualizacao":  "2026-03-06 14:35:20",
     "produtos":  [
                      {
                          "codigo_rede":  "K180",
@@ -102,14 +102,14 @@
                      {
                          "codigo_rede":  "KPOP",
                          "nome":  "KLINI POP",
-                         "registros":  1085,
+                         "registros":  1072,
                          "municipios":  14,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KPRIME",
                          "nome":  "KLINI PRIME",
-                         "registros":  1112,
+                         "registros":  1099,
                          "municipios":  15,
                          "estados":  1
                      },
@@ -123,56 +123,56 @@
                      {
                          "codigo_rede":  "KPRIME200",
                          "nome":  "KLINI PRIME 200",
-                         "registros":  2411,
+                         "registros":  2402,
                          "municipios":  30,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KREDECASA",
                          "nome":  "KLINI REDE HOSPITALAR CASA",
-                         "registros":  346,
+                         "registros":  335,
                          "municipios":  3,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KREFERENCIA",
                          "nome":  "KLINI REFERÊNCIA",
-                         "registros":  122,
+                         "registros":  121,
                          "municipios":  4,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KRIO",
                          "nome":  "KLINI RIO",
-                         "registros":  1621,
+                         "registros":  1610,
                          "municipios":  13,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KRIOSERV",
                          "nome":  "KLINI RIOSERV",
-                         "registros":  1694,
+                         "registros":  1679,
                          "municipios":  13,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KSENIORPF",
                          "nome":  "KLINI SENIOR 50+ PF",
-                         "registros":  795,
+                         "registros":  785,
                          "municipios":  3,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KSTART",
                          "nome":  "KLINI START",
-                         "registros":  1186,
+                         "registros":  1175,
                          "municipios":  12,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KSTARTPLUS",
                          "nome":  "KLINI START PLUS",
-                         "registros":  1466,
+                         "registros":  1454,
                          "municipios":  13,
                          "estados":  1
                      },
@@ -186,21 +186,21 @@
                      {
                          "codigo_rede":  "KSENIOR",
                          "nome":  "KLINI SÊNIOR 50+",
-                         "registros":  1249,
+                         "registros":  1239,
                          "municipios":  11,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KTECH",
                          "nome":  "KLINI TECH",
-                         "registros":  1065,
+                         "registros":  1052,
                          "municipios":  14,
                          "estados":  1
                      },
                      {
                          "codigo_rede":  "KTOTALQC",
                          "nome":  "KLINI TOTAL QC",
-                         "registros":  2634,
+                         "registros":  2624,
                          "municipios":  19,
                          "estados":  1
                      },

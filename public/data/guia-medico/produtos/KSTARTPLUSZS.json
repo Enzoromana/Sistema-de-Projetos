@@ -6,28 +6,6 @@
     "prestadores":  [
                         {
                             "produto":  "KSTARTPLUSZS",
-                            "nome_fantasia":  "DASA LSF BARRA CORPORATE",
-                            "especialidade":  "ANATOMOPATOLOGIA",
-                            "tipo_servico":  "EXAME",
-                            "telefone":  null,
-                            "endereco":  "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
-                            "bairro":  "BARRA DA TIJUCA",
-                            "municipio":  "RIO DE JANEIRO",
-                            "uf":  "RJ"
-                        },
-                        {
-                            "produto":  "KSTARTPLUSZS",
-                            "nome_fantasia":  "DASA LSF BARRA CORPORATE",
-                            "especialidade":  "ANÁLISES CLÍNICAS",
-                            "tipo_servico":  "EXAME",
-                            "telefone":  null,
-                            "endereco":  "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
-                            "bairro":  "BARRA DA TIJUCA",
-                            "municipio":  "RIO DE JANEIRO",
-                            "uf":  "RJ"
-                        },
-                        {
-                            "produto":  "KSTARTPLUSZS",
                             "nome_fantasia":  "CEIGO - DR. BRUNO - MASTOLOGISTA",
                             "especialidade":  "MASTOLOGIA",
                             "tipo_servico":  "CONSULTA",
@@ -44,6 +22,28 @@
                             "tipo_servico":  "CONSULTA",
                             "telefone":  "+552135945777",
                             "endereco":  "AVENIDA EMBAIXADOR ABELARDO BUENO, 3300 - SALA 1005",
+                            "bairro":  "BARRA DA TIJUCA",
+                            "municipio":  "RIO DE JANEIRO",
+                            "uf":  "RJ"
+                        },
+                        {
+                            "produto":  "KSTARTPLUSZS",
+                            "nome_fantasia":  "DASA LSF BARRA CORPORATE",
+                            "especialidade":  "ANATOMOPATOLOGIA",
+                            "tipo_servico":  "EXAME",
+                            "telefone":  null,
+                            "endereco":  "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
+                            "bairro":  "BARRA DA TIJUCA",
+                            "municipio":  "RIO DE JANEIRO",
+                            "uf":  "RJ"
+                        },
+                        {
+                            "produto":  "KSTARTPLUSZS",
+                            "nome_fantasia":  "DASA LSF BARRA CORPORATE",
+                            "especialidade":  "ANÁLISES CLÍNICAS",
+                            "tipo_servico":  "EXAME",
+                            "telefone":  null,
+                            "endereco":  "AVENIDA DAS AMÉRICAS, 3443 - BLOCO 2, LOJA 102",
                             "bairro":  "BARRA DA TIJUCA",
                             "municipio":  "RIO DE JANEIRO",
                             "uf":  "RJ"
