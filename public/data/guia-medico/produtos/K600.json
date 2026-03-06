@@ -1,8 +1,8 @@
 {
     "codigo_rede":  "K600",
-    "nome_rede":  "KLINI 600 QC",
+    "nome_rede":  "K600",
     "total_prestadores":  2817,
-    "data_atualizacao":  "2026-03-03",
+    "data_atualizacao":  "2026-03-06",
     "prestadores":  [
                         {
                             "produto":  "K600",
