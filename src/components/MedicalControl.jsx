@@ -1229,12 +1229,12 @@ export default function MedicalControl() {
                                             onDrop={(e) => handleDrop(e, dt.id)}
                                             className={`p-6 rounded-3xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-2xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-xl hover:shadow-teal-900/5'}`}
                                         >
-                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                                <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
-                                                    <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
-                                                        <FileText size={20} />
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0">
+                                                        <FileText size={16} />
                                                     </div>
-                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight break-words line-clamp-3">{dt.label}</span>
+                                                    <span className="text-[11px] font-black text-slate-600 uppercase tracking-tight leading-none">{dt.label}</span>
                                                 </div>
                                                 <button
                                                     onClick={() => {
@@ -1242,9 +1242,9 @@ export default function MedicalControl() {
                                                         input.setAttribute('data-type-id', dt.id);
                                                         input.click();
                                                     }}
-                                                    className="text-[10px] whitespace-nowrap font-black text-teal-600 uppercase tracking-widest px-3 py-2 bg-white rounded-xl border border-teal-100 hover:bg-teal-600 hover:text-white transition-all flex items-center gap-1 shadow-sm shrink-0"
+                                                    className="text-[10px] whitespace-nowrap font-black text-teal-600 uppercase tracking-widest px-3 py-1.5 bg-white rounded-lg border border-teal-100 hover:bg-teal-600 hover:text-white transition-all flex items-center gap-1 shadow-sm shrink-0"
                                                 >
-                                                    <Plus size={12} /> ANEXAR
+                                                    <Plus size={10} /> ANEXAR
                                                 </button>
                                             </div>
 
