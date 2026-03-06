@@ -8,10 +8,44 @@ import {
 
 const CHANGELOG = [
     {
+        version: '2.2.0',
+        date: '06 Mar 2026',
+        title: 'Desempate Externo & Otimizações Gerais',
+        highlight: true,
+        badge: 'ATUALIZAÇÃO',
+        badgeColor: 'bg-emerald-600',
+        entries: [
+            {
+                type: 'feature',
+                items: [
+                    { text: 'Fluxo de Desempate Externo na Junta Médica com links independentes', icon: <Activity size={16} /> },
+                    { text: 'Gerenciamento visual da visibilidade de módulos liberados no Dev Cockpit', icon: <ShieldCheck size={16} /> },
+                    { text: 'Arquivamento lógico de processos de teste (Junta Médica)', icon: <Database size={16} /> },
+                ]
+            },
+            {
+                type: 'improvement',
+                items: [
+                    { text: 'Transição automática de "Terceira Opinião" para "Desempate" após rascunho', icon: <ArrowLeft size={16} /> },
+                    { text: 'Refinamento avançado de UI no Pipeline (estilo de cards e filtro por corretor)', icon: <LayoutDashboard size={16} /> },
+                    { text: 'Atualização completa da Base de Dados do Guia Médico (Março)', icon: <BookOpen size={16} /> },
+                ]
+            },
+            {
+                type: 'fix',
+                items: [
+                    { text: 'Salvamento persistente de permissões e cargos no Módulo de Auditoria (RLS)', icon: <Lock size={16} /> },
+                    { text: 'Correção de visibilidade do botão de salvar RLS no Dev Cockpit', icon: <Bug size={16} /> },
+                    { text: 'Prevenção contra a geração de senhas em branco em resets temporários', icon: <CheckCircle2 size={16} /> },
+                ]
+            }
+        ]
+    },
+    {
         version: '2.1.0',
         date: '27 Fev 2026',
         title: 'Adaptação Mobile Completa',
-        highlight: true,
+        highlight: false,
         badge: 'NOVO',
         badgeColor: 'bg-purple-600',
         entries: [
@@ -258,8 +292,8 @@ export default function UpdateNotes() {
                         key={f.id}
                         onClick={() => setFilter(f.id)}
                         className={`px-4 md:px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === f.id
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
-                                : 'bg-white text-slate-400 border border-slate-100 hover:bg-slate-50'
+                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
+                            : 'bg-white text-slate-400 border border-slate-100 hover:bg-slate-50'
                             }`}
                     >
                         {f.label}
