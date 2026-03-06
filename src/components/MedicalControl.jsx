@@ -1046,8 +1046,8 @@ export default function MedicalControl() {
                                                 </button>
                                             </div>
                                             <div className="grid grid-cols-1 gap-6">
-                                                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
-                                                    <div className="lg:col-span-3">
+                                                <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-start">
+                                                    <div className="w-full">
                                                         <TussAutocomplete
                                                             value={p}
                                                             onChange={(newValues) => {
@@ -1057,7 +1057,7 @@ export default function MedicalControl() {
                                                             }}
                                                         />
                                                     </div>
-                                                    <div className="grid grid-cols-2 gap-3">
+                                                    <div className="grid grid-cols-2 gap-3 self-stretch">
                                                         <Input label="Solicitada" type="number" value={p.qtd_solicitada} onChange={v => {
                                                             const newP = [...procedures];
                                                             newP[idx].qtd_solicitada = v;
@@ -1113,25 +1113,27 @@ export default function MedicalControl() {
                                                     <Trash2 size={14} /> Remover Item
                                                 </button>
                                             </div>
-                                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                                <div className="md:col-span-2">
+                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-start">
+                                                <div className="w-full">
                                                     <Input label="Descrição" required value={m.descricao} onChange={v => {
                                                         const newM = [...materials];
                                                         newM[idx].descricao = v;
                                                         setMaterials(newM);
                                                     }} placeholder="Nome do material" />
                                                 </div>
-                                                <Input label="Qtd. Solicitada" type="number" value={m.qtd_solicitada} onChange={v => {
-                                                    const newM = [...materials];
-                                                    newM[idx].qtd_solicitada = v;
-                                                    setMaterials(newM);
-                                                }} />
-                                                <Input label="Qtd. Autorizada" type="number" value={m.qtd_autorizada} onChange={v => {
-                                                    const newM = [...materials];
-                                                    newM[idx].qtd_autorizada = v;
-                                                    setMaterials(newM);
-                                                }} />
-                                                <div className="md:col-span-4 mt-2">
+                                                <div className="grid grid-cols-2 gap-3 self-stretch">
+                                                    <Input label="Qtd. Solicitada" type="number" value={m.qtd_solicitada} onChange={v => {
+                                                        const newM = [...materials];
+                                                        newM[idx].qtd_solicitada = v;
+                                                        setMaterials(newM);
+                                                    }} />
+                                                    <Input label="Qtd. Autorizada" type="number" value={m.qtd_autorizada} onChange={v => {
+                                                        const newM = [...materials];
+                                                        newM[idx].qtd_autorizada = v;
+                                                        setMaterials(newM);
+                                                    }} />
+                                                </div>
+                                                <div className="lg:col-span-2 mt-2">
                                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
                                                     <textarea
                                                         value={m.justificativa}
@@ -1194,11 +1196,11 @@ export default function MedicalControl() {
                                             className={`p-6 rounded-3xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-2xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-xl hover:shadow-teal-900/5'}`}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <div className="flex items-center gap-3 min-w-0 pr-2">
+                                                    <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                                                         <FileText size={20} />
                                                     </div>
-                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight">{dt.label}</span>
+                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight break-words">{dt.label}</span>
                                                 </div>
                                                 <button
                                                     onClick={() => {
@@ -1206,7 +1208,7 @@ export default function MedicalControl() {
                                                         input.setAttribute('data-type-id', dt.id);
                                                         input.click();
                                                     }}
-                                                    className="text-[10px] font-black text-teal-600 uppercase tracking-widest px-4 py-2 bg-white rounded-xl border border-teal-100 hover:bg-teal-600 hover:text-white transition-all flex items-center gap-1 shadow-sm"
+                                                    className="text-[10px] whitespace-nowrap font-black text-teal-600 uppercase tracking-widest px-3 py-2 bg-white rounded-xl border border-teal-100 hover:bg-teal-600 hover:text-white transition-all flex items-center gap-1 shadow-sm shrink-0"
                                                 >
                                                     <Plus size={12} /> ANEXAR
                                                 </button>
