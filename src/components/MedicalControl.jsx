@@ -1230,11 +1230,11 @@ export default function MedicalControl() {
                                             className={`p-6 rounded-3xl border transition-all ${dragOverId === dt.id ? 'bg-teal-50 border-teal-500 scale-[1.02] shadow-2xl' : 'bg-slate-50 border-slate-100 hover:border-teal-200 hover:bg-white hover:shadow-xl hover:shadow-teal-900/5'}`}
                                         >
                                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                                <div className="flex items-center gap-3 w-full">
+                                                <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
                                                     <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                                                         <FileText size={20} />
                                                     </div>
-                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight break-words">{dt.label}</span>
+                                                    <span className="text-xs font-black text-slate-700 uppercase tracking-tight break-words line-clamp-3">{dt.label}</span>
                                                 </div>
                                                 <button
                                                     onClick={() => {
