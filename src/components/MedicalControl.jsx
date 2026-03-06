@@ -1635,49 +1635,6 @@ export default function MedicalControl() {
                                                         </div>
                                                     </div>
                                                 )}
-
-                                                {/* Edit mode: Attachments */}
-                                                {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
-                                                    <div className="mt-4 p-4 border border-teal-100 rounded-xl bg-teal-50">
-                                                        <p className="font-black text-teal-800 uppercase text-[10px] mb-2 tracking-widest flex items-center gap-2"><Paperclip size={12} /> Anexos Gerais</p>
-                                                        <div className="space-y-2">
-                                                            {selectedRequest.medical_attachments.map((att, i) => (
-                                                                <div key={i} className="flex items-center justify-between p-2 bg-white rounded-lg border border-teal-100/50 shadow-sm">
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className="p-2 bg-slate-50 rounded bg-teal-100/30 text-teal-600">
-                                                                            <FileText size={14} />
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className="text-xs font-bold text-slate-700">{att.file_name}</p>
-                                                                            <p className="text-[10px] font-medium text-slate-400">{new Date(att.created_at).toLocaleDateString('pt-BR')}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="flex items-center gap-2">
-                                                                        {isEditing && (
-                                                                            <button
-                                                                                onClick={() => alert("Exclusão de anexo só é disponível via supabase ou implantação avançada no momento.")}
-                                                                                className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                                                title="Remover anexo"
-                                                                            >
-                                                                                <Trash2 size={14} />
-                                                                            </button>
-                                                                        )}
-                                                                        <a
-                                                                            href={supabase.storage.from('documentos').getPublicUrl(att.file_path).data.publicUrl}
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer"
-                                                                            className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-                                                                            title="Download anexo"
-                                                                        >
-                                                                            <Download size={14} />
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
                                                 {/* Empty State */}
                                                 {(!selectedRequest.medical_attachments?.length && (!selectedRequest.documentos_internos || Object.keys(selectedRequest.documentos_internos).length === 0)) && (
                                                     <div className="p-4 text-center italic text-slate-500">Nenhum documento anexado.</div>
@@ -1880,6 +1837,41 @@ export default function MedicalControl() {
                                             </div>
                                         ))}
                                     </div>
+
+                                    {/* General Medical Attachments in Status window */}
+                                    {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
+                                        <div className="mt-6 p-5 rounded-2xl border border-teal-200 bg-teal-50/50">
+                                            <p className="font-black text-teal-800 uppercase text-[11px] mb-3 tracking-widest flex items-center gap-2">
+                                                <Paperclip size={14} /> Anexos Gerais
+                                            </p>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                {selectedRequest.medical_attachments.map((att, i) => (
+                                                    <div key={i} className="flex items-center justify-between p-3 bg-white rounded-xl border border-teal-100 shadow-sm hover:border-teal-300 transition-all">
+                                                        <div className="flex items-center gap-3 overflow-hidden">
+                                                            <div className="p-2 bg-teal-50 rounded-lg text-teal-600 shrink-0">
+                                                                <FileText size={14} />
+                                                            </div>
+                                                            <div className="min-w-0">
+                                                                <p className="text-xs font-bold text-slate-700 truncate">{att.file_name}</p>
+                                                                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">{new Date(att.created_at).toLocaleDateString('pt-BR')}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 shrink-0">
+                                                            <a
+                                                                href={supabase.storage.from('documentos').getPublicUrl(att.file_path).data.publicUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-colors flex items-center"
+                                                                title="Download anexo"
+                                                            >
+                                                                <Download size={14} />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
