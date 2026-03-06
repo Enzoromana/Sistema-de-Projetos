@@ -27,7 +27,7 @@ const isFinalized = (situacao) => FINALIZED_STATUSES.includes(situacao);
 const DOC_TYPES = [
     { id: 'aberturaBeneficiario', label: 'Confirmação abertura beneficiário' },
     { id: 'aberturaMedico', label: 'Confirmação abertura Médico' },
-    { id: 'desempatadorEscolha', label: 'Desempatador Escolha' },
+    { id: 'desempatadorEscolha', label: 'Escolha do Desempatador' },
     { id: 'parecerFinal', label: 'Parecer final' },
     { id: 'fechamentoBeneficiario', label: 'Confirmação fechamento beneficiário' },
     { id: 'fechamentoMedico', label: 'Confirmação fechamento médico' },
@@ -185,7 +185,7 @@ export default function MedicalControl() {
                     .select();
                 if (requestError) {
                     if (requestError.code === '23505') {
-                        throw new Error('Já existe uma Junta Médica cadastrada com este número de protocolo/requisição.');
+                        throw new Error('Já existe uma Junta Médica cadastrada com este número de requisição.');
                     }
                     throw requestError;
                 }
@@ -508,6 +508,34 @@ export default function MedicalControl() {
         }
     };
 
+    const handleInternalFileDelete = async (filePath, typeId) => {
+        if (!selectedRequest || !window.confirm('Deseja realmente excluir este documento?')) return;
+
+        try {
+            const { error: storageError } = await supabase.storage
+                .from('medical-board')
+                .remove([filePath]);
+
+            if (storageError) throw storageError;
+
+            const updatedDocs = { ...selectedRequest.documentos_internos };
+            updatedDocs[typeId] = updatedDocs[typeId].filter(doc => doc.path !== filePath);
+
+            const { error: dbError } = await supabase
+                .from('medical_requests')
+                .update({ documentos_internos: updatedDocs })
+                .eq('id', selectedRequest.id);
+
+            if (dbError) throw dbError;
+
+            setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+            loadRequests();
+        } catch (error) {
+            console.error('Erro ao excluir documento:', error);
+            alert('Erro ao excluir o documento.');
+        }
+    };
+
     const handleDrop = (e, typeId) => {
         e.preventDefault();
         setDragOverId(null);
@@ -533,7 +561,7 @@ export default function MedicalControl() {
 
     const exportToExcel = () => {
         // Prepare CSV headers and data
-        const headers = ['Protocolo', 'Beneficiário', 'Situação', 'Especialidade', 'Data Criação'];
+        const headers = ['Requisição', 'Beneficiário', 'Situação', 'Especialidade', 'Data Criação'];
         const rows = filteredRequests.map(r => [
             r.requisicao,
             r.ben_nome,
@@ -875,7 +903,7 @@ export default function MedicalControl() {
                         {[
                             { title: 'Beneficiário', icon: <User size={18} /> },
                             { title: 'Médico Auditor', icon: <Activity size={18} /> },
-                            { title: 'Médico Assistente', icon: <Stethoscope size={18} /> },
+                            { title: 'Profissional Assistente', icon: <Stethoscope size={18} /> },
                             { title: 'Procedimentos', icon: <FileText size={18} /> },
                             { title: 'Materiais', icon: <Box size={18} /> },
                             { title: 'Anexos', icon: <Paperclip size={18} /> },
@@ -981,7 +1009,7 @@ export default function MedicalControl() {
                         {/* Step 2: Médico Assistente */}
                         {currentStep === 2 && (
                             <div className="space-y-8 animate-in slide-in-from-right">
-                                <FormHeader icon={<Stethoscope />} title="Dados do Médico Assistente" sub="Informações do médico que solicitou o procedimento." />
+                                <FormHeader icon={<Stethoscope />} title="Dados do Profissional Assistente" sub="Informações do médico que solicitou o procedimento." />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Input label="Nome" required value={formData.ass_nome} onChange={v => setFormData({ ...formData, ass_nome: v })} placeholder="Dr. Nome Completo" />
                                     <div className="space-y-2">
@@ -1035,57 +1063,59 @@ export default function MedicalControl() {
                                     </button>
                                 </div>
                                 <div className="space-y-4">
-                                    {procedures.map((p, idx) => (
-                                        <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group" style={{ zIndex: procedures.length - idx }}>
-                                            <div className="flex justify-end mb-4">
-                                                <button
-                                                    onClick={() => setProcedures(procedures.filter((_, i) => i !== idx))}
-                                                    className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
-                                                >
-                                                    <Trash2 size={14} /> Remover Item
-                                                </button>
-                                            </div>
-                                            <div className="grid grid-cols-1 gap-6">
-                                                <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-start">
-                                                    <div className="w-full">
-                                                        <TussAutocomplete
-                                                            value={p}
-                                                            onChange={(newValues) => {
+                                    {procedures.map((p, idx) => {
+                                        return (
+                                            <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group" style={{ zIndex: procedures.length - idx }}>
+                                                <div className="flex justify-end mb-4">
+                                                    <button
+                                                        onClick={() => setProcedures(procedures.filter((_, i) => i !== idx))}
+                                                        className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
+                                                    >
+                                                        <Trash2 size={14} /> Remover Item
+                                                    </button>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-6">
+                                                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-end">
+                                                        <div className="w-full">
+                                                            <TussAutocomplete
+                                                                value={p}
+                                                                onChange={(newValues) => {
+                                                                    const newP = [...procedures];
+                                                                    newP[idx] = { ...newP[idx], ...newValues };
+                                                                    setProcedures(newP);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="grid grid-cols-2 gap-3 self-stretch">
+                                                            <Input label="Solicitada" type="number" value={p.qtd_solicitada} onChange={v => {
                                                                 const newP = [...procedures];
-                                                                newP[idx] = { ...newP[idx], ...newValues };
+                                                                newP[idx].qtd_solicitada = v;
+                                                                setProcedures(newP);
+                                                            }} />
+                                                            <Input label="Autorizada" type="number" value={p.qtd_autorizada} onChange={v => {
+                                                                const newP = [...procedures];
+                                                                newP[idx].qtd_autorizada = v;
+                                                                setProcedures(newP);
+                                                            }} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
+                                                        <textarea
+                                                            value={p.justificativa}
+                                                            onChange={e => {
+                                                                const newP = [...procedures];
+                                                                newP[idx].justificativa = e.target.value;
                                                                 setProcedures(newP);
                                                             }}
+                                                            placeholder="Descreva brevemente a necessidade clínica (Opcional)"
+                                                            className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
                                                         />
                                                     </div>
-                                                    <div className="grid grid-cols-2 gap-3 self-stretch">
-                                                        <Input label="Solicitada" type="number" value={p.qtd_solicitada} onChange={v => {
-                                                            const newP = [...procedures];
-                                                            newP[idx].qtd_solicitada = v;
-                                                            setProcedures(newP);
-                                                        }} />
-                                                        <Input label="Autorizada" type="number" value={p.qtd_autorizada} onChange={v => {
-                                                            const newP = [...procedures];
-                                                            newP[idx].qtd_autorizada = v;
-                                                            setProcedures(newP);
-                                                        }} />
-                                                    </div>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
-                                                    <textarea
-                                                        value={p.justificativa}
-                                                        onChange={e => {
-                                                            const newP = [...procedures];
-                                                            newP[idx].justificativa = e.target.value;
-                                                            setProcedures(newP);
-                                                        }}
-                                                        placeholder="Descreva brevemente a necessidade clínica (Opcional)"
-                                                        className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
-                                                    />
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
@@ -1103,52 +1133,56 @@ export default function MedicalControl() {
                                     </button>
                                 </div>
                                 <div className="space-y-4">
-                                    {materials.map((m, idx) => (
-                                        <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group">
-                                            <div className="flex justify-end mb-4">
-                                                <button
-                                                    onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
-                                                    className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
-                                                >
-                                                    <Trash2 size={14} /> Remover Item
-                                                </button>
+                                    {materials.map((m, idx) => {
+                                        return (
+                                            <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group">
+                                                <div className="flex justify-end mb-4">
+                                                    <button
+                                                        onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
+                                                        className="flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all"
+                                                    >
+                                                        <Trash2 size={14} /> Remover Item
+                                                    </button>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-6">
+                                                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-end">
+                                                        <div className="w-full">
+                                                            <Input label="Descrição" required value={m.descricao} onChange={v => {
+                                                                const newM = [...materials];
+                                                                newM[idx].descricao = v;
+                                                                setMaterials(newM);
+                                                            }} placeholder="Nome do material" />
+                                                        </div>
+                                                        <div className="grid grid-cols-2 gap-3 self-stretch">
+                                                            <Input label="Qtd. Solicitada" type="number" value={m.qtd_solicitada} onChange={v => {
+                                                                const newM = [...materials];
+                                                                newM[idx].qtd_solicitada = v;
+                                                                setMaterials(newM);
+                                                            }} />
+                                                            <Input label="Qtd. Autorizada" type="number" value={m.qtd_autorizada} onChange={v => {
+                                                                const newM = [...materials];
+                                                                newM[idx].qtd_autorizada = v;
+                                                                setMaterials(newM);
+                                                            }} />
+                                                        </div>
+                                                        <div className="lg:col-span-2 mt-2">
+                                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
+                                                            <textarea
+                                                                value={m.justificativa}
+                                                                onChange={e => {
+                                                                    const newM = [...materials];
+                                                                    newM[idx].justificativa = e.target.value;
+                                                                    setMaterials(newM);
+                                                                }}
+                                                                placeholder="Justificativa técnica (opcional)"
+                                                                className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-start">
-                                                <div className="w-full">
-                                                    <Input label="Descrição" required value={m.descricao} onChange={v => {
-                                                        const newM = [...materials];
-                                                        newM[idx].descricao = v;
-                                                        setMaterials(newM);
-                                                    }} placeholder="Nome do material" />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-3 self-stretch">
-                                                    <Input label="Qtd. Solicitada" type="number" value={m.qtd_solicitada} onChange={v => {
-                                                        const newM = [...materials];
-                                                        newM[idx].qtd_solicitada = v;
-                                                        setMaterials(newM);
-                                                    }} />
-                                                    <Input label="Qtd. Autorizada" type="number" value={m.qtd_autorizada} onChange={v => {
-                                                        const newM = [...materials];
-                                                        newM[idx].qtd_autorizada = v;
-                                                        setMaterials(newM);
-                                                    }} />
-                                                </div>
-                                                <div className="lg:col-span-2 mt-2">
-                                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Justificativa Técnica</label>
-                                                    <textarea
-                                                        value={m.justificativa}
-                                                        onChange={e => {
-                                                            const newM = [...materials];
-                                                            newM[idx].justificativa = e.target.value;
-                                                            setMaterials(newM);
-                                                        }}
-                                                        placeholder="Justificativa técnica (opcional)"
-                                                        className="w-full min-h-[80px] p-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all resize-y"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
@@ -1400,285 +1434,282 @@ export default function MedicalControl() {
                     </div>
                 </div>
             )}
-
             {/* Medical Report Modal */}
-            {
-                showReportModal && selectedRequest && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
-                        <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
-                            {/* Control Header (Hidden on Print) */}
-                            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 print:hidden">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
-                                        <FileText size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
-                                        <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Requisição: {selectedRequest.requisicao}</p>
-                                    </div>
+            {showReportModal && selectedRequest && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-white/20">
+                        {/* Control Header (Hidden on Print) */}
+                        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 print:hidden">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
+                                    <FileText size={24} />
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <button
-                                        onClick={handleDownloadPDF}
-                                        className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
-                                    >
-                                        <Printer size={18} /> Imprimir / Salvar PDF
-                                    </button>
-                                    <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
-                                        <X size={24} />
-                                    </button>
+                                <div>
+                                    <h3 className="text-2xl font-black text-slate-800 tracking-tight">Visualização do Relatório</h3>
+                                    <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Requisição: {selectedRequest.requisicao}</p>
                                 </div>
                             </div>
-
-                            {/* Report Content Wrapper */}
-                            <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
-                                {/* The Actual Document Area - Visual Match for A4 */}
-                                <div
-                                    id="printable-report-content"
-                                    className="bg-white shadow-2xl border border-slate-200"
-                                    style={{
-                                        width: '210mm',
-                                        minHeight: '297mm',
-                                        fontFamily: "'Inter', sans-serif",
-                                        padding: '15mm', // Match print padding
-                                        margin: '0 auto',
-                                        boxSizing: 'border-box',
-                                        transform: 'scale(0.85)', // Scale down for better preview visibility
-                                        transformOrigin: 'top center'
-                                    }}
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={handleDownloadPDF}
+                                    className="bg-teal-700 hover:bg-teal-800 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-teal-100 flex items-center gap-2"
                                 >
-                                    {/* Klini Header - Executive (Brand Colors) */}
-                                    <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
-                                        <div className="flex items-center gap-4 text-[#259591]">
-                                            <Activity size={48} className="stroke-[2.5]" />
-                                            <div>
-                                                <h1 className="text-4xl font-black tracking-tighter leading-none uppercase">Klini</h1>
-                                                <p className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 text-slate-600">Saúde & Bem-estar</p>
-                                            </div>
-                                        </div>
-                                        <div className="text-right">
-                                            <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de 2° opinião</h2>
-                                            <div className="mt-2 space-y-0.5">
-                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                                    Requisição: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
-                                                </p>
-                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                                    Emissão: <span className="text-slate-900 font-bold">{new Date().toLocaleDateString('pt-BR')}</span>
-                                                </p>
-                                            </div>
+                                    <Printer size={18} /> Imprimir / Salvar PDF
+                                </button>
+                                <button onClick={() => setShowReportModal(false)} className="p-4 hover:bg-slate-200 rounded-xl transition-all text-slate-400">
+                                    <X size={24} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Report Content Wrapper */}
+                        <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+                            {/* The Actual Document Area - Visual Match for A4 */}
+                            <div
+                                id="printable-report-content"
+                                className="bg-white shadow-2xl border border-slate-200"
+                                style={{
+                                    width: '210mm',
+                                    minHeight: '297mm',
+                                    fontFamily: "'Inter', sans-serif",
+                                    padding: '15mm', // Match print padding
+                                    margin: '0 auto',
+                                    boxSizing: 'border-box',
+                                    transform: 'scale(0.85)', // Scale down for better preview visibility
+                                    transformOrigin: 'top center'
+                                }}
+                            >
+                                {/* Klini Header - Executive (Brand Colors) */}
+                                <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
+                                    <div className="flex items-center gap-4 text-[#259591]">
+                                        <Activity size={48} className="stroke-[2.5]" />
+                                        <div>
+                                            <h1 className="text-4xl font-black tracking-tighter leading-none uppercase">Klini</h1>
+                                            <p className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 text-slate-600">Saúde & Bem-estar</p>
                                         </div>
                                     </div>
-
-                                    <div className="space-y-6 text-slate-900 font-sans">
-                                        {/* Block 1: Beneficiary & Request Data */}
-                                        <div className="border border-[#259591] flex rounded-none relative overflow-hidden">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#259591]"></div>
-                                            {/* Beneficiary Col */}
-                                            <div className="flex-[2] p-5 border-r border-[#259591] pl-8">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-100 pb-1">I. Beneficiário</h3>
-                                                <div className="grid grid-cols-2 gap-y-3 gap-x-6">
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Nome Completo</p>
-                                                        <p className="text-base font-bold" style={{ wordBreak: 'break-word', whiteSpace: 'normal' }}>{selectedRequest.ben_nome}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">CPF</p>
-                                                        <p className="text-base font-bold">{selectedRequest.ben_cpf}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Data de Nasc.</p>
-                                                        <p className="text-sm font-medium">{selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Telefone</p>
-                                                        <p className="text-sm font-medium">{selectedRequest.ben_telefone}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {/* Request Details Col */}
-                                            <div className="flex-1 p-5 bg-teal-50/30 break-inside-avoid">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-200 pb-1">Status Interno</h3>
-                                                <div className="space-y-3">
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Situação Atual</p>
-                                                        <p className="text-xs font-black uppercase text-slate-800">{selectedRequest.situacao}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-[9px] uppercase font-bold text-[#259591]/70">Prazo ANS</p>
-                                                        <p className="text-xs font-bold text-slate-800">{selectedRequest.prazo_ans ? new Date(selectedRequest.prazo_ans).toLocaleDateString('pt-BR') : 'A calcular'}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Block 2: Professionals */}
-                                        <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
-                                            <div className="flex-1 p-4 border-r border-[#259591]">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">II. Médico Auditor</h3>
-                                                <div className="space-y-1">
-                                                    <p className="text-sm font-bold">{selectedRequest.aud_nome}</p>
-                                                    <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
-                                                </div>
-                                            </div>
-                                            <div className="flex-1 p-4 bg-teal-50/10">
-                                                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Médico Assistente</h3>
-                                                <div className="space-y-1">
-                                                    <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
-                                                    <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Table: Procedures */}
-                                        <div className="mt-8 break-inside-avoid">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> IV. Procedimentos Solicitados
-                                            </h3>
-                                            <table className="w-full text-left border border-[#259591] text-xs">
-                                                <thead className="bg-teal-50 border-b border-[#259591]">
-                                                    <tr>
-                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase w-24 text-[#259591]">TUSS</th>
-                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição Técnica</th>
-                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-16 text-[#259591]">Sol.</th>
-                                                        <th className="p-3 font-black uppercase text-center w-16 text-[#259591]">Aut.</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-[#259591]/20">
-                                                    {selectedRequest.medical_procedures?.map((p, i) => (
-                                                        <tr key={i} className="even:bg-slate-50 hover:bg-teal-50/10">
-                                                            <td className="p-3 border-r border-[#259591]/20 font-bold font-mono text-slate-700">{p.codigo || '-'}</td>
-                                                            <td className="p-3 border-r border-[#259591]/20">
-                                                                <div className="font-bold text-slate-900">{p.descricao}</div>
-                                                                {p.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {p.justificativa}</div>}
-                                                            </td>
-                                                            <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{p.qtd_solicitada}</td>
-                                                            <td className="p-3 text-center font-bold text-[#259591]">{p.qtd_autorizada}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                            {(!selectedRequest.medical_procedures || selectedRequest.medical_procedures.length === 0) && (
-                                                <div className="text-center p-4 border border-t-0 border-[#259591] text-xs italic text-slate-500">Nenhum procedimento listado.</div>
-                                            )}
-                                        </div>
-
-                                        {/* Table: Materials */}
-                                        {selectedRequest.medical_materials?.length > 0 && (
-                                            <div className="mt-6 break-inside-avoid">
-                                                <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> V. Materiais & OPME
-                                                </h3>
-                                                <table className="w-full text-left border border-[#259591] text-xs">
-                                                    <thead className="bg-teal-50 border-b border-[#259591]">
-                                                        <tr>
-                                                            <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição do Material</th>
-                                                            <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-24 text-[#259591]">Sol.</th>
-                                                            <th className="p-3 font-black uppercase text-center w-24 text-[#259591]">Aut.</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody className="divide-y divide-[#259591]/20">
-                                                        {selectedRequest.medical_materials.map((m, i) => (
-                                                            <tr key={i} className="even:bg-slate-50">
-                                                                <td className="p-3 border-r border-[#259591]/20">
-                                                                    <div className="font-bold text-slate-900">{m.descricao}</div>
-                                                                    {m.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {m.justificativa}</div>}
-                                                                </td>
-                                                                <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{m.qtd_solicitada}</td>
-                                                                <td className="p-3 text-center font-bold text-[#259591]">{m.qtd_autorizada}</td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        )}
-
-                                        {/* Block 6: Documents */}
-                                        <div className="mt-8 break-inside-avoid">
-                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> VI. Documentos & Anexos
-                                            </h3>
-                                            <div className="border border-[#259591] bg-white text-xs">
-                                                {DOC_TYPES.map(type => {
-                                                    const docs = selectedRequest.documentos_internos?.[type.id];
-                                                    if (!docs || docs.length === 0) return null;
-                                                    return (
-                                                        <div key={type.id} className="p-3 border-b border-[#259591]/20 last:border-b-0">
-                                                            <p className="font-black text-[#259591] uppercase text-[10px] mb-1">{type.label}</p>
-                                                            <div className="space-y-1 pl-2">
-                                                                {docs.map((doc, i) => (
-                                                                    <div key={i} className="flex items-center gap-2">
-                                                                        <FileText size={10} className="text-slate-400" />
-                                                                        <span className="font-bold text-slate-700">{doc.name}</span>
-                                                                        <span className="text-[9px] text-slate-400">({new Date(doc.uploaded_at).toLocaleDateString('pt-BR')})</span>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    );
-                                                })}
-
-                                                {/* General Attachments */}
-                                                {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
-                                                    <div className="p-3 border-b border-[#259591]/20 last:border-b-0">
-                                                        <p className="font-black text-[#259591] uppercase text-[10px] mb-1">Outros Anexos</p>
-                                                        <div className="space-y-1 pl-2">
-                                                            {selectedRequest.medical_attachments.map((att, i) => (
-                                                                <div key={i} className="flex items-center gap-2">
-                                                                    <Paperclip size={10} className="text-slate-400" />
-                                                                    <span className="font-bold text-slate-700">{att.file_name}</span>
-                                                                    <span className="text-[9px] text-slate-400">({new Date(att.created_at).toLocaleDateString('pt-BR')})</span>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                {/* Empty State */}
-                                                {(!selectedRequest.medical_attachments?.length && (!selectedRequest.documentos_internos || Object.keys(selectedRequest.documentos_internos).length === 0)) && (
-                                                    <div className="p-4 text-center italic text-slate-500">Nenhum documento anexado.</div>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        {/* Block 7: Divergence (Renumbered) */}
-                                        <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-[#259591]/20 pb-1">VII. Parecer de Divergência</h3>
-                                            <div className="grid grid-cols-1 gap-y-1 relative z-10">
-                                                <div>
-                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Especialidade Analisada</p>
-                                                    <p className="text-sm font-bold text-slate-900">{selectedRequest.div_especialidade}</p>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Considerações Técnicas</p>
-                                                    <div className="flex flex-wrap gap-2 mt-1">
-                                                        {selectedRequest.div_motivos?.map((m, i) => (
-                                                            <span key={i} className="px-3 py-1 bg-white border border-[#259591]/30 rounded text-[10px] font-bold text-[#259591]">{m}</span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div className="mt-12 text-center">
-                                            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
-                                                Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
+                                    <div className="text-right">
+                                        <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de 2° opinião</h2>
+                                        <div className="mt-2 space-y-0.5">
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                Requisição: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
+                                            </p>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                Emissão: <span className="text-slate-900 font-bold">{new Date().toLocaleDateString('pt-BR')}</span>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Modal Footer Controls (Hidden on Print) */}
-                            <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:hidden">
-                                <button onClick={() => setShowReportModal(false)} className="px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
-                                    Fechar Visualização
-                                </button>
+                                <div className="space-y-6 text-slate-900 font-sans">
+                                    {/* Block 1: Beneficiary & Request Data */}
+                                    <div className="border border-[#259591] flex rounded-none relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-[#259591]"></div>
+                                        {/* Beneficiary Col */}
+                                        <div className="flex-[2] p-5 border-r border-[#259591] pl-8">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-100 pb-1">I. Beneficiário</h3>
+                                            <div className="grid grid-cols-2 gap-y-3 gap-x-6">
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Nome Completo</p>
+                                                    <p className="text-base font-bold" style={{ wordBreak: 'break-word', whiteSpace: 'normal' }}>{selectedRequest.ben_nome}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">CPF</p>
+                                                    <p className="text-base font-bold">{selectedRequest.ben_cpf}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Data de Nasc.</p>
+                                                    <p className="text-sm font-medium">{selectedRequest.ben_nascimento ? new Date(selectedRequest.ben_nascimento).toLocaleDateString('pt-BR') : '-'}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Telefone</p>
+                                                    <p className="text-sm font-medium">{selectedRequest.ben_telefone}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* Request Details Col */}
+                                        <div className="flex-1 p-5 bg-teal-50/30 break-inside-avoid">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-slate-200 pb-1">Status Interno</h3>
+                                            <div className="space-y-3">
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Situação Atual</p>
+                                                    <p className="text-xs font-black uppercase text-slate-800">{selectedRequest.situacao}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] uppercase font-bold text-[#259591]/70">Prazo ANS</p>
+                                                    <p className="text-xs font-bold text-slate-800">{selectedRequest.prazo_ans ? new Date(selectedRequest.prazo_ans).toLocaleDateString('pt-BR') : 'A calcular'}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Block 2: Professionals */}
+                                    <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rgba(29,120,116,0.1)]">
+                                        <div className="flex-1 p-4 border-r border-[#259591]">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">II. Médico Auditor</h3>
+                                            <div className="space-y-1">
+                                                <p className="text-sm font-bold">{selectedRequest.aud_nome}</p>
+                                                <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex-1 p-4 bg-teal-50/10">
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Profissional Assistente</h3>
+                                            <div className="space-y-1">
+                                                <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
+                                                <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Table: Procedures */}
+                                    <div className="mt-8 break-inside-avoid">
+                                        <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> IV. Procedimentos Solicitados
+                                        </h3>
+                                        <table className="w-full text-left border border-[#259591] text-xs">
+                                            <thead className="bg-teal-50 border-b border-[#259591]">
+                                                <tr>
+                                                    <th className="p-3 border-r border-[#259591]/20 font-black uppercase w-24 text-[#259591]">TUSS</th>
+                                                    <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição Técnica</th>
+                                                    <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-16 text-[#259591]">Sol.</th>
+                                                    <th className="p-3 font-black uppercase text-center w-16 text-[#259591]">Aut.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-[#259591]/20">
+                                                {selectedRequest.medical_procedures?.map((p, i) => (
+                                                    <tr key={i} className="even:bg-slate-50 hover:bg-teal-50/10">
+                                                        <td className="p-3 border-r border-[#259591]/20 font-bold font-mono text-slate-700">{p.codigo || '-'}</td>
+                                                        <td className="p-3 border-r border-[#259591]/20">
+                                                            <div className="font-bold text-slate-900">{p.descricao}</div>
+                                                            {p.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {p.justificativa}</div>}
+                                                        </td>
+                                                        <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{p.qtd_solicitada}</td>
+                                                        <td className="p-3 text-center font-bold text-[#259591]">{p.qtd_autorizada}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                        {(!selectedRequest.medical_procedures || selectedRequest.medical_procedures.length === 0) && (
+                                            <div className="text-center p-4 border border-t-0 border-[#259591] text-xs italic text-slate-500">Nenhum procedimento listado.</div>
+                                        )}
+                                    </div>
+
+                                    {/* Table: Materials */}
+                                    {selectedRequest.medical_materials?.length > 0 && (
+                                        <div className="mt-6 break-inside-avoid">
+                                            <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> V. Materiais & OPME
+                                            </h3>
+                                            <table className="w-full text-left border border-[#259591] text-xs">
+                                                <thead className="bg-teal-50 border-b border-[#259591]">
+                                                    <tr>
+                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-[#259591]">Descrição do Material</th>
+                                                        <th className="p-3 border-r border-[#259591]/20 font-black uppercase text-center w-24 text-[#259591]">Sol.</th>
+                                                        <th className="p-3 font-black uppercase text-center w-24 text-[#259591]">Aut.</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="divide-y divide-[#259591]/20">
+                                                    {selectedRequest.medical_materials.map((m, i) => (
+                                                        <tr key={i} className="even:bg-slate-50">
+                                                            <td className="p-3 border-r border-[#259591]/20">
+                                                                <div className="font-bold text-slate-900">{m.descricao}</div>
+                                                                {m.justificativa && <div className="text-[10px] mt-1 font-bold text-red-600">NOTA: {m.justificativa}</div>}
+                                                            </td>
+                                                            <td className="p-3 border-r border-[#259591]/20 text-center font-bold text-slate-600">{m.qtd_solicitada}</td>
+                                                            <td className="p-3 text-center font-bold text-[#259591]">{m.qtd_autorizada}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    )}
+
+                                    {/* Block 6: Documents */}
+                                    <div className="mt-8 break-inside-avoid">
+                                        <h3 className="text-xs font-black uppercase tracking-widest text-[#259591] mb-2 flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#259591]"></div> VI. Documentos & Anexos
+                                        </h3>
+                                        <div className="border border-[#259591] bg-white text-xs">
+                                            {DOC_TYPES.map(type => {
+                                                const docs = selectedRequest.documentos_internos?.[type.id];
+                                                if (!docs || docs.length === 0) return null;
+                                                return (
+                                                    <div key={type.id} className="p-3 border-b border-[#259591]/20 last:border-b-0">
+                                                        <p className="font-black text-[#259591] uppercase text-[10px] mb-1">{type.label}</p>
+                                                        <div className="space-y-1 pl-2">
+                                                            {docs.map((doc, i) => (
+                                                                <div key={i} className="flex items-center gap-2">
+                                                                    <FileText size={10} className="text-slate-400" />
+                                                                    <span className="font-bold text-slate-700">{doc.name}</span>
+                                                                    <span className="text-[9px] text-slate-400">({new Date(doc.uploaded_at).toLocaleDateString('pt-BR')})</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+
+                                            {/* General Attachments */}
+                                            {selectedRequest.medical_attachments && selectedRequest.medical_attachments.length > 0 && (
+                                                <div className="p-3 border-b border-[#259591]/20 last:border-b-0">
+                                                    <p className="font-black text-[#259591] uppercase text-[10px] mb-2">Outros Anexos</p>
+                                                    <div className="flex flex-wrap gap-x-4 gap-y-2 pl-2">
+                                                        {selectedRequest.medical_attachments.map((att, i) => (
+                                                            <div key={i} className="flex items-center gap-2 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                                                                <Paperclip size={10} className="text-slate-400" />
+                                                                <span className="font-bold text-slate-700 whitespace-nowrap">{att.file_name}</span>
+                                                                <span className="text-[9px] text-slate-400">({new Date(att.created_at).toLocaleDateString('pt-BR')})</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {/* Empty State */}
+                                            {(!selectedRequest.medical_attachments?.length && (!selectedRequest.documentos_internos || Object.keys(selectedRequest.documentos_internos).length === 0)) && (
+                                                <div className="p-4 text-center italic text-slate-500">Nenhum documento anexado.</div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Block 7: Divergence (Renumbered) */}
+                                    <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative overflow-hidden">
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-3 border-b border-[#259591]/20 pb-1">VII. Parecer de Divergência</h3>
+                                        <div className="grid grid-cols-1 gap-y-1 relative z-10">
+                                            <div>
+                                                <p className="text-[9px] uppercase font-bold text-[#259591]/70">Especialidade Analisada</p>
+                                                <p className="text-sm font-bold text-slate-900">{selectedRequest.div_especialidade}</p>
+                                            </div>
+                                            <div className="mt-2">
+                                                <p className="text-[9px] uppercase font-bold text-[#259591]/70">Considerações Técnicas</p>
+                                                <div className="flex flex-wrap gap-2 mt-1">
+                                                    {selectedRequest.div_motivos?.map((m, i) => (
+                                                        <span key={i} className="px-3 py-1 bg-white border border-[#259591]/30 rounded text-[10px] font-bold text-[#259591]">{m}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="mt-12 text-center">
+                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
+                                            Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Modal Footer Controls (Hidden on Print) */}
+                                <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:hidden">
+                                    <button onClick={() => setShowReportModal(false)} className="px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-200 transition-all">
+                                        Fechar Visualização
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )
-            }
+                </div>
+            )}
 
             {/* Modal Status */}
             {
@@ -1720,7 +1751,7 @@ export default function MedicalControl() {
                                                     }`}
                                             >
                                                 <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
-                                                <span className={`text-sm font-bold ${selectedRequest.situacao === status ? 'text-slate-800' : 'text-slate-500 group-hover:text-slate-700'}`}>
+                                                <span className={`text-[11px] font-bold ${selectedRequest.situacao === status ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'} leading-snug`}>
                                                     {status}
                                                 </span>
                                                 {selectedRequest.situacao === status && (
@@ -1789,40 +1820,48 @@ export default function MedicalControl() {
                                                     <div className="space-y-2 border-t border-slate-200/50 pt-3">
                                                         {selectedRequest.documentos_internos[dt.id].map((doc, idx) => (
                                                             <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
-                                                                <div className="flex items-center gap-2 text-slate-600">
-                                                                    <Paperclip size={12} className="text-slate-300" />
-                                                                    <span className="font-bold truncate max-w-[120px]">{doc.name}</span>
-                                                                </div>
                                                                 <div className="flex items-center gap-2">
+                                                                    <Paperclip size={12} className="text-slate-300" />
+                                                                    <span className="font-bold truncate max-w-[150px]">{doc.name}</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-1">
                                                                     <a
                                                                         href={doc.url}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
-                                                                        className="text-teal-600 font-black hover:underline uppercase tracking-tighter"
+                                                                        className="p-1.5 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
+                                                                        title="Ver Documento"
                                                                     >
-                                                                        Ver
+                                                                        <FileText size={12} />
                                                                     </a>
                                                                     <button
-                                                                        onClick={async () => {
-                                                                            if (!confirm('Deseja remover este anexo?')) return;
-                                                                            const updatedDocs = { ...selectedRequest.documentos_internos };
-                                                                            updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
-
-                                                                            const { error } = await supabase
-                                                                                .from('medical_requests')
-                                                                                .update({ documentos_internos: updatedDocs })
-                                                                                .eq('id', selectedRequest.id);
-
-                                                                            if (!error) {
-                                                                                setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
-                                                                                loadRequests();
-                                                                            }
-                                                                        }}
-                                                                        className="text-red-400 hover:text-red-600 transition-colors"
+                                                                        onClick={() => handleInternalFileDelete(dt.id, idx)}
+                                                                        className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                                                        title="Excluir"
                                                                     >
                                                                         <Trash2 size={12} />
                                                                     </button>
                                                                 </div>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        if (!confirm('Deseja remover este anexo?')) return;
+                                                                        const updatedDocs = { ...selectedRequest.documentos_internos };
+                                                                        updatedDocs[dt.id] = updatedDocs[dt.id].filter((_, i) => i !== idx);
+
+                                                                        const { error } = await supabase
+                                                                            .from('medical_requests')
+                                                                            .update({ documentos_internos: updatedDocs })
+                                                                            .eq('id', selectedRequest.id);
+
+                                                                        if (!error) {
+                                                                            setSelectedRequest({ ...selectedRequest, documentos_internos: updatedDocs });
+                                                                            loadRequests();
+                                                                        }
+                                                                    }}
+                                                                    className="text-red-400 hover:text-red-600 transition-colors"
+                                                                >
+                                                                    <Trash2 size={12} />
+                                                                </button>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -2125,7 +2164,7 @@ export default function MedicalControl() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="w-8 h-1 bg-[#259591] rounded-full"></div>
-                                        <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">2. Médico Assistente</h4>
+                                        <h4 className="text-xs font-black text-[#259591] uppercase tracking-widest">2. Profissional Assistente</h4>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <Input
@@ -2449,7 +2488,7 @@ export default function MedicalControl() {
                                     </div>
                                     <div>
                                         <h3 className="text-2xl font-black tracking-tight">Parecer de Junta Médica</h3>
-                                        <p className="text-sm text-white/70 font-bold uppercase tracking-widest">Protocolo: {selectedRequest.requisicao}</p>
+                                        <p className="text-sm text-white/70 font-bold uppercase tracking-widest">Requisição: {selectedRequest.requisicao}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -2513,7 +2552,7 @@ export default function MedicalControl() {
         </div>
         <div class="header-right">
             <h2>Parecer de Junta Médica</h2>
-            <p>Protocolo: <span style="font-size: 14px;">${r.requisicao}</span></p>
+            <p>Requisição: <span style="font-size: 14px;">${r.requisicao}</span></p>
             <p>Emissão: <span>${new Date().toLocaleDateString('pt-BR')}</span></p>
         </div>
     </div>
@@ -2545,7 +2584,7 @@ export default function MedicalControl() {
     </div>
 
     <div style="margin-bottom: 24px; line-height: 1.6; text-align: justify; color: #334155;">
-        <p>Em continuidade ao processo de <b>junta médica</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o número de guia nº <b>${r.guia || '-'}</b>, protocolo nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
+        <p>Em continuidade ao processo de <b>junta médica</b>, encaminhado em <b>${r.aud_data ? new Date(r.aud_data).toLocaleDateString('pt-BR') : '-'}</b> sob o número de guia nº <b>${r.guia || '-'}</b>, requisição nº <b>${r.requisicao}</b>, informamos que foi realizada a seguinte deliberação:</p>
     </div>
 
     ${(r.medical_procedures?.length > 0) ? `
@@ -2558,7 +2597,7 @@ export default function MedicalControl() {
                     <th>Descrição</th>
                     <th style="width: 50px;" class="center">Sol.</th>
                     <th style="width: 50px;" class="center">Aut.</th>
-                    <th>Conclusão Desempatador</th>
+                    <th>Conclusão do Desempatador</th>
                 </tr>
             </thead>
             <tbody>
@@ -2585,7 +2624,7 @@ export default function MedicalControl() {
                     <th>Descrição</th>
                     <th style="width: 50px;" class="center">Sol.</th>
                     <th style="width: 50px;" class="center">Aut.</th>
-                    <th>Conclusão Desempatador</th>
+                    <th>Conclusão do Desempatador</th>
                 </tr>
             </thead>
             <tbody>
@@ -2671,7 +2710,7 @@ export default function MedicalControl() {
                                             <h2 className="text-2xl font-black uppercase tracking-tight text-[#259591]">Parecer de Junta Médica</h2>
                                             <div className="mt-2 space-y-0.5">
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                                    Protocolo: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
+                                                    Requisição: <span className="text-slate-900 text-sm font-black">{selectedRequest.requisicao}</span>
                                                 </p>
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                                     Emissão: <span className="text-slate-900 font-bold">{new Date().toLocaleDateString('pt-BR')}</span>
@@ -2697,7 +2736,7 @@ export default function MedicalControl() {
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempatador_crm || '-'} • {selectedRequest.desempatador_especialidade || '-'}</p>
                                         </div>
                                         <div className="flex-1 p-4 border-r border-[#259591]">
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Médico Assistente</h3>
+                                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Profissional Assistente</h3>
                                             <p className="text-sm font-bold">{selectedRequest.desempate_ass_nome || '-'}</p>
                                             <p className="text-xs text-slate-600">CRM: {selectedRequest.desempate_ass_crm || '-'} • {selectedRequest.desempate_ass_especialidade || '-'}</p>
                                         </div>
@@ -2711,7 +2750,7 @@ export default function MedicalControl() {
                                     {/* Introductory Note */}
                                     <div className="mb-8 text-sm leading-relaxed text-slate-600 text-justify bg-slate-50 p-6 rounded-2xl border border-slate-100">
                                         <p>
-                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o número de guia nº <span className="font-bold text-slate-900">{selectedRequest.guia || '-'}</span>, protocolo nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
+                                            Em continuidade ao processo de <span className="font-bold text-slate-900">junta médica</span>, encaminhado em <span className="font-bold text-slate-900">{selectedRequest.aud_data ? new Date(selectedRequest.aud_data).toLocaleDateString('pt-BR') : '-'}</span> sob o número de guia nº <span className="font-bold text-slate-900">{selectedRequest.guia || '-'}</span>, requisição nº <span className="font-bold text-slate-900">{selectedRequest.requisicao}</span>, informamos que foi realizada a seguinte deliberação:
                                         </p>
                                     </div>
 
@@ -2794,19 +2833,12 @@ export default function MedicalControl() {
                                         </div>
                                     </div>
 
-                                    {/* Footer */}
-                                    <div className="mt-12 text-center">
-                                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#259591]/50">
-                                            Documento gerado eletronicamente em {new Date().toLocaleString('pt-BR')} • ID: {selectedRequest.id}
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                )
-            }
-        </div >
+                )}
+        </div>
     );
 }
 
@@ -3190,7 +3222,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                     </div>
 
                     <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
-                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Stethoscope size={20} className="text-teal-600" /> Médico Assistente</h3>
+                        <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><Stethoscope size={20} className="text-teal-600" /> Profissional Assistente</h3>
                         <div className="space-y-4">
                             <ReportItem label="Nome" value={request.ass_nome} />
                             <div className="flex gap-4">
@@ -3254,7 +3286,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                     {request.parecer_conclusao && (
                         <div className="bg-emerald-50 p-8 rounded-[2rem] border border-emerald-100">
                             <h3 className="text-lg font-black text-emerald-900 mb-6 flex items-center gap-2">
-                                <CheckCircle2 size={20} className="text-emerald-600" /> Conclusão Desempatador</h3>
+                                <CheckCircle2 size={20} className="text-emerald-600" /> Conclusão do Desempatador</h3>
                             <div className="space-y-6">
                                 <div className="grid grid-cols-2 gap-4 border-b border-emerald-200/50 pb-4">
                                     <div>
@@ -3263,9 +3295,9 @@ function RequestDetails({ request, onEdit, onBack }) {
                                         <p className="text-[10px] text-emerald-600/70">CRM: {request.desempatador_crm}</p>
                                     </div>
                                     <div>
-                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Médico Assistente</p>
+                                        <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Profissional Assistente</p>
                                         <p className="text-xs font-bold text-emerald-900">{request.ass_nome}</p>
-                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.ass_crm}</p>
+                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.ass_crm} ({request.ass_conselho_tipo || 'CRM'})</p>
                                     </div>
                                 </div>
                                 <div className="space-y-2">

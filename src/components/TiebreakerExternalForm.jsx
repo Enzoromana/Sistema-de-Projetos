@@ -311,12 +311,12 @@ export default function TiebreakerExternalForm({ token }) {
                         <div>
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Beneficiário</p>
                             <p className="font-bold text-slate-700">{request.ben_nome}</p>
-                            <p className="text-xs text-slate-500">{request.ben_sexo} • {new Date(request.ben_nascimento).toLocaleDateString()}</p>
+                            <p className="text-xs text-slate-500">{request.ben_sexo} • {request.ben_nascimento ? new Date(request.ben_nascimento).toLocaleDateString() : '-'}</p>
                         </div>
                         <div>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Médico Assistente</p>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Profissional Assistente</p>
                             <p className="font-bold text-slate-700">{request.ass_nome}</p>
-                            <p className="text-xs text-slate-500">CRM: {request.ass_crm} • {request.ass_especialidade}</p>
+                            <p className="text-xs text-slate-500">{request.ass_conselho_tipo || 'CRM'}: {request.ass_crm} • {request.ass_especialidade}</p>
                         </div>
                     </div>
 
@@ -541,6 +541,6 @@ export default function TiebreakerExternalForm({ token }) {
                     <p className="text-center text-xs text-slate-400 font-medium pb-8">Ao clicar em finalizar, o parecer será registrado e o processo será atualizado.</p>
                 </form>
             </main>
-        </div>
+        </div >
     );
 }
