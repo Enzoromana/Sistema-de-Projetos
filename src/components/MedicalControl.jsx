@@ -160,6 +160,10 @@ export default function MedicalControl() {
                 if (sanitizedData[field] === '') sanitizedData[field] = null;
             });
 
+            // Remove UI-only fields that are not in the database schema
+            delete sanitizedData.aud_conselho_tipo;
+            delete sanitizedData.ass_conselho_tipo;
+
             let requestId;
 
             if (selectedRequest && view === 'form') {
