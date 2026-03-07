@@ -722,26 +722,22 @@ export default function MedicalControl() {
                                 </div>
                             </div>
                             <div className="flex-1 w-full relative">
-                                <select
+                                <CustomSelect
+                                    label="Status"
                                     value={statusFilter}
-                                    onChange={e => setStatusFilter(e.target.value)}
-                                    className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10 appearance-none truncate"
-                                >
-                                    <option value="">Todos os status</option>
-                                    {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
-                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+                                    onChange={setStatusFilter}
+                                    options={['Todos os status', ...Object.keys(SITUACAO)]}
+                                    placeholder="Todos os status"
+                                />
                             </div>
                             <div className="flex-1 w-full relative">
-                                <select
+                                <CustomSelect
+                                    label="Especialidade"
                                     value={specialtyFilter}
-                                    onChange={e => setSpecialtyFilter(e.target.value)}
-                                    className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10 appearance-none truncate"
-                                >
-                                    <option value="">Todas as especialidades</option>
-                                    {specialties.map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
-                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+                                    onChange={setSpecialtyFilter}
+                                    options={['Todas as especialidades', ...specialties]}
+                                    placeholder="Todas as especialidades"
+                                />
                             </div>
                         </div>
 
@@ -3016,6 +3012,61 @@ function Input({ label, required, value, onChange, placeholder, type = "text", m
                 maxLength={maxLength}
                 className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 placeholder:text-slate-300 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
             />
+        </div>
+    );
+}
+
+function CustomSelect({ value, onChange, options, placeholder, label }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Normalize value for display
+    const displayValue = value || placeholder;
+
+    return (
+        <div className="relative">
+            <button
+                type="button"
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10 text-left transition-all flex items-center justify-between group"
+            >
+                <span className="truncate">{displayValue}</span>
+                <ChevronDown
+                    className={`text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    size={18}
+                />
+            </button>
+
+            {isOpen && (
+                <>
+                    <div
+                        className="fixed inset-0 z-[60]"
+                        onClick={() => setIsOpen(false)}
+                    />
+                    <div className="absolute z-[70] top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200 py-2 min-w-full">
+                        <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                            {options.map((option, idx) => {
+                                const isDefault = option.startsWith('Todos') || option.startsWith('Todas');
+                                const val = isDefault ? '' : option;
+                                const isSelected = value === val;
+
+                                return (
+                                    <button
+                                        key={idx}
+                                        type="button"
+                                        onClick={() => {
+                                            onChange(val);
+                                            setIsOpen(false);
+                                        }}
+                                        className={`w-full text-left px-6 py-3 text-sm font-bold transition-colors ${isSelected ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50 hover:text-[#259591]'}`}
+                                    >
+                                        {option}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
