@@ -868,12 +868,12 @@ export default function MedicalControl() {
                                                         title="Conclusão Junta"
                                                     >
                                                         <Gavel size={18} />
-                                                        {getTiebreakerMissingCount(r) > 0 && !isFinalized(r.situacao) && (
+                                                        {getTiebreakerMissingCount(r) > 0 && (
                                                             <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-rose-300">
                                                                 {getTiebreakerMissingCount(r)}
                                                             </span>
                                                         )}
-                                                        {getTiebreakerMissingCount(r) === 0 && !isFinalized(r.situacao) && (
+                                                        {getTiebreakerMissingCount(r) === 0 && (
                                                             <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-emerald-300" title="Parecer totalmente preenchido">
                                                                 <CheckCircle2 size={12} />
                                                             </span>
