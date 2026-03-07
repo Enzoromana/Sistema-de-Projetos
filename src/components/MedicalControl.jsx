@@ -449,6 +449,9 @@ export default function MedicalControl() {
             // Update local state
             setSelectedRequest(prev => ({ ...prev, ...tiebreakerData, situacao: 'Finalizado Junta Médica' }));
             setShowTiebreakerModal(false);
+            setTimeout(() => {
+                setShowTiebreakerReportModal(true);
+            }, 300);
             loadRequests();
         } catch (error) {
             console.error('Erro ao salvar desempate:', error);
@@ -868,6 +871,11 @@ export default function MedicalControl() {
                                                         {getTiebreakerMissingCount(r) > 0 && !isFinalized(r.situacao) && (
                                                             <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-rose-300">
                                                                 {getTiebreakerMissingCount(r)}
+                                                            </span>
+                                                        )}
+                                                        {getTiebreakerMissingCount(r) === 0 && !isFinalized(r.situacao) && (
+                                                            <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm ring-1 ring-emerald-300" title="Parecer totalmente preenchido">
+                                                                <CheckCircle2 size={12} />
                                                             </span>
                                                         )}
                                                     </button>
@@ -1761,6 +1769,39 @@ export default function MedicalControl() {
                                                 )}
                                             </button>
                                         ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center justify-between ml-1 pb-2 border-b border-slate-100">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Controle de Parecer Externo (Desempate)</label>
+                                    </div>
+                                    <div className="flex items-center justify-between p-5 rounded-2xl border border-slate-100 bg-white shadow-sm">
+                                        <div>
+                                            <p className="text-sm font-bold text-slate-800">Liberação do Formulário Externo</p>
+                                            <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-1">
+                                                {selectedRequest.tiebreaker_allow_edit ? 'Médico Desempatador pode reeditar o parecer' : 'Formulário externo encontra-se bloqueado'}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={async () => {
+                                                const newVal = !selectedRequest.tiebreaker_allow_edit;
+                                                const { error } = await supabase
+                                                    .from('medical_requests')
+                                                    .update({ tiebreaker_allow_edit: newVal })
+                                                    .eq('id', selectedRequest.id);
+
+                                                if (!error) {
+                                                    setSelectedRequest({ ...selectedRequest, tiebreaker_allow_edit: newVal });
+                                                    loadRequests();
+                                                } else {
+                                                    alert('Erro ao atualizar controle do parecer.');
+                                                }
+                                            }}
+                                            className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${selectedRequest.tiebreaker_allow_edit ? 'bg-teal-500' : 'bg-slate-200'}`}
+                                        >
+                                            <span className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${selectedRequest.tiebreaker_allow_edit ? 'translate-x-5' : 'translate-x-0'}`} />
+                                        </button>
                                     </div>
                                 </div>
 

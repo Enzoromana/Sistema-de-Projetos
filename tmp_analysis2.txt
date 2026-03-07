@@ -1,0 +1,709 @@
+﻿L 635  delta=  1  bal=   1  <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+L 637  delta= -1  bal=   0  </div>
+L 641  delta=  1  bal=   1  <div className="space-y-8 animate-in fade-in duration-500">
+L 643  delta=  1  bal=   2  <div className="bg-gradient-to-br from-[#074F4B] to-[#259591] rounded-[2.5rem] p-10 md:p-1...
+L 645  delta=  1  bal=   3  <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between ga...
+L 646  delta=  1  bal=   4  <div>
+L 647  delta=  1  bal=   5  <div className="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full...
+L 649  delta= -1  bal=   4  </div>
+L 654  delta= -1  bal=   3  </div>
+L 656  delta=  1  bal=   4  <div className="flex items-center gap-4">
+L 683  delta= -1  bal=   3  </div>
+L 684  delta= -1  bal=   2  </div>
+L 685  delta= -1  bal=   1  </div>
+L 690  delta=  1  bal=   2  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+L 695  delta= -1  bal=   1  </div>
+L 698  delta=  1  bal=   2  <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
+L 699  delta=  1  bal=   3  <div className="flex flex-col md:flex-row gap-4 items-center">
+L 700  delta=  1  bal=   4  <div className="relative flex-2 w-full md:w-2/5">
+L 709  delta= -1  bal=   3  </div>
+L 710  delta=  1  bal=   4  <div className="flex-1 w-full">
+L 711  delta=  1  bal=   5  <div className="relative">
+L 719  delta= -1  bal=   4  </div>
+L 720  delta= -1  bal=   3  </div>
+L 721  delta=  1  bal=   4  <div className="flex-1 w-full">
+L 730  delta= -1  bal=   3  </div>
+L 731  delta=  1  bal=   4  <div className="flex-1 w-full">
+L 740  delta= -1  bal=   3  </div>
+L 741  delta= -1  bal=   2  </div>
+L 743  delta=  1  bal=   3  <div className="flex flex-col md:flex-row gap-4 items-center">
+L 744  delta=  1  bal=   4  <div className="relative flex-1 w-full">
+L 753  delta= -1  bal=   3  </div>
+L 754  delta=  1  bal=   4  <div className="relative flex-1 w-full">
+L 763  delta= -1  bal=   3  </div>
+L 764  delta= -1  bal=   2  </div>
+L 765  delta= -1  bal=   1  </div>
+L 768  delta=  1  bal=   2  <div className="bg-white rounded-[3rem] border border-slate-200/50 shadow-[0_20px_50px_rgb...
+L 769  delta=  1  bal=   3  <div className="overflow-x-auto">
+L 786  delta=  1  bal=   4  <div>
+L 789  delta= -1  bal=   3  </div>
+L 793  delta=  1  bal=   4  <div className={`w-1.5 h-1.5 rounded-full ${SITUACAO[r.situacao]?.color}`} />
+L 798  delta=  1  bal=   5  <div className="flex justify-end gap-2">
+L 884  delta= -1  bal=   4  </div>
+L 890  delta= -1  bal=   3  </div>
+L 891  delta= -1  bal=   2  </div>
+L 900  delta=  1  bal=   3  <div className="flex flex-col lg:flex-row gap-8">
+L 902  delta=  1  bal=   4  <div className="w-full lg:w-72 space-y-1.5 pt-4">
+L 917  delta=  1  bal=   5  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${currentStep === idx...
+L 919  delta= -1  bal=   4  </div>
+L 920  delta=  1  bal=   5  <div>
+L 922  delta= -1  bal=   4  </div>
+L 923  delta= -1  bal=   3  </div>
+L 925  delta= -1  bal=   2  </div>
+L 928  delta=  1  bal=   3  <div className="flex-1 bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
+L 931  delta=  1  bal=   4  <div className="space-y-8 animate-in slide-in-from-right">
+L 933  delta=  1  bal=   5  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+L 943  delta=  1  bal=   6  <div className="space-y-2">
+L 954  delta= -1  bal=   5  </div>
+L 964  delta= -1  bal=   4  </div>
+L 965  delta= -1  bal=   3  </div>
+L 970  delta=  1  bal=   4  <div className="space-y-8 animate-in slide-in-from-right">
+L 972  delta=  1  bal=   5  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+L 975  delta=  1  bal=   6  <div className="space-y-2">
+L 976  delta=  1  bal=   7  <div className="flex items-center gap-4 mb-2">
+L 985  delta= -1  bal=   6  </div>
+L 992  delta= -1  bal=   5  </div>
+L 995  delta=  1  bal=   6  <div className="relative">
+L1003  delta=  1  bal=   7  <div className="absolute inset-0 bg-transparent cursor-not-allowed z-10" />
+L1004  delta= -1  bal=   6  </div>
+L1005  delta= -1  bal=   5  </div>
+L1006  delta= -1  bal=   4  </div>
+L1011  delta=  1  bal=   5  <div className="space-y-8 animate-in slide-in-from-right">
+L1013  delta=  1  bal=   6  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+L1015  delta=  1  bal=   7  <div className="space-y-2">
+L1016  delta=  1  bal=   8  <div className="flex items-center gap-4 mb-2">
+L1025  delta= -1  bal=   7  </div>
+L1032  delta= -1  bal=   6  </div>
+L1046  delta=  1  bal=   7  <div className="md:col-span-2">
+L1048  delta= -1  bal=   6  </div>
+L1049  delta= -1  bal=   5  </div>
+L1050  delta= -1  bal=   4  </div>
+L1055  delta=  1  bal=   5  <div className="space-y-8 animate-in slide-in-from-right">
+L1056  delta=  1  bal=   6  <div className="flex items-center justify-between">
+L1064  delta= -1  bal=   5  </div>
+L1065  delta=  1  bal=   6  <div className="space-y-4">
+L1068  delta=  1  bal=   7  <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative gro...
+L1069  delta=  1  bal=   8  <div className="flex justify-end mb-4">
+L1076  delta= -1  bal=   7  </div>
+L1077  delta=  1  bal=   8  <div className="grid grid-cols-1 gap-6">
+L1078  delta=  1  bal=   9  <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-end">
+L1079  delta=  1  bal=  10  <div className="w-full">
+L1088  delta= -1  bal=   9  </div>
+L1089  delta=  1  bal=  10  <div className="grid grid-cols-2 gap-3 self-stretch">
+L1100  delta= -1  bal=   9  </div>
+L1101  delta= -1  bal=   8  </div>
+L1102  delta=  1  bal=   9  <div className="mt-2">
+L1114  delta= -1  bal=   8  </div>
+L1115  delta= -1  bal=   7  </div>
+L1116  delta= -1  bal=   6  </div>
+L1119  delta= -1  bal=   5  </div>
+L1120  delta= -1  bal=   4  </div>
+L1125  delta=  1  bal=   5  <div className="space-y-8 animate-in slide-in-from-right">
+L1126  delta=  1  bal=   6  <div className="flex items-center justify-between">
+L1134  delta= -1  bal=   5  </div>
+L1135  delta=  1  bal=   6  <div className="space-y-4">
+L1138  delta=  1  bal=   7  <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 relative gro...
+L1139  delta=  1  bal=   8  <div className="flex justify-end mb-4">
+L1146  delta= -1  bal=   7  </div>
+L1147  delta=  1  bal=   8  <div className="grid grid-cols-1 gap-6">
+L1148  delta=  1  bal=   9  <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-4 items-end">
+L1149  delta=  1  bal=  10  <div className="w-full">
+L1155  delta= -1  bal=   9  </div>
+L1156  delta=  1  bal=  10  <div className="grid grid-cols-2 gap-3 self-stretch">
+L1167  delta= -1  bal=   9  </div>
+L1168  delta=  1  bal=  10  <div className="lg:col-span-2 mt-2">
+L1180  delta= -1  bal=   9  </div>
+L1181  delta= -1  bal=   8  </div>
+L1182  delta= -1  bal=   7  </div>
+L1183  delta= -1  bal=   6  </div>
+L1186  delta= -1  bal=   5  </div>
+L1187  delta= -1  bal=   4  </div>
+L1192  delta=  1  bal=   5  <div className="space-y-8 animate-in slide-in-from-right">
+L1193  delta=  1  bal=   6  <div className="flex items-center justify-between">
+L1198  delta= -1  bal=   5  </div>
+L1223  delta=  1  bal=   6  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L1232  delta=  1  bal=   7  <div className="flex items-center justify-between">
+L1233  delta=  1  bal=   8  <div className="flex items-center gap-3 min-w-0 pr-2">
+L1234  delta=  1  bal=   9  <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-c...
+L1236  delta= -1  bal=   8  </div>
+L1238  delta= -1  bal=   7  </div>
+L1249  delta= -1  bal=   6  </div>
+L1253  delta=  1  bal=   7  <div className="space-y-2 border-t border-slate-200/50 pt-4">
+L1256  delta=  1  bal=   8  <div key={`db-${idx}`} className="flex items-center justify-between text-[11px] bg-white p...
+L1257  delta=  1  bal=   9  <div className="flex items-center gap-2 text-slate-600">
+L1260  delta= -1  bal=   8  </div>
+L1261  delta=  1  bal=   9  <div className="flex items-center gap-2">
+L1290  delta= -1  bal=   8  </div>
+L1291  delta= -1  bal=   7  </div>
+L1296  delta=  1  bal=   8  <div key={`temp-${idx}`} className="flex items-center justify-between text-[11px] bg-teal-...
+L1297  delta=  1  bal=   9  <div className="flex items-center gap-2 text-teal-700">
+L1300  delta= -1  bal=   8  </div>
+L1312  delta= -1  bal=   7  </div>
+L1314  delta= -1  bal=   6  </div>
+L1316  delta=  1  bal=   7  <div className="mt-2 text-center py-4 border-2 border-dashed border-slate-100 rounded-2xl"...
+L1318  delta= -1  bal=   6  </div>
+L1320  delta= -1  bal=   5  </div>
+L1322  delta= -1  bal=   4  </div>
+L1324  delta=  1  bal=   5  <div className="mt-12 p-8 bg-amber-50 rounded-[2rem] border border-amber-100 flex items-st...
+L1325  delta=  1  bal=   6  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-amber...
+L1327  delta= -1  bal=   5  </div>
+L1328  delta=  1  bal=   6  <div>
+L1331  delta= -1  bal=   5  </div>
+L1332  delta= -1  bal=   4  </div>
+L1334  delta=  1  bal=   5  <div className="space-y-6">
+L1347  delta=  1  bal=   6  <div className="w-16 h-16 bg-slate-50 text-slate-300 rounded-2xl flex items-center justify...
+L1349  delta= -1  bal=   5  </div>
+L1352  delta= -1  bal=   4  </div>
+L1354  delta=  1  bal=   5  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L1356  delta=  1  bal=   6  <div key={idx} className="flex items-center justify-between p-4 bg-teal-50 border border-t...
+L1357  delta=  1  bal=   7  <div className="flex items-center gap-3">
+L1360  delta= -1  bal=   6  </div>
+L1364  delta= -1  bal=   5  </div>
+L1366  delta= -1  bal=   4  </div>
+L1368  delta= -1  bal=   3  </div>
+L1369  delta= -1  bal=   2  </div>
+L1374  delta=  1  bal=   3  <div className="space-y-8 animate-in slide-in-from-right">
+L1376  delta=  1  bal=   4  <div className="space-y-6">
+L1383  delta=  1  bal=   5  <div className="space-y-4">
+L1385  delta=  1  bal=   6  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L1403  delta= -1  bal=   5  </div>
+L1404  delta= -1  bal=   4  </div>
+L1405  delta= -1  bal=   3  </div>
+L1406  delta= -1  bal=   2  </div>
+L1410  delta=  1  bal=   3  <div className="flex items-center justify-between mt-12 pt-8 border-t border-slate-50">
+L1433  delta= -1  bal=   2  </div>
+L1434  delta= -1  bal=   1  </div>
+L1435  delta= -1  bal=   0  </div>
+L1439  delta=  1  bal=   1  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 ba...
+L1440  delta=  1  bal=   2  <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden fl...
+L1442  delta=  1  bal=   3  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-5...
+L1443  delta=  1  bal=   4  <div className="flex items-center gap-4">
+L1444  delta=  1  bal=   5  <div className="p-3 bg-teal-700 text-white rounded-2xl shadow-lg shadow-teal-200">
+L1446  delta= -1  bal=   4  </div>
+L1447  delta=  1  bal=   5  <div>
+L1450  delta= -1  bal=   4  </div>
+L1451  delta= -1  bal=   3  </div>
+L1452  delta=  1  bal=   4  <div className="flex items-center gap-3">
+L1462  delta= -1  bal=   3  </div>
+L1463  delta= -1  bal=   2  </div>
+L1466  delta=  1  bal=   3  <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+L1483  delta=  1  bal=   4  <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
+L1484  delta=  1  bal=   5  <div className="flex items-center gap-4 text-[#259591]">
+L1486  delta=  1  bal=   6  <div>
+L1489  delta= -1  bal=   5  </div>
+L1490  delta= -1  bal=   4  </div>
+L1491  delta=  1  bal=   5  <div className="text-right">
+L1493  delta=  1  bal=   6  <div className="mt-2 space-y-0.5">
+L1500  delta= -1  bal=   5  </div>
+L1501  delta= -1  bal=   4  </div>
+L1502  delta= -1  bal=   3  </div>
+L1504  delta=  1  bal=   4  <div className="space-y-6 text-slate-900 font-sans">
+L1506  delta=  1  bal=   5  <div className="border border-[#259591] flex rounded-none relative overflow-hidden">
+L1509  delta=  1  bal=   6  <div className="flex-[2] p-5 border-r border-[#259591] pl-8">
+L1511  delta=  1  bal=   7  <div className="grid grid-cols-2 gap-y-3 gap-x-6">
+L1512  delta=  1  bal=   8  <div>
+L1515  delta= -1  bal=   7  </div>
+L1516  delta=  1  bal=   8  <div>
+L1519  delta= -1  bal=   7  </div>
+L1520  delta=  1  bal=   8  <div>
+L1523  delta= -1  bal=   7  </div>
+L1524  delta=  1  bal=   8  <div>
+L1527  delta= -1  bal=   7  </div>
+L1528  delta= -1  bal=   6  </div>
+L1529  delta= -1  bal=   5  </div>
+L1531  delta=  1  bal=   6  <div className="flex-1 p-5 bg-teal-50/30 break-inside-avoid">
+L1533  delta=  1  bal=   7  <div className="space-y-3">
+L1534  delta=  1  bal=   8  <div>
+L1537  delta= -1  bal=   7  </div>
+L1538  delta=  1  bal=   8  <div>
+L1541  delta= -1  bal=   7  </div>
+L1542  delta= -1  bal=   6  </div>
+L1543  delta= -1  bal=   5  </div>
+L1544  delta= -1  bal=   4  </div>
+L1547  delta=  1  bal=   5  <div className="border border-[#259591] flex break-inside-avoid shadow-[4px_4px_0px_0px_rg...
+L1548  delta=  1  bal=   6  <div className="flex-1 p-4 border-r border-[#259591]">
+L1550  delta=  1  bal=   7  <div className="space-y-1">
+L1553  delta= -1  bal=   6  </div>
+L1554  delta= -1  bal=   5  </div>
+L1555  delta=  1  bal=   6  <div className="flex-1 p-4 bg-teal-50/10">
+L1557  delta=  1  bal=   7  <div className="space-y-1">
+L1560  delta= -1  bal=   6  </div>
+L1561  delta= -1  bal=   5  </div>
+L1562  delta= -1  bal=   4  </div>
+L1565  delta=  1  bal=   5  <div className="mt-8 break-inside-avoid">
+L1595  delta= -1  bal=   4  </div>
+L1599  delta=  1  bal=   5  <div className="mt-6 break-inside-avoid">
+L1624  delta= -1  bal=   4  </div>
+L1628  delta=  1  bal=   5  <div className="mt-8 break-inside-avoid">
+L1632  delta=  1  bal=   6  <div className="border border-[#259591] bg-white text-xs">
+L1637  delta=  1  bal=   7  <div key={type.id} className="p-3 border-b border-[#259591]/20 last:border-b-0">
+L1639  delta=  1  bal=   8  <div className="space-y-1 pl-2">
+L1641  delta=  1  bal=   9  <div key={i} className="flex items-center gap-2">
+L1645  delta= -1  bal=   8  </div>
+L1647  delta= -1  bal=   7  </div>
+L1648  delta= -1  bal=   6  </div>
+L1654  delta=  1  bal=   7  <div className="p-3 border-b border-[#259591]/20 last:border-b-0">
+L1656  delta=  1  bal=   8  <div className="flex flex-wrap gap-x-4 gap-y-2 pl-2">
+L1658  delta=  1  bal=   9  <div key={i} className="flex items-center gap-2 bg-slate-50 px-2 py-1 rounded-md border bo...
+L1662  delta= -1  bal=   8  </div>
+L1664  delta= -1  bal=   7  </div>
+L1665  delta= -1  bal=   6  </div>
+L1671  delta= -1  bal=   5  </div>
+L1672  delta= -1  bal=   4  </div>
+L1675  delta=  1  bal=   5  <div className="mt-8 border border-[#259591] bg-teal-50/30 p-5 break-inside-avoid relative...
+L1677  delta=  1  bal=   6  <div className="grid grid-cols-1 gap-y-1 relative z-10">
+L1678  delta=  1  bal=   7  <div>
+L1681  delta= -1  bal=   6  </div>
+L1682  delta=  1  bal=   7  <div className="mt-2">
+L1684  delta=  1  bal=   8  <div className="flex flex-wrap gap-2 mt-1">
+L1688  delta= -1  bal=   7  </div>
+L1689  delta= -1  bal=   6  </div>
+L1690  delta= -1  bal=   5  </div>
+L1692  delta= -1  bal=   4  </div>
+L1695  delta=  1  bal=   5  <div className="mt-12 text-center">
+L1699  delta= -1  bal=   4  </div>
+L1700  delta= -1  bal=   3  </div>
+L1703  delta=  1  bal=   4  <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50 print:...
+L1707  delta= -1  bal=   3  </div>
+L1708  delta= -1  bal=   2  </div>
+L1709  delta= -1  bal=   1  </div>
+L1710  delta= -1  bal=   0  </div>
+L1716  delta=  1  bal=   1  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 ba...
+L1717  delta=  1  bal=   2  <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden fl...
+L1718  delta=  1  bal=   3  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-5...
+L1719  delta=  1  bal=   4  <div className="flex items-center gap-4">
+L1720  delta=  1  bal=   5  <div className="p-3 bg-teal-600 text-white rounded-2xl shadow-lg shadow-teal-200">
+L1722  delta= -1  bal=   4  </div>
+L1723  delta=  1  bal=   5  <div>
+L1726  delta= -1  bal=   4  </div>
+L1727  delta= -1  bal=   3  </div>
+L1731  delta= -1  bal=   2  </div>
+L1733  delta=  1  bal=   3  <div className="flex-1 overflow-y-auto p-10 space-y-8">
+L1734  delta=  1  bal=   4  <div className="space-y-4">
+L1736  delta=  1  bal=   5  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+L1752  delta=  1  bal=   6  <div className={`w-3 h-3 rounded-full ${config.color} shrink-0`} />
+L1757  delta=  1  bal=   7  <div className="absolute top-2 right-2">
+L1759  delta= -1  bal=   6  </div>
+L1763  delta= -1  bal=   5  </div>
+L1764  delta= -1  bal=   4  </div>
+L1766  delta=  1  bal=   5  <div className="space-y-4">
+L1767  delta=  1  bal=   6  <div className="flex items-center justify-between ml-1">
+L1772  delta= -1  bal=   5  </div>
+L1783  delta=  1  bal=   6  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L1792  delta=  1  bal=   7  <div className="flex items-center justify-between">
+L1793  delta=  1  bal=   8  <div className="flex items-center gap-3">
+L1794  delta=  1  bal=   9  <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-cen...
+L1796  delta= -1  bal=   8  </div>
+L1798  delta= -1  bal=   7  </div>
+L1815  delta= -1  bal=   6  </div>
+L1819  delta=  1  bal=   7  <div className="space-y-2 border-t border-slate-200/50 pt-3">
+L1821  delta=  1  bal=   8  <div key={idx} className="flex items-center justify-between text-[11px] bg-white p-2 round...
+L1822  delta=  1  bal=   9  <div className="flex items-center gap-2">
+L1825  delta= -1  bal=   8  </div>
+L1826  delta=  1  bal=   9  <div className="flex items-center gap-1">
+L1843  delta= -1  bal=   8  </div>
+L1864  delta= -1  bal=   7  </div>
+L1866  delta= -1  bal=   6  </div>
+L1868  delta=  1  bal=   7  <div className="text-center py-2">
+L1870  delta= -1  bal=   6  </div>
+L1872  delta= -1  bal=   5  </div>
+L1874  delta= -1  bal=   4  </div>
+L1878  delta=  1  bal=   5  <div className="mt-6 p-5 rounded-2xl border border-teal-200 bg-teal-50/50">
+L1882  delta=  1  bal=   6  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+L1884  delta=  1  bal=   7  <div key={i} className="flex items-center justify-between p-3 bg-white rounded-xl border b...
+L1885  delta=  1  bal=   8  <div className="flex items-center gap-3 overflow-hidden">
+L1886  delta=  1  bal=   9  <div className="p-2 bg-teal-50 rounded-lg text-teal-600 shrink-0">
+L1888  delta= -1  bal=   8  </div>
+L1889  delta=  1  bal=   9  <div className="min-w-0">
+L1892  delta= -1  bal=   8  </div>
+L1893  delta= -1  bal=   7  </div>
+L1894  delta=  1  bal=   8  <div className="flex items-center gap-2 shrink-0">
+L1904  delta= -1  bal=   7  </div>
+L1905  delta= -1  bal=   6  </div>
+L1907  delta= -1  bal=   5  </div>
+L1908  delta= -1  bal=   4  </div>
+L1910  delta= -1  bal=   3  </div>
+L1911  delta= -1  bal=   2  </div>
+L1913  delta=  1  bal=   3  <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+L1917  delta= -1  bal=   2  </div>
+L1918  delta= -1  bal=   1  </div>
+L1919  delta= -1  bal=   0  </div>
+L1926  delta=  1  bal=   1  <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 ...
+L1927  delta=  1  bal=   2  <div className="bg-white rounded-[2.5rem] w-full max-w-3xl max-h-[90vh] overflow-hidden fl...
+L1928  delta=  1  bal=   3  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#25959...
+L1929  delta=  1  bal=   4  <div className="flex items-center gap-4">
+L1930  delta=  1  bal=   5  <div className="p-3 bg-white/20 rounded-2xl">
+L1932  delta= -1  bal=   4  </div>
+L1933  delta=  1  bal=   5  <div>
+L1936  delta= -1  bal=   4  </div>
+L1937  delta= -1  bal=   3  </div>
+L1941  delta= -1  bal=   2  </div>
+L1943  delta=  1  bal=   3  <div className="flex-1 overflow-y-auto p-10 space-y-12">
+L1947  delta=  1  bal=   4  <div className="w-8 h-1 bg-[#259591] rounded-full" /> Guia de Utilização
+L1949  delta=  1  bal=   5  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L1950  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1953  delta= -1  bal=   5  </div>
+L1954  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1957  delta= -1  bal=   5  </div>
+L1958  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1961  delta= -1  bal=   5  </div>
+L1962  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1965  delta= -1  bal=   5  </div>
+L1966  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1969  delta= -1  bal=   5  </div>
+L1970  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1973  delta= -1  bal=   5  </div>
+L1974  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1977  delta= -1  bal=   5  </div>
+L1978  delta=  1  bal=   6  <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-2">
+L1981  delta= -1  bal=   5  </div>
+L1982  delta= -1  bal=   4  </div>
+L1987  delta=  1  bal=   5  <div className="flex items-center justify-between">
+L1989  delta=  1  bal=   6  <div className="w-8 h-1 bg-amber-400 rounded-full" /> Notas de Atualização
+L1992  delta= -1  bal=   5  </div>
+L1994  delta=  1  bal=   6  <div className="space-y-4">
+L1995  delta=  1  bal=   7  <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+L1996  delta=  1  bal=   8  <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-emerald-500 border-4 bo...
+L1997  delta=  1  bal=   9  <div>
+L2007  delta=  1  bal=  10  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" /> {note}
+L2011  delta= -1  bal=   9  </div>
+L2012  delta= -1  bal=   8  </div>
+L2014  delta=  1  bal=   9  <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+L2015  delta=  1  bal=  10  <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-teal-600 border-4 borde...
+L2016  delta=  1  bal=  11  <div>
+L2028  delta=  1  bal=  12  <div className="w-1.5 h-1.5 rounded-full bg-[#259591] mt-1.5" /> {note}
+L2032  delta= -1  bal=  11  </div>
+L2033  delta= -1  bal=  10  </div>
+L2035  delta=  1  bal=  11  <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0 opa...
+L2036  delta=  1  bal=  12  <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-400 border-4 bord...
+L2037  delta=  1  bal=  13  <div>
+L2051  delta=  1  bal=  14  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5" /> {note}
+L2055  delta= -1  bal=  13  </div>
+L2056  delta= -1  bal=  12  </div>
+L2058  delta=  1  bal=  13  <div className="relative pl-8 pb-8 border-l-2 border-slate-100 last:border-0 last:pb-0">
+L2059  delta=  1  bal=  14  <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-slate-200 border-4 bord...
+L2060  delta=  1  bal=  15  <div>
+L2073  delta=  1  bal=  16  <div className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5" /> {note}
+L2077  delta= -1  bal=  15  </div>
+L2078  delta= -1  bal=  14  </div>
+L2079  delta= -1  bal=  13  </div>
+L2081  delta= -1  bal=  12  </div>
+L2083  delta=  1  bal=  13  <div className="p-8 border-t border-slate-100 flex justify-end bg-slate-50/50">
+L2087  delta= -1  bal=  12  </div>
+L2088  delta= -1  bal=  11  </div>
+L2089  delta= -1  bal=  10  </div>
+L2094  delta=  1  bal=  11  <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 ...
+L2095  delta=  1  bal=  12  <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-hidden fl...
+L2096  delta=  1  bal=  13  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-[#25959...
+L2097  delta=  1  bal=  14  <div className="flex items-center gap-4">
+L2098  delta=  1  bal=  15  <div className="p-3 bg-white/20 rounded-2xl">
+L2100  delta= -1  bal=  14  </div>
+L2101  delta=  1  bal=  15  <div>
+L2104  delta= -1  bal=  14  </div>
+L2105  delta= -1  bal=  13  </div>
+L2109  delta= -1  bal=  12  </div>
+L2111  delta=  1  bal=  13  <div className="flex-1 overflow-y-auto p-10 space-y-8">
+L2113  delta=  1  bal=  14  <div className="space-y-4">
+L2114  delta=  1  bal=  15  <div className="flex items-center gap-2 mb-2">
+L2117  delta= -1  bal=  14  </div>
+L2118  delta=  1  bal=  15  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L2137  delta= -1  bal=  14  </div>
+L2139  delta=  1  bal=  15  <div className="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center...
+L2140  delta=  1  bal=  16  <div className="bg-slate-50 p-6 flex flex-col items-center justify-center text-center">
+L2141  delta=  1  bal=  17  <div className="w-16 h-16 rounded-full bg-[#259591]/10 flex items-center justify-center mb...
+L2143  delta= -1  bal=  16  </div>
+L2151  delta= -1  bal=  15  </div>
+L2158  delta= -1  bal=  14  </div>
+L2159  delta= -1  bal=  13  </div>
+L2163  delta=  1  bal=  14  <div className="space-y-4">
+L2164  delta=  1  bal=  15  <div className="flex items-center gap-2 mb-2">
+L2167  delta= -1  bal=  14  </div>
+L2168  delta=  1  bal=  15  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+L2187  delta= -1  bal=  14  </div>
+L2188  delta= -1  bal=  13  </div>
+L2192  delta=  1  bal=  14  <div className="space-y-4">
+L2193  delta=  1  bal=  15  <div className="flex items-center gap-2 mb-2">
+L2196  delta= -1  bal=  14  </div>
+L2197  delta=  1  bal=  15  <div className="space-y-4">
+L2199  delta=  1  bal=  16  <div key={proc.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+L2200  delta=  1  bal=  17  <div className="flex flex-wrap gap-2 text-xs mb-3">
+L2204  delta= -1  bal=  16  </div>
+L2221  delta= -1  bal=  15  </div>
+L2223  delta= -1  bal=  14  </div>
+L2224  delta= -1  bal=  13  </div>
+L2229  delta=  1  bal=  14  <div className="space-y-4">
+L2230  delta=  1  bal=  15  <div className="flex items-center gap-2 mb-2">
+L2233  delta= -1  bal=  14  </div>
+L2234  delta=  1  bal=  15  <div className="space-y-4">
+L2236  delta=  1  bal=  16  <div key={mat.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+L2237  delta=  1  bal=  17  <div className="flex flex-wrap gap-2 text-xs mb-3">
+L2240  delta= -1  bal=  16  </div>
+L2257  delta= -1  bal=  15  </div>
+L2259  delta= -1  bal=  14  </div>
+L2260  delta= -1  bal=  13  </div>
+L2264  delta=  1  bal=  14  <div className="space-y-4">
+L2265  delta=  1  bal=  15  <div className="flex items-center gap-2 mb-2">
+L2268  delta= -1  bal=  14  </div>
+L2269  delta=  1  bal=  15  <div className="space-y-2">
+L2277  delta= -1  bal=  14  </div>
+L2278  delta=  1  bal=  15  <div className="space-y-2">
+L2286  delta= -1  bal=  14  </div>
+L2287  delta= -1  bal=  13  </div>
+L2288  delta= -1  bal=  12  </div>
+L2290  delta=  1  bal=  13  <div className="p-8 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+L2331  delta= -1  bal=  12  </div>
+L2332  delta= -1  bal=  11  </div>
+L2333  delta= -1  bal=  10  </div >
+L2338  delta=  1  bal=  11  <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 ...
+L2339  delta=  1  bal=  12  <div className="bg-white rounded-[2.5rem] w-full max-w-md overflow-hidden flex flex-col sh...
+L2340  delta=  1  bal=  13  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-amber-5...
+L2341  delta=  1  bal=  14  <div className="flex items-center gap-4">
+L2342  delta=  1  bal=  15  <div className="p-3 bg-white/20 rounded-2xl shadow-lg">
+L2344  delta= -1  bal=  14  </div>
+L2345  delta=  1  bal=  15  <div>
+L2348  delta= -1  bal=  14  </div>
+L2349  delta= -1  bal=  13  </div>
+L2353  delta= -1  bal=  12  </div>
+L2355  delta=  1  bal=  13  <div className="p-10 space-y-8">
+L2356  delta=  1  bal=  14  <div className="space-y-4">
+L2360  delta=  1  bal=  15  <div className="space-y-4 pt-4">
+L2376  delta= -1  bal=  14  </div>
+L2377  delta= -1  bal=  13  </div>
+L2379  delta=  1  bal=  14  <div className="flex flex-col gap-3 pt-4">
+L2422  delta= -1  bal=  13  </div>
+L2423  delta= -1  bal=  12  </div>
+L2424  delta= -1  bal=  11  </div>
+L2425  delta= -1  bal=  10  </div>
+L2430  delta=  1  bal=  11  <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40...
+L2431  delta=  1  bal=  12  <div className="bg-white rounded-[3rem] w-full max-w-lg overflow-hidden shadow-[0_40px_80p...
+L2432  delta=  1  bal=  13  <div className="p-10 text-center">
+L2433  delta=  1  bal=  14  <div className="w-24 h-24 bg-teal-50 rounded-[2rem] flex items-center justify-center text-...
+L2435  delta= -1  bal=  13  </div>
+L2441  delta=  1  bal=  14  <div className="bg-slate-50 border border-slate-100 rounded-[1.5rem] p-5 mb-8 flex items-c...
+L2442  delta=  1  bal=  15  <div className="flex-1 truncate text-xs font-mono font-black text-slate-400 text-left">
+L2444  delta= -1  bal=  14  </div>
+L2454  delta= -1  bal=  13  </div>
+L2456  delta=  1  bal=  14  <div className="flex flex-col gap-3">
+L2471  delta= -1  bal=  13  </div>
+L2472  delta= -1  bal=  12  </div>
+L2473  delta= -1  bal=  11  </div>
+L2474  delta= -1  bal=  10  </div>
+L2480  delta=  1  bal=  11  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 ba...
+L2481  delta=  1  bal=  12  <div className="bg-white rounded-[2.5rem] w-full max-w-5xl max-h-[95vh] overflow-hidden fl...
+L2483  delta=  1  bal=  13  <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-emerald...
+L2484  delta=  1  bal=  14  <div className="flex items-center gap-4">
+L2485  delta=  1  bal=  15  <div className="p-3 bg-white/20 rounded-2xl shadow-lg">
+L2487  delta= -1  bal=  14  </div>
+L2488  delta=  1  bal=  15  <div>
+L2491  delta= -1  bal=  14  </div>
+L2492  delta= -1  bal=  13  </div>
+L2493  delta=  1  bal=  14  <div className="flex items-center gap-3">
+L2590  delta=  1  bal=  15  <div style="margin-bottom: 12px;">
+L2614  delta= -1  bal=  14  </div>
+L2618  delta=  1  bal=  15  <div style="margin-bottom: 12px;">
+L2640  delta= -1  bal=  14  </div>
+L2648  delta=  1  bal=  15  <div style="border-top: 1px solid rgba(29, 120, 116, 0.2); padding-top: 8px; margin-top: 8...
+L2651  delta= -1  bal=  14  </div>
+L2680  delta= -1  bal=  13  </div>
+L2681  delta= -1  bal=  12  </div>
+L2684  delta=  1  bal=  13  <div className="flex-1 overflow-y-auto p-8 bg-slate-100/50 flex justify-center">
+L2700  delta=  1  bal=  14  <div className="flex justify-between items-end border-b-[4px] border-[#259591] pb-4 mb-6">
+L2701  delta=  1  bal=  15  <div className="flex items-center gap-4 text-[#259591]">
+L2703  delta=  1  bal=  16  <div>
+L2706  delta= -1  bal=  15  </div>
+L2707  delta= -1  bal=  14  </div>
+L2708  delta=  1  bal=  15  <div className="text-right">
+L2710  delta=  1  bal=  16  <div className="mt-2 space-y-0.5">
+L2717  delta= -1  bal=  15  </div>
+L2718  delta= -1  bal=  14  </div>
+L2719  delta= -1  bal=  13  </div>
+L2722  delta=  1  bal=  14  <div className="border border-[#259591] p-4 mb-4">
+L2724  delta=  1  bal=  15  <div className="grid grid-cols-2 gap-4 text-sm">
+L2727  delta= -1  bal=  14  </div>
+L2728  delta= -1  bal=  13  </div>
+L2731  delta=  1  bal=  14  <div className="border border-[#259591] flex mb-4">
+L2732  delta=  1  bal=  15  <div className="flex-1 p-4 border-r border-[#259591]">
+L2736  delta= -1  bal=  14  </div>
+L2737  delta=  1  bal=  15  <div className="flex-1 p-4 border-r border-[#259591]">
+L2741  delta= -1  bal=  14  </div>
+L2742  delta=  1  bal=  15  <div className="flex-1 p-4 bg-teal-50/30">
+L2746  delta= -1  bal=  14  </div>
+L2747  delta= -1  bal=  13  </div>
+L2750  delta=  1  bal=  14  <div className="mb-8 text-sm leading-relaxed text-slate-600 text-justify bg-slate-50 p-6 r...
+L2754  delta= -1  bal=  13  </div>
+L2758  delta=  1  bal=  14  <div className="mb-4">
+L2782  delta= -1  bal=  13  </div>
+L2787  delta=  1  bal=  14  <div className="mb-4">
+L2809  delta= -1  bal=  13  </div>
+L2813  delta=  1  bal=  14  <div className="border border-[#259591] bg-teal-50/30 p-4 mt-6">
+L2818  delta=  1  bal=  15  <div className="border-t border-[#259591]/20 pt-3">
+L2821  delta= -1  bal=  14  </div>
+L2823  delta= -1  bal=  13  </div>
+L2826  delta=  1  bal=  14  <div className="mt-12 flex justify-around">
+L2827  delta=  1  bal=  15  <div className="text-center">
+L2828  delta=  1  bal=  16  <div className="w-48 border-t border-slate-400 pt-2">
+L2831  delta= -1  bal=  15  </div>
+L2832  delta= -1  bal=  14  </div>
+L2833  delta= -1  bal=  13  </div>
+L2835  delta= -1  bal=  12  </div>
+L2836  delta= -1  bal=  11  </div>
+L2837  delta= -1  bal=  10  </div>
+L2838  delta= -1  bal=   9  </div>
+L2840  delta= -1  bal=   8  </div>
+L2841  delta= -1  bal=   7  </div>
+L2842  delta= -1  bal=   6  </div>
+L2843  delta= -1  bal=   5  </div>
+L2844  delta= -1  bal=   4  </div>
+L2845  delta= -1  bal=   3  </div>
+L2846  delta= -1  bal=   2  </div>
+L2847  delta= -1  bal=   1  </div>
+L2848  delta= -1  bal=   0  </div>
+L2849  delta= -1  bal=  -1  </div>
+L2881  delta=  1  bal=   0  <div className="space-y-2 relative">
+L2885  delta=  1  bal=   1  <div className="relative">
+L2903  delta=  1  bal=   2  <div className="absolute z-50 top-full left-0 right-0 mt-3 bg-white/90 backdrop-blur-xl ro...
+L2904  delta=  1  bal=   3  <div className="p-2">
+L2918  delta= -1  bal=   2  </div>
+L2919  delta= -1  bal=   1  </div>
+L2923  delta=  1  bal=   2  <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} /...
+L2925  delta= -1  bal=   1  </div>
+L2926  delta= -1  bal=   0  </div>
+L2939  delta=  1  bal=   1  <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] bo...
+L2940  delta=  1  bal=   2  <div className="flex items-center gap-6">
+L2941  delta=  1  bal=   3  <div className={`w-16 h-16 rounded-[1.2rem] ${colors[color]} border flex items-center just...
+L2943  delta= -1  bal=   2  </div>
+L2944  delta=  1  bal=   3  <div>
+L2947  delta= -1  bal=   2  </div>
+L2948  delta= -1  bal=   1  </div>
+L2949  delta= -1  bal=   0  </div>
+L2955  delta=  1  bal=   1  <div className="flex items-center gap-4">
+L2956  delta=  1  bal=   2  <div className="w-14 h-14 rounded-2xl bg-slate-50 text-[#259591] flex items-center justify...
+L2958  delta= -1  bal=   1  </div>
+L2959  delta=  1  bal=   2  <div>
+L2962  delta= -1  bal=   1  </div>
+L2963  delta= -1  bal=   0  </div>
+L2969  delta=  1  bal=   1  <div className="space-y-2">
+L2981  delta= -1  bal=   0  </div>
+L2988  delta=  1  bal=   1  <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-a...
+L2990  delta= -1  bal=   0  </div>
+L2999  delta=  1  bal=   1  <div className="space-y-6 break-inside-avoid border-l-2 border-teal-50 pl-6">
+L3000  delta=  1  bal=   2  <div className="flex items-center gap-3 border-b-2 border-slate-50 pb-4">
+L3003  delta= -1  bal=   1  </div>
+L3005  delta= -1  bal=   0  </div>
+L3011  delta=  1  bal=   1  <div className={`${className} break-inside-avoid`}>
+L3014  delta= -1  bal=   0  </div>
+L3087  delta=  1  bal=   1  <div className="space-y-2 relative">
+L3092  delta=  1  bal=   2  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+L3094  delta=  1  bal=   3  <div className="md:col-span-1 relative">
+L3096  delta=  1  bal=   4  <div className="relative">
+L3113  delta= -1  bal=   3  </div>
+L3115  delta=  1  bal=   4  <div className="relative">
+L3129  delta=  1  bal=   5  <div className="absolute z-50 top-full left-0 right-0 mt-3 bg-white/90 backdrop-blur-xl ro...
+L3130  delta=  1  bal=   6  <div className="p-2">
+L3144  delta= -1  bal=   5  </div>
+L3145  delta= -1  bal=   4  </div>
+L3149  delta=  1  bal=   5  <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setShowOptions(false)} /...
+L3151  delta= -1  bal=   4  </div>
+L3153  delta= -1  bal=   3  </div>
+L3156  delta=  1  bal=   4  <div className="md:col-span-2">
+L3163  delta= -1  bal=   3  </div>
+L3164  delta= -1  bal=   2  </div>
+L3165  delta= -1  bal=   1  </div>
+L3173  delta=  1  bal=   2  <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl animate-i...
+L3174  delta=  1  bal=   3  <div className="flex items-center justify-between mb-10 pb-8 border-b border-slate-100">
+L3175  delta=  1  bal=   4  <div className="flex items-center gap-6">
+L3176  delta=  1  bal=   5  <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-tea...
+L3178  delta= -1  bal=   4  </div>
+L3179  delta=  1  bal=   5  <div>
+L3182  delta= -1  bal=   4  </div>
+L3183  delta= -1  bal=   3  </div>
+L3184  delta=  1  bal=   4  <div className="flex gap-4">
+L3197  delta= -1  bal=   3  </div>
+L3198  delta= -1  bal=   2  </div>
+L3200  delta=  1  bal=   3  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+L3201  delta=  1  bal=   4  <div className="space-y-8">
+L3202  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3204  delta=  1  bal=   6  <div className="space-y-4">
+L3206  delta=  1  bal=   7  <div className="flex gap-4">
+L3209  delta= -1  bal=   6  </div>
+L3213  delta=  1  bal=   7  <div className="flex gap-4">
+L3216  delta= -1  bal=   6  </div>
+L3217  delta= -1  bal=   5  </div>
+L3218  delta= -1  bal=   4  </div>
+L3220  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3222  delta=  1  bal=   6  <div className="space-y-4">
+L3224  delta=  1  bal=   7  <div className="flex gap-4">
+L3227  delta= -1  bal=   6  </div>
+L3229  delta= -1  bal=   5  </div>
+L3230  delta= -1  bal=   4  </div>
+L3232  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3234  delta=  1  bal=   6  <div className="space-y-4">
+L3236  delta=  1  bal=   7  <div className="flex gap-4">
+L3239  delta= -1  bal=   6  </div>
+L3243  delta= -1  bal=   5  </div>
+L3244  delta= -1  bal=   4  </div>
+L3245  delta= -1  bal=   3  </div>
+L3247  delta=  1  bal=   4  <div className="space-y-8">
+L3248  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3250  delta=  1  bal=   6  <div className="space-y-4">
+L3251  delta=  1  bal=   7  <div className="flex gap-4">
+L3254  delta= -1  bal=   6  </div>
+L3255  delta=  1  bal=   7  <div className="space-y-2">
+L3257  delta=  1  bal=   8  <div className="flex flex-wrap gap-2">
+L3261  delta= -1  bal=   7  </div>
+L3262  delta= -1  bal=   6  </div>
+L3263  delta= -1  bal=   5  </div>
+L3264  delta= -1  bal=   4  </div>
+L3266  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3268  delta=  1  bal=   6  <div className="space-y-3">
+L3270  delta=  1  bal=   7  <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+L3272  delta=  1  bal=   8  <div className="flex justify-between mt-2">
+L3275  delta= -1  bal=   7  </div>
+L3276  delta= -1  bal=   6  </div>
+L3278  delta= -1  bal=   5  </div>
+L3279  delta= -1  bal=   4  </div>
+L3281  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3283  delta=  1  bal=   6  <div className="space-y-3">
+L3285  delta=  1  bal=   7  <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+L3288  delta= -1  bal=   6  </div>
+L3290  delta= -1  bal=   5  </div>
+L3291  delta= -1  bal=   4  </div>
+L3295  delta=  1  bal=   5  <div className="bg-emerald-50 p-8 rounded-[2rem] border border-emerald-100">
+L3298  delta=  1  bal=   6  <div className="space-y-6">
+L3299  delta=  1  bal=   7  <div className="grid grid-cols-2 gap-4 border-b border-emerald-200/50 pb-4">
+L3300  delta=  1  bal=   8  <div>
+L3304  delta= -1  bal=   7  </div>
+L3305  delta=  1  bal=   8  <div>
+L3309  delta= -1  bal=   7  </div>
+L3310  delta= -1  bal=   6  </div>
+L3311  delta=  1  bal=   7  <div className="space-y-2">
+L3316  delta= -1  bal=   6  </div>
+L3318  delta=  1  bal=   7  <div className="space-y-2">
+L3323  delta= -1  bal=   6  </div>
+L3326  delta=  1  bal=   7  <div className="mt-4 pt-4 border-t border-emerald-200/50">
+L3345  delta= -1  bal=   6  </div>
+L3347  delta= -1  bal=   5  </div>
+L3348  delta= -1  bal=   4  </div>
+L3351  delta=  1  bal=   5  <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+L3352  delta=  1  bal=   6  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+L3384  delta= -1  bal=   5  </div>
+L3386  delta=  1  bal=   6  <div className="space-y-6">
+L3388  delta=  1  bal=   7  <div className="space-y-3">
+L3394  delta=  1  bal=   8  <div key={dt.id} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+L3396  delta=  1  bal=   9  <div className="space-y-2">
+L3403  delta= -1  bal=   8  </div>
+L3404  delta= -1  bal=   7  </div>
+L3410  delta= -1  bal=   6  </div>
+L3414  delta=  1  bal=   7  <div className="space-y-3 pt-4 border-t border-slate-200">
+L3416  delta=  1  bal=   8  <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm space-y-2">
+L3423  delta= -1  bal=   7  </div>
+L3424  delta= -1  bal=   6  </div>
+L3426  delta= -1  bal=   5  </div>
+L3427  delta= -1  bal=   4  </div>
+L3428  delta= -1  bal=   3  </div>
+L3429  delta= -1  bal=   2  </div>
+L3430  delta=  1  bal=   3  <div className="mt-10 pt-10 border-t border-slate-100 flex justify-end">
+L3437  delta= -1  bal=   2  </div>
+L3438  delta= -1  bal=   1  </div >
+
+=== FINAL BALANCE: 1 ===

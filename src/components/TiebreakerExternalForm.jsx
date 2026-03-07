@@ -48,6 +48,12 @@ export default function TiebreakerExternalForm({ token }) {
                 return;
             }
 
+            if (data.tiebreaker_allow_edit === false) {
+                setError('O acesso a este parecer foi suspenso pela administração. Entre em contato para liberação.');
+                setLoading(false);
+                return;
+            }
+
             setRequest(data);
 
             // Filter items that need a conclusion (where authorized < requested)
@@ -533,12 +539,35 @@ export default function TiebreakerExternalForm({ token }) {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full py-6 bg-[#259591] hover:bg-[#155a57] text-white rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-teal-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                        className="w-full py-6 relative bg-[#259591] hover:bg-[#155a57] text-white rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-teal-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                     >
+                        {(() => {
+                            let count = 0;
+                            if (!formData.desempatador_nome) count++;
+                            if (!formData.desempatador_crm) count++;
+                            if (!formData.desempatador_especialidade) count++;
+                            if (!formData.parecer_conclusao) count++;
+                            procedureConclusions.forEach(p => { if (!p.conclusao_desempate) count++; });
+                            materialConclusions.forEach(m => { if (!m.conclusao_desempate) count++; });
+
+                            if (count > 0) {
+                                return (
+                                    <span className="absolute -top-3 -right-3 bg-rose-500 text-white text-xs font-black w-8 h-8 flex items-center justify-center rounded-full border-4 border-white shadow-md ring-2 ring-rose-200" title="Campos obrigatórios pendentes">
+                                        {count}
+                                    </span>
+                                );
+                            } else {
+                                return (
+                                    <span className="absolute -top-3 -right-3 bg-emerald-500 text-white text-xs font-black w-8 h-8 flex items-center justify-center rounded-full border-4 border-white shadow-md ring-1 ring-emerald-300">
+                                        <CheckCircle2 size={16} />
+                                    </span>
+                                );
+                            }
+                        })()}
                         {submitting ? <Loader2 className="animate-spin" /> : <Save />}
                         {submitting ? 'Enviando...' : 'Assinar e Finalizar Parecer'}
                     </button>
-                    <p className="text-center text-xs text-slate-400 font-medium pb-8">Ao clicar em finalizar, o parecer será registrado e o processo será atualizado.</p>
+                    <p className="text-center text-xs text-slate-400 font-medium pb-8 mt-4">Ao clicar em finalizar, o parecer será registrado e o processo será atualizado.</p>
                 </form>
             </main>
         </div >
