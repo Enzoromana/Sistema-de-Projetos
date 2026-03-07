@@ -3313,8 +3313,8 @@ function RequestDetails({ request, onEdit, onBack }) {
                         <div className="space-y-4">
                             <ReportItem label="Nome" value={request.aud_nome} />
                             <div className="flex gap-4">
-                                <ReportItem label="CRM" value={request.aud_crm} className="flex-1" />
-                                <ReportItem label="Estado (CRM)" value={request.aud_estado} className="flex-1" />
+                                <ReportItem label={request.aud_conselho_tipo || 'CRM'} value={request.aud_crm} className="flex-1" />
+                                <ReportItem label={`Estado (${request.aud_conselho_tipo || 'CRM'})`} value={request.aud_estado} className="flex-1" />
                             </div>
                             <ReportItem label="Data Análise" value={request.aud_data ? new Date(request.aud_data).toLocaleDateString('pt-BR') : '-'} />
                         </div>
@@ -3325,7 +3325,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                         <div className="space-y-4">
                             <ReportItem label="Nome" value={request.ass_nome} />
                             <div className="flex gap-4">
-                                <ReportItem label="CRM" value={request.ass_crm} className="flex-1" />
+                                <ReportItem label={request.ass_conselho_tipo || 'CRM'} value={request.ass_crm} className="flex-1" />
                                 <ReportItem label="Especialidade" value={request.ass_especialidade} className="flex-1" />
                             </div>
                             <ReportItem label="Email" value={request.ass_email} />
