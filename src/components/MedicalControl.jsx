@@ -7,7 +7,7 @@ import {
     FileText, Search,
     User, Stethoscope,
     Box, Paperclip, AlertTriangle, Printer,
-    ArrowLeft, Loader2, Gavel, Download, Link, ShieldCheck
+    ArrowLeft, Loader2, Gavel, Download, Link, ShieldCheck, ChevronDown
 } from 'lucide-react';
 import TUSS_DATA from '../data/tuss.json';
 import SPECIALTIES from '../data/specialties.json';
@@ -721,25 +721,27 @@ export default function MedicalControl() {
                                     />
                                 </div>
                             </div>
-                            <div className="flex-1 w-full">
+                            <div className="flex-1 w-full relative">
                                 <select
                                     value={statusFilter}
                                     onChange={e => setStatusFilter(e.target.value)}
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10"
+                                    className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10 appearance-none truncate"
                                 >
                                     <option value="">Todos os status</option>
                                     {Object.keys(SITUACAO).map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
+                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
                             </div>
-                            <div className="flex-1 w-full">
+                            <div className="flex-1 w-full relative">
                                 <select
                                     value={specialtyFilter}
                                     onChange={e => setSpecialtyFilter(e.target.value)}
-                                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10"
+                                    className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-600 outline-none focus:ring-4 focus:ring-[#259591]/10 appearance-none truncate"
                                 >
                                     <option value="">Todas as especialidades</option>
                                     {specialties.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
+                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
                             </div>
                         </div>
 
@@ -950,15 +952,18 @@ export default function MedicalControl() {
                                     <Input label="E-mail" required value={formData.ben_email} onChange={v => setFormData({ ...formData, ben_email: v })} placeholder="email@exemplo.com" />
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Sexo</label>
-                                        <select
-                                            value={formData.ben_sexo}
-                                            onChange={e => setFormData({ ...formData, ben_sexo: e.target.value })}
-                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all"
-                                        >
-                                            <option value="">Selecione...</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Feminino">Feminino</option>
-                                        </select>
+                                        <div className="relative">
+                                            <select
+                                                value={formData.ben_sexo}
+                                                onChange={e => setFormData({ ...formData, ben_sexo: e.target.value })}
+                                                className="w-full pl-6 pr-10 py-4 rounded-2xl bg-slate-50 border border-slate-100 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-[#259591]/10 transition-all appearance-none truncate"
+                                            >
+                                                <option value="">Selecione...</option>
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Feminino">Feminino</option>
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={18} />
+                                        </div>
                                     </div>
                                     <Input label="Data de Nascimento" type="date" value={formData.ben_nascimento} onChange={v => setFormData({ ...formData, ben_nascimento: v })} />
                                     <Input
