@@ -34,6 +34,9 @@ const CHANGELOG = [
             {
                 type: 'fix',
                 items: [
+                    { text: 'Persistência de dados "aud_conselho_tipo" e "ass_conselho_tipo" no Supabase', icon: <Database size={16} /> },
+                    { text: 'Rótulos dinâmicos (CRM/CRO) no Modal de Detalhes, Visualização e PDF', icon: <Sparkles size={16} /> },
+                    { text: 'Resolvido ReferenceError: Paperclip is not defined no módulo de novidades', icon: <Bug size={16} /> },
                     { text: 'Correção de quebra de linha e truncamento no nome do médico (PDF Final)', icon: <CheckCircle2 size={16} /> },
                     { text: 'Ajuste de alinhamento vertical nos campos Nome/CRM do cabeçalho', icon: <Activity size={16} /> },
                 ]
