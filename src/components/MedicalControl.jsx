@@ -160,10 +160,6 @@ export default function MedicalControl() {
                 if (sanitizedData[field] === '') sanitizedData[field] = null;
             });
 
-            // Remove UI-only fields that are not in the database schema
-            delete sanitizedData.aud_conselho_tipo;
-            delete sanitizedData.ass_conselho_tipo;
-
             let requestId;
 
             if (selectedRequest && view === 'form') {
@@ -301,7 +297,9 @@ export default function MedicalControl() {
             aud_nome: request.aud_nome, aud_estado: request.aud_estado || '', aud_crm: request.aud_crm, aud_data: request.aud_data,
             ass_nome: request.ass_nome, ass_crm: request.ass_crm, ass_email: request.ass_email || '', ass_telefone: request.ass_telefone || '', ass_endereco: request.ass_endereco || '', ass_especialidade: request.ass_especialidade || '',
             div_especialidade: request.div_especialidade || '', div_motivos: request.div_motivos || [],
-            prazo_ans: request.prazo_ans || ''
+            prazo_ans: request.prazo_ans || '',
+            aud_conselho_tipo: request.aud_conselho_tipo || 'CRM',
+            ass_conselho_tipo: request.ass_conselho_tipo || 'CRM'
         });
 
         // Clean up procedures/materials to match form structure
@@ -1562,14 +1560,14 @@ export default function MedicalControl() {
                                             <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">II. Médico Auditor</h3>
                                             <div className="space-y-1">
                                                 <p className="text-sm font-bold">{selectedRequest.aud_nome}</p>
-                                                <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
+                                                <p className="text-xs font-medium text-slate-600">{selectedRequest.aud_conselho_tipo || 'CRM'}: {selectedRequest.aud_crm} / {selectedRequest.aud_estado}</p>
                                             </div>
                                         </div>
                                         <div className="flex-1 p-4 bg-teal-50/10">
                                             <h3 className="text-[10px] font-black uppercase tracking-widest text-[#259591] mb-2">III. Profissional Assistente</h3>
                                             <div className="space-y-1">
                                                 <p className="text-sm font-bold">{selectedRequest.ass_nome}</p>
-                                                <p className="text-xs font-medium text-slate-600">CRM: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
+                                                <p className="text-xs font-medium text-slate-600">{selectedRequest.ass_conselho_tipo || 'CRM'}: {selectedRequest.ass_crm} • {selectedRequest.ass_especialidade}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -3398,7 +3396,7 @@ function RequestDetails({ request, onEdit, onBack }) {
                                     <div>
                                         <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-1">Profissional Assistente</p>
                                         <p className="text-xs font-bold text-emerald-900">{request.ass_nome}</p>
-                                        <p className="text-[10px] text-emerald-600/70">CRM: {request.ass_crm} ({request.ass_conselho_tipo || 'CRM'})</p>
+                                        <p className="text-[10px] text-emerald-600/70">{request.ass_conselho_tipo || 'CRM'}: {request.ass_crm}</p>
                                     </div>
                                 </div>
                                 <div className="space-y-2">
