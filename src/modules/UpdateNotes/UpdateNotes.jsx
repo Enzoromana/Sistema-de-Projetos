@@ -8,10 +8,43 @@ import {
 
 const CHANGELOG = [
     {
+        version: '2.3.0',
+        date: '07 Mar 2026',
+        title: 'Refinamento Premium & Gestão de Junta',
+        highlight: true,
+        badge: 'ATUALIZAÇÃO',
+        badgeColor: 'bg-[#259591]',
+        entries: [
+            {
+                type: 'feature',
+                items: [
+                    { text: 'Novos Seletores Customizados para Status e Especialidade (Dashboard)', icon: <LayoutDashboard size={16} /> },
+                    { text: 'Numerador dinâmico de pendências no botão de Conclusão do Parecer', icon: <Sparkles size={16} /> },
+                    { text: 'Controle Administrativo de Reedição para médicos desempatadores', icon: <Lock size={16} /> },
+                ]
+            },
+            {
+                type: 'improvement',
+                items: [
+                    { text: 'Padronização de Nomenclatura: "Profissional Assistente" e "Conselho/UF"', icon: <Users size={16} /> },
+                    { text: 'Campos de justificativa expandidos (textarea) para maior clareza técnica', icon: <FileText size={16} /> },
+                    { text: 'Visualização de "Anexos Gerais" integrada ao Modal de Status', icon: <Paperclip size={16} /> },
+                ]
+            },
+            {
+                type: 'fix',
+                items: [
+                    { text: 'Correção de quebra de linha e truncamento no nome do médico (PDF Final)', icon: <CheckCircle2 size={16} /> },
+                    { text: 'Ajuste de alinhamento vertical nos campos Nome/CRM do cabeçalho', icon: <Activity size={16} /> },
+                ]
+            }
+        ]
+    },
+    {
         version: '2.2.0',
         date: '06 Mar 2026',
         title: 'Desempate Externo & Otimizações Gerais',
-        highlight: true,
+        highlight: false,
         badge: 'ATUALIZAÇÃO',
         badgeColor: 'bg-emerald-600',
         entries: [

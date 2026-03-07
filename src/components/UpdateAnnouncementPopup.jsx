@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Smartphone, Sparkles, ArrowRight, Rocket, CheckCircle2, Menu, LayoutGrid } from 'lucide-react';
 
-const CURRENT_VERSION = '2.1.0';
+const CURRENT_VERSION = '2.3.0';
 const STORAGE_KEY = 'hub_last_seen_update';
 
 export default function UpdateAnnouncementPopup({ onViewAll, onClose }) {
@@ -36,7 +36,7 @@ export default function UpdateAnnouncementPopup({ onViewAll, onClose }) {
         <div className={`fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md transition-opacity duration-300 ${closing ? 'opacity-0' : 'animate-in fade-in duration-500'}`}>
             <div className={`bg-white rounded-[1.5rem] md:rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border border-slate-100 transition-all duration-300 ${closing ? 'scale-95 opacity-0' : 'animate-in zoom-in duration-500'}`}>
                 {/* Hero section */}
-                <div className="relative bg-gradient-to-br from-emerald-500 via-teal-600 to-slate-900 p-8 md:p-12 text-white overflow-hidden">
+                <div className="relative bg-gradient-to-br from-[#259591] via-teal-700 to-slate-900 p-8 md:p-12 text-white overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-400/20 rounded-full -ml-12 -mb-12 blur-2xl"></div>
 
@@ -47,17 +47,17 @@ export default function UpdateAnnouncementPopup({ onViewAll, onClose }) {
                     <div className="relative z-10">
                         <div className="flex items-center gap-3 mb-5">
                             <div className="p-3 bg-white/15 backdrop-blur-md rounded-2xl border border-white/10">
-                                <Rocket size={24} />
+                                <Sparkles size={24} />
                             </div>
                             <div className="px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">
-                                v{CURRENT_VERSION} • Fev 2026
+                                v{CURRENT_VERSION} • Mar 2026
                             </div>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-3 italic">
-                            Novidade no Hub! ✨
+                            Refinamento Premium! ✨
                         </h2>
                         <p className="text-emerald-50 text-sm md:text-base font-medium leading-relaxed">
-                            O Hub Manager agora funciona perfeitamente no seu celular. Acesse todos os módulos de qualquer lugar com fluidez total.
+                            A Junta Médica está mais elegante e funcional. Novos seletores inteligentes, gerenciamento de reedição e numerador de pendências chegaram ao Hub.
                         </p>
                     </div>
                 </div>
