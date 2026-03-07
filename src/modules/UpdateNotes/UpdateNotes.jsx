@@ -3,7 +3,7 @@ import {
     Bell, Rocket, Sparkles, Bug, Zap, ArrowLeft,
     Smartphone, LayoutDashboard, Calendar, ShieldCheck, Activity,
     Presentation, BookOpen, Code2, Users, Lock, Globe,
-    FileText, Database, CheckCircle2, ChevronDown, ChevronUp
+    FileText, Database, CheckCircle2, ChevronDown, ChevronUp, Paperclip
 } from 'lucide-react';
 
 const CHANGELOG = [
